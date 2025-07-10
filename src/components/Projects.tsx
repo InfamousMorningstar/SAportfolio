@@ -1,9 +1,28 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { FaGithub, FaExternalLinkAlt, FaServer, FaChartLine, FaRobot, FaMedium } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt, FaServer, FaChartLine, FaRobot, FaMedium, FaGlobe } from 'react-icons/fa';
 
 const projects = [
+  {
+    title: 'Professional Portfolio Website',
+    description: 'Showcase of my technical expertise in DevOps, automation, and infrastructure management with comprehensive analytics, real-time features, and professional presentation.',
+    technologies: ['Next.js 15', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'Vercel Analytics', 'Vercel Speed Insights'],
+    features: [
+      'Bruce Wayne/Tony Stark inspired dark theme',
+      'Real-time dual timezone clock (MDT/UTC)',
+      'Continuously animated geometric shapes',
+      'Comprehensive visitor analytics tracking',
+      'Performance monitoring with Core Web Vitals',
+      'SEO optimized with Open Graph integration',
+      'Responsive design with smooth animations',
+      'Custom domain with SSL certificate'
+    ],
+    icon: <FaGlobe className="text-accent" />,
+    status: 'Live',
+    github: 'https://github.com/InfamousMorningstar/SAportfolio',
+    demo: 'https://portfolio.ahmxd.net'
+  },
   {
     title: 'TrueNAS Home Lab',
     description: 'Enterprise-grade home server with 32TB ZFS storage array, featuring automated backups, VM hosting, and comprehensive monitoring.',
