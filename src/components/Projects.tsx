@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { FaGithub, FaExternalLinkAlt, FaServer, FaChartLine, FaRobot } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt, FaServer, FaChartLine, FaRobot, FaMedium } from 'react-icons/fa';
 
 const projects = [
   {
@@ -210,17 +210,31 @@ export default function Projects() {
           viewport={{ once: true }}
         >
           <p className="text-muted mb-6">Want to see more of my work?</p>
-          <motion.a
-            href="https://github.com/InfamousMorningstar"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-primary inline-flex items-center space-x-2 px-6 py-3"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <FaGithub />
-            <span>View GitHub Profile</span>
-          </motion.a>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <motion.a
+              href="https://github.com/InfamousMorningstar"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary inline-flex items-center space-x-2 px-6 py-3"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <FaGithub />
+              <span>View GitHub Profile</span>
+            </motion.a>
+            
+            <motion.a
+              href="https://medium.com/@Infamous_Morningstar"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-secondary inline-flex items-center space-x-2 px-6 py-3"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <FaMedium />
+              <span>Read My Blog</span>
+            </motion.a>
+          </div>
         </motion.div>
       </div>
     </section>
