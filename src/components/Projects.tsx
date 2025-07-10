@@ -227,7 +227,7 @@ export default function Projects() {
               href="https://medium.com/@Infamous_Morningstar"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-secondary inline-flex items-center space-x-2 px-6 py-3"
+              className="btn-primary inline-flex items-center space-x-2 px-6 py-3"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
