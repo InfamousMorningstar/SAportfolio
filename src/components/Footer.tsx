@@ -9,7 +9,7 @@ export default function Footer() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
-      className="relative w-full py-12 px-6 border-t border-neutral-800 overflow-hidden"
+      className="relative w-full py-16 px-6 border-t border-neutral-800 overflow-hidden"
     >
       {/* Background Geometric Shapes */}
       <div className="absolute inset-0 pointer-events-none">
@@ -152,18 +152,18 @@ export default function Footer() {
         />
       </div>
 
-      <div className="relative max-w-4xl mx-auto text-center space-y-3">
+      <div className="relative max-w-2xl mx-auto text-center space-y-8">
         {/* Latin Quote */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.1 }}
-          className="space-y-1"
+          className="space-y-2"
         >
-          <h3 className="text-xl md:text-2xl font-mono font-bold text-neutral-300 tracking-wide">
+          <h2 className="text-2xl md:text-3xl font-mono font-bold text-neutral-300 tracking-wide">
             <span className="relative">
-              Fortes fortuna adiuvat
+              Aut viam inveniam aut faciam.
               {/* Accent underline */}
               <motion.div
                 initial={{ scaleX: 0 }}
@@ -173,19 +173,19 @@ export default function Footer() {
                 className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-accent via-accent2 to-accent origin-left"
               />
             </span>
-          </h3>
-          <p className="text-base italic text-neutral-400">
-            "Fortune favours the bold."
+          </h2>
+          <p className="text-lg italic text-neutral-400">
+            I shall either find a way or make one.
           </p>
         </motion.div>
 
-        {/* Tech Stack with accent colors */}
+        {/* Tech Stack */}
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-sm font-mono text-neutral-500 pt-2"
+          className="text-sm font-mono text-neutral-500"
         >
           Built with{' '}
           <span className="text-accent font-semibold">Next.js</span>,{' '}
@@ -194,18 +194,64 @@ export default function Footer() {
           Deployed on <span className="text-accent font-semibold">Vercel</span>
         </motion.p>
 
-        {/* Copyright with decorative elements */}
+        {/* Copyright */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex items-center justify-center space-x-2 text-xs font-mono text-neutral-500 tracking-wider pt-2"
+          className="flex items-center justify-center space-x-2 text-sm font-mono text-neutral-500 tracking-wider"
         >
-          <div className="w-2 h-px bg-accent/50" />
+          <div className="w-3 h-px bg-accent/50" />
           <span>© 2025 — All rights reserved. Trademark of Salman Ahmad / ahmxd.net</span>
-          <div className="w-2 h-px bg-accent2/50" />
+          <div className="w-3 h-px bg-accent2/50" />
         </motion.div>
+
+        {/* Legal Notice */}
+        <motion.section
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="space-y-4 pt-6 border-t border-neutral-800"
+          aria-labelledby="legal-notice"
+        >
+          <h3 id="legal-notice" className="sr-only">Legal Notice</h3>
+          
+          <div className="space-y-3 text-xs leading-relaxed text-neutral-400 font-mono">
+            <p className="font-semibold text-neutral-300">
+              LEGAL NOTICE
+            </p>
+            
+            <p>
+              This website and its source code are the intellectual property of Salman Ahmad (ahmxd.net).
+            </p>
+            
+            <p>
+              Unauthorized reproduction, distribution, or modification is strictly prohibited under applicable intellectual property laws.
+            </p>
+            
+            <p>
+              This portfolio is protected under the Copyright Act, R.S.C., 1985, c. C-42 (Canada), and international IP treaties.
+            </p>
+            
+            <p>
+              Activity on this site may be monitored for security and compliance purposes.
+            </p>
+            
+            <p className="pt-2 border-t border-neutral-800">
+              For licensing, collaboration, or educational use, contact:{' '}
+              <a 
+                href="mailto:s.ahmad0147@gmail.com?subject=PERMISSION REQUEST"
+                className="text-accent hover:text-accent2 transition-colors underline decoration-accent/50 hover:decoration-accent2 font-medium"
+                aria-label="Contact for permissions via email"
+              >
+                s.ahmad0147@gmail.com
+              </a>
+              {' '}with subject line: <span className="text-accent font-semibold">PERMISSION REQUEST</span>.
+            </p>
+          </div>
+        </motion.section>
       </div>
     </motion.footer>
   );
