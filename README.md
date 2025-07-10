@@ -319,15 +319,44 @@ const fadeInUp = {
 - **Edge Runtime** - Faster cold starts and global distribution
 - **Advanced Caching** - Intelligent caching strategies for optimal performance
 
-## 📄 License & Legal
+## 📄 LICENSE & LEGAL NOTICE
 
-This project is open source and available under the **MIT License**. See the [LICENSE](LICENSE) file for details.
+This project is distributed under the terms of the **MIT License**. While the source code is openly accessible for educational and collaborative purposes, unauthorised reproduction, redistribution, or commercial exploitation of this code without proper attribution and explicit written consent is strictly prohibited.
 
-### Attribution
-- **Font:** Inter & JetBrains Mono (Google Fonts)
-- **Icons:** Lucide React (MIT License)
-- **Animations:** Framer Motion (MIT License)
-- **Framework:** Next.js (MIT License)
+### ⚖️ NOTICE TO VIOLATORS
+
+This codebase is actively monitored. Any instance of plagiarism, uncredited reuse, or misappropriation — including but not limited to rehosting, rebranding, or derivative works without attribution — will be considered a breach of the license terms and intellectual property laws.
+
+Legal remedies will be pursued under applicable copyright statutes, including but not limited to the **Copyright Act of Canada (R.S.C., 1985, c. C-42)**, the **Digital Millennium Copyright Act (DMCA)**, and international IP treaties.
+
+### ✅ You are encouraged to:
+
+- **Fork, study, and contribute** with proper attribution
+- **Credit the author** (Salman Ahmad – s.ahmad0147@gmail.com)
+- **Contact the author** for any commercial use or redistribution
+
+### ❌ You are strictly prohibited from:
+
+- **Claiming ownership** or origin of this codebase
+- **Distributing modified versions** without clear attribution
+- **Using this project** in proprietary software without permission
+
+### ⚠️ Failure to comply may result in:
+
+- 🚫 Takedown requests and DMCA filings
+- 🚨 Reporting to GitHub Trust & Safety
+- ⚖️ Legal proceedings
+
+### 🧩 Attribution
+
+- **Font:** Inter & JetBrains Mono – Google Fonts
+- **Icons:** Lucide React – MIT License
+- **Animations:** Framer Motion – MIT License
+- **Framework:** Next.js – MIT License
+
+---
+
+**This repository and its contents are the intellectual property of Salman Ahmad. All rights reserved.**
 
 ## 📞 Contact & Support
 
