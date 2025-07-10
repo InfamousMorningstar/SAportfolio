@@ -137,7 +137,7 @@ This site is configured for GitHub Pages deployment with a custom domain. The bu
 - Autoprefixer
 
 ### Deployment
-- GitHub Pages
+- Vercel
 - Custom Domain (portfolio.ahmxd.net)
 
 ## 📄 License
