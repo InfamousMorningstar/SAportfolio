@@ -383,21 +383,19 @@ export default function Footer() {
                           For licensing, collaboration, or educational use, contact:{' '}
                           <a 
                             href="mailto:s.ahmad0147@gmail.com?subject=PERMISSION REQUEST"
-                            className="inline-flex items-center gap-1 text-purple-400 hover:text-purple-300 transition-all duration-300 underline decoration-purple-400/50 hover:decoration-purple-300 font-medium bg-purple-500/10 hover:bg-purple-500/20 px-2 py-1 rounded-md"
+                            className="text-purple-400 hover:text-purple-300 font-medium transition-colors duration-200"
                           >
-                            <span>📧</span>
                             s.ahmad0147@gmail.com
                           </a>
                           {' '}with subject line:{' '}
-                          <span className="text-cyan-300 font-bold bg-cyan-500/10 px-2 py-1 rounded-md border border-cyan-500/20">
-                            PERMISSION REQUEST
-                          </span>
+                          <span className="text-accent font-medium">PERMISSION REQUEST</span>
                         </p>
                       </div>
                       
                       {/* Footer Note */}
-                      <div className="text-center pt-2 opacity-60">
-                        <span className="text-xs text-purple-400">⚡ Powered by transparency and respect for intellectual property ⚡</span>
+                      <div className="border-t border-neutral-700/40 my-3 w-full" />
+                      <div className="text-center pt-2 opacity-70">
+                        <span className="text-xs text-neutral-400 italic">If you copy, bring a lawyer. If you ask, bring coffee.</span>
                       </div>
                     </motion.div>
                   </motion.div>
