@@ -56,6 +56,10 @@ const config: Config = {
           '50%': { backgroundPosition: '100% 50%' },
         },
       },
+      backdropBlur: {
+        'xs': '3px',
+        'xxl': '20px'
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'grid-pattern': 'linear-gradient(to right, #8b5cf610 1px, transparent 1px), linear-gradient(to bottom, #8b5cf610 1px, transparent 1px)',

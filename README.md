@@ -61,6 +61,30 @@ Experience the full interactive portfolio with real-time animations, responsive 
 - **Micro-interactions** - Button hovers, form feedback, and navigation highlights
 - **Performance Optimized** - Hardware-accelerated CSS transforms
 
+## 🍏 Apple-Style UI & Animation Enhancements (2025)
+
+### Premium Liquid Glass Aesthetic
+- **Navbar & Footer**: Transformed to a dark, frosted glass (glassmorphism) look with backdrop blur, soft gradients, and subtle borders for a premium Apple-style feel.
+- **Pillbox Navigation**: All nav links and social icons are now pill-shaped, with soft glass, inner shadow, and neon accent ring for active states.
+- **Resume Button**: Styled as a macOS system button with gradient, ring, and shadow.
+- **Clock**: Always displays `[HH:MM:SS MDT | HH:MM:SS UTC]` in a glassy pill, consistent across all breakpoints.
+- **Mobile Drawer**: Stronger blur, more pronounced glass, pillbox nav, neon accent ring, and improved spacing/shadow for all elements.
+
+### Footer Floating Shapes & Animation
+- **Animated Floating Shapes**: Footer background now features animated, blurred, responsive floating shapes (matching the hero section) using Framer Motion.
+- **Legal Notice Panel**: 
+  - Apple-style spring animation for opening/closing, with fade, blur, and scale transitions.
+  - Staggered content animation for a polished, professional feel.
+  - Enhanced color, emoji, and gradient styling for legal content.
+  - **Auto-scroll**: When opened, the page automatically scrolls to reveal the full legal notice panel, ensuring optimal user experience on all devices.
+
+### General Improvements
+- **All animations**: Use Framer Motion with custom spring physics and Apple-style cubic bezier for ultra-smooth, natural transitions.
+- **Dark mode**: All new UI and animation features are fully dark-mode compatible.
+- **Responsiveness**: All enhancements are pixel-perfect and responsive across all breakpoints.
+
+---
+
 ## 🏗️ Architecture & Features
 
 ### 📱 Core Sections
@@ -111,6 +135,11 @@ Experience the full interactive portfolio with real-time animations, responsive 
 - **Responsive Positioning** - Adapts to screen size and orientation
 
 #### Navigation System
+- **Apple-Style Glassmorphism**: Dark, frosted glass navbar with backdrop blur and soft gradients
+- **Pillbox Nav Buttons**: All nav links and social icons are pill-shaped, with neon accent ring for active
+- **Resume Button**: Styled as a macOS system button with gradient, ring, and shadow
+- **Clock**: Glassy pill, always shows `[HH:MM:SS MDT | HH:MM:SS UTC]`
+- **Mobile Drawer**: Stronger blur, pillbox nav, neon accent ring, and improved spacing/shadow
 - **Intelligent Navbar** - Scroll-spy active section highlighting
 - **Smooth Scrolling** - Animated transitions between sections
 - **Resume Integration** - Direct PDF download functionality
@@ -118,11 +147,17 @@ Experience the full interactive portfolio with real-time animations, responsive 
 - **Glowing Effects** - Active state animations and hover feedback
 
 #### Footer Enhancement
-- **Animated Geometric Shapes** - Continuously moving design elements
-- **Latin Quote Integration** - "Fortes fortuna adiuvat" with translation
-- **Technology Attribution** - Credit to development stack
-- **Copyright Information** - Professional legal footer
-- **Visual Effects** - Gradient underlines and floating elements
+- **Apple-Style Glassmorphism**: Footer uses dark, blurred glass background
+- **Animated Floating Shapes**: Responsive, blurred, animated shapes in the background (Framer Motion)
+- **Legal Notice Panel**: 
+  - Apple-style spring animation for open/close (fade, blur, scale)
+  - Staggered content animation for legal text
+  - Enhanced color, emoji, and gradient styling
+  - **Auto-scroll**: Automatically scrolls to reveal the full legal notice when opened
+- **Latin Quote Integration**: "Aut viam inveniam aut faciam" with translation
+- **Technology Attribution**: Credit to development stack
+- **Copyright Information**: Professional legal footer
+- **Visual Effects**: Gradient underlines and floating elements
 
 #### Blog System (Optional)
 - **Article Showcase** - Featured blog posts with metadata

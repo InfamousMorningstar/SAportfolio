@@ -101,14 +101,14 @@ export default function Navbar() {
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
-      className="fixed top-0 w-full z-50 flex items-center justify-between px-8 py-1
-        backdrop-blur-lg bg-neutral-900/40
+      className="fixed top-0 w-full z-50 flex items-center justify-between px-8 py-3
+        backdrop-blur-lg bg-neutral-900/40 border-b border-white/10
         shadow-[0_4px_30px_rgba(0,0,0,0.1)] ring-1 ring-white/10"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         
         {/* Desktop Layout - min-w-0 prevents flex-shrink issues */}
-        <div className="hidden xl:grid xl:grid-cols-[auto_1fr_auto] xl:gap-6 xl:items-center py-2 min-w-0">
+        <div className="hidden xl:grid xl:grid-cols-[auto_1fr_auto] xl:gap-6 xl:items-center py-4 min-w-0">
           
           {/* Left: Logo - Fixed Width */}
           <motion.div 
@@ -116,15 +116,17 @@ export default function Navbar() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <div
+            <button
               onClick={() => handleNavClick('#home')}
-              className="text-2xl font-bold text-purple-400 tracking-wider 
-                transition-all duration-300 hover:text-purple-300 
-                hover:drop-shadow-[0_0_12px_rgba(168,85,247,0.5)]
-                px-3 py-2 cursor-pointer"
+              className="text-2xl font-bold text-white/90 tracking-wider 
+                transition-all duration-300 hover:text-white 
+                hover:drop-shadow-[0_0_12px_rgba(255,255,255,0.3)]
+                px-3 py-2 rounded-full
+                bg-white/5 hover:bg-white/10 transition-colors duration-300
+                shadow-inner border border-white/10 backdrop-blur"
             >
               SA
-            </div>
+            </button>
           </motion.div>
 
           {/* Center: Navigation Links - Flex container with centering */}
@@ -219,29 +221,27 @@ export default function Navbar() {
                 className="px-3 py-1 rounded-full bg-white/5 text-xs font-mono text-white/80 border border-white/10 backdrop-blur flex gap-1 items-center shadow-inner"
               >
                 <span className="text-purple-300 font-semibold">{mdtTime}</span>
-                <span className="text-white/60">MDT</span>
                 <span className="text-white/40">|</span>
                 <span className="text-cyan-300 font-semibold">{utcTime}</span>
-                <span className="text-white/60">UTC</span>
               </motion.div>
             )}
           </div>
         </div>
 
         {/* Large Desktop Simplified Layout - for screens with nav + clock */}
-        <div className="hidden lg:flex xl:hidden justify-between items-center py-2 gap-4">
+        <div className="hidden lg:flex xl:hidden justify-between items-center py-4 gap-4">
           
           {/* Logo */}
-          <motion.div
+          <motion.button
             onClick={() => handleNavClick('#home')}
-            className="text-xl font-bold text-purple-400 tracking-wider flex-shrink-0
-              px-3 py-2 cursor-pointer
-              transition-all duration-300 hover:text-purple-300
-              hover:drop-shadow-[0_0_12px_rgba(168,85,247,0.5)]"
+            className="text-xl font-bold text-white/90 tracking-wider flex-shrink-0
+              px-3 py-2 rounded-full
+              bg-white/5 hover:bg-white/10 transition-colors duration-300
+              shadow-inner border border-white/10 backdrop-blur"
             whileHover={{ scale: 1.05 }}
           >
             SA
-          </motion.div>
+          </motion.button>
 
           {/* Navigation Links - Compact */}
           <div className="flex gap-3 flex-shrink min-w-0">
@@ -280,30 +280,28 @@ export default function Navbar() {
             {mounted && (
               <div className="flex items-center gap-1 px-2 py-1 rounded-full 
                 bg-white/5 text-xs font-mono text-white/80 border border-white/10 backdrop-blur shadow-inner">
-                <span className="text-purple-300 font-semibold">{mdtTime.slice(0, 8)}</span>
-                <span className="text-white/60">MDT</span>
+                <span className="text-purple-300">{mdtTime.slice(0, 5)}</span>
                 <span className="text-white/40">|</span>
-                <span className="text-cyan-300 font-semibold">{utcTime.slice(0, 8)}</span>
-                <span className="text-white/60">UTC</span>
+                <span className="text-cyan-300">{utcTime.slice(0, 5)}</span>
               </div>
             )}
           </div>
         </div>
 
         {/* Medium Screen Layout - Navigation priority */}
-        <div className="hidden md:flex lg:hidden justify-between items-center py-2 gap-3">
+        <div className="hidden md:flex lg:hidden justify-between items-center py-4 gap-3">
           
           {/* Logo */}
-          <motion.div
+          <motion.button
             onClick={() => handleNavClick('#home')}
-            className="text-lg font-bold text-purple-400 tracking-wider flex-shrink-0
-              px-2 py-1 cursor-pointer
-              transition-all duration-300 hover:text-purple-300
-              hover:drop-shadow-[0_0_12px_rgba(168,85,247,0.5)]"
+            className="text-lg font-bold text-white/90 tracking-wider flex-shrink-0
+              px-2 py-1 rounded-lg
+              bg-white/5 hover:bg-white/10 transition-colors duration-300
+              shadow-inner border border-white/10 backdrop-blur"
             whileHover={{ scale: 1.05 }}
           >
             SA
-          </motion.div>
+          </motion.button>
 
           {/* Core Navigation */}
           <div className="flex gap-2 flex-shrink min-w-0">
@@ -347,19 +345,19 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Layout - Minimal, No Overlap */}
-        <div className="md:hidden flex justify-between items-center py-2">
+        <div className="md:hidden flex justify-between items-center py-4">
           {/* Mobile Logo */}
-          <motion.div
+          <motion.button
             onClick={() => handleNavClick('#home')}
-            className="text-lg font-bold text-purple-400 tracking-wider
-              px-2 py-1 cursor-pointer
-              transition-all duration-300 hover:text-purple-300
-              hover:drop-shadow-[0_0_12px_rgba(168,85,247,0.5)]"
+            className="text-lg font-bold text-white/90 tracking-wider
+              px-2 py-1 rounded-xl
+              bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/15
+              shadow-[0_2px_8px_rgba(0,0,0,0.10)] hover:bg-white/15 transition-all duration-300"
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.96 }}
           >
             SA
-          </motion.div>
+          </motion.button>
 
           {/* Mobile Actions */}
           <div className="flex items-center gap-3">
@@ -453,13 +451,17 @@ export default function Navbar() {
                 {/* Mobile Clock */}
                 {mounted && (
                   <div className="flex justify-center">
-                    <div className="flex items-center gap-1 px-3 py-2 rounded-full 
+                    <div className="flex items-center gap-2 px-3 py-2 rounded-full 
                       bg-gradient-to-br from-white/10 to-white/5 border border-white/10 shadow-inner backdrop-blur font-mono text-xs text-white/80">
-                      <span className="text-purple-300 font-semibold drop-shadow">{mdtTime}</span>
-                      <span className="text-white/60">MDT</span>
+                      <div className="text-center">
+                        <div className="text-purple-300 font-semibold drop-shadow">{mdtTime}</div>
+                        <div className="text-white/60 text-xs">MDT</div>
+                      </div>
                       <span className="text-white/40">|</span>
-                      <span className="text-cyan-300 font-semibold drop-shadow">{utcTime}</span>
-                      <span className="text-white/60">UTC</span>
+                      <div className="text-center">
+                        <div className="text-cyan-300 font-semibold drop-shadow">{utcTime}</div>
+                        <div className="text-white/60 text-xs">UTC</div>
+                      </div>
                     </div>
                   </div>
                 )}

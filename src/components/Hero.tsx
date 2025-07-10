@@ -178,7 +178,7 @@ export default function Hero() {
           
           <motion.a
             href="mailto:s.ahmad0147@gmail.com"
-            className="px-8 py-3 text-lg font-semibold border-2 border-accent text-accent hover:bg-accent hover:text-background transition-all duration-300 rounded-lg"
+            className="px-8 py-3 text-lg font-semibold border-2 border-accent text-accent hover:bg-accent hover:text-background transition-all duration-300 rounded-full"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
