@@ -1,0 +1,272 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom CSS Variables */
+:root {
+  --background: #0a0a0a;
+  --foreground: #ffffff;
+  --muted: #a1a1aa;
+  --accent: #8b5cf6;
+  --accent2: #14b8a6;
+  --secondary: #06b6d4;
+}
+
+/* Base Styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', system-ui, sans-serif;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Animated Background */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    linear-gradient(90deg, transparent 79px, rgba(139, 92, 246, 0.03) 81px, rgba(139, 92, 246, 0.03) 82px, transparent 84px),
+    linear-gradient(rgba(139, 92, 246, 0.03) 79px, transparent 81px, transparent 82px, rgba(139, 92, 246, 0.03) 84px);
+  background-size: 84px 84px;
+  animation: float 20s ease-in-out infinite;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent2);
+}
+
+/* Selection Styles */
+::selection {
+  background: var(--accent);
+  color: white;
+}
+
+/* Focus Styles */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Floating Shapes */
+.floating-shape {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.floating-shape:nth-child(1) {
+  top: 10%;
+  left: 10%;
+  animation: float 8s ease-in-out infinite;
+}
+
+.floating-shape:nth-child(2) {
+  top: 20%;
+  right: 15%;
+  animation: float 12s ease-in-out infinite reverse;
+}
+
+.floating-shape:nth-child(3) {
+  bottom: 20%;
+  left: 20%;
+  animation: float 10s ease-in-out infinite 2s;
+}
+
+.floating-shape:nth-child(4) {
+  bottom: 30%;
+  right: 10%;
+  animation: float 14s ease-in-out infinite 4s reverse;
+}
+
+/* Glow Effects */
+.glow {
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+}
+
+.glow-accent2 {
+  box-shadow: 0 0 20px rgba(20, 184, 166, 0.5);
+}
+
+/* Text Effects */
+.text-glow {
+  text-shadow: 0 0 10px rgba(139, 92, 246, 0.8);
+}
+
+.text-glow-accent2 {
+  text-shadow: 0 0 10px rgba(20, 184, 166, 0.8);
+}
+
+/* Gradient Text */
+.gradient-text {
+  background: linear-gradient(45deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient 3s ease infinite;
+  background-size: 400% 400%;
+}
+
+/* Blink Animation for Cursor */
+.cursor-blink::after {
+  content: '>';
+  color: var(--accent);
+  animation: blink 1s infinite;
+  font-weight: bold;
+}
+
+/* Decrypt Effect */
+.decrypt-text {
+  overflow: hidden;
+  position: relative;
+}
+
+.decrypt-text::before {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--background);
+  animation: decrypt 2s ease-out forwards;
+}
+
+/* Grid Background */
+.grid-bg {
+  background-image: 
+    linear-gradient(to right, rgba(139, 92, 246, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(139, 92, 246, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Navbar Active State */
+.nav-link-active {
+  color: var(--accent);
+  position: relative;
+}
+
+.nav-link-active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--accent);
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+/* Button Styles */
+.btn-primary {
+  background: linear-gradient(45deg, var(--accent), var(--accent2));
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4);
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-primary:hover::before {
+  left: 100%;
+}
+
+/* Section Styles */
+.section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Card Styles */
+.card {
+  background: rgba(23, 23, 23, 0.8);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 12px;
+  padding: 24px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  border-color: rgba(139, 92, 246, 0.5);
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Project Card Hover Effect */
+.project-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.1), transparent);
+  transition: left 0.5s;
+}
+
+.project-card:hover::before {
+  left: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .floating-shape {
+    display: none;
+  }
+  
+  body::before {
+    background-size: 42px 42px;
+  }
+}
