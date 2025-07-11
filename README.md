@@ -1,229 +1,120 @@
-# 🚀 Professional Portfolio Website
+# 🚀 Salman Ahmad – Professional Portfolio
 
-A cutting-edge, fully animated portfolio website showcasing modern web development with dark theme aesthetics, comprehensive analytics, and professional features.
-
----
-
-## ✨ Key Features
-
-- **Apple-Style Glassmorphic Navbar & Footer**
-  - Frosted glass effect with deep blur and accent LED strip glow beneath the navbar for a premium, modern look.
-  - Responsive, pixel-perfect alignment and spacing across all devices.
-
-- **Animated, Responsive Hamburger Menu**
-  - Buttery-smooth open/close transitions with staggered content fade and gentle menu box animation.
-  - Accessible, touch-friendly, and visually polished for mobile/tablet users.
-
-- **Premium Button & Pill Design**
-  - All buttons and pills use Apple-style pillbox shapes, gradients, and smooth hover/tap effects for a unified, elegant feel.
-
-- **Live Dual-Time Clock**
-  - Beautiful pill-style clock showing local (MDT) and UTC time, with dynamic color and alignment.
-
-- **Universal Scrollbar & UI Polish**
-  - Custom scrollbar styling and dynamic color changes for a consistent, premium experience.
-
-- **LED Accent Lighting**
-  - Subtle, blurred accent color glow beneath the navbar simulates LED strip lighting, enhancing the dark theme.
-
-- **Animated Hero Section**
-  - "Hello World" text features a smooth, long color transition from accent to foreground.
-  - Decrypt animation and blinking cursor for a lively, engaging intro.
-
-- **Floating Geometric Shapes**
-  - Animated, responsive shapes add depth and motion to the background.
-
-- **Responsive, Accessible Layout**
-  - All components adapt seamlessly to desktop, tablet, and mobile.
-  - Keyboard navigation and ARIA labels for accessibility.
-
-- **Legal Notice & Footer**
-  - Visually polished, responsive legal notice with premium spacing and line breaks.
+A visually stunning, Apple-inspired portfolio website built with Next.js, Tailwind CSS, and Framer Motion. Showcasing real projects, technical skills, and professional experience with glassmorphic design, neon accents, and S-tier polish.
 
 ---
 
-## ✨ Live Demo
+## ✨ Features
 
-🌐 **Live Site:** [https://portfolio.ahmxd.net](https://portfolio.ahmxd.net)
+- **Apple-style glassmorphic UI:** Frosted glass navbar, footer, and cards with deep blur, neon accent gradients, and floating particles.
+- **Animated navigation:** Responsive, glassy navbar with anchor links, live dual-timezone clock (MDT & UTC), and animated hamburger menu for mobile.
+- **Hero section:** Animated intro with decrypt effect, floating geometric shapes, and smooth color transitions.
+- **About section:** Professional headshot, personal narrative, animated skills grid, and interactive trait badges.
+- **Projects section:** Real, production-grade projects with tech stack, features, and links to GitHub/Medium.
+- **Experience section:** Timeline of professional roles, responsibilities, and achievements.
+- **Education section:** Academic background, highlights, and relevant coursework.
+- **Contact section:** Real contact methods (email, Discord, GitHub, LinkedIn, location), availability, and response time.
+- **Footer:** Glassmorphic, animated, with signature, motto, tech stack, last updated, and legal notice.
+- **S-tier 3D pop-up animation:** All interactive elements feature unified 3D pop and microinteractions.
+- **Context-aware floating scroll-to-top arrow:** S-tier, glassmorphic, animated arrow appears only between Contact and Footer, with buttery-smooth spring physics and no flicker.
+- **Responsive & accessible:** Mobile-first, keyboard navigation, and ARIA labels.
+- **Legal & copyright:** Professional legal notice and copyright compliance.
 
-Experience the full interactive portfolio with real-time animations, responsive design, and professional presentation.
+---
 
-## 🛠️ Technology Stack
+## 🛠️ Built With
 
-### Core Framework
-- **Next.js 15** with App Router - Latest React framework with server-side rendering
-- **React 18** - Modern React with concurrent features
-- **TypeScript** - Type-safe development environment
-- **Tailwind CSS** - Utility-first CSS framework with custom configurations
+- **Next.js 15.3.5** (App Router, SSR)
+- **React 18**
+- **TypeScript 5.x**
+- **Tailwind CSS 3.4.x**
+- **Framer Motion 11.18.x**
+- **Lucide React 0.525.x**
+- **React Icons 5.x**
+- **@vercel/analytics**
+- **@vercel/speed-insights**
 
-### Animation & Interactivity
-- **Framer Motion** - Advanced animations and transitions
-- **Custom Animations** - Floating shapes, geometric patterns, and micro-interactions
-- **Smooth Scroll** - Seamless navigation between sections
-- **Interactive Elements** - Hover effects, glowing buttons, and dynamic components
+---
 
-### Analytics & Performance
-- **Vercel Web Analytics** - Comprehensive visitor tracking and insights
-- **Vercel Speed Insights** - Core Web Vitals and performance monitoring
-- **Real-time Data** - Live visitor statistics and engagement metrics
-- **SEO Optimization** - Meta tags, Open Graph, and Twitter Card support
+## 📁 Folder Structure
 
-### UI/UX Components
-- **Lucide React** - Modern icon library with consistent design
-- **Custom Fonts** - Inter + JetBrains Mono via Next.js font optimization
-- **Responsive Design** - Mobile-first approach with breakpoint management
-- **Dark Theme** - Professional dark mode with purple/teal accent colors
-
-### Development & Deployment
-- **ESLint** - Code quality and consistency
-- **PostCSS** - CSS processing with Autoprefixer
-- **Vercel Deployment** - Automated CI/CD with GitHub integration
-- **Custom Domain** - Professional domain with SSL certificate
-
-## 🎨 Design Philosophy
-
-### Visual Identity
-- **Bruce Wayne/Tony Stark Aesthetic** - Sophisticated, tech-forward professional design
-- **Color Palette:**
-  - Primary: Purple (#8B5CF6) - Innovation and creativity
-  - Secondary: Teal (#14B8A6) - Technology and precision
-  - Accent: Cyan (#06B6D4) - Energy and dynamism
-  - Background: Deep dark with subtle gradients
-
-### Typography Hierarchy
-- **Inter Font Family** - Clean, readable sans-serif for body text
-- **JetBrains Mono** - Technical monospace for code, data, and technical elements
-- **Dynamic Sizing** - Responsive typography scaling across devices
-
-### Animation Strategy
-- **Entrance Animations** - Smooth fade-in and slide effects on scroll
-- **Continuous Motion** - Subtle floating and rotating geometric shapes
-- **Micro-interactions** - Button hovers, form feedback, and navigation highlights
-- **Performance Optimized** - Hardware-accelerated CSS transforms
-
-## 🏗️ Architecture & Features
-
-### 📱 Core Sections
-
-#### 🎯 Hero Section
-- **Decrypt Animation** - Typewriter effect revealing name and title
-- **Floating Shapes** - Continuously animated geometric elements
-- **Scroll Indicator** - Elegant downward arrow with pulsing animation
-- **Background Effects** - Animated grid pattern with gradient overlays
-
-#### 👨‍💻 About Section
-- **Profile Image Integration** - Professional headshot with hover effects
-- **Skills Showcase** - Technology stack with animated reveals
-- **Personal Narrative** - Compelling story with professional positioning
-- **Interactive Cards** - Hover animations and smooth transitions
-
-#### 🚀 Projects Section
-- **Featured Work Display** - Curated project portfolio with descriptions
-- **External Link Integration** - GitHub repository and live demo access
-- **Medium Blog Integration** - Direct link to technical articles
-- **Technology Tags** - Visual skill representation per project
-
-#### 💼 Experience Section
-- **Professional Timeline** - Career progression with detailed descriptions
-- **Company Highlights** - Key achievements and responsibilities
-- **Skills Integration** - Technology stack per role
-- **Visual Hierarchy** - Clean, scannable layout design
-
-#### 🎓 Education Section
-- **Academic Achievement Display** - Degrees, certifications, and honors
-- **Institution Branding** - Professional presentation with logos
-- **Timeline Format** - Chronological education journey
-- **Relevant Coursework** - Technical skills and specializations
-
-#### 📞 Contact Section
-- **Unified Contact Card** - Consolidated contact methods and social media
-- **Quick Message Form** - Streamlined contact form (ready for backend)
-- **Social Media Integration** - Professional network connections
-- **Location Information** - Geographic presence with timezone display
-
-### 🕒 Advanced Components
-
-#### Real-Time Clock System
-- **Dual Timezone Display** - MDT (Mountain Daylight Time) and UTC
-- **Live Updates** - Second-by-second time synchronization
-- **Visual Indicators** - Colored dots for each timezone
-- **Theme Integration** - Matches site color scheme with accent colors
-- **Responsive Positioning** - Adapts to screen size and orientation
-
-#### Navigation System
-- **Intelligent Navbar** - Scroll-spy active section highlighting
-- **Smooth Scrolling** - Animated transitions between sections
-- **Resume Integration** - Direct PDF download functionality
-- **Mobile Optimization** - Responsive hamburger menu (ready for implementation)
-- **Glowing Effects** - Active state animations and hover feedback
-
-#### Footer Enhancement
-- **Animated Geometric Shapes** - Continuously moving design elements
-- **Latin Quote Integration** - "Fortes fortuna adiuvat" with translation
-- **Technology Attribution** - Credit to development stack
-- **Copyright Information** - Professional legal footer
-- **Visual Effects** - Gradient underlines and floating elements
-
-#### Blog System (Optional)
-- **Article Showcase** - Featured blog posts with metadata
-- **External Integration** - Links to Medium, Dev.to, or custom blog
-- **Tagging System** - Technology and topic categorization
-- **Read Time Estimation** - User experience enhancement
-- **Social Sharing Ready** - Prepared for content marketing
-
-## 📊 Analytics & Monitoring
-
-### Vercel Web Analytics
-- **Page View Tracking** - Comprehensive visitor statistics
-- **User Behavior Analysis** - Navigation patterns and engagement
-- **Geographic Insights** - Visitor location and demographics
-- **Device Analytics** - Desktop vs mobile usage patterns
-- **Referral Tracking** - Traffic source identification
-
-### Performance Monitoring
-- **Core Web Vitals** - LCP, FID, and CLS measurements
-- **Loading Performance** - Page speed and optimization metrics
-- **User Experience Scoring** - Real user monitoring data
-- **Performance Budgets** - Automatic performance regression detection
-
-## 📁 Project Structure
-
-```
+```text
 portfolio/
-├── 📂 src/
-│   ├── 📂 app/
-│   │   ├── 🎨 globals.css          # Global styles & animations
-│   │   ├── 🏗️ layout.tsx           # Root layout with analytics
-│   │   ├── 📄 page.tsx             # Main page composition
-│   │   └── 🖼️ favicon.ico          # Site icon
-│   └── 📂 components/
-│       ├── 🧭 Navbar.tsx           # Navigation with scroll-spy
-│       ├── 🎯 Hero.tsx             # Animated hero section
-│       ├── 👨‍💻 About.tsx            # About with profile image
-│       ├── 🚀 Projects.tsx         # Featured work showcase
-│       ├── 💼 Experience.tsx       # Professional timeline
-│       ├── 🎓 Education.tsx        # Academic background
-│       ├── 📞 Contact.tsx          # Contact & social media
-│       ├── 🕒 LocalClock.tsx       # Real-time clock widget
-│       ├── 📝 Blog.tsx             # Blog posts display
-│       └── 🦶 Footer.tsx           # Enhanced footer with animations
-├── 📂 public/
-│   ├── 🖼️ favicon.svg             # Vector site icon
-│   ├── 🌐 CNAME                   # Custom domain configuration
-│   ├── 🤖 robots.txt              # Search engine directives
-│   ├── 🗺️ sitemap.xml             # SEO sitemap
-│   ├── 📄 Salman_Ahmad_Resume.pdf # Professional resume
-│   └── 📂 images/
-│       └── 📸 profile-photo.JPG   # Professional headshot
-├── 📂 data/
-│   └── 📊 profile.json            # Structured profile data
-├── ⚙️ next.config.ts              # Next.js configuration
-├── 🎨 tailwind.config.ts          # Tailwind customization
-├── 📋 package.json                # Dependencies & scripts
-├── 📄 LICENSE                     # MIT License
-├── 📖 README.md                   # Project documentation
-└── 📚 DEPLOYMENT.md               # Deployment guidelines
+├── public/
+│   ├── CNAME
+│   ├── favicon.svg
+│   ├── robots.txt
+│   ├── Salman_Ahmad_Resume.pdf
+│   ├── sitemap.xml
+│   └── images/
+│       └── profile-photo.JPG
+├── src/
+│   ├── app/
+│   │   ├── globals.css
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   └── components/
+│       ├── About.tsx
+│       ├── Blog.tsx
+│       ├── Contact.tsx
+│       ├── Education.tsx
+│       ├── Experience.tsx
+│       ├── Footer.tsx
+│       ├── Hero.tsx
+│       ├── LocalClock.tsx
+│       ├── Navbar.tsx
+│       ├── Projects.tsx
+│       └── ScrollToTopArrow.tsx
+├── DEPLOYMENT.md
+├── LICENSE
+├── next-env.d.ts
+├── next.config.js
+├── package.json
+├── postcss.config.js
+├── README.md
+├── tailwind.config.ts
+├── tsconfig.json
+└── tsconfig.tsbuildinfo
 ```
+
+---
+
+## 📁 Main Components & Sections
+
+- `Navbar` – Glassmorphic, animated, with live clock and anchor navigation
+- `Hero` – Animated intro, floating shapes, decrypt effect
+- `About` – Headshot, narrative, animated skills grid
+- `Projects` – Real projects (portfolio, TrueNAS homelab, media automation, infra dashboard)
+- `Experience` – Work timeline, responsibilities, achievements
+- `Education` – Degrees, highlights, coursework
+- `Contact` – Email, Discord, GitHub, LinkedIn, location, availability
+- `Footer` – Glassy, animated, legal notice, tech stack, last updated
+- `Blog` – Placeholder only (no real blog integration)
+- `ScrollToTopArrow` – S-tier, context-aware, glassmorphic, animated floating arrow that appears only between Contact and Footer, with spring physics and no flicker
+
+---
+
+## 📞 Contact
+
+- **Email:** [s.ahmad0147@gmail.com](mailto:s.ahmad0147@gmail.com)
+- **Discord:** [infamous_morningstar](https://discord.com/users/699763177315106836)
+- **GitHub:** [InfamousMorningstar](https://github.com/InfamousMorningstar)
+- **LinkedIn:** [Salman Ahmad](https://www.linkedin.com/in/salman-ahmad-6788811b6/)
+- **Location:** [Calgary, AB, Canada](https://www.google.com/maps/place/Calgary,+AB)
+
+---
+
+## 📄 License & Legal Notice
+
+This website and its source code are protected under the **Copyright Act, R.S.C., 1985, c. C-42 (Canada)** and the **DMCA**. Unauthorized reproduction, redistribution, or modification is strictly prohibited. For licensing or legal inquiries, contact: s.ahmad0147@gmail.com with subject line "PERMISSION REQUEST".
+
+MIT License. See `LICENSE` for details.
+
+---
+
+**© Salman Ahmad – ahmxd.net – All Rights Reserved.**
+
+---
 
 ## 🚀 Development Workflow
 
@@ -255,62 +146,70 @@ portfolio/
 
 ### Code Quality & Standards
 
-- **TypeScript Strict Mode** - Type safety across all components
-- **ESLint Configuration** - Enforced coding standards and best practices
-- **Component Architecture** - Modular, reusable component design
-- **Performance Optimization** - Image optimization, lazy loading, code splitting
+- **TypeScript Strict Mode** – Type safety across all components
+- **ESLint Configuration** – Enforced coding standards and best practices
+- **Component Architecture** – Modular, reusable component design
+- **Performance Optimization** – Image optimization, lazy loading, code splitting
+
+---
 
 ## 🌐 Deployment & Infrastructure
 
 ### Vercel Platform Integration
-- **Automatic Deployments** - GitHub push triggers instant deployment
-- **Preview Deployments** - Branch-based staging environments
-- **Custom Domain** - SSL-secured professional domain
-- **Edge Network** - Global CDN for optimal performance
-- **Analytics Dashboard** - Real-time performance and visitor insights
+- **Automatic Deployments** – GitHub push triggers instant deployment
+- **Preview Deployments** – Branch-based staging environments
+- **Custom Domain** – SSL-secured professional domain
+- **Edge Network** – Global CDN for optimal performance
+- **Analytics Dashboard** – Real-time performance and visitor insights
 
 ### Domain Configuration
 - **Primary Domain:** portfolio.ahmxd.net
 - **SSL Certificate:** Automatic HTTPS with Let's Encrypt
 - **DNS Management:** Cloudflare integration for performance
-- **Subdomain Ready** - Prepared for blog.ahmxd.net expansion
+- **Subdomain Ready** – Prepared for blog.ahmxd.net expansion
 
 ### Performance Optimizations
-- **Static Generation** - Pre-rendered pages for fastest loading
-- **Image Optimization** - Next.js automatic image compression
-- **Font Optimization** - Google Fonts with font-display: swap
-- **CSS Optimization** - Purged unused styles and optimized delivery
-- **JavaScript Splitting** - Optimized bundle sizes with lazy loading
+- **Static Generation** – Pre-rendered pages for fastest loading
+- **Image Optimization** – Next.js automatic image compression
+- **Font Optimization** – Google Fonts with font-display: swap
+- **CSS Optimization** – Purged unused styles and optimized delivery
+- **JavaScript Splitting** – Optimized bundle sizes with lazy loading
+
+---
 
 ## 🎯 SEO & Marketing Features
 
 ### Search Engine Optimization
-- **Meta Tags** - Comprehensive meta descriptions and keywords
-- **Open Graph** - Social media sharing optimization
-- **Twitter Cards** - Enhanced Twitter link previews
-- **Structured Data** - Schema.org markup for rich snippets
-- **Sitemap Generation** - Automatic XML sitemap creation
+- **Meta Tags** – Comprehensive meta descriptions and keywords
+- **Open Graph** – Social media sharing optimization
+- **Twitter Cards** – Enhanced Twitter link previews
+- **Structured Data** – Schema.org markup for rich snippets
+- **Sitemap Generation** – Automatic XML sitemap creation
 
 ### Social Media Integration
-- **LinkedIn Profile** - Professional network connection
-- **GitHub Showcase** - Open source project portfolio
-- **Medium Articles** - Technical writing and thought leadership
-- **Email Contact** - Professional communication channel
+- **LinkedIn Profile** – Professional network connection
+- **GitHub Showcase** – Open source project portfolio
+- **Medium Articles** – Technical writing and thought leadership
+- **Email Contact** – Professional communication channel
+
+---
 
 ## 📊 Analytics Insights
 
 ### Available Metrics
-- **Real-time Visitors** - Live site engagement tracking
-- **Page Performance** - Loading times and Core Web Vitals
-- **User Journey** - Navigation patterns and section engagement
-- **Geographic Data** - Visitor location and timezone analysis
-- **Device Insights** - Desktop, mobile, and tablet usage
+- **Real-time Visitors** – Live site engagement tracking
+- **Page Performance** – Loading times and Core Web Vitals
+- **User Journey** – Navigation patterns and section engagement
+- **Geographic Data** – Visitor location and timezone analysis
+- **Device Insights** – Desktop, mobile, and tablet usage
 
 ### Performance Benchmarks
 - **Lighthouse Score:** 95+ (Performance, Accessibility, Best Practices, SEO)
 - **Core Web Vitals:** Excellent rating across all metrics
 - **Loading Speed:** < 1.5s First Contentful Paint
 - **Interactive Time:** < 2.5s Time to Interactive
+
+---
 
 ## 🔧 Customization Guide
 
@@ -336,58 +235,42 @@ const fadeInUp = {
   animate: { opacity: 1, y: 0 },
   transition: { duration: 0.8, ease: 'easeOut' }
 }
+
+// S-tier spring for ScrollToTopArrow
+const scrollToTopSpring = {
+  type: 'spring',
+  stiffness: 120,
+  damping: 18,
+  mass: 0.7
+}
 ```
 
 ### Content Management
-- **Profile Data:** Update `/data/profile.json` for personal information
 - **Project Showcase:** Modify `/components/Projects.tsx` for portfolio items
 - **Resume Integration:** Replace `/public/Salman_Ahmad_Resume.pdf`
-- **Blog Posts:** Configure `/components/Blog.tsx` for article display
+- **Blog Posts:** Configure `/components/Blog.tsx` for article display (placeholder only)
+- **Scroll-to-Top Arrow:** Refine `/components/ScrollToTopArrow.tsx` for context-aware, S-tier animated floating arrow
+
+---
 
 ## 📈 Future Enhancements
 
 ### Planned Features
-- **CMS Integration** - Headless CMS for dynamic content management
-- **Blog Platform** - Full blog with dynamic routing and MDX support
-- **Contact Form Backend** - Serverless function for message handling
-- **Multi-language Support** - Internationalization for global reach
-- **Advanced Analytics** - Custom event tracking and conversion funnels
+- **CMS Integration** – Headless CMS for dynamic content management
+- **Blog Platform** – Full blog with dynamic routing and MDX support
+- **Contact Form Backend** – Serverless function for message handling
+- **Multi-language Support** – Internationalization for global reach
+- **Advanced Analytics** – Custom event tracking and conversion funnels
 
 ### Technical Roadmap
-- **Next.js 16 Migration** - Latest framework features and optimizations
-- **React Server Components** - Enhanced performance and SEO
-- **Edge Runtime** - Faster cold starts and global distribution
-- **Advanced Caching** - Intelligent caching strategies for optimal performance
+- **Next.js 16 Migration** – Latest framework features and optimizations
+- **React Server Components** – Enhanced performance and SEO
+- **Edge Runtime** – Faster cold starts and global distribution
+- **Advanced Caching** – Intelligent caching strategies for optimal performance
 
-## 📄 LICENSE & LEGAL NOTICE
+---
 
-This project is distributed under the terms of the **MIT License**. While the source code is openly accessible for educational and collaborative purposes, unauthorised reproduction, redistribution, or commercial exploitation of this code without proper attribution and explicit written consent is strictly prohibited.
-
-### ⚖️ NOTICE TO VIOLATORS
-
-This codebase is actively monitored. Any instance of plagiarism, uncredited reuse, or misappropriation — including but not limited to rehosting, rebranding, or derivative works without attribution — will be considered a breach of the license terms and intellectual property laws.
-
-Legal remedies will be pursued under applicable copyright statutes, including but not limited to the **Copyright Act of Canada (R.S.C., 1985, c. C-42)**, the **Digital Millennium Copyright Act (DMCA)**, and international IP treaties.
-
-### ✅ You are encouraged to:
-
-- **Fork, study, and contribute** with proper attribution
-- **Credit the author** (Salman Ahmad – s.ahmad0147@gmail.com)
-- **Contact the author** for any commercial use or redistribution
-
-### ❌ You are strictly prohibited from:
-
-- **Claiming ownership** or origin of this codebase
-- **Distributing modified versions** without clear attribution
-- **Using this project** in proprietary software without permission
-
-### ⚠️ Failure to comply may result in:
-
-- 🚫 Takedown requests and DMCA filings
-- 🚨 Reporting to GitHub Trust & Safety
-- ⚖️ Legal proceedings
-
-### 🧩 Attribution
+## 🧩 Attribution
 
 - **Font:** Inter & JetBrains Mono – Google Fonts
 - **Icons:** Lucide React – MIT License
@@ -396,31 +279,6 @@ Legal remedies will be pursued under applicable copyright statutes, including bu
 
 ---
 
-**This repository and its contents are the intellectual property of Salman Ahmad. All rights reserved.**
-
-## 📞 Contact & Support
-
-### Professional Contact
-- **Email:** [s.ahmad0147@gmail.com](mailto:s.ahmad0147@gmail.com)
-- **LinkedIn:** [Professional Profile](https://linkedin.com/in/yourusername)
-- **GitHub:** [Project Repository](https://github.com/InfamousMorningstar/SAportfolio)
-
-### Project Support
-- **Issues:** Report bugs via GitHub Issues
-- **Feature Requests:** Submit enhancement proposals
-- **Contributions:** Pull requests welcome for improvements
-- **Documentation:** Comprehensive guides in `/docs` directory
-
----
-
 **Built with ❤️ by Salman Ahmad**  
-*Fortes fortuna adiuvat* - Fortune favours the bold
-
-## ⚠️ Scrollbar Styling Limitations (iOS & Safari)
-
-Custom scrollbars (color, width, style) are not supported on iOS browsers (Safari, Chrome, Firefox) due to platform restrictions. All iOS browsers use WebKit, which does not expose the necessary APIs for custom scrollbar CSS. As a result, the portfolio will display the default system scrollbar on iOS devices, regardless of browser.
-
-On macOS Safari, only static custom scrollbar color is supported (e.g., purple). Dynamic color changes (such as changing from purple to teal while scrolling) are not possible due to Safari's limited support for dynamic scrollbar styling. This feature works as intended on Firefox (Windows/macOS) and some Chromium browsers, but not on Safari.
-
-For more details, see [WebKit Issue #176454](https://bugs.webkit.org/show_bug.cgi?id=176454).
+*Aut viam inveniam aut faciam* – I shall either find a way or make one.
 
