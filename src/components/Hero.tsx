@@ -63,7 +63,9 @@ const DecryptText = ({ text, isVisible }: { text: string; isVisible: boolean }) 
   }, [text, isVisible]);
 
   return (
-    <span className={`font-mono ${isDecrypting ? 'text-accent' : 'text-foreground'}`}>
+    <span
+      className={`font-mono transition-colors duration-[1800ms] ${isDecrypting ? 'text-accent' : 'text-foreground'}`}
+    >
       {displayText}
     </span>
   );
@@ -169,7 +171,7 @@ export default function Hero() {
         >
           <motion.button
             onClick={scrollToAbout}
-            className="btn-primary px-8 py-3 text-lg font-semibold"
+            className="btn-primary px-8 py-3 text-lg font-semibold rounded-full"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -178,11 +180,11 @@ export default function Hero() {
           
           <motion.a
             href="mailto:s.ahmad0147@gmail.com"
-            className="px-8 py-3 text-lg font-semibold border-2 border-accent text-accent hover:bg-accent hover:text-background transition-all duration-300 rounded-full"
+            className="btn-primary px-8 py-3 text-lg font-semibold rounded-full"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            Get In Touch
+            Contact Me
           </motion.a>
         </motion.div>
 
