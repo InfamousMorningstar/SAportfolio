@@ -102,6 +102,22 @@ export default function Hero() {
     }
   };
 
+  // Scroll to Featured Projects
+  const scrollToProjects = () => {
+    const projectsSection = document.getElementById('projects');
+    if (projectsSection) {
+      projectsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  // Scroll to Contact/Get In Touch
+  const scrollToContact = () => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Animated Background Grid */}
@@ -170,22 +186,23 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.3, ease: 'easeInOut' }}
         >
           <motion.button
-            onClick={scrollToAbout}
-            className="btn-primary px-8 py-3 text-lg font-semibold rounded-full border-2 border-accent text-accent hover:bg-accent hover:text-white transition duration-200"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            onClick={scrollToProjects}
+            className={`btn-primary px-8 py-3 text-lg font-semibold rounded-full border-2 border-accent text-accent hover:bg-accent hover:text-white transition duration-300 will-change-transform`}
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.97 }}
+            transition={{ type: 'spring', stiffness: 340, damping: 22, mass: 1.1 }}
           >
             Explore My Work
           </motion.button>
-          
-          <motion.a
-            href="mailto:s.ahmad0147@gmail.com"
-            className="px-8 py-3 text-lg font-semibold rounded-full border-2 border-accent text-accent hover:bg-accent hover:text-white transition duration-200"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+          <motion.button
+            onClick={scrollToContact}
+            className={`px-8 py-3 text-lg font-semibold rounded-full border-2 border-accent text-accent hover:bg-accent hover:text-white transition duration-300 will-change-transform`}
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.97 }}
+            transition={{ type: 'spring', stiffness: 340, damping: 22, mass: 1.1 }}
           >
             Get In Touch
-          </motion.a>
+          </motion.button>
         </motion.div>
 
         {/* Scroll Indicator */}

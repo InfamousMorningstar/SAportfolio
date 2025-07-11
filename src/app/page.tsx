@@ -7,7 +7,8 @@ import Projects from '@/components/Projects';
 import Experience from '@/components/Experience';
 import Education from '@/components/Education';
 import Contact from '@/components/Contact';
-import Footer from '@/components/Footer_backup';
+import Footer from '@/components/Footer';
+import ScrollToTopArrow from '@/components/ScrollToTopArrow';
 
 export default function HomePage() {
   return (
@@ -22,6 +23,7 @@ export default function HomePage() {
         <Education />
         <Contact />
       </main>
+      <ScrollToTopArrow />
       <Footer />
     </div>
   );

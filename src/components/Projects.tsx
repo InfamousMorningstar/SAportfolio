@@ -7,7 +7,7 @@ const projects = [
 	{
 		title: 'Professional Portfolio Website',
 		description:
-			'Showcase of my technical expertise in DevOps, automation, and infrastructure management with comprehensive analytics, real-time features, and professional presentation.',
+			'A production-grade personal portfolio showcasing modern frontend and backend integration. This site demonstrates real-time analytics, responsive UI/UX, and DevOps-aware deployment—crafted with elegant motion design, legal-grade footer compliance, and Apple-inspired visual polish. Ideal for recruiters, clients, and engineering leads evaluating both technical depth and presentation.',
 		technologies: [
 			'Next.js 15',
 			'TypeScript',
@@ -29,12 +29,12 @@ const projects = [
 		icon: <FaGlobe className="text-accent" />,
 		status: 'Live',
 		github: 'https://github.com/InfamousMorningstar/SAportfolio',
-		demo: 'https://portfolio.ahmxd.net',
+		demo: '',
 	},
 	{
 		title: 'TrueNAS Home Lab',
 		description:
-			'Enterprise-grade home server with 32TB ZFS storage array, featuring automated backups, VM hosting, and comprehensive monitoring.',
+			'Self-hosted ZFS-powered server with 32TB storage for virtualization, media, and backup tasks—equipped with monitoring and container orchestration.',
 		technologies: ['TrueNAS SCALE', 'ZFS', 'Docker', 'KVM', 'Prometheus', 'Grafana'],
 		features: [
 			'8×4TB ZFS RAID-Z2 configuration',
@@ -46,7 +46,7 @@ const projects = [
 		icon: <FaServer className="text-accent" />,
 		status: 'Production',
 		github: '',
-		demo: '',
+		demo: 'https://medium.com/@Infamous_Morningstar/my-truenas-scale-setup-from-boredom-to-bytes-beba90d32d45',
 	},
 	{
 		title: 'Media Automation Stack',
@@ -252,10 +252,10 @@ export default function Projects() {
 							href="https://github.com/InfamousMorningstar"
 							target="_blank"
 							rel="noopener noreferrer"
-							className="btn-primary inline-flex items-center space-x-2 px-6 py-3 rounded-full"
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}
-							transition={{ duration: 0.8, ease: 'easeInOut' }}
+							className="btn-primary inline-flex items-center space-x-2 px-6 py-3 rounded-full will-change-transform"
+							whileHover={{ scale: 1.08 }}
+							whileTap={{ scale: 0.97 }}
+							transition={{ type: 'spring', stiffness: 340, damping: 22, mass: 1.1 }}
 						>
 							<FaGithub />
 							<span>View GitHub Profile</span>
@@ -265,10 +265,10 @@ export default function Projects() {
 							href="https://medium.com/@Infamous_Morningstar"
 							target="_blank"
 							rel="noopener noreferrer"
-							className="inline-flex items-center space-x-2 px-6 py-3 rounded-full border-2 border-accent text-accent hover:bg-accent hover:text-white transition duration-200"
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}
-							transition={{ duration: 0.8, ease: 'easeInOut' }}
+							className="inline-flex items-center space-x-2 px-6 py-3 rounded-full border-2 border-accent text-accent hover:bg-accent hover:text-white transition duration-300 will-change-transform"
+							whileHover={{ scale: 1.08 }}
+							whileTap={{ scale: 0.97 }}
+							transition={{ type: 'spring', stiffness: 340, damping: 22, mass: 1.1 }}
 						>
 							<FaMedium className="text-accent" />
 							<span>Read My Blog</span>

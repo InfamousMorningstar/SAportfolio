@@ -125,7 +125,8 @@ export default function Navbar() {
                 <Link key={link} href={`#${link.toLowerCase()}`}>
                   <div
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="px-4 py-1 border border-neutral-800 rounded-full text-sm font-medium text-neutral-200 hover:text-white hover:border-accent transition duration-200 backdrop-blur-md bg-black/30 hover:scale-105 font-sans"
+                    className="px-4 py-1 border border-neutral-800 rounded-full text-sm font-medium text-neutral-200 hover:text-white hover:border-accent transition duration-300 backdrop-blur-md bg-black/30 hover:scale-[1.08] will-change-transform"
+                    style={{ transitionTimingFunction: 'cubic-bezier(0.4,0,0.2,1)' }}
                   >
                     {link}
                   </div>
