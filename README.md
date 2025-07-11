@@ -6,21 +6,22 @@ A visually stunning, Apple-inspired portfolio website built with Next.js, Tailwi
 
 ## ✨ Features
 
-- **Apple-style glassmorphic UI:** Frosted glass navbar, footer, and cards with deep blur, neon accent gradients, and floating particles.
-- **Animated navigation:** Responsive, glassy navbar with anchor links, live dual-timezone clock (MDT & UTC), and animated hamburger menu for mobile.
-- **Hero section:** Animated intro with decrypt effect, floating geometric shapes, and smooth color transitions.
-- **About section:** Professional headshot, personal narrative, animated skills grid, and interactive trait badges.
-- **Projects section:** Real, production-grade projects with tech stack, features, and links to GitHub/Medium.
-- **Experience section:** Timeline of professional roles, responsibilities, and achievements.
-- **Education section:** Academic background, highlights, and relevant coursework.
-- **Contact section:** Real contact methods (email, Discord, GitHub, LinkedIn, location), availability, and response time.
-- **Footer:** Glassmorphic, animated, with signature, motto, tech stack, last updated, and legal notice.
-- **S-tier 3D pop-up animation:** All interactive elements feature unified 3D pop and microinteractions.
-- **Context-aware floating scroll-to-top arrow:** S-tier, glassmorphic, animated arrow appears only between Contact and Footer, with buttery-smooth spring physics and no flicker.
-- **Responsive & accessible:** Mobile-first, keyboard navigation, and ARIA labels.
+- **Apple-style glassmorphic UI:** Frosted glass navbar, footer, and cards with deep blur, neon accent gradients, and floating particles.  
+- **Animated navigation:** Responsive, glassy navbar with anchor links, live dual-timezone clock (MDT & UTC), and animated hamburger menu for mobile.  
+- **Hero section:** Animated intro with decrypt effect, floating geometric shapes, and smooth color transitions.  
+- **About section:** Professional headshot, personal narrative, animated skills grid, and interactive trait badges.  
+- **Projects section:** Real, production-grade projects with tech stack, features, and links to GitHub/Medium.  
+- **Experience section:** Timeline of professional roles, responsibilities, and achievements.  
+- **Education section:** Academic background, highlights, and relevant coursework.  
+- **Contact section:** Real contact methods (email, Discord, GitHub, LinkedIn, location), availability, and response time.  
+- **Footer:** Glassmorphic, animated, with signature, motto, tech stack, last updated, and legal notice.  
+- **S-tier 3D pop-up animation:** All interactive elements feature unified 3D pop and microinteractions.  
+- **Context-aware floating scroll-to-top arrow:** S-tier, glassmorphic, animated arrow appears only between Contact and Footer, with buttery-smooth spring physics and no flicker.  
+- **Color-changing scrollbar:** Dynamic neon-accented scrollbar that works flawlessly on Windows browsers.  
+  Not visible on macOS/iOS due to **WebKit**, Apple’s rendering engine used in Safari and all iOS browsers, which intentionally restricts custom scrollbar styling for performance and UI consistency.  
+  *Learn more about WebKit [here](https://webkit.org).*  
+- **Responsive & accessible:** Mobile-first, keyboard navigation, and ARIA labels.  
 - **Legal & copyright:** Professional legal notice and copyright compliance.
-## Color-changing scrollbar: Dynamic neon-accented scrollbar that works flawlessly on Windows browsers. Not visible on macOS/iOS due to WebKit’s strict rendering rules, which override custom scrollbar styling for security and UX consistency.
----
 
 ## 🛠️ Built With
 
