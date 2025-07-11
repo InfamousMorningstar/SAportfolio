@@ -19,7 +19,7 @@ A visually stunning, Apple-inspired portfolio website built with Next.js, Tailwi
 - **Context-aware floating scroll-to-top arrow:** S-tier, glassmorphic, animated arrow appears only between Contact and Footer, with buttery-smooth spring physics and no flicker.
 - **Responsive & accessible:** Mobile-first, keyboard navigation, and ARIA labels.
 - **Legal & copyright:** Professional legal notice and copyright compliance.
-
+## Color-changing scrollbar: Dynamic neon-accented scrollbar that works flawlessly on Windows browsers. Not visible on macOS/iOS due to WebKit’s strict rendering rules, which override custom scrollbar styling for security and UX consistency.
 ---
 
 ## 🛠️ Built With
