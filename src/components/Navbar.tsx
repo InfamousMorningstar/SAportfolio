@@ -26,7 +26,7 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    let scrollTimeout = null;
+    let scrollTimeout: ReturnType<typeof setTimeout> | null = null;
     const handleScroll = () => {
       document.documentElement.classList.add('scrolling');
       if (scrollTimeout) clearTimeout(scrollTimeout);
@@ -51,27 +51,27 @@ export default function Navbar() {
     <motion.nav
       initial={{ y: 0, opacity: 1 }}
       animate={{ y: hidden ? -80 : 0, opacity: hidden ? 0 : 1 }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 0.8, ease: 'easeInOut' }}
       className="fixed top-0 w-full z-50 shadow-sm border border-neutral-800 bg-black/40 backdrop-blur-2xl backdrop-saturate-150"
       style={{ WebkitBackdropFilter: 'blur(32px) saturate(150%)', backdropFilter: 'blur(32px) saturate(150%)' }}
     >
       <div className="relative w-full px-4 sm:px-6 lg:px-8">
         {/* LED strip effect */}
         <div className="absolute left-0 right-0 -bottom-2 h-6 pointer-events-none z-10">
-          <div className="w-full h-full bg-gradient-to-b from-purple-500/60 via-blue-500/40 to-transparent blur-2xl opacity-80"></div>
+          <div className="w-full h-full bg-gradient-to-b from-accent/60 via-accent2/40 to-transparent blur-2xl opacity-80"></div>
         </div>
 
         <div className="flex items-center justify-between h-16 relative">
           {/* Left */}
           <Link href="#home">
-            <div className="absolute left-0 top-1/2 -translate-y-1/2 pl-4 text-purple-400 font-bold text-xl cursor-pointer" aria-label="Go to Home">SA</div>
+            <div className="absolute left-0 top-1/2 -translate-y-1/2 pl-4 text-accent font-bold text-xl cursor-pointer" aria-label="Go to Home">SA</div>
           </Link>
 
           {/* Center */}
           <div className="hidden lg:flex mx-auto space-x-3">
             {links.map((link) => (
               <Link key={link} href={`#${link.toLowerCase()}`}>
-                <div className="px-4 py-1 border border-neutral-800 rounded-full text-sm font-medium text-neutral-200 hover:text-white hover:border-purple-500 transition duration-200 backdrop-blur-md bg-black/30 hover:scale-105">
+                <div className="px-4 py-1 border border-neutral-800 rounded-full text-sm font-medium text-neutral-200 hover:text-white hover:border-accent transition duration-200 backdrop-blur-md bg-black/30 hover:scale-105">
                   {link}
                 </div>
               </Link>
@@ -82,23 +82,23 @@ export default function Navbar() {
           <div className="absolute right-0 pr-4 flex items-center space-x-3">
             <a
               href="/resume.pdf"
-              className="px-4 py-1 rounded-full bg-gradient-to-r from-purple-600 to-blue-500 text-white text-sm font-semibold shadow-md hover:scale-105 transition"
+              className="px-4 py-1 rounded-full border-2 border-accent text-accent text-sm font-semibold shadow-md hover:bg-accent hover:text-white transition"
             >
               Resume
             </a>
             {/* Desktop Clock */}
             <div className="hidden lg:flex items-center px-3 py-1 rounded-full border border-neutral-800 text-sm font-mono backdrop-blur-md bg-black/30">
-              <span className="text-purple-400 font-mono mr-1">{time.mdt}</span>
+              <span className="text-accent font-mono mr-1">{time.mdt}</span>
               <span className="text-white/50 text-xs">MDT</span>
               <span className="mx-2 text-white/30">|</span>
-              <span className="text-teal-400 font-mono mr-1">{time.utc}</span>
+              <span className="text-accent2 font-mono mr-1">{time.utc}</span>
               <span className="text-white/50 text-xs">UTC</span>
             </div>
             <button
               className="lg:hidden rounded-full"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
-              {isMobileMenuOpen ? <X className="text-white" size={24} /> : <Menu className="text-purple-400" size={24} />}
+              {isMobileMenuOpen ? <X className="text-white" size={24} /> : <Menu className="text-accent" size={24} />}
             </button>
           </div>
         </div>
@@ -110,7 +110,7 @@ export default function Navbar() {
             initial={{ opacity: 0, scale: 0.98, y: -10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: -20 }}
-            transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
+            transition={{ duration: 0.8, ease: 'easeInOut' }}
             style={{ transitionProperty: 'opacity, transform', willChange: 'opacity, transform' }}
             className="lg:hidden bg-black/80 backdrop-blur-md px-4 pt-4 pb-8 space-y-4 text-center"
           >
@@ -125,7 +125,7 @@ export default function Navbar() {
                 <Link key={link} href={`#${link.toLowerCase()}`}>
                   <div
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="px-4 py-1 border border-neutral-800 rounded-full text-sm font-medium text-neutral-200 hover:text-white hover:border-purple-500 transition duration-200 backdrop-blur-md bg-black/30 hover:scale-105"
+                    className="px-4 py-1 border border-neutral-800 rounded-full text-sm font-medium text-neutral-200 hover:text-white hover:border-accent transition duration-200 backdrop-blur-md bg-black/30 hover:scale-105"
                   >
                     {link}
                   </div>
@@ -151,10 +151,10 @@ export default function Navbar() {
               transition={{ duration: 0.6, delay: 0.19, ease: [0.4, 0, 0.2, 1] }}
               className="mt-4 px-3 py-1 inline-block rounded-full border border-neutral-800 text-sm font-mono backdrop-blur-md bg-black/30"
             >
-              <span className="text-purple-400 font-mono mr-1">{time.mdt}</span>
+              <span className="text-accent font-mono mr-1">{time.mdt}</span>
               <span className="text-white/50 text-xs">MDT</span>
               <span className="mx-2 text-white/30">|</span>
-              <span className="text-teal-400 font-mono mr-1">{time.utc}</span>
+              <span className="text-accent2 font-mono mr-1">{time.utc}</span>
               <span className="text-white/50 text-xs">UTC</span>
             </motion.div>
           </motion.div>

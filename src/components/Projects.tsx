@@ -255,6 +255,7 @@ export default function Projects() {
 							className="btn-primary inline-flex items-center space-x-2 px-6 py-3 rounded-full"
 							whileHover={{ scale: 1.05 }}
 							whileTap={{ scale: 0.95 }}
+							transition={{ duration: 0.8, ease: 'easeInOut' }}
 						>
 							<FaGithub />
 							<span>View GitHub Profile</span>
@@ -264,11 +265,12 @@ export default function Projects() {
 							href="https://medium.com/@Infamous_Morningstar"
 							target="_blank"
 							rel="noopener noreferrer"
-							className="btn-primary inline-flex items-center space-x-2 px-6 py-3 rounded-full"
+							className="inline-flex items-center space-x-2 px-6 py-3 rounded-full border-2 border-accent text-accent hover:bg-accent hover:text-white transition duration-200"
 							whileHover={{ scale: 1.05 }}
 							whileTap={{ scale: 0.95 }}
+							transition={{ duration: 0.8, ease: 'easeInOut' }}
 						>
-							<FaMedium />
+							<FaMedium className="text-accent" />
 							<span>Read My Blog</span>
 						</motion.a>
 					</div>

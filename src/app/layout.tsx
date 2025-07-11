@@ -50,7 +50,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </head>
-      <body className="min-h-screen bg-background text-foreground antialiased">
+      <body className="min-h-screen bg-black text-white antialiased">
         {children}
         <Analytics />
         <SpeedInsights />

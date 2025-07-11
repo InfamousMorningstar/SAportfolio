@@ -146,7 +146,7 @@ export default function Hero() {
           className="mb-12"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: showSubtext ? 1 : 0, y: showSubtext ? 0 : 30 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
+          transition={{ duration: 0.8, ease: 'easeInOut' }}
         >
           <h2 className="text-xl md:text-2xl text-muted mb-4 font-mono">
             I&apos;m{' '}
@@ -167,11 +167,11 @@ export default function Hero() {
           className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6 mb-16"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: showSubtext ? 1 : 0, y: showSubtext ? 0 : 30 }}
-          transition={{ duration: 0.8, delay: 0.3, ease: 'easeOut' }}
+          transition={{ duration: 0.8, delay: 0.3, ease: 'easeInOut' }}
         >
           <motion.button
             onClick={scrollToAbout}
-            className="btn-primary px-8 py-3 text-lg font-semibold rounded-full"
+            className="btn-primary px-8 py-3 text-lg font-semibold rounded-full border-2 border-accent text-accent hover:bg-accent hover:text-white transition duration-200"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -180,11 +180,11 @@ export default function Hero() {
           
           <motion.a
             href="mailto:s.ahmad0147@gmail.com"
-            className="btn-primary px-8 py-3 text-lg font-semibold rounded-full"
+            className="px-8 py-3 text-lg font-semibold rounded-full border-2 border-accent text-accent hover:bg-accent hover:text-white transition duration-200"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            Contact Me
+            Get In Touch
           </motion.a>
         </motion.div>
 
@@ -193,7 +193,7 @@ export default function Hero() {
           className="absolute bottom-2 left-1/2 transform -translate-x-1/2"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 4, duration: 1 }}
+          transition={{ delay: 4, duration: 0.8, ease: 'easeInOut' }}
         >
           <motion.div
             className="cursor-pointer text-accent text-3xl"
