@@ -416,3 +416,11 @@ Legal remedies will be pursued under applicable copyright statutes, including bu
 **Built with ❤️ by Salman Ahmad**  
 *Fortes fortuna adiuvat* - Fortune favours the bold
 
+## ⚠️ Scrollbar Styling Limitations (iOS & Safari)
+
+Custom scrollbars (color, width, style) are not supported on iOS browsers (Safari, Chrome, Firefox) due to platform restrictions. All iOS browsers use WebKit, which does not expose the necessary APIs for custom scrollbar CSS. As a result, the portfolio will display the default system scrollbar on iOS devices, regardless of browser.
+
+On macOS Safari, only static custom scrollbar color is supported (e.g., purple). Dynamic color changes (such as changing from purple to teal while scrolling) are not possible due to Safari's limited support for dynamic scrollbar styling. This feature works as intended on Firefox (Windows/macOS) and some Chromium browsers, but not on Safari.
+
+For more details, see [WebKit Issue #176454](https://bugs.webkit.org/show_bug.cgi?id=176454).
+

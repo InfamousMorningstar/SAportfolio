@@ -232,13 +232,24 @@ export default function Contact() {
                     </div>
 
                     <div className="border-t border-accent/20 pt-6">
-                      <div className="text-center">
+                      <motion.div
+                        className="text-center"
+                        animate={{ 
+                          scale: [1, 1.02, 1],
+                          rotateY: [0, 5, 0]
+                        }}
+                        transition={{ 
+                          duration: 4, 
+                          repeat: Infinity,
+                          ease: 'easeInOut'
+                        }}
+                      >
                         <p className="text-sm text-muted mb-2">Response Time</p>
                         <div className="flex items-center justify-center space-x-2">
                           <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
                           <span className="text-accent font-semibold">Usually within 24 hours</span>
                         </div>
-                      </div>
+                      </motion.div>
                     </div>
                   </div>
                 </div>

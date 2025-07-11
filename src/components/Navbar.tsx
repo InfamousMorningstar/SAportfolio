@@ -71,7 +71,7 @@ export default function Navbar() {
           <div className="hidden lg:flex mx-auto space-x-3">
             {links.map((link) => (
               <Link key={link} href={`#${link.toLowerCase()}`}>
-                <div className="px-4 py-1 border border-neutral-800 rounded-full text-sm font-medium text-neutral-200 hover:text-white hover:border-accent transition duration-200 backdrop-blur-md bg-black/30 hover:scale-105">
+                <div className="px-4 py-1 border border-neutral-800 rounded-full text-sm font-medium text-neutral-200 hover:text-white hover:border-accent transition duration-200 backdrop-blur-md bg-black/30 hover:scale-105 font-sans">
                   {link}
                 </div>
               </Link>
@@ -125,7 +125,7 @@ export default function Navbar() {
                 <Link key={link} href={`#${link.toLowerCase()}`}>
                   <div
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="px-4 py-1 border border-neutral-800 rounded-full text-sm font-medium text-neutral-200 hover:text-white hover:border-accent transition duration-200 backdrop-blur-md bg-black/30 hover:scale-105"
+                    className="px-4 py-1 border border-neutral-800 rounded-full text-sm font-medium text-neutral-200 hover:text-white hover:border-accent transition duration-200 backdrop-blur-md bg-black/30 hover:scale-105 font-sans"
                   >
                     {link}
                   </div>
