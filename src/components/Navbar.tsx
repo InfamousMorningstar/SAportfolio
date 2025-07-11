@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Github, Linkedin, Mail, Menu, X } from "lucide-react";
 
-const links = ["HOME", "ABOUT", "PROJECTS", "EXPERIENCE", "EDUCATION", "CONTACT"];
+const links = ["Home", "About", "Projects", "Experience", "Education", "Contact"];
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

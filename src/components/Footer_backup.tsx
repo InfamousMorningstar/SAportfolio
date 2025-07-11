@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function Footer() {
+export default function Footer_backup() {
   const [showLegalNotice, setShowLegalNotice] = useState(false);
 
   return (
@@ -63,8 +63,7 @@ export default function Footer() {
         {/* Left Section - Copyright & Quote */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
           className="space-y-3 md:text-left text-center"
         >
@@ -76,15 +75,14 @@ export default function Footer() {
             >
               <span className="relative">
                 — Salman Ahmad · ahmxd.net · © 2025 —
-                <motion.div
-                  initial={{ scaleX: 0 }}
-                  whileInView={{ scaleX: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1.2, delay: 0.5 }}
-                  className="absolute -bottom-0.5 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent origin-center"
-                />
               </span>
             </motion.p>
+            <motion.div
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 1.2, delay: 0.5 }}
+              className="absolute -bottom-0.5 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent origin-center"
+            />
             <p className="text-neutral-400 font-medium italic flex items-center justify-center md:justify-start space-x-2">
               <span className="w-1 h-1 bg-red-400 rounded-full animate-pulse" />
               <span><span className="text-red-400">All Rights Reserved.</span> Unauthorized use is prohibited.</span>
@@ -95,8 +93,7 @@ export default function Footer() {
             <motion.p 
               className="italic text-neutral-300 font-medium tracking-wide"
               initial={{ opacity: 0, x: -10 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
+              animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
             >
               <span className="text-accent/80">Aut viam inveniam</span>{' '}
@@ -105,8 +102,7 @@ export default function Footer() {
             <motion.p 
               className="text-xs italic text-neutral-400"
               initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
+              animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.6 }}
             >
               <span className="text-neutral-500">»</span> I shall either find a way or make one.
@@ -117,24 +113,21 @@ export default function Footer() {
         {/* Center Section - Tech Stack */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
           className="space-y-4 text-center"
         >
           <motion.h3 
             className="text-xs font-bold uppercase tracking-wider text-neutral-200 relative"
             initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <span className="relative">
               BUILT WITH EXCELLENCE
               <motion.div
                 initial={{ width: 0 }}
-                whileInView={{ width: '100%' }}
-                viewport={{ once: true }}
+                animate={{ width: '100%' }}
                 transition={{ duration: 0.8, delay: 0.7 }}
                 className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 h-px bg-gradient-to-r from-accent/60 via-accent2/60 to-secondary/60"
               />
@@ -146,16 +139,15 @@ export default function Footer() {
               <motion.span
                 key={tech}
                 initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                whileHover={{ 
-                  scale: 1.05,
-                  boxShadow: '0 0 15px rgba(139, 92, 246, 0.3)'
-                }}
+                animate={{ opacity: 1, scale: 1 }}
                 transition={{ 
                   duration: 0.3, 
                   delay: 0.3 + index * 0.1,
                   hover: { duration: 0.2 }
+                }}
+                whileHover={{ 
+                  scale: 1.05,
+                  boxShadow: '0 0 15px rgba(139, 92, 246, 0.3)'
                 }}
                 className="px-3 py-1 bg-neutral-800 rounded-full text-xs font-medium text-neutral-200 border border-neutral-700 cursor-default relative overflow-hidden group"
               >
@@ -173,8 +165,7 @@ export default function Footer() {
           <motion.p 
             className="text-xs uppercase tracking-wide text-neutral-400 font-medium relative"
             initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
+            animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.6 }}
           >
             <span className="text-neutral-500">⚡</span> Deployed on{' '}
@@ -186,8 +177,7 @@ export default function Footer() {
         {/* Right Section - Legal Framework */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
           className="space-y-4 md:text-right text-center"
         >
@@ -251,46 +241,39 @@ export default function Footer() {
                 }}
               >
                 <motion.div
-                  initial={{ scaleY: 0 }}
-                  animate={{ scaleY: 1 }}
-                  transition={{ duration: 0.4, delay: 0.1 }}
-                  className="absolute left-0 top-0 w-0.5 h-full bg-gradient-to-b from-accent/50 via-accent2/50 to-secondary/50 origin-top"
-                />
-                
-                <motion.p
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.4, delay: 0.1 }}
                 >
                   This website and its source code are protected under the{' '}
                   <strong className="text-neutral-300">Copyright Act, R.S.C., 1985, c. C-42 (Canada)</strong>.
-                </motion.p>
+                </motion.div>
                 
-                <motion.p
+                <motion.div
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.4, delay: 0.2 }}
                 >
                   Unauthorized reproduction, redistribution, or modification is strictly prohibited.
-                </motion.p>
+                </motion.div>
                 
-                <motion.p
+                <motion.div
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.4, delay: 0.3 }}
                 >
                   The Digital Millennium Copyright Act (DMCA) and international IP treaties may also apply.
-                </motion.p>
+                </motion.div>
                 
-                <motion.p
+                <motion.div
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.4, delay: 0.4 }}
                 >
                   Activity on this site may be monitored for security and compliance.
-                </motion.p>
+                </motion.div>
                 
-                <motion.p
+                <motion.div
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.4, delay: 0.5 }}
@@ -303,14 +286,22 @@ export default function Footer() {
                     whileHover={{ scale: 1.02 }}
                   >
                     s.ahmad0147@gmail.com
-                    <motion.div
-                      initial={{ scaleX: 0 }}
-                      whileHover={{ scaleX: 1 }}
-                      className="absolute -bottom-0.5 left-0 w-full h-px bg-accent2 origin-left"
-                    />
                   </motion.a>{' '}
+                  <motion.div
+                    initial={{ scaleX: 0 }}
+                    whileHover={{ scaleX: 1 }}
+                    className="absolute -bottom-0.5 left-0 w-full h-px bg-accent2 origin-left"
+                  />
                   with subject line <strong className="text-accent">"PERMISSION REQUEST"</strong>.
-                </motion.p>
+                </motion.div>
+                
+                {/* Vertical gradient bar moved here, outside of <motion.p> tags */}
+                <motion.div
+                  initial={{ scaleY: 0 }}
+                  animate={{ scaleY: 1 }}
+                  transition={{ duration: 0.4, delay: 0.1 }}
+                  className="absolute left-0 top-0 w-0.5 h-full bg-gradient-to-b from-accent/50 via-accent2/50 to-secondary/50 origin-top"
+                />
               </motion.div>
             )}
           </AnimatePresence>
