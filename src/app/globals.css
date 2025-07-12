@@ -1,3 +1,23 @@
+/* Navbar desktop button: purple border, teal on hover, purple shadow on hover (desktop only) */
+.navbar-btn-desktop {
+  border-color: var(--accent);
+  transition: all 0.18s cubic-bezier(0.4,0,0.2,1);
+}
+@media (hover: hover) and (pointer: fine) {
+  .navbar-btn-desktop:hover, .navbar-btn-desktop:focus-visible {
+    border-color: var(--accent2) !important;
+    box-shadow: 0 0 0 2px var(--accent2), 0 4px 16px 0 rgba(139,92,246,0.18);
+  }
+}
+
+/* Navbar mobile/tablet button: purple border, teal on active/click (no hover effect) */
+.navbar-btn-mobile {
+  border-color: var(--accent);
+  transition: all 0.18s cubic-bezier(0.4,0,0.2,1);
+}
+.navbar-btn-mobile:active, .navbar-btn-mobile:focus-visible {
+  border-color: var(--accent2) !important;
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

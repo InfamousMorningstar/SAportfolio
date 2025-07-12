@@ -11,7 +11,7 @@
  * 📧 Contact : s.ahmad0147@gmail.com
  * 📝 License : MIT (Educational/Personal Use)
  * 📁 File    : README.md
- * 🕒 Updated : Jul 11, 2025
+ * 🕒 Updated : Jul 12, 2025
 -->
 # 🚀 Salman Ahmad – Professional Portfolio
 
@@ -64,25 +64,52 @@ This portfolio is fully optimized for Cumulative Layout Shift (CLS) and Core Web
 - **TypeScript 5.x**
 - **Tailwind CSS 3.4.x**
 - **Framer Motion 11.18.x**
-- **Lucide React 0.525.x**
-- **React Icons 5.x**
-- **@vercel/analytics**
-- **@vercel/speed-insights**
+- **Cinematic, S-tier scroll/entrance animation** for all major sections (Framer Motion, hardware-accelerated, lag-free, CLS/hydration safe)
+- **Apple-style Liquid-Glass navbar & footer** — 200 % blur field, LED under-glow, pointer-safe masking (< 0.01 CLS)
+- **Motion-driven mobile UX** — Framer-Motion hamburger morphs into a staggered menu with buttery easing
+- **Live dual-timezone pill clock** (MDT / UTC) updating every second for global availability
+- **Decrypt-style hero + floating geometry** — cinematic text-reveal plus depth layers, zero layout shift
+- **Universal neon scrollbar & ISO dark-mode theme** with graceful fall-backs across Chrome, Firefox, Safari
+- **Built-in performance telemetry** via Vercel Analytics & Speed Insights badges (real-time Core Web Vitals)
+- **CI/CD-ready, type-safe stack** — Next.js 15, TypeScript, Tailwind, Husky pre-commit hooks auto-deploying to Vercel edge
+- **Legal-grade compliance footer** — dynamic copyright, Latin motto, and Canadian Copyright Act notice
+portfolio/
+- `Hero`: Cinematic decrypt text, floating geometry, scroll arrow, content lift, micro-bounce, zero CLS
+- `Navbar`: Apple-style glass, LED under-glow, device-appropriate hover/click (desktop: hover, mobile: tap), dual-timezone pill clock, social icons (desktop), hamburger menu (mobile), pixel-perfect alignment
+- `About`: Animated entrance, premium card, responsive grid, Space Grotesk font
+- `Experience`: Animated timeline, premium card, micro-bounce, responsive
+- `Projects`: Animated card grid, premium card, feature list (see below), live status, GitHub/demo links
+- `Education`: Animated entrance, premium card, responsive
+- `Blog`: Animated entrance, premium card, responsive
+- `Contact`: Animated entrance, premium card, social links, legal compliance, **no 3D pop on Location/Email** (simple links)
+- `Footer`: Apple-style glass, LED under-glow, dynamic copyright, Latin motto, legal notice
+│   │   ├── globals.css
+- Apple-style Liquid-Glass navbar & footer — 200 % blur field, LED under-glow, pointer-safe masking (< 0.01 CLS)
+- Motion-driven mobile UX — Framer-Motion hamburger morphs into a staggered menu with buttery easing
+- Live dual-timezone pill clock (MDT / UTC) updating every second for global availability
+- Decrypt-style hero + floating geometry — cinematic text-reveal plus depth layers, zero layout shift
+- Universal neon scrollbar & ISO dark-mode theme with graceful fall-backs across Chrome, Firefox, Safari
+- Built-in performance telemetry via Vercel Analytics & Speed Insights badges (real-time Core Web Vitals)
+- CI/CD-ready, type-safe stack — Next.js 15, TypeScript, Tailwind, Husky pre-commit hooks auto-deploying to Vercel edge
+- Legal-grade compliance footer — dynamic copyright, Latin motto, and Canadian Copyright Act notice
+│       ├── Hero.tsx
+- Uses [Space Grotesk](https://fonts.google.com/specimen/Space+Grotesk) for headings and UI, with fallbacks for system fonts.
 
----
+- Accent colors and gradients are defined in `tailwind.config.ts` and used throughout for a consistent, premium look.
 
-## 📁 Folder Structure
+- All major sections use Framer Motion for entrance/scroll animation. Animations are hardware-accelerated, lag-free, and CLS/hydration safe.
 
-```text
+- Fully responsive, mobile-first layout. Device-appropriate hover/click logic for nav buttons and interactive elements. Social icons visible on desktop, hamburger menu and clock logic refined for mobile.
+
+- Footer includes dynamic copyright, Latin motto, and Canadian Copyright Act/DMCA notice.
+├── tailwind.config.ts
+- All main component files include a standardized signature block with file name and date (see top of each file).
+
+- ```bash
 portfolio/
 ├── public/
-│   ├── CNAME
-│   ├── favicon.svg
-│   ├── robots.txt
-│   ├── Salman_Ahmad_Resume.pdf
-│   ├── sitemap.xml
-│   └── images/
-│       └── profile-photo.JPG
+│   ├── images/
+│   └── ...
 ├── src/
 │   ├── app/
 │   │   ├── globals.css
@@ -98,47 +125,13 @@ portfolio/
 │       ├── Hero.tsx
 │       ├── LocalClock.tsx
 │       ├── Navbar.tsx
-│       ├── Projects.tsx
-│       └── ScrollToTopArrow.tsx
-├── DEPLOYMENT.md
-├── LICENSE
-├── next-env.d.ts
+│       └── Projects.tsx
+├── tailwind.config.ts
 ├── next.config.js
 ├── package.json
-├── postcss.config.js
 ├── README.md
-├── tailwind.config.ts
-├── tsconfig.json
-└── tsconfig.tsbuildinfo
+└── ...
 ```
-
----
-
-## 📁 Main Components & Sections
-
-- `Navbar` – Glassmorphic, animated, with live clock and anchor navigation
-- `Hero` – Animated intro, floating shapes, decrypt effect
-- `About` – Headshot, narrative, animated skills grid
-- `Projects` – Real projects (portfolio, TrueNAS homelab, media automation, infra dashboard)
-- `Experience` – Work timeline, responsibilities, achievements
-- `Education` – Degrees, highlights, coursework
-- `Contact` – Email, Discord, GitHub, LinkedIn, location, availability
-- `Footer` – Glassy, animated, legal notice, tech stack, last updated
-- `Blog` – Placeholder only (no real blog integration)
-- `ScrollToTopArrow` – S-tier, context-aware, glassmorphic, animated floating arrow that appears only between Contact and Footer, with spring physics and no flicker
-
----
-
-## 📞 Contact
-
-- **Email:** [s.ahmad0147@gmail.com](mailto:s.ahmad0147@gmail.com)
-- **Discord:** [infamous_morningstar](https://discord.com/users/699763177315106836)
-- **GitHub:** [InfamousMorningstar](https://github.com/InfamousMorningstar)
-- **LinkedIn:** [Salman Ahmad](https://www.linkedin.com/in/salman-ahmad-6788811b6/)
-- **Location:** [Calgary, AB, Canada](https://www.google.com/maps/place/Calgary,+AB)
-
----
-
 ## 📄 License & Legal Notice
 
 This website and its source code are protected under the **Copyright Act, R.S.C., 1985, c. C-42 (Canada)** and the **DMCA**. Unauthorized reproduction, redistribution, or modification is strictly prohibited. For licensing or legal inquiries, contact: s.ahmad0147@gmail.com with subject line "PERMISSION REQUEST".

@@ -1,23 +1,40 @@
+/*
+ * ███╗░░░███╗░█████╗░██████╗░██████╗░██╗░░░██╗███████╗██████╗░██████╗░
+ * ████╗░░████║██╔══██╗██╔══██╗██╔══██╗██║░░░██║██╔════╝██╔══██╗██╔══██╗
+ * ██╔████╔██║███████║██████╔╝██████╔╝██║░░░██║█████╗░░██████╔╝██████╔╝
+ * ██║╚██╔╝██║██╔══██║██╔══██╗██╔══██╗██║░░░██║██╔══╝░░██╔══██╗██╔══██╗
+ * ██║░╚═╝░██║██║░░██║██║░░██║██║░░██║╚██████╔╝███████╗██║░░██║██║░░██║
+ * ╚═╝░░░░░╚═╝╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░░╚═╝░╚═════╝░╚══════╝╚═╝░░╚═╝╚═╝░░╚═╝
+ *
+ * 👤 Author  : Salman Ahmad
+ * 🌐 URL     : https://portfolio.ahmxd.net
+ * 📧 Contact : s.ahmad0147@gmail.com
+ * 📝 License : MIT (Educational/Personal Use)
+ * 📁 File    : Contact.tsx
+ * 🕒 Updated : Jun 12, 2025
+ */
 'use client';
 
 import { motion } from 'framer-motion';
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaGithub, FaLinkedin, FaDiscord } from 'react-icons/fa';
 
 const contactInfo = [
-	{
-		icon: <FaEnvelope className="text-accent" />,
-		label: 'Email',
-		value: 's.ahmad0147@gmail.com',
-		href: 'mailto:s.ahmad0147@gmail.com',
-		description: 'Send me an email for professional inquiries'
-	},
-	{
-		icon: <FaMapMarkerAlt className="text-secondary" />,
-		label: 'Location',
-		value: 'Calgary, AB, Canada',
-		href: 'https://www.google.com/maps/place/Calgary,+AB',
-		description: 'Based in Calgary, open to remote opportunities'
-	}
+  {
+	icon: <FaEnvelope className="text-accent" />,
+	label: 'Email',
+	value: 's.ahmad0147@gmail.com',
+	href: 'mailto:s.ahmad0147@gmail.com',
+	description: 'Send me an email for professional inquiries',
+	simple: true,
+  },
+  {
+	icon: <FaMapMarkerAlt className="text-secondary" />,
+	label: 'Location',
+	value: 'Calgary, AB, Canada',
+	href: 'https://www.google.com/maps/place/Calgary,+AB',
+	description: 'Based in Calgary, open to remote opportunities',
+	simple: true,
+  }
 ];
 
 const socialLinks = [
@@ -107,49 +124,67 @@ export default function Contact() {
 									Contact Information
 								</h3>
 
-								<div className="grid md:grid-cols-2 gap-4">
-						{contactInfo.map((item, index) => (
-							<motion.a
-								key={item.label}
-								href={item.href}
-								target={item.href.startsWith('http') ? '_blank' : undefined}
-								rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-								className={`flex items-center space-x-4 p-4 ${button3dClass} group hover:text-secondary bg-transparent`}
-								style={{
-									background: 'none',
-									color: '#fff',
-									boxShadow: 'none',
-									WebkitTapHighlightColor: 'transparent',
-									border: 'none',
-									backfaceVisibility: 'hidden',
-									willChange: 'opacity, transform'
-								}}
-								whileHover={{ scale: 1.13, boxShadow: '0 6px 32px 0 rgba(168,85,247,0.18)', backgroundColor: 'rgba(168,85,247,0.08)', filter: 'brightness(1.12)' }}
-								whileTap={{ scale: 0.96, boxShadow: '0 2px 8px 0 rgba(168,85,247,0.10)', backgroundColor: 'rgba(168,85,247,0.14)', filter: 'brightness(0.98)' }}
-								transition={{ type: 'spring', stiffness: 420, damping: 18, mass: 1.05 }}
-								initial={{ opacity: 0, y: 20 }}
-								whileInView={{ opacity: 1, y: 0 }}
-								viewport={{ once: true }}
-							>
-											<motion.div
-												className="text-2xl group-hover:scale-110 transition-transform"
-											>
-												{item.icon}
-											</motion.div>
-											<div>
-												<h4 className="font-semibold text-foreground group-hover:text-accent transition-colors">
-													{item.label}
-												</h4>
-												<p className="text-lg text-muted group-hover:text-foreground transition-colors">
-													{item.value}
-												</p>
-												<p className="text-sm text-muted">
-													{item.description}
-												</p>
-											</div>
-										</motion.a>
-									))}
-								</div>
+<div className="grid md:grid-cols-2 gap-4">
+  {contactInfo.map((item, index) => (
+	item.simple ? (
+	  <a
+		key={item.label}
+		href={item.href}
+		target={item.href.startsWith('http') ? '_blank' : undefined}
+		rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+		className="flex items-center space-x-4 p-4 bg-transparent rounded-lg border border-border hover:border-accent transition-colors"
+		style={{ color: '#fff', background: 'none', boxShadow: 'none', WebkitTapHighlightColor: 'transparent', border: 'none' }}
+	  >
+		<span className="text-2xl">{item.icon}</span>
+		<div>
+		  <h4 className="font-semibold text-foreground">{item.label}</h4>
+		  <p className="text-lg text-muted">{item.value}</p>
+		  <p className="text-sm text-muted">{item.description}</p>
+		</div>
+	  </a>
+	) : (
+	  <motion.a
+		key={item.label}
+		href={item.href}
+		target={item.href.startsWith('http') ? '_blank' : undefined}
+		rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+		className={`flex items-center space-x-4 p-4 ${button3dClass} group hover:text-secondary bg-transparent`}
+		style={{
+		  background: 'none',
+		  color: '#fff',
+		  boxShadow: 'none',
+		  WebkitTapHighlightColor: 'transparent',
+		  border: 'none',
+		  backfaceVisibility: 'hidden',
+		  willChange: 'opacity, transform'
+		}}
+		whileHover={{ scale: 1.13, boxShadow: '0 6px 32px 0 rgba(168,85,247,0.18)', backgroundColor: 'rgba(168,85,247,0.08)', filter: 'brightness(1.12)' }}
+		whileTap={{ scale: 0.96, boxShadow: '0 2px 8px 0 rgba(168,85,247,0.10)', backgroundColor: 'rgba(168,85,247,0.14)', filter: 'brightness(0.98)' }}
+		transition={{ type: 'spring', stiffness: 420, damping: 18, mass: 1.05 }}
+		initial={{ opacity: 0, y: 20 }}
+		whileInView={{ opacity: 1, y: 0 }}
+		viewport={{ once: true }}
+	  >
+		<motion.div
+		  className="text-2xl group-hover:scale-110 transition-transform"
+		>
+		  {item.icon}
+		</motion.div>
+		<div>
+		  <h4 className="font-semibold text-foreground group-hover:text-accent transition-colors">
+			{item.label}
+		  </h4>
+		  <p className="text-lg text-muted group-hover:text-foreground transition-colors">
+			{item.value}
+		  </p>
+		  <p className="text-sm text-muted">
+			{item.description}
+		  </p>
+		</div>
+	  </motion.a>
+	)
+  ))}
+</div>
 							</div>
 
 							{/* Divider */}
