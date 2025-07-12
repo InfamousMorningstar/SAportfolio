@@ -31,7 +31,7 @@ export default function Navbar() {
  * 📧 Contact : s.ahmad0147@gmail.com
  * 📝 License : MIT (Educational/Personal Use)
  * 📁 File    : Navbar.tsx
- * 🕒 Updated : Jul 11, 2025
+ * 🕒 Updated : Jul 12, 2025
  */
 
       setTime({ mdt, utc });
@@ -91,16 +91,12 @@ export default function Navbar() {
               <div className="hidden xl:flex mx-auto space-x-3">
                 {links.map((link) => (
                   <Link key={link} href={`#${link.toLowerCase()}`}>
-                    <motion.div
-                      className="px-4 py-1 border border-border rounded-full text-sm font-medium text-neutral-200 hover:text-white hover:border-accent/80 focus-visible:ring-2 focus-visible:ring-accent/70 focus-visible:ring-offset-2 focus-visible:outline-none shadow-md hover:shadow-lg transition-all duration-150 will-change-transform backdrop-blur-md bg-black/30 hover:scale-105 font-sans"
-                      whileHover={{ scale: 1.08, boxShadow: '0 4px 16px 0 rgba(6,182,212,0.13)', backgroundColor: 'rgba(34,211,238,0.10)', filter: 'brightness(1.10)' }}
-                      whileTap={{ scale: 0.96, boxShadow: '0 1.5px 6px 0 rgba(6,182,212,0.08)', backgroundColor: 'rgba(34,211,238,0.16)', filter: 'brightness(0.97)' }}
-                      transition={{ duration: 0.18, ease: [0.4, 0, 0.2, 1] }}
-                      style={{ WebkitTapHighlightColor: 'transparent', outline: 'none', backfaceVisibility: 'hidden' }}
+                    <div
+                      className="navbar-btn-desktop px-4 py-1 border rounded-full text-sm font-medium text-neutral-200 border-accent transition-all duration-150 will-change-transform backdrop-blur-md bg-black/30 hover:text-white hover:border-accent2 focus-visible:ring-2 focus-visible:ring-accent/70 focus-visible:ring-offset-2 focus-visible:outline-none shadow-md font-sans"
                       tabIndex={0}
                     >
                       {link}
-                    </motion.div>
+                    </div>
                   </Link>
                 ))}
               </div>
@@ -161,8 +157,9 @@ export default function Navbar() {
                     <Link key={link} href={`#${link.toLowerCase()}`}>
                       <div
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className="px-4 py-1 border border-neutral-800 rounded-full text-sm font-medium text-neutral-200 hover:text-white hover:border-accent transition duration-300 backdrop-blur-md bg-black/30 hover:scale-[1.08] will-change-transform"
+                        className="navbar-btn-mobile px-4 py-1 border rounded-full text-sm font-medium text-neutral-200 border-accent transition duration-300 backdrop-blur-md bg-black/30 active:text-white active:border-accent2 will-change-transform"
                         style={{ transitionTimingFunction: 'cubic-bezier(0.4,0,0.2,1)' }}
+                        tabIndex={0}
                       >
                         {link}
                       </div>
