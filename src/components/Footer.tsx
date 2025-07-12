@@ -14,6 +14,22 @@
  * 🕒 Updated : Jul 11, 2025
  */
 
+/*
+ * ███╗░░░███╗░█████╗░██████╗░██████╗░██╗░░░██╗███████╗██████╗░██████╗░
+ * ████╗░░████║██╔══██╗██╔══██╗██╔══██╗██║░░░██║██╔════╝██╔══██╗██╔══██╗
+ * ██╔████╔██║███████║██████╔╝██████╔╝██║░░░██║█████╗░░██████╔╝██████╔╝
+ * ██║╚██╔╝██║██╔══██║██╔══██╗██╔══██╗██║░░░██║██╔══╝░░██╔══██╗██╔══██╗
+ * ██║░╚═╝░██║██║░░██║██║░░██║██║░░██║╚██████╔╝███████╗██║░░██║██║░░██║
+ * ╚═╝░░░░░╚═╝╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░░╚═╝░╚═════╝░╚══════╝╚═╝░░╚═╝╚═╝░░╚═╝
+ *
+ * 👤 Author  : Salman Ahmad
+ * 🌐 URL     : https://portfolio.ahmxd.net
+ * 📧 Contact : s.ahmad0147@gmail.com
+ * 📝 License : MIT (Educational/Personal Use)
+ * 📁 File    : Footer.tsx
+ * 🕒 Updated : Jul 11, 2025
+ */
+
 'use client';
 
 import { motion } from 'framer-motion';
@@ -27,7 +43,7 @@ export default function Footer() {
   });
 
   return (
-    <footer className="relative w-full bg-neutral-900/70 backdrop-blur-2xl border-t border-neutral-700/60 shadow-[0_4px_32px_0_rgba(80,80,120,0.12)] text-neutral-300 text-sm overflow-hidden transition-all duration-500">
+    <footer className="relative w-full bg-neutral-900/80 dark:bg-background/90 backdrop-blur-2xl border-t border-border shadow-lg hover:shadow-xl transition-all duration-300 rounded-t-2xl text-neutral-300 text-sm overflow-hidden">
       {/* Glassy background overlays */}
       <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/80 via-neutral-900/60 to-neutral-900/40 pointer-events-none" />
       <div className="absolute inset-0 opacity-5 pointer-events-none">
@@ -37,18 +53,21 @@ export default function Footer() {
       {/* Floating accent dots */}
       <motion.div
         animate={{ y: [0, -10, 0], opacity: [0.3, 0.6, 0.3] }}
-        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+        transition={{ duration: 8, repeat: Infinity, ease: [0.77, 0, 0.175, 1] }}
         className="absolute top-6 left-12 w-1 h-1 bg-accent rounded-full"
+        style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
       />
       <motion.div
         animate={{ y: [0, 8, 0], opacity: [0.2, 0.5, 0.2] }}
-        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+        transition={{ duration: 6, repeat: Infinity, ease: [0.77, 0, 0.175, 1], delay: 2 }}
         className="absolute bottom-8 right-16 w-1.5 h-1.5 bg-accent2 rounded-full"
+        style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
       />
       <motion.div
         animate={{ y: [0, -6, 0], opacity: [0.4, 0.7, 0.4] }}
-        transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 4 }}
+        transition={{ duration: 7, repeat: Infinity, ease: [0.77, 0, 0.175, 1], delay: 4 }}
         className="absolute top-12 right-24 w-0.5 h-0.5 bg-secondary rounded-full"
+        style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
       />
 
       {/* Signature, Motto, and Tech Info */}

@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+  CLS TIP: 
+  - Use font-display: swap for all custom fonts (handled by next/font by default).
+  - For <img> or <Image fill />, always reserve space with aspect-ratio, min-height, or width/height.
+  - Only animate transform/opacity, not layout properties (width, height, margin, padding).
+  - For dynamic/injected content, always reserve space with min-height or skeletons.
+*/
+
 /* Custom CSS Variables */
 :root {
   --background: #0a0a0a;
@@ -189,37 +197,32 @@ html.scrolling {
 }
 
 /* Button Styles */
-.btn-primary {
-  background: linear-gradient(90deg, var(--accent), var(--accent2));
-  border: none;
-  padding: 12px 32px;
+
+/* Border-only button for Contact Me (no background, only border and white text) */
+.btn-border-pure {
+  background: none !important;
+  border: 2px solid #a855f7 !important;
+  color: #fff !important;
   border-radius: 9999px;
-  color: white;
   font-weight: 600;
-  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
-  position: relative;
-  overflow: hidden;
   box-shadow: 0 2px 16px 0 rgba(139,92,246,0.10);
+  transition: none !important;
+  position: relative;
+  overflow: visible;
 }
 
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4);
+.btn-border-pure:hover, .btn-border-pure:focus {
+  background: none !important;
+  color: #fff !important;
+  box-shadow: 0 4px 24px 0 #a855f733;
+  filter: brightness(1.08);
 }
 
-.btn-primary::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.5s;
-}
-
-.btn-primary:hover::before {
-  left: 100%;
+.btn-border-pure:active {
+  background: none !important;
+  color: #fff !important;
+  box-shadow: 0 1.5px 6px 0 #a855f722;
+  filter: brightness(0.98);
 }
 
 /* Section Styles */

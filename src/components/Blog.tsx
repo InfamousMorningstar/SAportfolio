@@ -1,3 +1,18 @@
+/*
+ * ███╗░░░███╗░█████╗░██████╗░██████╗░██╗░░░██╗███████╗██████╗░██████╗░
+ * ████╗░░████║██╔══██╗██╔══██╗██╔══██╗██║░░░██║██╔════╝██╔══██╗██╔══██╗
+ * ██╔████╔██║███████║██████╔╝██████╔╝██║░░░██║█████╗░░██████╔╝██████╔╝
+ * ██║╚██╔╝██║██╔══██║██╔══██╗██╔══██╗██║░░░██║██╔══╝░░██╔══██╗██╔══██╗
+ * ██║░╚═╝░██║██║░░██║██║░░██║██║░░██║╚██████╔╝███████╗██║░░██║██║░░██║
+ * ╚═╝░░░░░╚═╝╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░░╚═╝░╚═════╝░╚══════╝╚═╝░░╚═╝╚═╝░░╚═╝
+ *
+ * 👤 Author  : Salman Ahmad
+ * 🌐 URL     : https://portfolio.ahmxd.net
+ * 📧 Contact : s.ahmad0147@gmail.com
+ * 📝 License : MIT (Educational/Personal Use)
+ * 📁 File    : Blog.tsx
+ * 🕒 Updated : Jul 11, 2025
+ */
 'use client';
 
 import { motion } from 'framer-motion';
@@ -52,8 +67,9 @@ export default function Blog() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.8, ease: [0.77, 0, 0.175, 1] }}
           className="text-center mb-16"
+          style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
         >
           <h2 className="text-4xl font-bold mb-4">
             Latest <span className="text-accent">Articles</span>
@@ -70,8 +86,9 @@ export default function Blog() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: index * 0.1 }}
+              transition={{ duration: 0.8, delay: index * 0.1, ease: [0.77, 0, 0.175, 1] }}
               className="group"
+              style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
             >
               <a
                 href={post.url}
@@ -79,7 +96,7 @@ export default function Blog() {
                 rel="noopener noreferrer"
                 className="block h-full"
               >
-                <div className="bg-card border border-border rounded-lg p-6 h-full transition-all duration-300 hover:border-accent/50 hover:shadow-lg hover:shadow-accent/10 hover:-translate-y-1">
+                <div className="bg-white/90 dark:bg-background/80 border border-border shadow-lg hover:shadow-xl hover:ring-2 hover:ring-accent/20 transition-all duration-200 rounded-2xl p-6 h-full">
                   <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
                     <div className="flex items-center gap-1">
                       <Calendar className="w-4 h-4" />
@@ -128,8 +145,9 @@ export default function Blog() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={{ duration: 0.8, delay: 0.4, ease: [0.77, 0, 0.175, 1] }}
           className="text-center mt-12"
+          style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
         >
           <a
             href="#"

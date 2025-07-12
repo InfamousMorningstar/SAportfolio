@@ -25,6 +25,7 @@ const config: Config = {
       fontFamily: {
         mono: ['var(--font-jetbrains)', 'JetBrains Mono', 'Fira Code', 'monospace'],
         sans: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
+        head: ['var(--font-head)', 'Space Grotesk', 'sans-serif'],
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',

@@ -96,8 +96,9 @@ export default function Education() {
 					className="text-center mb-16"
 					initial={{ opacity: 0, y: 30 }}
 					whileInView={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.8 }}
+					transition={{ duration: 0.8, ease: [0.77, 0, 0.175, 1] }}
 					viewport={{ once: true }}
+					style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
 				>
 					<h2 className="text-4xl md:text-6xl font-bold mb-6">
 						<span className="gradient-text">Education</span>
@@ -115,6 +116,7 @@ export default function Education() {
 					initial="hidden"
 					whileInView="visible"
 					viewport={{ once: true }}
+					style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
 				>
 					{education.map((edu, index) => (
 						<motion.div
@@ -122,17 +124,21 @@ export default function Education() {
 							className="card group hover:border-accent/50"
 							variants={itemVariants}
 							whileHover={{ y: -5, scale: 1.02 }}
-							transition={{ type: 'spring', stiffness: 300 }}
+							whileTap={{ scale: 0.97 }}
+							transition={{ type: 'spring', stiffness: 340, damping: 22, mass: 1.1 }}
+							style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
 						>
 							<div className="grid lg:grid-cols-3 gap-8">
 								{/* Left Column - Institution Info */}
 								<div className="lg:col-span-1">
 									<div className="flex items-center space-x-3 mb-4">
-										<motion.div
-											className="text-3xl"
-											whileHover={{ scale: 1.2, rotate: 10 }}
-											transition={{ type: 'spring', stiffness: 300 }}
-										>
+								<motion.div
+									className="text-3xl"
+									whileHover={{ scale: 1.08, rotate: 10 }}
+									whileTap={{ scale: 0.97 }}
+									transition={{ type: 'spring', stiffness: 340, damping: 22, mass: 1.1 }}
+									style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
+								>
 											{edu.icon}
 										</motion.div>
 										<div>
@@ -207,14 +213,15 @@ export default function Education() {
 										</h4>
 										<ul className="space-y-2">
 											{edu.highlights.map((highlight, idx) => (
-												<motion.li
-													key={highlight}
-													className="flex items-start space-x-2 text-sm text-muted"
-													initial={{ opacity: 0, x: 20 }}
-													whileInView={{ opacity: 1, x: 0 }}
-													transition={{ delay: idx * 0.1 }}
-													viewport={{ once: true }}
-												>
+									<motion.li
+										key={highlight}
+										className="flex items-start space-x-2 text-sm text-muted"
+										initial={{ opacity: 0, x: 20 }}
+										whileInView={{ opacity: 1, x: 0 }}
+										transition={{ delay: idx * 0.1, duration: 0.7, ease: [0.77, 0, 0.175, 1] }}
+										viewport={{ once: true }}
+										style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
+									>
 													<div className="w-1.5 h-1.5 bg-accent rounded-full mt-1.5 flex-shrink-0"></div>
 													<span>{highlight}</span>
 												</motion.li>
@@ -231,15 +238,17 @@ export default function Education() {
 									</h4>
 									<div className="space-y-2">
 										{edu.relevantCourses.map((course, idx) => (
-											<motion.div
-												key={course}
-												className="text-sm text-muted hover:text-foreground transition-colors cursor-default"
-												initial={{ opacity: 0, y: 10 }}
-												whileInView={{ opacity: 1, y: 0 }}
-												transition={{ delay: idx * 0.05 }}
-												viewport={{ once: true }}
-												whileHover={{ x: 5 }}
-											>
+								<motion.div
+									key={course}
+									className="text-sm text-muted hover:text-foreground transition-colors cursor-default will-change-transform"
+									initial={{ opacity: 0, y: 10 }}
+									whileInView={{ opacity: 1, y: 0 }}
+									viewport={{ once: true }}
+									whileHover={{ x: 5, scale: 1.13, boxShadow: '0 6px 32px 0 rgba(168,85,247,0.18)', backgroundColor: 'rgba(168,85,247,0.08)', filter: 'brightness(1.12)' }}
+									whileTap={{ scale: 0.96, boxShadow: '0 2px 8px 0 rgba(168,85,247,0.10)', backgroundColor: 'rgba(168,85,247,0.14)', filter: 'brightness(0.98)' }}
+									transition={{ type: 'spring', stiffness: 540, damping: 16, mass: 1.01 }}
+									style={{ WebkitTapHighlightColor: 'transparent', backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
+								>
 												• {course}
 											</motion.div>
 										))}
@@ -255,8 +264,9 @@ export default function Education() {
 					className="mt-20"
 					initial={{ opacity: 0, y: 30 }}
 					whileInView={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.8 }}
+					transition={{ duration: 0.8, ease: [0.77, 0, 0.175, 1] }}
 					viewport={{ once: true }}
+					style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
 				>
 					<h3 className="text-2xl font-bold text-center mb-8">
 						Academic <span className="gradient-text">Skills</span>
@@ -270,8 +280,9 @@ export default function Education() {
 								whileInView={{ opacity: 1, scale: 1 }}
 								whileHover={{ scale: 1.08 }}
 								whileTap={{ scale: 0.97 }}
-								transition={{ type: 'spring', stiffness: 340, damping: 22, mass: 1.1, delay: index * 0.05 }}
+								transition={{ type: 'spring', stiffness: 340, damping: 22, mass: 1.1 }}
 								viewport={{ once: true }}
+								style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
 							>
 								{skill}
 							</motion.span>

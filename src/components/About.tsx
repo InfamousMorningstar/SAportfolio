@@ -77,13 +77,18 @@ const itemVariants = {
 export default function About() {
 	return (
 		<section id="about" className="min-h-screen py-20 px-6 relative">
+			{/*
+			  CLS TIP: All custom fonts are loaded with next/font, which uses font-display: swap by default.
+			  No FOIT/FOUC risk here. If you add custom @font-face, use font-display: swap.
+			*/}
 			<div className="max-w-7xl mx-auto">
 				<motion.div
 					className="text-center mb-16"
 					initial={{ opacity: 0, y: 30 }}
 					whileInView={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.8 }}
+					transition={{ duration: 0.8, ease: [0.77, 0, 0.175, 1] }}
 					viewport={{ once: true }}
+					style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
 				>
 					<h2 className="text-4xl md:text-6xl font-bold mb-6">
 						About <span className="gradient-text">Me</span>
@@ -93,94 +98,89 @@ export default function About() {
 
 				<div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
 					{/* Left Column - Text */}
-					<motion.div
-						className="space-y-6"
-						initial={{ opacity: 0, x: -50 }}
-						whileInView={{ opacity: 1, x: 0 }}
-						transition={{ duration: 0.8 }}
-						viewport={{ once: true }}
-					>
-						<div className="text-lg md:text-xl text-muted leading-relaxed space-y-6">
-							<p>
-								I&apos;m a passionate{' '}
-								<span className="text-accent font-semibold">
-									Computer Information Systems student
-								</span>{' '}
+				<motion.div
+					className="space-y-6"
+					initial={{ opacity: 0, x: -50 }}
+					whileInView={{ opacity: 1, x: 0 }}
+					transition={{ duration: 0.8, ease: [0.77, 0, 0.175, 1] }}
+					viewport={{ once: true }}
+					style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
+				>
+					<div className="text-lg md:text-xl text-muted leading-relaxed space-y-6">
+						{/* Fade-in pop animation for each paragraph, staggered for premium effect */}
+						{[
+							<>I'm a passionate{' '}
+								<span className="text-accent font-semibold">Computer Information Systems student</span>{' '}
 								at Mount Royal University with a strong background in{' '}
 								<span className="text-accent2 font-semibold">IT support</span>,{' '}
-								<span className="text-secondary font-semibold">
-									home server architecture
-								</span>
+								<span className="text-secondary font-semibold">home server architecture</span>
 								, and{' '}
-								<span className="text-accent font-semibold">software development</span>
-								.
-							</p>
-
-							<p>
-								My journey began with a curiosity for technology and evolved into
+								<span className="text-accent font-semibold">software development</span>.
+							</>,
+							<>My journey began with a curiosity for technology and evolved into
 								expertise in{' '}
 								<span className="text-accent2 font-semibold">DevOps practices</span>,{' '}
 								<span className="text-accent font-semibold">container orchestration</span>
 								, and{' '}
-								<span className="text-secondary font-semibold">
-									infrastructure automation
-								</span>
-								. I&apos;ve built and maintain a sophisticated home lab environment that
+								<span className="text-secondary font-semibold">infrastructure automation</span>.
+								I've built and maintain a sophisticated home lab environment that
 								serves as both a learning platform and a production-grade media and
-								monitoring solution.
-							</p>
-
-							<p>
-								Beyond technical skills, I bring{' '}
-								<span className="text-accent font-semibold">
-									6+ years of customer service experience
-								</span>{' '}
+								monitoring solution.</>,
+							<>Beyond technical skills, I bring{' '}
+								<span className="text-accent font-semibold">6+ years of customer service experience</span>{' '}
 								and proven leadership abilities from my roles in retail and manufacturing
 								environments. This unique combination allows me to bridge technical
-								complexity with clear communication and user-focused solutions.
-							</p>
-						</div>
-
-						<motion.div
-							className="flex flex-wrap gap-3 mt-8"
-							variants={containerVariants}
-							initial="hidden"
-							whileInView="visible"
+								complexity with clear communication and user-focused solutions.</>
+						].map((content, i) => (
+						<motion.p
+							key={i}
+							initial={{ opacity: 0, scale: 0.96, y: 24 }}
+							whileInView={{ opacity: 1, scale: 1, y: 0 }}
+							transition={{ duration: 0.7, delay: i * 0.18, ease: [0.4, 0, 0.2, 1] }}
 							viewport={{ once: true }}
+							className=""
 						>
-							{['Problem Solver', 'Team Player', 'Self-Learner', 'Innovation-Driven'].map(
-								(trait, index) => (
-									<motion.span
-										key={trait}
-										className="px-4 py-2 bg-accent/10 border border-accent/30 rounded-full text-accent text-sm font-medium will-change-transform"
-										variants={itemVariants}
-										whileHover={{ scale: 1.08 }}
-										whileTap={{ scale: 0.97 }}
-										transition={{
-											type: 'spring',
-											stiffness: 340,
-											damping: 22,
-											mass: 1.1,
-										}}
-									>
-										{trait}
-									</motion.span>
-								)
-							)}
-						</motion.div>
+							{content}
+						</motion.p>
+					))}
+					</div>
+
+					<div className="flex flex-wrap gap-3 mt-8">
+						{['Problem Solver', 'Team Player', 'Self-Learner', 'Innovation-Driven'].map(
+							(trait) => (
+								<motion.span
+									key={trait}
+									layout
+									className="px-4 py-2 bg-accent/10 border border-accent/30 rounded-full text-accent text-sm font-medium will-change-transform"
+									whileHover={{ scale: 1.13, boxShadow: '0 6px 32px 0 rgba(168,85,247,0.18)', backgroundColor: 'rgba(168,85,247,0.08)', filter: 'brightness(1.12)' }}
+									whileTap={{ scale: 0.96, boxShadow: '0 2px 8px 0 rgba(168,85,247,0.10)', backgroundColor: 'rgba(168,85,247,0.14)', filter: 'brightness(0.98)' }}
+									transition={{ type: 'spring', stiffness: 540, damping: 16, mass: 1.01 }}
+									style={{ WebkitTapHighlightColor: 'transparent' }}
+								>
+									{trait}
+								</motion.span>
+							)
+						)}
+					</div>
 					</motion.div>
 
 					{/* Right Column - Profile Image */}
-					<motion.div
-						className="relative"
-						initial={{ opacity: 0, x: 50 }}
-						whileInView={{ opacity: 1, x: 0 }}
-						transition={{ duration: 0.8 }}
-						viewport={{ once: true }}
-					>
+					{/*
+					  CLS TIP: To prevent layout shift, always reserve space for <Image fill />.
+					  Here, h-[32rem] and max-w-sm ensure the image container has a fixed size.
+					  If you change to a responsive or dynamic size, use aspect-[3/4] or min-h-[] to reserve space.
+					*/}
+				<motion.div
+					className="relative"
+					initial={{ opacity: 0, x: 50 }}
+					whileInView={{ opacity: 1, x: 0 }}
+					transition={{ duration: 0.8, ease: [0.77, 0, 0.175, 1] }}
+					viewport={{ once: true }}
+					style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
+				>
 						<div className="relative h-[32rem] max-w-sm mx-auto border-2 border-accent/30 rounded-lg overflow-hidden hover:border-accent/50 transition-colors duration-300">
 							<Image
-								src="/images/profile-photo.JPG"
+								src="/images/profile-photo.webp"
 								alt="Ahmad Profile Photo"
 								fill
 								className="object-cover rounded-lg"
@@ -192,20 +192,26 @@ export default function About() {
 				</div>
 
 				{/* Skills Grid */}
+				{/*
+				  CLS TIP: All Framer Motion and animation blocks only animate transform/opacity.
+				  No layout shift risk. If you add new animations, avoid animating width, height, margin, or padding.
+				*/}
 				<motion.div
 					className="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
 					variants={containerVariants}
 					initial="hidden"
 					whileInView="visible"
 					viewport={{ once: true }}
+					style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
 				>
-					{skills.map((skillGroup, index) => (
-						<motion.div
-							key={skillGroup.category}
-							className="card group hover:border-accent/50 transition-all duration-300"
-							variants={itemVariants}
-							whileHover={{ y: -5 }}
-						>
+						{skills.map((skillGroup, index) => (
+							<motion.div
+								key={skillGroup.category}
+								className="card group hover:border-accent/50 transition-all duration-300"
+								variants={itemVariants}
+								whileHover={{ y: -5 }}
+								style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
+							>
 							<div className="flex items-center mb-4">
 								<div className="text-2xl mr-3 group-hover:scale-110 transition-transform">
 									{skillGroup.icon}

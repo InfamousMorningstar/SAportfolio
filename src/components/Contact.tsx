@@ -65,7 +65,7 @@ const itemVariants = {
 
 // S-tier 3D pop class for all buttons
 const button3dClass =
-	"transition-all duration-300 rounded-full bg-transparent shadow-md hover:shadow-[0_8px_32px_0_rgba(139,92,246,0.18)] hover:-translate-y-1 hover:scale-[1.08] border border-transparent hover:border-2 hover:border-accent focus:outline-none focus:ring-2 focus:ring-accent/60 will-change-transform";
+	"rounded-full bg-transparent shadow-md border border-transparent hover:border-2 hover:border-accent focus:outline-none focus:ring-2 focus:ring-accent/60";
 
 export default function Contact() {
 	return (
@@ -75,8 +75,9 @@ export default function Contact() {
 					className="text-center mb-16"
 					initial={{ opacity: 0, y: 30 }}
 					whileInView={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.8 }}
+					transition={{ duration: 0.8, ease: [0.77, 0, 0.175, 1] }}
 					viewport={{ once: true }}
+					style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
 				>
 					<h2 className="text-4xl md:text-6xl font-bold mb-6">
 						Say <span className="gradient-text">Hello</span>
@@ -90,13 +91,14 @@ export default function Contact() {
 
 				<div className="max-w-4xl mx-auto">
 					{/* Single Column - Complete Contact Information */}
-					<motion.div
-						className="card"
-						initial={{ opacity: 0, y: 50 }}
-						whileInView={{ opacity: 1, y: 0 }}
-						transition={{ duration: 0.8 }}
-						viewport={{ once: true }}
-					>
+				<motion.div
+	className="card bg-white/90 dark:bg-background/80 border border-border shadow-lg hover:shadow-xl hover:ring-2 hover:ring-accent/20 transition-all duration-200 rounded-2xl px-6 py-5 md:px-8 md:py-7"
+					initial={{ opacity: 0, y: 50 }}
+					whileInView={{ opacity: 1, y: 0 }}
+					transition={{ duration: 0.8, ease: [0.77, 0, 0.175, 1] }}
+					viewport={{ once: true }}
+					style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
+				>
 						<div className="space-y-8">
 							{/* Contact Information Section */}
 							<div>
@@ -106,20 +108,29 @@ export default function Contact() {
 								</h3>
 
 								<div className="grid md:grid-cols-2 gap-4">
-									{contactInfo.map((item, index) => (
-										<motion.a
-											key={item.label}
-											href={item.href}
-											target={item.href.startsWith('http') ? '_blank' : undefined}
-											rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-											className={`flex items-start space-x-4 p-4 ${button3dClass} hover:bg-accent/10 transition-all duration-300 group`}
-											whileHover={{ scale: 1.08 }}
-											whileTap={{ scale: 0.97 }}
-											transition={{ type: 'spring', stiffness: 340, damping: 22, mass: 1.1, duration: 0.6, delay: index * 0.1 }}
-											initial={{ opacity: 0, y: 20 }}
-											whileInView={{ opacity: 1, y: 0 }}
-											viewport={{ once: true }}
-										>
+						{contactInfo.map((item, index) => (
+							<motion.a
+								key={item.label}
+								href={item.href}
+								target={item.href.startsWith('http') ? '_blank' : undefined}
+								rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+								className={`flex items-center space-x-4 p-4 ${button3dClass} group hover:text-secondary bg-transparent`}
+								style={{
+									background: 'none',
+									color: '#fff',
+									boxShadow: 'none',
+									WebkitTapHighlightColor: 'transparent',
+									border: 'none',
+									backfaceVisibility: 'hidden',
+									willChange: 'opacity, transform'
+								}}
+								whileHover={{ scale: 1.13, boxShadow: '0 6px 32px 0 rgba(168,85,247,0.18)', backgroundColor: 'rgba(168,85,247,0.08)', filter: 'brightness(1.12)' }}
+								whileTap={{ scale: 0.96, boxShadow: '0 2px 8px 0 rgba(168,85,247,0.10)', backgroundColor: 'rgba(168,85,247,0.14)', filter: 'brightness(0.98)' }}
+								transition={{ type: 'spring', stiffness: 420, damping: 18, mass: 1.05 }}
+								initial={{ opacity: 0, y: 20 }}
+								whileInView={{ opacity: 1, y: 0 }}
+								viewport={{ once: true }}
+							>
 											<motion.div
 												className="text-2xl group-hover:scale-110 transition-transform"
 											>
@@ -152,20 +163,21 @@ export default function Contact() {
 								</h3>
 
 								<div className="grid md:grid-cols-3 gap-4">
-									{socialLinks.map((social, index) => (
-										<motion.a
-											key={social.label}
-											href={social.href}
-											target="_blank"
-											rel="noopener noreferrer"
-											className={`flex items-center space-x-4 p-4 ${button3dClass} transition-all duration-300 group ${social.color}`}
-											whileHover={{ scale: 1.08, boxShadow: '0 8px 32px 0 rgba(6,182,212,0.18)' }}
-											whileTap={{ scale: 0.97 }}
-											initial={{ opacity: 0, y: 20 }}
-											whileInView={{ opacity: 1, y: 0 }}
-											transition={{ duration: 0.6, delay: (index + 2) * 0.1 }}
-											viewport={{ once: true }}
-										>
+						{socialLinks.map((social, index) => (
+							<motion.a
+								key={social.label}
+								href={social.href}
+								target="_blank"
+								rel="noopener noreferrer"
+								className={`flex items-center space-x-4 p-4 ${button3dClass} group ${social.color}`}
+								whileHover={{ scale: 1.13, boxShadow: '0 6px 32px 0 rgba(168,85,247,0.18)', backgroundColor: 'rgba(168,85,247,0.08)', filter: 'brightness(1.12)' }}
+								whileTap={{ scale: 0.96, boxShadow: '0 2px 8px 0 rgba(168,85,247,0.10)', backgroundColor: 'rgba(168,85,247,0.14)', filter: 'brightness(0.98)' }}
+								transition={{ type: 'spring', stiffness: 420, damping: 18, mass: 1.05 }}
+								style={{ WebkitTapHighlightColor: 'transparent', backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
+								initial={{ opacity: 0, y: 20 }}
+								whileInView={{ opacity: 1, y: 0 }}
+								viewport={{ once: true }}
+							>
 											<motion.div
 												className="text-2xl group-hover:scale-110 transition-transform"
 											>
@@ -223,12 +235,14 @@ export default function Contact() {
 												Prefer email? Send me a message directly and I'll get back to you within 24 hours.
 											</p>
 
-											<motion.a
-												href="mailto:s.ahmad0147@gmail.com?subject=Let's Connect!&body=Hi Salman,%0D%0A%0D%0AI'd like to discuss..."
-												className={`btn-primary inline-flex items-center space-x-2 px-8 py-4 text-lg ${button3dClass}`}
-												whileHover={{ scale: 1.08, boxShadow: '0 8px 32px 0 rgba(168,85,247,0.18)' }}
-												whileTap={{ scale: 0.97 }}
-											>
+						<motion.a
+							href="mailto:s.ahmad0147@gmail.com?subject=Let's Connect!&body=Hi Salman,%0D%0A%0D%0AI'd like to discuss..."
+							className={`btn-primary inline-flex items-center space-x-2 px-8 py-4 text-lg ${button3dClass}`}
+							whileHover={{ scale: 1.13, boxShadow: '0 6px 32px 0 rgba(168,85,247,0.18)', background: 'linear-gradient(90deg, #a855f7 0%, #14b8a6 100%)', filter: 'brightness(1.12)' }}
+							whileTap={{ scale: 0.96, boxShadow: '0 2px 8px 0 rgba(168,85,247,0.10)', background: 'linear-gradient(90deg, #a855f7 0%, #14b8a6 100%)', filter: 'brightness(0.98)' }}
+							transition={{ type: 'spring', stiffness: 420, damping: 18, mass: 1.05 }}
+							style={{ WebkitTapHighlightColor: 'transparent', background: 'linear-gradient(90deg, #a855f7 0%, #14b8a6 100%)', color: '#fff', border: 'none', backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
+						>
 												<FaEnvelope />
 												<span>Send Email</span>
 											</motion.a>

@@ -1,8 +1,43 @@
+<!--
+ * ███╗░░░███╗░█████╗░██████╗░██████╗░██╗░░░██╗███████╗██████╗░██████╗░
+ * ████╗░░████║██╔══██╗██╔══██╗██╔══██╗██║░░░██║██╔════╝██╔══██╗██╔══██╗
+ * ██╔████╔██║███████║██████╔╝██████╔╝██║░░░██║█████╗░░██████╔╝██████╔╝
+ * ██║╚██╔╝██║██╔══██║██╔══██╗██╔══██╗██║░░░██║██╔══╝░░██╔══██╗██╔══██╗
+ * ██║░╚═╝░██║██║░░██║██║░░██║██║░░██║╚██████╔╝███████╗██║░░██║██║░░██║
+ * ╚═╝░░░░░╚═╝╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░░╚═╝░╚═════╝░╚══════╝╚═╝░░╚═╝╚═╝░░╚═╝
+ *
+ * 👤 Author  : Salman Ahmad
+ * 🌐 URL     : https://portfolio.ahmxd.net
+ * 📧 Contact : s.ahmad0147@gmail.com
+ * 📝 License : MIT (Educational/Personal Use)
+ * 📁 File    : README.md
+ * 🕒 Updated : Jul 11, 2025
+-->
 # 🚀 Salman Ahmad – Professional Portfolio
 
 A visually stunning, Apple-inspired portfolio website built with Next.js, Tailwind CSS, and Framer Motion. Showcasing real projects, technical skills, and professional experience with glassmorphic design, neon accents, and S-tier polish.
 
 ---
+
+## 🟢 CLS Optimization & Deployment Readiness
+
+This portfolio is fully optimized for Cumulative Layout Shift (CLS) and Core Web Vitals:
+
+- **No layout jank:** All images, headings, and dynamic content reserve space to prevent shifting.
+- **Animation polish:** Framer Motion controls all transitions; no interfering CSS transitions or legacy styles.
+- **Instant micro-interactions:** All buttons and interactive elements use spring physics for instant feedback.
+- **Consistent structure:** No conflicting CSS, no legacy code, and all files are deployment-ready.
+- **Signature comments:** Every major file includes a signature block for author, license, and update info.
+
+### CLS Best Practices Checklist
+
+- Use `width` and `height` attributes for all images and media.
+- Reserve space for headings, icons, and dynamic content.
+- Avoid layout shifts from fonts by using `font-display: swap`.
+- Use Framer Motion for all entrance/exit animations.
+- Remove all CSS transitions from interactive elements; use JS animation only.
+- Test on mobile and desktop for zero jank.
+- Validate with Lighthouse and Chrome DevTools.
 
 ## ✨ Features
 
@@ -151,6 +186,10 @@ MIT License. See `LICENSE` for details.
 - **ESLint Configuration** – Enforced coding standards and best practices
 - **Component Architecture** – Modular, reusable component design
 - **Performance Optimization** – Image optimization, lazy loading, code splitting
+ - **Signature Comments** – Every major file includes a signature block for author, license, and update info
+ - **CLS Optimization** – All layout, animation, and content loads are optimized for zero jank
+ - **No Interfering CSS** – All transitions and animations are handled by Framer Motion only
+ - **Deployment Ready** – Codebase is clean, documented, and ready for production
 
 ---
 

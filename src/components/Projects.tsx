@@ -89,7 +89,7 @@ const containerVariants = {
 	visible: {
 		opacity: 1,
 		transition: {
-			staggerChildren: 0.3,
+			staggerChildren: 0.22,
 		},
 	},
 };
@@ -99,7 +99,7 @@ const cardVariants = {
 	visible: {
 		opacity: 1,
 		y: 0,
-		transition: { duration: 0.8, ease: 'easeOut' },
+		transition: { duration: 0.18, ease: [0.4, 0, 0.2, 1] },
 	},
 };
 
@@ -111,8 +111,9 @@ export default function Projects() {
 					className="text-center mb-16"
 					initial={{ opacity: 0, y: 30 }}
 					whileInView={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.8 }}
+					transition={{ duration: 0.65, ease: [0.77, 0, 0.175, 1] }}
 					viewport={{ once: true }}
+					style={{ backfaceVisibility: 'hidden', willChange: 'transform, opacity' }}
 				>
 					<h2 className="text-4xl md:text-6xl font-bold mb-6">
 						Featured <span className="gradient-text">Projects</span>
@@ -134,7 +135,7 @@ export default function Projects() {
 					{projects.map((project, index) => (
 						<motion.div
 							key={project.title}
-							className="project-card card group hover:border-accent/50"
+			  className="project-card card group bg-white/90 dark:bg-background/80 border border-border shadow-lg hover:shadow-xl hover:ring-2 hover:ring-accent/20 transition-all duration-200 rounded-2xl px-6 py-5 md:px-8 md:py-7"
 							variants={cardVariants}
 							whileHover={{ y: -10 }}
 						>
@@ -146,7 +147,7 @@ export default function Projects() {
 											<motion.div
 												className="text-4xl"
 												whileHover={{ scale: 1.2, rotate: 10 }}
-												transition={{ type: 'spring', stiffness: 300 }}
+												transition={{ type: 'spring', stiffness: 420, damping: 18, mass: 1.05 }}
 											>
 												{project.icon}
 											</motion.div>
@@ -175,9 +176,10 @@ export default function Projects() {
 													target="_blank"
 													rel="noopener noreferrer"
 													className="text-muted hover:text-accent transition-colors"
-													whileHover={{ scale: 1.2 }}
-													whileTap={{ scale: 0.9 }}
-												>
+												whileHover={{ scale: 1.08 }}
+												whileTap={{ scale: 0.97 }}
+												transition={{ type: 'spring', stiffness: 420, damping: 18, mass: 1.05 }}
+											>
 													<FaGithub size={20} />
 												</motion.a>
 											)}
@@ -187,9 +189,10 @@ export default function Projects() {
 													target="_blank"
 													rel="noopener noreferrer"
 													className="text-muted hover:text-accent2 transition-colors"
-													whileHover={{ scale: 1.2 }}
-													whileTap={{ scale: 0.9 }}
-												>
+												whileHover={{ scale: 1.08 }}
+												whileTap={{ scale: 0.97 }}
+												transition={{ type: 'spring', stiffness: 420, damping: 18, mass: 1.05 }}
+											>
 													<FaExternalLinkAlt size={18} />
 												</motion.a>
 											)}
@@ -253,9 +256,15 @@ export default function Projects() {
 							target="_blank"
 							rel="noopener noreferrer"
 							className="btn-primary inline-flex items-center space-x-2 px-6 py-3 rounded-full will-change-transform"
-							whileHover={{ scale: 1.08 }}
-							whileTap={{ scale: 0.97 }}
-							transition={{ type: 'spring', stiffness: 340, damping: 22, mass: 1.1 }}
+							whileHover={{ scale: 1.13, boxShadow: '0 6px 32px 0 rgba(168,85,247,0.18)', backgroundColor: 'rgba(168,85,247,0.08)', filter: 'brightness(1.12)' }}
+							whileTap={{ scale: 0.96, boxShadow: '0 2px 8px 0 rgba(168,85,247,0.10)', backgroundColor: 'rgba(168,85,247,0.14)', filter: 'brightness(0.98)' }}
+				transition={{ type: 'spring', stiffness: 420, damping: 18, mass: 1.05 }}
+			style={{
+				WebkitTapHighlightColor: 'transparent',
+				background: 'linear-gradient(90deg, #a855f7 0%, #f43f5e 100%)',
+				color: '#fff',
+				border: 'none'
+			}}
 						>
 							<FaGithub />
 							<span>View GitHub Profile</span>
@@ -265,10 +274,11 @@ export default function Projects() {
 							href="https://medium.com/@Infamous_Morningstar"
 							target="_blank"
 							rel="noopener noreferrer"
-							className="inline-flex items-center space-x-2 px-6 py-3 rounded-full border-2 border-accent text-accent hover:bg-accent hover:text-white transition duration-300 will-change-transform"
-							whileHover={{ scale: 1.08 }}
-							whileTap={{ scale: 0.97 }}
-							transition={{ type: 'spring', stiffness: 340, damping: 22, mass: 1.1 }}
+			className={"btn-border-pure inline-flex items-center space-x-2 px-8 py-3 text-lg font-semibold border-2 border-accent text-white"}
+			whileHover={{ scale: 1.07, boxShadow: '0 4px 24px 0 #a855f733', backgroundColor: 'transparent', filter: 'brightness(1.08)' }}
+			whileTap={{ scale: 0.97, boxShadow: '0 1.5px 6px 0 #a855f722', backgroundColor: 'transparent', filter: 'brightness(0.98)' }}
+			transition={{ type: 'spring', stiffness: 420, damping: 18, mass: 1.05 }}
+			style={{ WebkitTapHighlightColor: 'transparent', background: 'transparent', color: '#fff', borderColor: '#a855f7', boxShadow: 'none' }}
 						>
 							<FaMedium className="text-accent" />
 							<span>Read My Blog</span>
