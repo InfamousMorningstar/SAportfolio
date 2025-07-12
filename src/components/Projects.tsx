@@ -249,9 +249,11 @@ export default function Projects() {
               href="https://github.com/InfamousMorningstar"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-primary inline-flex items-center space-x-2 px-6 py-3"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              className="btn-primary inline-flex items-center space-x-2 px-8 py-3 rounded-full font-semibold"
+              whileHover={{ scale: 1.07, boxShadow: '0 4px 24px 0 rgba(139,92,246,0.13)', filter: 'brightness(1.08)' }}
+              whileTap={{ scale: 0.97, boxShadow: '0 1.5px 6px 0 rgba(139,92,246,0.08)', filter: 'brightness(0.98)' }}
+              transition={{ type: 'spring', stiffness: 420, damping: 18, mass: 1.05 }}
+              style={{ background: 'linear-gradient(90deg, #8b5cf6, #14b8a6)', color: '#fff', WebkitTapHighlightColor: 'transparent', backfaceVisibility: 'hidden', willChange: 'transform' }}
             >
               <FaGithub />
               <span>View GitHub Profile</span>
@@ -261,9 +263,11 @@ export default function Projects() {
               href="https://medium.com/@Infamous_Morningstar"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-primary inline-flex items-center space-x-2 px-6 py-3"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              className="btn-primary inline-flex items-center space-x-2 px-8 py-3 rounded-full font-semibold border-2 border-accent"
+              whileHover={{ scale: 1.07, boxShadow: '0 4px 24px 0 #a855f733', backgroundColor: 'transparent', filter: 'brightness(1.08)' }}
+              whileTap={{ scale: 0.97, boxShadow: '0 1.5px 6px 0 #a855f722', backgroundColor: 'transparent', filter: 'brightness(0.98)' }}
+              transition={{ type: 'spring', stiffness: 420, damping: 18, mass: 1.05 }}
+              style={{ WebkitTapHighlightColor: 'transparent', boxShadow: 'none', backfaceVisibility: 'hidden', willChange: 'transform' }}
             >
               <FaMedium />
               <span>Read My Blog</span>
