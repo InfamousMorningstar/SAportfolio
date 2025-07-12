@@ -87,20 +87,20 @@ export default function Navbar() {
                 <div className="absolute left-0 top-1/2 -translate-y-1/2 pl-4 text-accent font-bold text-xl cursor-pointer" aria-label="Go to Home">SA</div>
               </Link>
 
-              {/* Center */}
-              <div className="hidden lg:flex mx-auto space-x-3">
+              {/* Center - Only show full nav at xl and above */}
+              <div className="hidden xl:flex mx-auto space-x-3">
                 {links.map((link) => (
                   <Link key={link} href={`#${link.toLowerCase()}`}>
-                <motion.div
-                  className="px-4 py-1 border border-border rounded-full text-sm font-medium text-neutral-200 hover:text-white hover:border-accent/80 focus-visible:ring-2 focus-visible:ring-accent/70 focus-visible:ring-offset-2 focus-visible:outline-none shadow-md hover:shadow-lg transition-all duration-150 will-change-transform backdrop-blur-md bg-black/30 hover:scale-105 font-sans"
-                  whileHover={{ scale: 1.08, boxShadow: '0 4px 16px 0 rgba(6,182,212,0.13)', backgroundColor: 'rgba(34,211,238,0.10)', filter: 'brightness(1.10)' }}
-                  whileTap={{ scale: 0.96, boxShadow: '0 1.5px 6px 0 rgba(6,182,212,0.08)', backgroundColor: 'rgba(34,211,238,0.16)', filter: 'brightness(0.97)' }}
-                  transition={{ duration: 0.18, ease: [0.4, 0, 0.2, 1] }}
-                  style={{ WebkitTapHighlightColor: 'transparent', outline: 'none', backfaceVisibility: 'hidden' }}
-                  tabIndex={0}
-                >
-                  {link}
-                </motion.div>
+                    <motion.div
+                      className="px-4 py-1 border border-border rounded-full text-sm font-medium text-neutral-200 hover:text-white hover:border-accent/80 focus-visible:ring-2 focus-visible:ring-accent/70 focus-visible:ring-offset-2 focus-visible:outline-none shadow-md hover:shadow-lg transition-all duration-150 will-change-transform backdrop-blur-md bg-black/30 hover:scale-105 font-sans"
+                      whileHover={{ scale: 1.08, boxShadow: '0 4px 16px 0 rgba(6,182,212,0.13)', backgroundColor: 'rgba(34,211,238,0.10)', filter: 'brightness(1.10)' }}
+                      whileTap={{ scale: 0.96, boxShadow: '0 1.5px 6px 0 rgba(6,182,212,0.08)', backgroundColor: 'rgba(34,211,238,0.16)', filter: 'brightness(0.97)' }}
+                      transition={{ duration: 0.18, ease: [0.4, 0, 0.2, 1] }}
+                      style={{ WebkitTapHighlightColor: 'transparent', outline: 'none', backfaceVisibility: 'hidden' }}
+                      tabIndex={0}
+                    >
+                      {link}
+                    </motion.div>
                   </Link>
                 ))}
               </div>
@@ -118,7 +118,7 @@ export default function Navbar() {
                   Resume
                 </motion.a>
                 {/* Desktop Clock */}
-                <div className="hidden lg:flex items-center px-3 py-1 rounded-full border border-neutral-800 text-sm font-mono backdrop-blur-md bg-black/30">
+                <div className="hidden xl:flex items-center px-3 py-1 rounded-full border border-neutral-800 text-sm font-mono backdrop-blur-md bg-black/30">
                   <span className="text-accent font-mono mr-1">{time.mdt}</span>
                   <span className="text-white/50 text-xs">MDT</span>
                   <span className="mx-2 text-white/30">|</span>
@@ -127,7 +127,7 @@ export default function Navbar() {
                 </div>
                 <motion.button
                   layout
-                  className="lg:hidden rounded-full"
+                  className="xl:hidden rounded-full"
                   onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                   whileHover={{ scale: 1.07, boxShadow: '0 4px 24px 0 rgba(6,182,212,0.13)', backgroundColor: 'rgba(34,211,238,0.08)', filter: 'brightness(1.08)' }}
                   whileTap={{ scale: 0.97, boxShadow: '0 1.5px 6px 0 rgba(6,182,212,0.08)', backgroundColor: 'rgba(34,211,238,0.14)', filter: 'brightness(0.98)' }}
@@ -148,14 +148,14 @@ export default function Navbar() {
                 exit={{ opacity: 0, scale: 0.96, y: -20 }}
                 transition={{ duration: 0.8, ease: 'easeInOut' }}
                 style={{ transitionProperty: 'opacity, transform', willChange: 'opacity, transform' }}
-                className="lg:hidden bg-black/80 backdrop-blur-md px-4 pt-4 pb-8 space-y-4 text-center"
+                className="xl:hidden bg-black/80 backdrop-blur-md px-4 pt-4 pb-8 space-y-4 text-center"
               >
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 30 }}
                   transition={{ duration: 0.6, delay: 0.05, ease: [0.4, 0, 0.2, 1] }}
-                  className="lg:hidden flex flex-col items-center space-y-3 md:flex-row md:space-y-0 md:space-x-4 md:justify-center md:items-center"
+                  className="xl:hidden flex flex-col items-center space-y-3 md:flex-row md:space-y-0 md:space-x-4 md:justify-center md:items-center"
                 >
                   {links.map((link) => (
                     <Link key={link} href={`#${link.toLowerCase()}`}>
