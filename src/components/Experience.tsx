@@ -78,8 +78,9 @@ export default function Experience() {
           className="text-center mb-16"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.65, ease: [0.77, 0, 0.175, 1] }}
           viewport={{ once: true }}
+          style={{ backfaceVisibility: 'hidden', willChange: 'transform, opacity' }}
         >
           <h2 className="text-4xl md:text-6xl font-bold mb-6">
             Work <span className="gradient-text">Experience</span>
@@ -96,6 +97,7 @@ export default function Experience() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
+          style={{ backfaceVisibility: 'hidden', willChange: 'transform, opacity' }}
         >
           {/* Timeline Line */}
           <div className="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 w-0.5 h-full bg-gradient-to-b from-accent via-accent2 to-secondary"></div>
@@ -107,30 +109,38 @@ export default function Experience() {
                 index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
               }`}
               variants={itemVariants}
+              style={{ backfaceVisibility: 'hidden', willChange: 'transform, opacity' }}
             >
               {/* Timeline Node */}
               <motion.div
-                className="absolute left-6 md:left-1/2 transform md:-translate-x-1/2 w-6 h-6 bg-gradient-to-r from-accent to-accent2 rounded-full border-4 border-background z-10"
-                whileHover={{ scale: 1.2 }}
-                transition={{ type: 'spring', stiffness: 300 }}
+                className="absolute left-6 md:left-1/2 transform md:-translate-x-1/2 w-6 h-6 bg-gradient-to-r from-accent to-accent2 rounded-full border-4 border-background z-10 will-change-transform"
+                whileHover={{ scale: 1.13, boxShadow: '0 4px 16px 0 rgba(168,85,247,0.13)', backgroundColor: 'rgba(168,85,247,0.08)', filter: 'brightness(1.12)' }}
+                whileTap={{ scale: 0.96, boxShadow: '0 1.5px 6px 0 rgba(168,85,247,0.08)', backgroundColor: 'rgba(168,85,247,0.14)', filter: 'brightness(0.98)' }}
+                transition={{ duration: 0.18, ease: [0.4, 0, 0.2, 1] }}
+                style={{ WebkitTapHighlightColor: 'transparent', backfaceVisibility: 'hidden' }}
               />
 
               {/* Content Card */}
-              <div className={`w-full md:w-5/12 ml-16 md:ml-0 ${
-                index % 2 === 0 ? 'md:mr-auto md:pr-8' : 'md:ml-auto md:pl-8'
-              }`}>
+              <div
+                className={`w-full md:w-5/12 ml-16 md:ml-0 ${
+                  index % 2 === 0 ? 'md:mr-auto md:pr-8' : 'md:ml-auto md:pl-8'
+                }`}
+              >
                 <motion.div
-                  className="card group hover:border-accent/50"
+                  className="card group bg-white/90 dark:bg-background/80 border border-border shadow-lg hover:shadow-xl hover:ring-2 hover:ring-accent/20 transition-all duration-200 rounded-2xl px-6 py-5 md:px-8 md:py-7"
                   whileHover={{ y: -5, scale: 1.02 }}
-                  transition={{ type: 'spring', stiffness: 300 }}
+                  whileTap={{ scale: 0.97 }}
+                  transition={{ duration: 0.18, ease: [0.4, 0, 0.2, 1] }}
+                  style={{ backfaceVisibility: 'hidden', willChange: 'transform, opacity' }}
                 >
                   {/* Header */}
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center space-x-3">
                       <motion.div
                         className="text-2xl"
-                        whileHover={{ rotate: 10, scale: 1.1 }}
-                        transition={{ type: 'spring', stiffness: 300 }}
+                        whileHover={{ rotate: 10, scale: 1.08 }}
+                        whileTap={{ scale: 0.97 }}
+                        transition={{ type: 'spring', stiffness: 340, damping: 22, mass: 1.1 }}
                       >
                         {experience.icon}
                       </motion.div>
@@ -141,8 +151,11 @@ export default function Experience() {
                         <p className="text-accent2 font-semibold">{experience.company}</p>
                       </div>
                     </div>
-                    <span className="px-3 py-1 bg-accent/10 border border-accent/30 rounded-full text-accent text-xs font-medium">
-                      {experience.type}
+                    <span
+                      className="inline-flex items-center justify-center px-2.5 py-0.5 sm:px-3 sm:py-1 bg-white/80 dark:bg-accent/10 border border-accent/15 shadow-[0_1px_6px_0_rgba(0,0,0,0.06)] rounded-full text-accent font-semibold shrink-0 text-[0.78rem] sm:text-xs max-w-fit text-center whitespace-nowrap h-6 sm:h-7 leading-none select-none transition-all duration-200"
+                      style={{ lineHeight: 1.15, WebkitFontSmoothing: 'antialiased', fontWeight: 600 }}
+                    >
+                      Full-Time
                     </span>
                   </div>
 
@@ -169,8 +182,9 @@ export default function Experience() {
                           className="flex items-start space-x-2 text-sm text-muted"
                           initial={{ opacity: 0, x: 20 }}
                           whileInView={{ opacity: 1, x: 0 }}
-                          transition={{ delay: idx * 0.1 }}
+                          transition={{ duration: 0.18, delay: idx * 0.08, ease: [0.4, 0, 0.2, 1] }}
                           viewport={{ once: true }}
+                          style={{ backfaceVisibility: 'hidden', willChange: 'transform, opacity' }}
                         >
                           <div className="w-1.5 h-1.5 bg-accent rounded-full mt-1.5 flex-shrink-0"></div>
                           <span>{responsibility}</span>
@@ -208,8 +222,9 @@ export default function Experience() {
                           className="flex items-start space-x-2 text-sm text-muted"
                           initial={{ opacity: 0, x: 20 }}
                           whileInView={{ opacity: 1, x: 0 }}
-                          transition={{ delay: idx * 0.1 + 0.2 }}
+                          transition={{ duration: 0.18, delay: idx * 0.08 + 0.12, ease: [0.4, 0, 0.2, 1] }}
                           viewport={{ once: true }}
+                          style={{ backfaceVisibility: 'hidden', willChange: 'transform, opacity' }}
                         >
                           <div className="w-1.5 h-1.5 bg-accent rounded-full mt-1.5 flex-shrink-0"></div>
                           <span>{achievement}</span>
