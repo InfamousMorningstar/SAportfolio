@@ -25,6 +25,9 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata = {
   title: 'Salman Ahmad // 0xPortfolio',
+  icons: {
+    icon: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({
