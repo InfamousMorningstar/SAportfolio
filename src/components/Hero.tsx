@@ -1,3 +1,4 @@
+
 /*
  * ███╗░░░███╗░█████╗░██████╗░██████╗░██╗░░░██╗███████╗██████╗░██████╗░
  * ████╗░░████║██╔══██╗██╔══██╗██╔══██╗██║░░░██║██╔════╝██╔══██╗██╔══██╗
@@ -174,7 +175,7 @@ export default function Hero() {
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 md:pt-32 lg:pt-36">
       {/* Animated Background Grid */}
       <div className="absolute inset-0 grid-bg opacity-20" />
-      
+
       {/* Floating Geometric Shapes */}
       <FloatingShape 
         className="w-20 h-20 border-2 border-accent rounded-lg top-20 left-20" 
@@ -193,9 +194,9 @@ export default function Hero() {
         delay={6} 
       />
 
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center" style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}>
+      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center" style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}>
         {/* Main Heading */}
-        <div className="mb-8">
+        <div className="mb-8 min-h-[3.5rem] xs:min-h-[4.5rem] sm:min-h-[5.5rem] md:min-h-[6.5rem] flex items-center justify-center">
           <div className="flex items-center justify-center mb-4 w-full whitespace-nowrap" style={{ minHeight: '2.5em' }}>
             <span className="flex items-center w-full">
               {/* Cursor (not part of centering) */}
@@ -224,7 +225,7 @@ export default function Hero() {
 
         {/* Subtitle */}
         <motion.div
-          className="mb-12"
+          className="mb-12 min-h-[5.5rem] xs:min-h-[6.5rem] sm:min-h-[7.5rem] md:min-h-[8.5rem] flex flex-col justify-center"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: showSubtext ? 1 : 0, y: showSubtext ? 0 : 30 }}
           transition={{ duration: 0.9, ease: [0.77, 0, 0.175, 1] }}
@@ -246,7 +247,7 @@ export default function Hero() {
 
         {/* Button Group */}
         <motion.div
-          className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6 mb-16"
+          className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6 mb-16 min-h-[4.5rem] xs:min-h-[5.5rem] sm:min-h-[6.5rem]"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: showSubtext ? 1 : 0, y: showSubtext ? 0 : 30 }}
           transition={{ duration: 0.9, delay: 0.3, ease: [0.77, 0, 0.175, 1] }}

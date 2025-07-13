@@ -16,8 +16,9 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Head from 'next/head';
 import { FaServer, FaCode, FaDocker, FaLinux, FaNetworkWired, FaCloud, FaUserTie } from 'react-icons/fa';
-import Image from 'next/image';
+
 
 const skills = [
   {
@@ -63,8 +64,17 @@ const itemVariants = {
 
 export default function About() {
   return (
-    <section id="about" className="min-h-screen py-20 px-6 relative">
-      <div className="max-w-7xl mx-auto">
+    <>
+      <Head>
+        {/* Preload the largest image for LCP (HTML attributes, not React props) */}
+        <link
+          rel="preload"
+          as="image"
+          href="/images/profile-photo-1600.avif"
+        />
+      </Head>
+      <section id="about" className="min-h-screen py-20 px-6 relative">
+        <div className="max-w-7xl mx-auto">
         <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 30 }}
@@ -144,13 +154,27 @@ export default function About() {
             viewport={{ once: true }}
           >
             <div className="relative h-[32rem] max-w-sm mx-auto border-2 border-accent/30 rounded-lg overflow-hidden hover:border-accent/50 transition-colors duration-300">
-              <Image
-                src="/images/profile-photo.webp"
-                alt="Ahmad Profile Photo"
-                fill
-                className="object-cover rounded-lg"
-                priority
-              />
+              <picture>
+                <source
+                  type="image/avif"
+                  srcSet="/images/profile-photo-320.avif 320w, /images/profile-photo-480.avif 480w, /images/profile-photo-768.avif 768w, /images/profile-photo-1024.avif 1024w, /images/profile-photo-1280.avif 1280w, /images/profile-photo-1600.avif 1600w"
+                  sizes="(max-width: 640px) 90vw, (max-width: 1024px) 60vw, 32rem"
+                />
+                <source
+                  type="image/webp"
+                  srcSet="/images/profile-photo-320.webp 320w, /images/profile-photo-480.webp 480w, /images/profile-photo-768.webp 768w, /images/profile-photo-1024.webp 1024w, /images/profile-photo-1280.webp 1280w, /images/profile-photo-1600.webp 1600w"
+                  sizes="(max-width: 640px) 90vw, (max-width: 1024px) 60vw, 32rem"
+                />
+                <img
+                  src="/images/profile-photo-768.webp"
+                  alt="Ahmad Profile Photo"
+                  className="object-cover rounded-lg w-full h-full"
+                  width="400"
+                  height="512"
+                  loading="eager"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
+              </picture>
               <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent rounded-lg"></div>
             </div>
           </motion.div>
@@ -191,6 +215,7 @@ export default function About() {
           ))}
         </motion.div>
       </div>
-    </section>
+      </section>
+    </>
   );
 }

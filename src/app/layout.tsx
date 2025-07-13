@@ -1,3 +1,6 @@
+
+"use client";
+import React from 'react';
 import type { Metadata } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
 // CLS TIP: next/font/google uses font-display: swap by default, preventing FOIT/FOUC.
@@ -19,35 +22,24 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ['400', '500', '600'],
 });
 
-export const metadata: Metadata = {
-  title: 'Salman Ahmad - Portfolio',
-  description: 'DevOps Engineer & Full-Stack Developer passionate about automation, infrastructure, and innovative solutions.',
-  keywords: ['DevOps', 'Full-Stack', 'Developer', 'Next.js', 'React', 'TypeScript', 'TrueNAS', 'Kubernetes'],
-  authors: [{ name: 'Salman Ahmad' }],
-  openGraph: {
-    title: 'Salman Ahmad - Portfolio',
-    description: 'DevOps Engineer & Full-Stack Developer',
-    url: 'https://portfolio.ahmxd.net',
-    siteName: 'Salman Ahmad Portfolio',
-    locale: 'en_US',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Salman Ahmad - Portfolio',
-    description: 'DevOps Engineer & Full-Stack Developer',
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
+// Metadata export removed: not allowed in a client component
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Scroll to Hero section on page load
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const hero = document.getElementById('home');
+      if (hero) {
+        hero.scrollIntoView({ behavior: 'auto' });
+      } else {
+        window.scrollTo(0, 0);
+      }
+    }
+  }, []);
   return (
     <html lang="en" className={`dark ${inter.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable}`}>
       <head>

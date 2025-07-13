@@ -173,9 +173,9 @@ export default function Navbar() {
                   transition={{ duration: 0.6, delay: 0.12, ease: [0.4, 0, 0.2, 1] }}
                   className="flex justify-center gap-4 pt-2"
                 >
-                  <a href="https://github.com" target="_blank"><Github className="text-white" size={20} /></a>
-                  <a href="https://linkedin.com" target="_blank"><Linkedin className="text-white" size={20} /></a>
-                  <a href="mailto:s.ahmad0147@gmail.com"><Mail className="text-white" size={20} /></a>
+                  <a href="https://github.com" target="_blank" aria-label="GitHub"><Github className="text-white" size={20} /></a>
+                  <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn"><Linkedin className="text-white" size={20} /></a>
+                  <a href="mailto:s.ahmad0147@gmail.com" aria-label="Email"><Mail className="text-white" size={20} /></a>
                 </motion.div>
                 {/* Mobile Clock */}
                 <motion.div
