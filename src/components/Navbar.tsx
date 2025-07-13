@@ -1,3 +1,5 @@
+
+"use client";
 // Final layout fix with Apple-style pill clock and proper alignment
 
 import React, { useState, useEffect } from "react";

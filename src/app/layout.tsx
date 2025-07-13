@@ -22,7 +22,10 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ['400', '500', '600'],
 });
 
-// Metadata export removed: not allowed in a server component
+
+export const metadata = {
+  title: 'Salman Ahmad // 0xPortfolio',
+};
 
 export default function RootLayout({
   children,
