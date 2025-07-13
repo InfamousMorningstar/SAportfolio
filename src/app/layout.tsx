@@ -30,18 +30,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`dark ${inter.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable}`}>
-      <head>
-        <title>Salman Ahmad - Portfolio</title>
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-        {/* Preload LCP image for faster paint */}
-        <link rel="preload" as="image" href="/images/profile-photo-1600.avif" />
-        {/*
-          CLS TIP: For any <img> or <Image> tags, always specify width/height or reserve space with aspect-ratio or min-height.
-          For dynamic/injected content, always reserve space with min-height or skeletons.
-        */}
-      </head>
-      <body className="min-h-screen bg-black text-white antialiased">
+    <html lang="en" className="dark">
+      <body className={`min-h-screen bg-black text-white antialiased ${inter.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable}`}>
         {children}
         {/* Defer analytics for faster FCP/LCP */}
         <Analytics />

@@ -103,6 +103,47 @@ export default function Navbar() {
 
               {/* Right */}
               <div className="absolute right-0 pr-4 flex items-center space-x-3">
+                {/* Social Icons Desktop */}
+                <div className="hidden xl:flex items-center gap-3">
+                  <motion.a
+                    href="https://github.com/InfamousMorningstar"
+                    target="_blank"
+                    aria-label="GitHub"
+                    whileHover={{ scale: 1.18, boxShadow: '0 2px 16px 0 rgba(168,85,247,0.32)' }}
+                    whileTap={{ scale: 0.93, boxShadow: '0 1px 6px 0 rgba(168,85,247,0.18)' }}
+                    transition={{ type: 'spring', stiffness: 520, damping: 20, mass: 0.7 }}
+                    className="transition-all duration-150 rounded-full focus-visible:ring-2 focus-visible:ring-accent/70 focus-visible:outline-none"
+                    style={{ WebkitTapHighlightColor: 'transparent', backfaceVisibility: 'hidden' }}
+                  >
+                    <Github className="text-accent2" size={20} />
+                    <span className="sr-only">GitHub</span>
+                  </motion.a>
+                  <motion.a
+                    href="https://www.linkedin.com/in/salman-ahmad-6788811b6/"
+                    target="_blank"
+                    aria-label="LinkedIn"
+                    whileHover={{ scale: 1.18, boxShadow: '0 2px 16px 0 rgba(168,85,247,0.32)' }}
+                    whileTap={{ scale: 0.93, boxShadow: '0 1px 6px 0 rgba(168,85,247,0.18)' }}
+                    transition={{ type: 'spring', stiffness: 520, damping: 20, mass: 0.7 }}
+                    className="transition-all duration-150 rounded-full focus-visible:ring-2 focus-visible:ring-accent2/70 focus-visible:outline-none"
+                    style={{ WebkitTapHighlightColor: 'transparent', backfaceVisibility: 'hidden' }}
+                  >
+                    <Linkedin className="text-accent2" size={20} />
+                    <span className="sr-only">LinkedIn</span>
+                  </motion.a>
+                  <motion.a
+                    href="mailto:s.ahmad0147@gmail.com"
+                    aria-label="Email"
+                    whileHover={{ scale: 1.18, boxShadow: '0 2px 16px 0 rgba(168,85,247,0.32)' }}
+                    whileTap={{ scale: 0.93, boxShadow: '0 1px 6px 0 rgba(168,85,247,0.18)' }}
+                    transition={{ type: 'spring', stiffness: 520, damping: 20, mass: 0.7 }}
+                    className="transition-all duration-150 rounded-full focus-visible:ring-2 focus-visible:ring-secondary/70 focus-visible:outline-none"
+                    style={{ WebkitTapHighlightColor: 'transparent', backfaceVisibility: 'hidden' }}
+                  >
+                    <Mail className="text-accent2" size={20} />
+                    <span className="sr-only">Email</span>
+                  </motion.a>
+                </div>
                 <motion.a
                   href="/resume.pdf"
                   className="px-4 py-1 rounded-full border-2 border-accent text-accent text-sm font-semibold shadow-lg hover:bg-accent hover:text-white will-change-transform transition-all duration-150"
