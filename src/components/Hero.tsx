@@ -256,6 +256,7 @@ export default function Hero() {
           <motion.button
             onClick={scrollToProjects}
             className={"btn-primary px-8 py-3 text-lg font-semibold rounded-full will-change-transform"}
+            aria-label="Explore My Work section"
             whileHover={{ scale: 1.07, boxShadow: '0 4px 24px 0 rgba(139,92,246,0.13)', filter: 'brightness(1.08)' }}
             whileTap={{ scale: 0.97, boxShadow: '0 1.5px 6px 0 rgba(139,92,246,0.08)', filter: 'brightness(0.98)' }}
             transition={{ type: 'spring', stiffness: 420, damping: 18, mass: 1.05 }}
@@ -267,16 +268,19 @@ export default function Hero() {
               willChange: 'transform'
             }}
           >
+            <span className="sr-only">Explore My Work section</span>
             Explore My Work
           </motion.button>
           <motion.button
             onClick={scrollToContact}
             className={"btn-border-pure px-8 py-3 text-lg font-semibold sm:ml-4 will-change-transform"}
+            aria-label="Contact Me section"
             whileHover={{ scale: 1.07, boxShadow: '0 4px 24px 0 #a855f733', backgroundColor: 'transparent', filter: 'brightness(1.08)' }}
             whileTap={{ scale: 0.97, boxShadow: '0 1.5px 6px 0 #a855f722', backgroundColor: 'transparent', filter: 'brightness(0.98)' }}
             transition={{ type: 'spring', stiffness: 420, damping: 18, mass: 1.05 }}
             style={{ WebkitTapHighlightColor: 'transparent', boxShadow: 'none', backfaceVisibility: 'hidden', willChange: 'transform' }}
           >
+            <span className="sr-only">Contact Me section</span>
             Contact Me
           </motion.button>
         </motion.div>

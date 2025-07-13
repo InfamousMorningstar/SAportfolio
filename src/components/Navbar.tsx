@@ -106,11 +106,13 @@ export default function Navbar() {
                 <motion.a
                   href="/resume.pdf"
                   className="px-4 py-1 rounded-full border-2 border-accent text-accent text-sm font-semibold shadow-lg hover:bg-accent hover:text-white will-change-transform transition-all duration-150"
+                  aria-label="Download Resume PDF"
                   whileHover={{ scale: 1.07, boxShadow: '0 4px 16px 0 rgba(6,182,212,0.13)', backgroundColor: 'rgba(34,211,238,0.08)', filter: 'brightness(1.08)' }}
                   whileTap={{ scale: 0.97, boxShadow: '0 1.5px 6px 0 rgba(6,182,212,0.08)', backgroundColor: 'rgba(34,211,238,0.14)', filter: 'brightness(0.98)' }}
                   transition={{ duration: 0.18, ease: [0.4, 0, 0.2, 1] }}
                   style={{ WebkitTapHighlightColor: 'transparent', backfaceVisibility: 'hidden' }}
                 >
+                  <span className="sr-only">Download Resume PDF</span>
                   Resume
                 </motion.a>
                 {/* Desktop Clock */}
@@ -125,11 +127,13 @@ export default function Navbar() {
                   layout
                   className="xl:hidden rounded-full"
                   onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                  aria-label={isMobileMenuOpen ? "Close mobile menu" : "Open mobile menu"}
                   whileHover={{ scale: 1.07, boxShadow: '0 4px 24px 0 rgba(6,182,212,0.13)', backgroundColor: 'rgba(34,211,238,0.08)', filter: 'brightness(1.08)' }}
                   whileTap={{ scale: 0.97, boxShadow: '0 1.5px 6px 0 rgba(6,182,212,0.08)', backgroundColor: 'rgba(34,211,238,0.14)', filter: 'brightness(0.98)' }}
                   transition={{ type: 'spring', stiffness: 420, damping: 18, mass: 1.05 }}
                   style={{ WebkitTapHighlightColor: 'transparent' }}
                 >
+                  <span className="sr-only">{isMobileMenuOpen ? "Close mobile menu" : "Open mobile menu"}</span>
                   {isMobileMenuOpen ? <X className="text-white" size={24} /> : <Menu className="text-accent" size={24} />}
                 </motion.button>
               </div>
