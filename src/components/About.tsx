@@ -166,13 +166,14 @@ export default function About() {
                   sizes="(max-width: 640px) 90vw, (max-width: 1024px) 60vw, 32rem"
                 />
                 <img
-                  src="/images/profile-photo-768.webp"
+                  src="/images/profile-photo-1600.avif"
                   alt="Ahmad Profile Photo"
                   className="object-cover rounded-lg w-full h-full"
-                  width="400"
-                  height="512"
+                  width="512"
+                  height="640"
                   loading="eager"
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  fetchPriority="high"
                 />
               </picture>
               <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent rounded-lg"></div>

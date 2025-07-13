@@ -45,6 +45,8 @@ export default function RootLayout({
       <head>
         <title>Salman Ahmad - Portfolio</title>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        {/* Preload LCP image for faster paint */}
+        <link rel="preload" as="image" href="/images/profile-photo-1600.avif" />
         {/*
           CLS TIP: For any <img> or <Image> tags, always specify width/height or reserve space with aspect-ratio or min-height.
           For dynamic/injected content, always reserve space with min-height or skeletons.
@@ -52,6 +54,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen bg-black text-white antialiased">
         {children}
+        {/* Defer analytics for faster FCP/LCP */}
         <Analytics />
         <SpeedInsights />
       </body>

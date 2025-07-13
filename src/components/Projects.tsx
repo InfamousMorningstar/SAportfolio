@@ -13,7 +13,7 @@
  * 📁 File    : Projects.tsx
  * 🕒 Updated : Jun 12, 2025
  */
-'use client';
+"use client";
 
 import { motion } from 'framer-motion';
 import { FaGithub, FaExternalLinkAlt, FaServer, FaChartLine, FaRobot, FaMedium, FaGlobe } from 'react-icons/fa';
@@ -106,7 +106,6 @@ const cardVariants = {
     transition: { duration: 0.8, ease: 'easeOut' }
   }
 };
-
 export default function Projects() {
   return (
     <section id="projects" className="min-h-screen py-20 px-6 relative">
@@ -258,7 +257,6 @@ export default function Projects() {
               <FaGithub />
               <span>View GitHub Profile</span>
             </motion.a>
-            
             <motion.a
               href="https://medium.com/@Infamous_Morningstar"
               target="_blank"
