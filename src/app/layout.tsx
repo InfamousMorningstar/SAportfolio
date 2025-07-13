@@ -43,6 +43,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`dark ${inter.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable}`}>
       <head>
+        <title>Salman Ahmad - Portfolio</title>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         {/*
           CLS TIP: For any <img> or <Image> tags, always specify width/height or reserve space with aspect-ratio or min-height.
