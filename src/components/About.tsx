@@ -43,22 +43,23 @@ const skills = [
   }
 ];
 
+// Ultra-premium cinematic animation
 const containerVariants = {
-  hidden: { opacity: 0 },
+  hidden: {},
   visible: {
-    opacity: 1,
     transition: {
-      staggerChildren: 0.2
+      staggerChildren: 0.28
     }
   }
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { 
-    opacity: 1, 
-    y: 0,
-    transition: { duration: 0.6, ease: 'easeOut' }
+  hidden: { scale: 0.96, filter: 'blur(12px)', opacity: 0.6 },
+  visible: {
+    scale: 1,
+    filter: 'blur(0px)',
+    opacity: 1,
+    transition: { duration: 1.05, ease: [0.77, 0, 0.175, 1] }
   }
 };
 
@@ -92,10 +93,11 @@ export default function About() {
           {/* Left Column - Text */}
           <motion.div
             className="space-y-6"
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+            initial={{ scale: 0.96, filter: 'blur(12px)', opacity: 0.6 }}
+            whileInView={{ scale: 1, filter: 'blur(0px)', opacity: 1 }}
+            transition={{ duration: 1.05, ease: [0.77, 0, 0.175, 1] }}
             viewport={{ once: true }}
+            style={{ willChange: 'transform, filter, opacity', backfaceVisibility: 'hidden' }}
           >
             <div className="text-lg md:text-xl text-muted leading-relaxed space-y-6">
               <p>
@@ -132,12 +134,15 @@ export default function About() {
               whileInView="visible"
               viewport={{ once: true }}
             >
-              {['Problem Solver', 'Team Player', 'Self-Learner', 'Innovation-Driven'].map((trait, index) => (
+              {['Problem Solver', 'Team Player', 'Self-Learner', 'Innovation-Driven'].map((trait) => (
                 <motion.span
                   key={trait}
-                  className="px-4 py-2 bg-accent/10 border border-accent/30 rounded-full text-accent text-sm font-medium"
+                  className="px-4 py-2 bg-accent/10 border border-accent/30 rounded-full text-accent text-sm font-medium transition-all duration-300 focus-visible:outline focus-visible:ring-2 focus-visible:ring-accent/70"
                   variants={itemVariants}
-                  whileHover={{ scale: 1.05, backgroundColor: 'rgba(139, 92, 246, 0.2)' }}
+                  whileHover={{ scale: 1.11, y: -6, boxShadow: '0 8px 32px 0 rgba(139,92,246,0.13)', borderColor: 'var(--tw-accent)', backgroundColor: 'rgba(139, 92, 246, 0.22)' }}
+                  style={{ willChange: 'transform, box-shadow, border-color, background-color, filter', backfaceVisibility: 'hidden' }}
+                  tabIndex={0}
+                  aria-label={trait}
                 >
                   {trait}
                 </motion.span>
@@ -148,10 +153,11 @@ export default function About() {
           {/* Right Column - Profile Image */}
           <motion.div
             className="relative"
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+            initial={{ scale: 0.96, filter: 'blur(12px)', opacity: 0.6 }}
+            whileInView={{ scale: 1, filter: 'blur(0px)', opacity: 1 }}
+            transition={{ duration: 1.05, ease: [0.77, 0, 0.175, 1] }}
             viewport={{ once: true }}
+            style={{ willChange: 'transform, filter, opacity', backfaceVisibility: 'hidden' }}
           >
             <div className="relative h-[32rem] max-w-sm mx-auto border-2 border-accent/30 rounded-lg overflow-hidden hover:border-accent/50 transition-colors duration-300">
               <picture>

@@ -1,5 +1,5 @@
 
-"use client";
+// No 'use client' — this is now a server component
 import React from 'react';
 import type { Metadata } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
@@ -22,24 +22,13 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ['400', '500', '600'],
 });
 
-// Metadata export removed: not allowed in a client component
+// Metadata export removed: not allowed in a server component
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  // Scroll to Hero section on page load
-  React.useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const hero = document.getElementById('home');
-      if (hero) {
-        hero.scrollIntoView({ behavior: 'auto' });
-      } else {
-        window.scrollTo(0, 0);
-      }
-    }
-  }, []);
   return (
     <html lang="en" className={`dark ${inter.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable}`}>
       <head>

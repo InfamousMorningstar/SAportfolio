@@ -31,7 +31,7 @@ export default function Navbar() {
  * 📧 Contact : s.ahmad0147@gmail.com
  * 📝 License : MIT (Educational/Personal Use)
  * 📁 File    : Navbar.tsx
- * 🕒 Updated : Jul 12, 2025
+ * 🕒 Updated : Jul 13, 2025
  */
 
       setTime({ mdt, utc });
@@ -72,8 +72,8 @@ export default function Navbar() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -80, opacity: 0, pointerEvents: 'none' }}
           transition={{ duration: 0.65, ease: [0.77, 0, 0.175, 1] }}
-          className="fixed top-0 w-full z-50 shadow-lg border border-border bg-black/60 dark:bg-background/80 backdrop-blur-2xl backdrop-saturate-150 rounded-b-2xl transition-none"
-          style={{ WebkitBackdropFilter: 'blur(32px) saturate(150%)', backdropFilter: 'blur(32px) saturate(150%)', willChange: 'transform, opacity', backfaceVisibility: 'hidden' }}
+          className="fixed top-0 w-full z-50 bg-black/40 backdrop-blur-xl border-b border-white/20 rounded-b-3xl transition-none"
+          style={{ willChange: 'transform, opacity', backfaceVisibility: 'hidden' }}
         >
           <div className="relative w-full px-4 sm:px-6 lg:px-8">
             {/* LED strip effect */}
@@ -177,11 +177,11 @@ export default function Navbar() {
                   transition={{ duration: 0.6, delay: 0.12, ease: [0.4, 0, 0.2, 1] }}
                   className="flex justify-center gap-4 pt-2"
                 >
-                  <a href="https://github.com" target="_blank" aria-label="GitHub">
+                  <a href="https://github.com/InfamousMorningstar" target="_blank" aria-label="GitHub">
                     <Github className="text-white" size={20} />
                     <span className="sr-only">GitHub</span>
                   </a>
-                  <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn">
+                  <a href="https://www.linkedin.com/in/salman-ahmad-6788811b6/" target="_blank" aria-label="LinkedIn">
                     <Linkedin className="text-white" size={20} />
                     <span className="sr-only">LinkedIn</span>
                   </a>

@@ -61,22 +61,23 @@ const socialLinks = [
 	}
 ];
 
+// Ultra-premium cinematic animation
 const containerVariants = {
-	hidden: { opacity: 0 },
+	hidden: {},
 	visible: {
-		opacity: 1,
 		transition: {
-			staggerChildren: 0.2
+			staggerChildren: 0.24
 		}
 	}
 };
 
 const itemVariants = {
-	hidden: { opacity: 0, y: 30 },
+	hidden: { scale: 0.96, filter: 'blur(12px)', opacity: 0.6 },
 	visible: {
+		scale: 1,
+		filter: 'blur(0px)',
 		opacity: 1,
-		y: 0,
-		transition: { duration: 0.6, ease: 'easeOut' }
+		transition: { duration: 1.05, ease: [0.77, 0, 0.175, 1] }
 	}
 };
 
@@ -108,14 +109,14 @@ export default function Contact() {
 
 				<div className="max-w-4xl mx-auto">
 					{/* Single Column - Complete Contact Information */}
-				<motion.div
-	className="card bg-white/90 dark:bg-background/80 border border-border shadow-lg hover:shadow-xl hover:ring-2 hover:ring-accent/20 transition-all duration-200 rounded-2xl px-6 py-5 md:px-8 md:py-7"
-					initial={{ opacity: 0, y: 50 }}
-					whileInView={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.8, ease: [0.77, 0, 0.175, 1] }}
-					viewport={{ once: true }}
-					style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
-				>
+		<motion.div
+		  className="card bg-white/10 dark:bg-black/30 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-lg px-6 py-5 md:px-8 md:py-7"
+		  initial={{ scale: 0.96, filter: 'blur(12px)', opacity: 0.6 }}
+		  whileInView={{ scale: 1, filter: 'blur(0px)', opacity: 1 }}
+		  transition={{ duration: 1.05, ease: [0.77, 0, 0.175, 1] }}
+		  viewport={{ once: true }}
+		  style={{ willChange: 'transform, filter, opacity', backfaceVisibility: 'hidden' }}
+		>
 						<div className="space-y-8">
 							{/* Contact Information Section */}
 							<div>

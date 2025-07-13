@@ -88,22 +88,23 @@ const projects = [
   }
 ];
 
+// Cinematic minimalist card animation: scale/blur reveal
 const containerVariants = {
-  hidden: { opacity: 0 },
+  hidden: {},
   visible: {
-    opacity: 1,
     transition: {
-      staggerChildren: 0.3
+      staggerChildren: 0.22
     }
   }
 };
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: { 
-    opacity: 1, 
-    y: 0,
-    transition: { duration: 0.8, ease: 'easeOut' }
+  hidden: { scale: 0.96, filter: 'blur(8px)', opacity: 0.7 },
+  visible: {
+    scale: 1,
+    filter: 'blur(0px)',
+    opacity: 1,
+    transition: { duration: 0.85, ease: [0.22, 0.61, 0.36, 1] }
   }
 };
 export default function Projects() {
@@ -136,9 +137,16 @@ export default function Projects() {
           {projects.map((project, index) => (
             <motion.div
               key={project.title}
-              className="project-card card group hover:border-accent/50"
+              className="project-card card group hover:border-accent/60 transition-all duration-300"
               variants={cardVariants}
-              whileHover={{ y: -10 }}
+              whileHover={{
+                scale: 1.025,
+                boxShadow: '0 8px 32px 0 rgba(20,184,166,0.10)',
+                borderColor: 'var(--tw-accent)',
+                filter: 'blur(0px)'
+              }}
+              transition={{ type: 'spring', stiffness: 180, damping: 18, mass: 1.05 }}
+              style={{ willChange: 'transform, box-shadow, border-color, filter' }}
             >
               <div className="grid lg:grid-cols-3 gap-8">
                 {/* Left Column - Project Info */}
@@ -214,18 +222,14 @@ export default function Projects() {
                 <div className="space-y-4">
                   <h4 className="text-lg font-semibold text-accent2 mb-4">Key Features</h4>
                   <ul className="space-y-3">
-                    {project.features.map((feature, featureIndex) => (
-                      <motion.li
+                    {project.features.map((feature) => (
+                      <li
                         key={feature}
                         className="flex items-start space-x-3 text-muted"
-                        initial={{ opacity: 0, x: 20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ delay: featureIndex * 0.1 }}
-                        viewport={{ once: true }}
                       >
                         <div className="w-2 h-2 bg-accent2 rounded-full mt-2 flex-shrink-0"></div>
                         <span className="text-sm">{feature}</span>
-                      </motion.li>
+                      </li>
                     ))}
                   </ul>
                 </div>

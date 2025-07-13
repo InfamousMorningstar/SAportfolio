@@ -58,7 +58,7 @@ export default function Footer() {
   });
 
   return (
-    <footer className="relative w-full bg-neutral-900/80 dark:bg-background/90 backdrop-blur-2xl border-t border-border shadow-lg hover:shadow-xl transition-all duration-300 rounded-t-2xl text-neutral-300 text-sm overflow-hidden">
+    <footer className="w-full z-50 bg-black/40 backdrop-blur-xl border-t border-white/20 rounded-t-3xl transition-none text-neutral-300 text-sm overflow-hidden">
       {/* Glassy background overlays */}
       <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/80 via-neutral-900/60 to-neutral-900/40 pointer-events-none" />
       <div className="absolute inset-0 opacity-5 pointer-events-none">

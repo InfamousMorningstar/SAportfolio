@@ -84,22 +84,23 @@ const skills = [
 	'Cybersecurity Principles'
 ];
 
+// Ultra-premium cinematic animation
 const containerVariants = {
-	hidden: { opacity: 0 },
+	hidden: {},
 	visible: {
-		opacity: 1,
 		transition: {
-			staggerChildren: 0.3
+			staggerChildren: 0.32
 		}
 	}
 };
 
 const itemVariants = {
-	hidden: { opacity: 0, y: 30 },
+	hidden: { scale: 0.96, filter: 'blur(12px)', opacity: 0.6 },
 	visible: {
+		scale: 1,
+		filter: 'blur(0px)',
 		opacity: 1,
-		y: 0,
-		transition: { duration: 0.8, ease: 'easeOut' }
+		transition: { duration: 1.1, ease: [0.77, 0, 0.175, 1] }
 	}
 };
 
@@ -125,24 +126,30 @@ export default function Education() {
 					</p>
 				</motion.div>
 
-				<motion.div
-					className="space-y-12"
-					variants={containerVariants}
-					initial="hidden"
-					whileInView="visible"
-					viewport={{ once: true }}
-					style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
-				>
-					{education.map((edu, index) => (
-						<motion.div
-							key={edu.institution}
-							className="card group hover:border-accent/50"
-							variants={itemVariants}
-							whileHover={{ y: -5, scale: 1.02 }}
-							whileTap={{ scale: 0.97 }}
-							transition={{ type: 'spring', stiffness: 340, damping: 22, mass: 1.1 }}
-							style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
-						>
+		<motion.div
+		  className="space-y-12"
+		  variants={containerVariants}
+		  initial="hidden"
+		  whileInView="visible"
+		  viewport={{ once: true }}
+		>
+		  {education.map((edu) => (
+			<motion.div
+			  key={edu.institution}
+			  className="card group bg-white/10 dark:bg-black/30 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-lg hover:border-accent/60 transition-all duration-300"
+			  variants={itemVariants}
+			  whileHover={{
+				scale: 1.045,
+				y: -6,
+				boxShadow: '0 12px 40px 0 rgba(20,184,166,0.13)',
+				borderColor: 'var(--tw-accent)',
+				filter: 'blur(0px)'
+			  }}
+			  transition={{ type: 'spring', stiffness: 160, damping: 18, mass: 1.05 }}
+			  style={{ willChange: 'transform, box-shadow, border-color, filter', backfaceVisibility: 'hidden' }}
+			  tabIndex={0}
+			  aria-label={edu.institution}
+			>
 							<div className="grid lg:grid-cols-3 gap-8">
 								{/* Left Column - Institution Info */}
 								<div className="lg:col-span-1">
