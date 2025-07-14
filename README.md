@@ -106,31 +106,50 @@ portfolio/
 - All main component files include a standardized signature block with file name and date (see top of each file).
 
 - ```bash
+## 📁 Project Structure
+
+```
 portfolio/
 ├── public/
-│   ├── images/
-│   └── ...
+│   ├── images/                # Optimized images (webp, avif, etc.)
+│   ├── favicon.svg
+│   ├── resume.pdf
+│   ├── robots.txt
+│   └── sitemap.xml
 ├── src/
-│   ├── app/
+│   ├── app/                   # Next.js App Router entry, global styles, layout
+│   │   ├── fonts.ts
 │   │   ├── globals.css
 │   │   ├── layout.tsx
 │   │   └── page.tsx
-│   └── components/
-│       ├── About.tsx
-│       ├── Blog.tsx
-│       ├── Contact.tsx
-│       ├── Education.tsx
-│       ├── Experience.tsx
-│       ├── Footer.tsx
-│       ├── Hero.tsx
-│       ├── LocalClock.tsx
-│       ├── Navbar.tsx
-│       └── Projects.tsx
-├── tailwind.config.ts
+│   ├── components/            # All React components (modular, reusable)
+│   │   ├── About.tsx
+│   │   ├── Blog.tsx
+│   │   ├── Contact.tsx
+│   │   ├── Education.tsx
+│   │   ├── Experience.tsx
+│   │   ├── Footer.tsx
+│   │   ├── Hero.tsx
+│   │   ├── MotionArrowTest.tsx
+│   │   ├── Navbar.tsx
+│   │   ├── Projects.tsx
+│   │   └── ScrollToTopArrow.tsx
+│   ├── constants/             # Static data/constants (e.g., lastUpdated.ts)
+│   └── pages/                 # API routes (e.g., /api/last-updated.ts)
+│       └── api/
+│           └── last-updated.ts
+├── .eslintrc.js
 ├── next.config.js
 ├── package.json
+├── postcss.config.js
+├── tailwind.config.ts
+├── tsconfig.json
 ├── README.md
-└── ...
+└── LICENSE
+```
+
+- All main files include signature comments for author, license, and last update.
+- See each section/component for more details in the README.
 ```
 ## 📄 License & Legal Notice
 
