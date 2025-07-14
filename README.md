@@ -104,8 +104,6 @@ portfolio/
 - Footer includes dynamic copyright, Latin motto, and Canadian Copyright Act/DMCA notice.
 ├── tailwind.config.ts
 - All main component files include a standardized signature block with file name and date (see top of each file).
-
-- ```bash
 ## 📁 Project Structure
 
 ```
