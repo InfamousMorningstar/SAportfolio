@@ -46,23 +46,27 @@ const FloatingShape = ({
 const DecryptText = ({ text, isVisible }: { text: string; isVisible: boolean }) => {
   const [displayText, setDisplayText] = useState('');
   const [isDecrypting, setIsDecrypting] = useState(false);
+  const [fullyDecrypted, setFullyDecrypted] = useState(false);
 
   useEffect(() => {
     if (!isVisible) return;
 
     setIsDecrypting(true);
+    setFullyDecrypted(false);
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()';
     let iteration = 0;
 
     const interval = setInterval(() => {
-      setDisplayText(current => 
+      setDisplayText(current =>
         text
           .split('')
           .map((letter, index) => {
             if (index < iteration) {
-              return text[index];
+              // Decrypted: purple, will fade to white
+              return `<span class='decrypted-fade'>${letter}</span>`;
             }
-            return chars[Math.floor(Math.random() * chars.length)];
+            // Start decrypting chars as purple
+            return `<span style=\"color:#a855f7\">${chars[Math.floor(Math.random() * chars.length)]}</span>`;
           })
           .join('')
       );
@@ -70,6 +74,7 @@ const DecryptText = ({ text, isVisible }: { text: string; isVisible: boolean }) 
       if (iteration >= text.length) {
         clearInterval(interval);
         setIsDecrypting(false);
+        setFullyDecrypted(true);
       }
 
       iteration += 1 / 3;
@@ -78,19 +83,40 @@ const DecryptText = ({ text, isVisible }: { text: string; isVisible: boolean }) 
     return () => clearInterval(interval);
   }, [text, isVisible]);
 
+  // Add fade-to-white animation when fully decrypted
   return (
     <span
-      className={`font-mono transition-colors duration-[1800ms] ${isDecrypting ? 'text-accent' : 'text-foreground'}`}
-    >
-      {displayText}
-    </span>
+      className={`font-mono ${isDecrypting ? 'text-accent' : 'text-foreground'}`}
+      dangerouslySetInnerHTML={{ __html: displayText }}
+      style={{
+        transition: fullyDecrypted ? 'color 1.5s cubic-bezier(0.77,0,0.175,1)' : undefined
+      }}
+    />
   );
+// Fade-to-white animation for decrypted text
+if (typeof window !== 'undefined') {
+  const styleId = 'decrypted-fade-style';
+  if (!document.getElementById(styleId)) {
+    const style = document.createElement('style');
+    style.id = styleId;
+    style.innerHTML = `
+      .decrypted-fade {
+        color: #a855f7;
+        transition: color 1.5s cubic-bezier(0.77,0,0.175,1);
+      }
+      .fully-decrypted .decrypted-fade {
+        color: #fff !important;
+      }
+    `;
+    document.head.appendChild(style);
+  }
+}
 };
 
 
 const CinematicCursor = ({ onComplete }: { onComplete: () => void }) => (
   <motion.span
-    className="text-accent font-mono text-5xl md:text-7xl font-bold fixed left-1/2 top-1/2 z-50"
+    className="text-accent font-mono font-bold fixed left-1/2 top-1/2 z-50 text-[clamp(2.2rem,8vw,5.5rem)] px-0 whitespace-nowrap w-full max-w-full overflow-hidden text-center align-middle leading-none"
     initial={{
       opacity: 0,
       x: '-50%',
@@ -110,7 +136,7 @@ const CinematicCursor = ({ onComplete }: { onComplete: () => void }) => (
       x: { duration: 1.15 },
     }}
     onAnimationComplete={onComplete}
-    style={{ pointerEvents: 'none' }}
+    style={{ pointerEvents: 'none', fontSize: 'clamp(2.2rem, 8vw, 5.5rem)' }}
   >
     &gt;
   </motion.span>
@@ -118,9 +144,10 @@ const CinematicCursor = ({ onComplete }: { onComplete: () => void }) => (
 
 const BlinkingCursor = () => (
   <motion.span
-    className="text-accent font-mono text-5xl md:text-7xl font-bold"
+    className="text-accent font-mono font-bold text-[clamp(2.2rem,8vw,5.5rem)] px-0 whitespace-nowrap w-full max-w-full overflow-hidden text-center align-middle leading-none"
     animate={{ opacity: [1, 0, 1] }}
     transition={{ duration: 1, repeat: Infinity }}
+    style={{ fontSize: 'clamp(2.2rem, 8vw, 5.5rem)' }}
   >
     &gt;
   </motion.span>
@@ -176,49 +203,54 @@ export default function Hero() {
       {/* Animated Background Grid */}
       <div className="absolute inset-0 grid-bg opacity-20" />
 
-      {/* Floating Geometric Shapes */}
-      <FloatingShape 
-        className="w-20 h-20 border-2 border-accent rounded-lg top-20 left-20" 
-        delay={0} 
-      />
-      <FloatingShape 
-        className="w-16 h-16 bg-accent2 rounded-full top-32 right-32" 
-        delay={2} 
-      />
-      <FloatingShape 
-        className="w-24 h-24 border-2 border-secondary transform rotate-45 bottom-32 left-32" 
-        delay={4} 
-      />
-      <FloatingShape 
-        className="w-12 h-12 bg-accent rounded-lg bottom-20 right-20" 
-        delay={6} 
-      />
+      {/* Floating Geometric Shapes - hidden on mobile */}
+      <div className="hidden sm:block">
+        <FloatingShape 
+          className="w-20 h-20 border-2 border-accent rounded-lg top-20 left-20" 
+          delay={0} 
+        />
+        <FloatingShape 
+          className="w-16 h-16 bg-accent2 rounded-full top-32 right-32" 
+          delay={2} 
+        />
+        <FloatingShape 
+          className="w-24 h-24 border-2 border-secondary transform rotate-45 bottom-32 left-32" 
+          delay={4} 
+        />
+        <FloatingShape 
+          className="w-12 h-12 bg-accent rounded-lg bottom-20 right-20" 
+          delay={6} 
+        />
+      </div>
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center" style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}>
         {/* Main Heading */}
         <div className="mb-8 min-h-[3.5rem] xs:min-h-[4.5rem] sm:min-h-[5.5rem] md:min-h-[6.5rem] flex items-center justify-center">
           <div className="flex items-center justify-center mb-4 w-full whitespace-nowrap" style={{ minHeight: '2.5em' }}>
-            <span className="flex items-center w-full">
-              {/* Cursor (not part of centering) */}
-              <span className="flex items-center justify-center w-[0.9em] h-[1em] leading-none align-middle mr-2 xs:mr-3 sm:mr-4">
+            <span className="flex items-center w-full justify-center">
+              <motion.span
+                className="font-bold text-center leading-none align-middle whitespace-nowrap w-full max-w-full overflow-hidden text-[clamp(2.2rem,8vw,5.5rem)] px-0"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.9, delay: 0.5, ease: [0.77, 0, 0.175, 1] }}
+                style={{
+                  display: 'inline-block',
+                  verticalAlign: 'middle',
+                  maxWidth: '100vw',
+                  width: '100%',
+                  backfaceVisibility: 'hidden',
+                  willChange: 'opacity, transform',
+                  fontSize: 'clamp(2.2rem, 8vw, 5.5rem)',
+                  whiteSpace: 'nowrap',
+                }}
+              >
                 {hasMounted && showCinematicCursor ? (
-                  <CinematicCursor onComplete={() => setShowCinematicCursor(false)} />
+                  <span className="text-accent font-mono font-bold">&gt;</span>
                 ) : hasMounted && showDecrypt ? (
-                  <BlinkingCursor />
+                  <span className="text-accent font-mono font-bold animate-blink">&gt;</span>
                 ) : null}
-              </span>
-              {/* Center only Hello World */}
-              <span className="flex-1 flex justify-center">
-                <motion.span
-                  className="text-5xl xs:text-6xl sm:text-7xl md:text-8xl font-bold text-center leading-none align-middle"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.9, delay: 0.5, ease: [0.77, 0, 0.175, 1] }}
-                  style={{ display: 'inline-block', verticalAlign: 'middle', maxWidth: '100%', backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
-                >
-                  {hasMounted ? <DecryptText text="Hello World" isVisible={showDecrypt} /> : <span style={{ opacity: 0 }}>Hello World</span>}
-                </motion.span>
-              </span>
+                {hasMounted ? <DecryptText text="Hello, World!" isVisible={showDecrypt} /> : <span style={{ opacity: 0 }}>Hello World</span>}
+              </motion.span>
             </span>
           </div>
         </div>
