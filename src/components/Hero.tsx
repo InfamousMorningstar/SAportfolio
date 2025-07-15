@@ -265,15 +265,13 @@ export default function Hero() {
         >
           <h2 className="text-xl md:text-2xl text-muted mb-4 font-head">
             I am{' '}
-            <span className="gradient-text font-bold font-head">
-              Salman Ahmad
-            </span>
+            <span className="gradient-text font-bold font-head">Salman Ahmad</span>
           </h2>
-          <p className="text-lg md:text-xl text-muted max-w-2xl mx-auto leading-relaxed">
-            <span className="text-accent2">DevOps-Inclined</span> <span className="text-accent">Full-Stack Developer</span><br />
-            <span className="text-secondary">Studying Computer Information Systems.</span> Solving <span className="text-accent">problems</span>. Occasionally breaking things — <span className="text-accent2">on purpose</span>.<br />
-            Already automating what people do <span className="text-accent">manually</span>.<br />
-            Not a pro (yet), but building like one — from <span className="text-accent">automation workflows</span> to <span className="text-accent2">scalable systems</span>.
+          <p className="text-lg md:text-xl text-foreground max-w-2xl mx-auto leading-relaxed">
+            <span className="text-accent2 font-semibold">DevOps</span>-inclined <span className="text-accent font-semibold">Full-Stack Developer</span>.<br />
+            Studying Computer Information Systems. Solving problems. Occasionally breaking things — on purpose.<br />
+            Already automating what people do manually.<br />
+            Not a pro (yet), but building like one — from <span className="text-accent font-semibold">automation workflows</span> to <span className="text-accent2 font-semibold">scalable systems</span>.
           </p>
         </motion.div>
 
