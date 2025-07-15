@@ -1,4 +1,3 @@
-
 // No 'use client' — this is now a server component
 import React from 'react';
 import type { Metadata } from 'next';
