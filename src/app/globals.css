@@ -1,3 +1,34 @@
+/* Accent Scroll Indicator & Blur-on-Scroll Styles */
+:root {
+  --accent-color: #8b5cf6; /* Update this to match your accent color */
+  --scroll-indicator-height: 4px; /* Change height as needed */
+  --blur-amount: 10px; /* Initial blur for .blur-on-scroll */
+}
+
+
+/* === Accent-Colored Scroll Indicator === */
+#scroll-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: var(--scroll-indicator-height, 4px); /* Update indicator height here */
+  background: var(--accent-color, #a855f7); /* Update accent color here */
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 1;
+  border-radius: 0 0 2px 2px;
+  box-shadow: 0 2px 8px 0 var(--accent-color, #a855f7)22;
+  transition: width 0.18s cubic-bezier(0.77,0,0.175,1), opacity 0.3s cubic-bezier(0.77,0,0.175,1);
+}
+
+
+/* === Scroll-Triggered Blur Transition === */
+.blur-on-scroll {
+  filter: blur(var(--blur-amount, 10px)); /* Update blur amount here */
+  transition: filter 0.7s cubic-bezier(0.77,0,0.175,1);
+}
+/* When in viewport, blur is removed by JS */
 /* Navbar desktop button: purple border, teal on hover, purple shadow on hover (desktop only) */
 .navbar-btn-desktop {
   border-color: var(--accent);

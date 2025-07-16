@@ -1,4 +1,3 @@
-
 /*
  * ███╗░░░███╗░█████╗░██████╗░██████╗░██╗░░░██╗███████╗██████╗░██████╗░
  * ████╗░░████║██╔══██╗██╔══██╗██╔══██╗██║░░░██║██╔════╝██╔══██╗██╔══██╗
@@ -160,9 +159,15 @@ export default function Hero() {
   const [showDecrypt, setShowDecrypt] = useState(false);
   const [showSubtext, setShowSubtext] = useState(false);
   const [showArrow, setShowArrow] = useState(false);
+  const [showLoader, setShowLoader] = useState(true);
 
   useEffect(() => {
-    setHasMounted(true);
+    // Show loader for 1.2s, then mount content
+    const loaderTimeout = setTimeout(() => {
+      setShowLoader(false);
+      setHasMounted(true);
+    }, 1200);
+    return () => clearTimeout(loaderTimeout);
   }, []);
 
   useEffect(() => {
@@ -198,31 +203,56 @@ export default function Hero() {
     }
   };
 
+  if (showLoader) {
+    // Loader: three dots in accent color, centered, fade out
+    return (
+      <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 md:pt-32 lg:pt-36">
+        <motion.div
+          className="flex items-center justify-center h-32"
+          initial={{ opacity: 1 }}
+          animate={{ opacity: 0 }}
+          transition={{ duration: 0.5, delay: 0.7, ease: [0.77, 0, 0.175, 1] }}
+        >
+          <span className="dot-loader">
+            <motion.span
+              className="inline-block w-3 h-3 mx-1 rounded-full bg-accent"
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 0.7, repeat: Infinity, delay: 0 }}
+            />
+            <motion.span
+              className="inline-block w-3 h-3 mx-1 rounded-full bg-accent"
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 0.7, repeat: Infinity, delay: 0.2 }}
+            />
+            <motion.span
+              className="inline-block w-3 h-3 mx-1 rounded-full bg-accent"
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 0.7, repeat: Infinity, delay: 0.4 }}
+            />
+          </span>
+        </motion.div>
+      </section>
+    );
+  }
+
+  // Main content slide-up animation
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 md:pt-32 lg:pt-36">
+    <motion.section
+      id="home"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 md:pt-32 lg:pt-36"
+      initial={{ opacity: 0, y: 60 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ type: 'spring', stiffness: 60, damping: 18, mass: 1.1 }}
+    >
       {/* Animated Background Grid */}
       <div className="absolute inset-0 grid-bg opacity-20" />
-
       {/* Floating Geometric Shapes - hidden on mobile */}
       <div className="hidden sm:block">
-        <FloatingShape 
-          className="w-20 h-20 border-2 border-accent rounded-lg top-20 left-20" 
-          delay={0} 
-        />
-        <FloatingShape 
-          className="w-16 h-16 bg-accent2 rounded-full top-32 right-32" 
-          delay={2} 
-        />
-        <FloatingShape 
-          className="w-24 h-24 border-2 border-secondary transform rotate-45 bottom-32 left-32" 
-          delay={4} 
-        />
-        <FloatingShape 
-          className="w-12 h-12 bg-accent rounded-lg bottom-20 right-20" 
-          delay={6} 
-        />
+        <FloatingShape className="w-20 h-20 border-2 border-accent rounded-lg top-20 left-20" delay={0} />
+        <FloatingShape className="w-16 h-16 bg-accent2 rounded-full top-32 right-32" delay={2} />
+        <FloatingShape className="w-24 h-24 border-2 border-secondary transform rotate-45 bottom-32 left-32" delay={4} />
+        <FloatingShape className="w-12 h-12 bg-accent rounded-lg bottom-20 right-20" delay={6} />
       </div>
-
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center" style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}>
         {/* Main Heading */}
         <div className="mb-8 min-h-[3.5rem] xs:min-h-[4.5rem] sm:min-h-[5.5rem] md:min-h-[6.5rem] flex items-center justify-center">
@@ -254,7 +284,6 @@ export default function Hero() {
             </span>
           </div>
         </div>
-
         {/* Subtitle */}
         <motion.div
           className="mb-12 min-h-[5.5rem] xs:min-h-[6.5rem] sm:min-h-[7.5rem] md:min-h-[8.5rem] flex flex-col justify-center"
@@ -267,14 +296,13 @@ export default function Hero() {
             I am{' '}
             <span className="gradient-text font-bold font-head">Salman Ahmad</span>
           </h2>
-          <p className="text-lg md:text-xl text-foreground max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-muted max-w-2xl mx-auto leading-relaxed">
             <span className="text-accent2 font-semibold">DevOps</span>-inclined <span className="text-accent font-semibold">Full-Stack Developer</span>.<br />
             Studying Computer Information Systems. Solving problems. Occasionally breaking things — on purpose.<br />
             Already automating what people do manually.<br />
             Not a pro (yet), but building like one — from <span className="text-accent font-semibold">automation workflows</span> to <span className="text-accent2 font-semibold">scalable systems</span>.
           </p>
         </motion.div>
-
         {/* Button Group */}
         <motion.div
           className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6 mb-16 min-h-[4.5rem] xs:min-h-[5.5rem] sm:min-h-[6.5rem]"
@@ -326,6 +354,6 @@ export default function Hero() {
           ↓
         </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 }

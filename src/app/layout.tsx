@@ -1,7 +1,8 @@
-// No 'use client' — this is now a server component
 import React from 'react';
+import { useEffect, useState } from 'react';
 import type { Metadata } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
+import ScrollProgressBar from '../components/ScrollProgressBar'; // Only one import needed
 // CLS TIP: next/font/google uses font-display: swap by default, preventing FOIT/FOUC.
 // If you add custom @font-face, always use font-display: swap.
 import { Analytics } from '@vercel/analytics/react';
@@ -37,6 +38,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={`min-h-screen bg-black text-white antialiased ${inter.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable}`}>
+        <ScrollProgressBar />
         {children}
         {/* Defer analytics for faster FCP/LCP */}
         <Analytics />
