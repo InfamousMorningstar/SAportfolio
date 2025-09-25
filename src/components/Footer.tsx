@@ -16,14 +16,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { LAST_UPDATED } from '../constants/lastUpdated';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
-  const lastUpdated = new Date().toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  });
 
   return (
     <footer className="w-full z-50 bg-black/40 backdrop-blur-xl border-t border-white/20 rounded-t-3xl transition-none text-neutral-300 text-sm overflow-hidden">
@@ -78,7 +74,7 @@ export default function Footer() {
           <p className="text-sm md:text-xs text-neutral-400 font-semibold italic">
             Built using <span className="text-accent">Next.js 15</span>, <span className="text-accent2">Tailwind CSS</span>, <span className="text-secondary">Framer Motion</span>, <span className="text-accent">TypeScript</span>, and <span className="text-accent2">Lucide Icons</span> — deployed on <span className="text-secondary">Vercel</span>.
           </p>
-          <p className="text-[10px] text-neutral-600">Last updated: {lastUpdated}</p>
+          <p className="text-[10px] text-neutral-600">Last updated: {LAST_UPDATED}</p>
         </div>
       </div>
 

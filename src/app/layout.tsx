@@ -23,11 +23,45 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 
-export const metadata = {
+export const metadata: Metadata = {
+  metadataBase: new URL('https://portfolio.ahmxd.net'),
   title: 'Salman Ahmad // 0xPortfolio',
+  description: 'Full-Stack Developer specializing in cloud infrastructure, homelab automation, and modern web applications. Experience with React, Next.js, TypeScript, and cloud-native technologies.',
+  keywords: ['Full-Stack Developer', 'Cloud Infrastructure', 'React', 'Next.js', 'TypeScript', 'Homelab', 'DevOps', 'TrueNAS', 'Portfolio'],
+  authors: [{ name: 'Salman Ahmad' }],
+  creator: 'Salman Ahmad',
+  publisher: 'Salman Ahmad',
+  robots: 'index, follow',
   icons: {
     icon: '/favicon.svg',
   },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://portfolio.ahmxd.net',
+    title: 'Salman Ahmad // 0xPortfolio',
+    description: 'Full-Stack Developer specializing in cloud infrastructure, homelab automation, and modern web applications.',
+    siteName: 'Salman Ahmad Portfolio',
+    images: [
+      {
+        url: '/images/profile-photo-1280.webp',
+        width: 1280,
+        height: 1280,
+        alt: 'Salman Ahmad Profile Photo',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Salman Ahmad // 0xPortfolio',
+    description: 'Full-Stack Developer specializing in cloud infrastructure, homelab automation, and modern web applications.',
+    images: ['/images/profile-photo-1280.webp'],
+  },
+};
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
 };
 
 export default function RootLayout({

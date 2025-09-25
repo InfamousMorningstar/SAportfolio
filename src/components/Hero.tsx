@@ -303,6 +303,27 @@ export default function Hero() {
             Not a pro (yet), but building like one — from <span className="text-accent font-semibold">automation workflows</span> to <span className="text-accent2 font-semibold">scalable systems</span>.
           </p>
         </motion.div>
+        
+        {/* Blog Hint */}
+        <motion.div
+          className="mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: showSubtext ? 1 : 0, y: showSubtext ? 0 : 20 }}
+          transition={{ duration: 0.8, delay: 0.6, ease: [0.77, 0, 0.175, 1] }}
+        >
+          <motion.a
+            href="/blog"
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm text-muted-foreground hover:text-accent border border-border/50 hover:border-accent/30 rounded-lg transition-all duration-300 backdrop-blur-sm bg-background/10 hover:bg-background/20"
+            whileHover={{ scale: 1.02, y: -2 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+          >
+            <span className="font-mono text-xs">💻</span>
+            <span className="font-mono">Read my technical logs</span>
+            <span className="text-accent font-mono text-xs">→</span>
+          </motion.a>
+        </motion.div>
+        
         {/* Button Group */}
         <motion.div
           className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6 mb-16 min-h-[4.5rem] xs:min-h-[5.5rem] sm:min-h-[6.5rem]"

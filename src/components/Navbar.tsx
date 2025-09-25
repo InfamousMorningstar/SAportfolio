@@ -6,7 +6,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Github, Linkedin, Mail, Menu, X } from "lucide-react";
 
-const links = ["Home", "About", "Projects", "Experience", "Education", "Contact"];
+const links = ["Home", "About", "Projects", "Experience", "Education", "Blog", "Contact"];
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -113,7 +113,7 @@ export default function Navbar() {
                     style={{ perspective: 1200 }}
                   >
                     {links.map((link, i) => (
-                      <Link key={link} href={`#${link.toLowerCase()}`}>
+                      <Link key={link} href={link === 'Blog' ? '/blog' : `#${link.toLowerCase()}`}>
                         <motion.div
                           className="navbar-btn-desktop px-4 py-1 border rounded-full text-sm font-medium text-neutral-200 border-accent transition-all duration-150 will-change-transform backdrop-blur-md bg-black/30 hover:text-white hover:border-accent2 focus-visible:ring-2 focus-visible:ring-accent/70 focus-visible:ring-offset-2 focus-visible:outline-none shadow-md font-sans"
                           tabIndex={0}
@@ -307,7 +307,7 @@ export default function Navbar() {
                   className="flex flex-col items-center space-y-3 md:flex-row md:space-y-0 md:space-x-4 md:justify-center md:items-center"
                 >
                   {links.map((link) => (
-                    <Link key={link} href={`#${link.toLowerCase()}`}>
+                    <Link key={link} href={link === 'Blog' ? '/blog' : `#${link.toLowerCase()}`}>
                       <div
                         onClick={() => setIsMobileMenuOpen(false)}
                         className="navbar-btn-mobile px-4 py-1 border rounded-full text-sm font-medium text-neutral-200 border-accent transition duration-300 backdrop-blur-md bg-black/30 active:text-white active:border-accent2 will-change-transform"

@@ -11,11 +11,11 @@
  * 📧 Contact : s.ahmad0147@gmail.com
  * 📝 License : MIT (Educational/Personal Use)
  * 📁 File    : README.md
- * 🕒 Updated : Jul 12, 2025
+ * 🕒 Updated : Sep 25, 2025
 -->
 # 🚀 Salman Ahmad – Professional Portfolio
 
-A visually stunning, Apple-inspired portfolio website built with Next.js, Tailwind CSS, and Framer Motion. Showcasing real projects, technical skills, and professional experience with glassmorphic design, neon accents, and S-tier polish.
+A visually stunning, Apple-inspired portfolio website built with Next.js, Tailwind CSS, and Framer Motion. Features a complete SYSADMIN_ARCHIVES blog system showcasing technical infrastructure documentation, homelab adventures, and production system deep-dives with glassmorphic design, neon accents, and S-tier polish.
 
 ---
 
@@ -43,13 +43,14 @@ This portfolio is fully optimized for Cumulative Layout Shift (CLS) and Core Web
 
 - **Apple-style glassmorphic UI:** Frosted glass navbar, footer, and cards with deep blur, neon accent gradients, and floating particles.
 - **Animated navigation:** Responsive, glassy navbar with anchor links, live dual-timezone clock (MDT & UTC), and animated hamburger menu for mobile.
-- **Hero section:** Animated intro with decrypt effect, floating geometric shapes, and smooth color transitions.
+- **Hero section:** Animated intro with decrypt effect, floating geometric shapes, smooth color transitions, and professional blog hint linking to SYSADMIN_ARCHIVES.
+- **SYSADMIN_ARCHIVES Blog System:** Complete separate blog platform featuring technical infrastructure logs, homelab documentation, and system administration deep-dives with computer science themed backgrounds.
 - **About section:** Professional headshot, personal narrative, animated skills grid, and interactive trait badges.
 - **Projects section:** Real, production-grade projects with tech stack, features, and links to GitHub/Medium.
 - **Experience section:** Timeline of professional roles, responsibilities, and achievements.
 - **Education section:** Academic background, highlights, and relevant coursework.
 - **Contact section:** Real contact methods (email, Discord, GitHub, LinkedIn, location), availability, and response time.
-- **Footer:** Glassmorphic, animated, with signature, motto, tech stack, last updated, and legal notice.
+- **Footer:** Glassmorphic, animated, with signature, motto, tech stack, dynamic last updated date, and legal notice.
 - **S-tier 3D pop-up animation:** All interactive elements feature unified 3D pop and microinteractions.
 - **Context-aware floating scroll-to-top arrow:** S-tier, glassmorphic, animated arrow appears only between Contact and Footer, with buttery-smooth spring physics and no flicker.
 - **Responsive & accessible:** Mobile-first, keyboard navigation, and ARIA labels.
@@ -59,19 +60,23 @@ This portfolio is fully optimized for Cumulative Layout Shift (CLS) and Core Web
 
 ## 🛠️ Built With
 
-- **Next.js 15.3.5** (App Router, SSR)
+- **Next.js 15.5.4** (App Router, Static Export)
 - **React 18**
-- **TypeScript 5.x**
+- **TypeScript 5.9.2**
 - **Tailwind CSS 3.4.x**
 - **Framer Motion 11.18.x**
+- **Vercel Analytics & Speed Insights** (Real-time Core Web Vitals)
+- **Optimized Images** (WebP & AVIF with responsive sizing)
+- **Complete Blog System** — SYSADMIN_ARCHIVES with separate routing, themed backgrounds, and technical content
+- **Professional SEO** — Full metadata, Open Graph, Twitter cards, XML sitemap
+- **Production Security** — Latest dependency updates, vulnerability scanning
 - **Cinematic, S-tier scroll/entrance animation** for all major sections (Framer Motion, hardware-accelerated, lag-free, CLS/hydration safe)
-- **Apple-style Liquid-Glass navbar & footer** — 200 % blur field, LED under-glow, pointer-safe masking (< 0.01 CLS)
+- **Apple-style Liquid-Glass navbar & footer** — 200% blur field, LED under-glow, pointer-safe masking (< 0.01 CLS)
 - **Motion-driven mobile UX** — Framer-Motion hamburger morphs into a staggered menu with buttery easing
 - **Live dual-timezone pill clock** (MDT / UTC) updating every second for global availability
 - **Decrypt-style hero + floating geometry** — cinematic text-reveal plus depth layers, zero layout shift
 - **Universal neon scrollbar & ISO dark-mode theme** with graceful fall-backs across Chrome, Firefox, Safari
-- **Built-in performance telemetry** via Vercel Analytics & Speed Insights badges (real-time Core Web Vitals)
-- **CI/CD-ready, type-safe stack** — Next.js 15, TypeScript, Tailwind, Husky pre-commit hooks auto-deploying to Vercel edge
+- **CI/CD-ready, type-safe stack** — Next.js 15, TypeScript, Tailwind, ESLint auto-deploying to Vercel edge
 - **Legal-grade compliance footer** — dynamic copyright, Latin motto, and Canadian Copyright Act notice
 portfolio/
 - `Hero`: Cinematic decrypt text, floating geometry, scroll arrow, content lift, micro-bounce, zero CLS
@@ -109,36 +114,46 @@ portfolio/
 ```
 portfolio/
 ├── public/
-│   ├── images/                # Optimized images (webp, avif, etc.)
+│   ├── images/                # Optimized images (webp, avif, responsive sizes)
+│   │   ├── profile-photo-320.webp
+│   │   ├── profile-photo-480.webp
+│   │   ├── profile-photo-768.webp
+│   │   ├── profile-photo-1024.webp
+│   │   ├── profile-photo-1280.webp
+│   │   ├── profile-photo-1600.webp
+│   │   ├── profile-photo-1920.webp
+│   │   └── [corresponding .avif files]
 │   ├── favicon.svg
 │   ├── resume.pdf
 │   ├── robots.txt
-│   └── sitemap.xml
+│   └── sitemap.xml            # Updated with blog routes
 ├── src/
-│   ├── app/                   # Next.js App Router entry, global styles, layout
+│   ├── app/                   # Next.js App Router
+│   │   ├── blog/              # SYSADMIN_ARCHIVES blog system
+│   │   │   ├── layout.tsx     # Blog-specific metadata
+│   │   │   └── page.tsx       # Blog listing page
 │   │   ├── fonts.ts
 │   │   ├── globals.css
-│   │   ├── layout.tsx
-│   │   └── page.tsx
-│   ├── components/            # All React components (modular, reusable)
+│   │   ├── layout.tsx         # Root layout with full SEO metadata
+│   │   └── page.tsx           # Main portfolio page
+│   ├── components/            # React components (modular, reusable)
 │   │   ├── About.tsx
-│   │   ├── Blog.tsx
+│   │   ├── BlogPost.tsx       # TrueNAS SCALE technical deep-dive
+│   │   ├── HybridEdgePost.tsx # Hybrid edge computing setup
 │   │   ├── Contact.tsx
 │   │   ├── Education.tsx
 │   │   ├── Experience.tsx
-│   │   ├── Footer.tsx
-│   │   ├── Hero.tsx
-│   │   ├── MotionArrowTest.tsx
-│   │   ├── Navbar.tsx
+│   │   ├── Footer.tsx         # Dynamic last updated date
+│   │   ├── Hero.tsx           # With professional blog hint
+│   │   ├── Navbar.tsx         # Updated with Blog navigation
 │   │   ├── Projects.tsx
+│   │   ├── ScrollProgressBar.tsx
 │   │   └── ScrollToTopArrow.tsx
-│   ├── constants/             # Static data/constants (e.g., lastUpdated.ts)
-│   └── pages/                 # API routes (e.g., /api/last-updated.ts)
-│       └── api/
-│           └── last-updated.ts
+│   └── constants/
+│       └── lastUpdated.ts     # Centralized date management
 ├── .eslintrc.js
 ├── next.config.js
-├── package.json
+├── package.json               # Updated dependencies (Next.js 15.5.4, latest types)
 ├── postcss.config.js
 ├── tailwind.config.ts
 ├── tsconfig.json
@@ -147,6 +162,35 @@ portfolio/
 ```
 
 - All main files include signature comments for author, license, and last update.
+
+---
+
+## 📖 SYSADMIN_ARCHIVES Blog System
+
+### Technical Content Platform
+The portfolio features a complete separate blog system accessible via `/blog` that showcases technical expertise and system administration experience.
+
+### Blog Features
+- **Terminal-Style Branding:** `\\.SYSADMIN_ARCHIVES` heading with monospace typography
+- **Computer Science Themed Backgrounds:** Binary code patterns, mathematical equations, circuit diagrams, floating particles
+- **Two Technical Deep-Dives:**
+  - **TrueNAS SCALE Setup:** Complete homelab infrastructure documentation covering ZFS pool "Centauri", Intel i7-8700 hardware, Quadro P1000 GPU, 72TB storage, Cloudflare Tunnels, and services (Plex, Nextcloud, Immich)
+  - **Hybrid Edge Computing:** ZimaBoard 2 edge node architecture, network topology, container orchestration, and performance benefits
+- **Professional Navigation:** Seamless routing between portfolio and blog content
+- **SEO Optimized:** Complete metadata, social media cards, and search engine optimization
+- **Responsive Design:** Mobile-first approach with glassmorphic design consistency
+
+### Content Focus
+- System administration logs and documentation
+- Infrastructure setup guides and lessons learned  
+- Production environment deep-dives
+- Homelab automation and cloud-native technologies
+- DevOps practices and troubleshooting guides
+
+### Hero Integration
+The main portfolio Hero section includes a subtle, professional call-to-action that directs visitors to the technical blog content with the hint "Read my technical logs" in a glassmorphic, animated button.
+
+---
 - See each section/component for more details in the README.
 ```
 ## 📄 License & Legal Notice
@@ -296,9 +340,10 @@ const scrollToTopSpring = {
 
 ### Content Management
 - **Project Showcase:** Modify `/components/Projects.tsx` for portfolio items
-- **Resume Integration:** Replace `/public/Salman_Ahmad_Resume.pdf`
-- **Blog Posts:** Configure `/components/Blog.tsx` for article display (placeholder only)
-- **Scroll-to-Top Arrow:** Refine `/components/ScrollToTopArrow.tsx` for context-aware, S-tier animated floating arrow
+- **Resume Integration:** Replace `/public/resume.pdf`
+- **Blog Content:** Two comprehensive technical posts in `/components/BlogPost.tsx` and `/components/HybridEdgePost.tsx`
+- **SYSADMIN_ARCHIVES:** Full blog system at `/blog` route with separate metadata and theming
+- **Dynamic Footer:** Centralized last updated date management via `/constants/lastUpdated.ts`
 
 ---
 

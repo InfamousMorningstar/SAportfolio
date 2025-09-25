@@ -17,8 +17,10 @@
 
 import { motion } from 'framer-motion';
 import { Calendar, ExternalLink, Clock } from 'lucide-react';
+import { useState } from 'react';
+import BlogPostComponent from './BlogPost';
 
-interface BlogPost {
+interface BlogPostData {
   id: string;
   title: string;
   excerpt: string;
@@ -29,15 +31,15 @@ interface BlogPost {
 }
 
 // Example blog posts - replace with actual data from your blog/Medium
-const blogPosts: BlogPost[] = [
+const blogPosts: BlogPostData[] = [
   {
     id: '1',
-    title: 'Building a Homelab: From Zero to Enterprise',
-    excerpt: 'A complete guide to setting up a professional homelab with TrueNAS, Docker, and enterprise networking.',
-    date: '2024-03-15',
-    readTime: '8 min',
-    url: '#',
-    tags: ['Homelab', 'TrueNAS', 'Docker', 'Networking']
+    title: 'My TrueNAS SCALE Setup: From Boredom to Bytes',
+    excerpt: 'What began as a simple wish for an ad-free cartoon binge spiraled into a full-fledged homelab. This isn\'t just another headless server—it\'s a living, breathing storage beast running TrueNAS SCALE.',
+    date: '2025-09-24',
+    readTime: '12 min',
+    url: '#truenas-setup',
+    tags: ['TrueNAS', 'Homelab', 'ZFS', 'Docker', 'Infrastructure']
   },
   {
     id: '2',
@@ -60,6 +62,13 @@ const blogPosts: BlogPost[] = [
 ];
 
 export default function Blog() {
+  const [selectedPost, setSelectedPost] = useState<string | null>(null);
+
+  // If a blog post is selected, show the detailed view
+  if (selectedPost === 'truenas-setup') {
+    return <BlogPostComponent onBack={() => setSelectedPost(null)} />;
+  }
+
   return (
     <section id="blog" className="min-h-screen py-20 relative">
       <div className="container mx-auto px-6 max-w-6xl">
@@ -90,53 +99,101 @@ export default function Blog() {
               className="group"
               style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
             >
-              <a
-                href={post.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block h-full"
-              >
-                <div className="bg-white/90 dark:bg-background/80 border border-border shadow-lg hover:shadow-xl hover:ring-2 hover:ring-accent/20 transition-all duration-200 rounded-2xl p-6 h-full">
-                  <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
-                    <div className="flex items-center gap-1">
-                      <Calendar className="w-4 h-4" />
-                      {new Date(post.date).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric'
-                      })}
+              {post.id === 'truenas-scale-setup' ? (
+                <div
+                  onClick={() => setSelectedPost('truenas-scale-setup')}
+                  className="block h-full cursor-pointer"
+                >
+                  <div className="bg-white/90 dark:bg-background/80 border border-border shadow-lg hover:shadow-xl hover:ring-2 hover:ring-accent/20 transition-all duration-200 rounded-2xl p-6 h-full">
+                    <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
+                      <div className="flex items-center gap-1">
+                        <Calendar className="w-4 h-4" />
+                        {new Date(post.date).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'short',
+                          day: 'numeric'
+                        })}
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Clock className="w-4 h-4" />
+                        {post.readTime}
+                      </div>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <Clock className="w-4 h-4" />
-                      {post.readTime}
+
+                    <h3 className="text-xl font-semibold mb-3 group-hover:text-accent transition-colors">
+                      {post.title}
+                    </h3>
+
+                    <p className="text-muted-foreground mb-4 line-clamp-3">
+                      {post.excerpt}
+                    </p>
+
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {post.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="text-xs px-2 py-1 bg-accent/10 text-accent rounded-full"
+                        >
+                          {tag}
+                        </span>
+                      ))}
                     </div>
-                  </div>
 
-                  <h3 className="text-xl font-semibold mb-3 group-hover:text-accent transition-colors">
-                    {post.title}
-                  </h3>
-
-                  <p className="text-muted-foreground mb-4 line-clamp-3">
-                    {post.excerpt}
-                  </p>
-
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {post.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="text-xs px-2 py-1 bg-accent/10 text-accent rounded-full"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="flex items-center text-accent font-medium text-sm group-hover:gap-2 transition-all">
-                    Read more
-                    <ExternalLink className="w-4 h-4 ml-1 group-hover:ml-0 transition-all" />
+                    <div className="flex items-center text-accent font-medium text-sm group-hover:gap-2 transition-all">
+                      Read more
+                      <ExternalLink className="w-4 h-4 ml-1 group-hover:ml-0 transition-all" />
+                    </div>
                   </div>
                 </div>
-              </a>
+              ) : (
+                <a
+                  href={post.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block h-full"
+                >
+                  <div className="bg-white/90 dark:bg-background/80 border border-border shadow-lg hover:shadow-xl hover:ring-2 hover:ring-accent/20 transition-all duration-200 rounded-2xl p-6 h-full">
+                    <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
+                      <div className="flex items-center gap-1">
+                        <Calendar className="w-4 h-4" />
+                        {new Date(post.date).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'short',
+                          day: 'numeric'
+                        })}
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Clock className="w-4 h-4" />
+                        {post.readTime}
+                      </div>
+                    </div>
+
+                    <h3 className="text-xl font-semibold mb-3 group-hover:text-accent transition-colors">
+                      {post.title}
+                    </h3>
+
+                    <p className="text-muted-foreground mb-4 line-clamp-3">
+                      {post.excerpt}
+                    </p>
+
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {post.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="text-xs px-2 py-1 bg-accent/10 text-accent rounded-full"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="flex items-center text-accent font-medium text-sm group-hover:gap-2 transition-all">
+                      Read more
+                      <ExternalLink className="w-4 h-4 ml-1 group-hover:ml-0 transition-all" />
+                    </div>
+                  </div>
+                </a>
+              )}
             </motion.article>
           ))}
         </div>
