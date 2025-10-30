@@ -11,7 +11,7 @@
  * 📧 Contact : s.ahmad0147@gmail.com
  * 📝 License : MIT (Educational/Personal Use)
  * 📁 File    : README.md
- * 🕒 Updated : Sep 25, 2025
+ * 🕒 Updated : Oct 30, 2025
 -->
 # 🚀 Salman Ahmad – Professional Portfolio
 
@@ -60,10 +60,10 @@ This portfolio is fully optimized for Cumulative Layout Shift (CLS) and Core Web
 
 ## 🛠️ Built With
 
-- **Next.js 15.5.4** (App Router, Static Export)
+- **Next.js 15.5.6** (App Router, Static Export)
 - **React 18**
-- **TypeScript 5.9.2**
-- **Tailwind CSS 3.4.x**
+- **TypeScript 5.9.3**
+- **Tailwind CSS 3.4.18**
 - **Framer Motion 11.18.x**
 - **Vercel Analytics & Speed Insights** (Real-time Core Web Vitals)
 - **Optimized Images** (WebP & AVIF with responsive sizing)
@@ -139,6 +139,7 @@ portfolio/
 │   ├── components/            # React components (modular, reusable)
 │   │   ├── About.tsx
 │   │   ├── BlogPost.tsx       # TrueNAS SCALE technical deep-dive
+│   │   ├── CentauriPlexPost.tsx # Plex automation system documentation
 │   │   ├── HybridEdgePost.tsx # Hybrid edge computing setup
 │   │   ├── Contact.tsx
 │   │   ├── Education.tsx
@@ -173,7 +174,8 @@ The portfolio features a complete separate blog system accessible via `/blog` th
 ### Blog Features
 - **Terminal-Style Branding:** `\\.SYSADMIN_ARCHIVES` heading with monospace typography
 - **Computer Science Themed Backgrounds:** Binary code patterns, mathematical equations, circuit diagrams, floating particles
-- **Two Technical Deep-Dives:**
+- **Three Technical Deep-Dives:**
+  - **Centauri (Plex) Automation System:** First-person documentation of a 95% automated user lifecycle management platform managing 61 Plex users with Python scripts, Tautulli API integration, cron job orchestration, SQLite database, email notifications, and zero daily intervention. Features space/DevOps themed background with constellation patterns.
   - **TrueNAS SCALE Setup:** Complete homelab infrastructure documentation covering ZFS pool "Centauri", Intel i7-8700 hardware, Quadro P1000 GPU, 72TB storage, Cloudflare Tunnels, and services (Plex, Nextcloud, Immich)
   - **Hybrid Edge Computing:** ZimaBoard 2 edge node architecture, network topology, container orchestration, and performance benefits
 - **Professional Navigation:** Seamless routing between portfolio and blog content

@@ -6,6 +6,7 @@ import { Calendar, Clock, ArrowLeft, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
 import BlogPostComponent from '../../components/BlogPost';
 import HybridEdgePost from '../../components/HybridEdgePost';
+import CentauriPlexPost from '../../components/CentauriPlexPost';
 
 interface BlogPostData {
   id: string;
@@ -19,12 +20,12 @@ interface BlogPostData {
 
 const blogPosts: BlogPostData[] = [
   {
-    id: 'truenas-scale-setup',
-    title: 'My TrueNAS SCALE Setup: From Boredom to Bytes',
-    excerpt: 'What started with boredom became a highly capable home infrastructure stack: Plex for media, Nextcloud for files, Immich for photos, and enough storage overhead to keep my family\'s data safe for years.',
-    date: '2024-03-15',
-    readTime: '8 min read',
-    tags: ['TrueNAS', 'Homelab', 'Docker', 'ZFS', 'Self-Hosting', 'Plex', 'Nextcloud'],
+    id: 'centauri-plex-automation',
+    title: 'Centauri (Plex) Automation System',
+    excerpt: 'My 95% automated user lifecycle management system for my Plex server. From instant welcome emails to automated cleanup of inactive users—a production-grade system I built that manages 61 users with zero daily intervention.',
+    date: '2025-10-29',
+    readTime: '15 min read',
+    tags: ['Python', 'Automation', 'Plex', 'Tautulli', 'Cron', 'SQLite', 'DevOps', 'API Integration'],
     url: '#'
   },
   {
@@ -35,11 +36,24 @@ const blogPosts: BlogPostData[] = [
     readTime: '6 min read',
     tags: ['ZimaBoard', 'Edge Computing', 'Network Architecture', 'Homelab', 'Infrastructure'],
     url: '#'
+  },
+  {
+    id: 'truenas-scale-setup',
+    title: 'My TrueNAS SCALE Setup: From Boredom to Bytes',
+    excerpt: 'What started with boredom became a highly capable home infrastructure stack: Plex for media, Nextcloud for files, Immich for photos, and enough storage overhead to keep my family\'s data safe for years.',
+    date: '2024-03-15',
+    readTime: '8 min read',
+    tags: ['TrueNAS', 'Homelab', 'Docker', 'ZFS', 'Self-Hosting', 'Plex', 'Nextcloud'],
+    url: '#'
   }
 ];
 
 export default function BlogPage() {
   const [selectedPost, setSelectedPost] = useState<string | null>(null);
+
+  if (selectedPost === 'centauri-plex-automation') {
+    return <CentauriPlexPost onBack={() => setSelectedPost(null)} />;
+  }
 
   if (selectedPost === 'truenas-scale-setup') {
     return <BlogPostComponent onBack={() => setSelectedPost(null)} />;
@@ -142,59 +156,61 @@ export default function BlogPage() {
           </p>
         </motion.div>
 
-        {/* Blog Posts Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        {/* Blog Posts List (Terminal-Style Professional List) */}
+        <div className="max-w-4xl mx-auto space-y-6">
           {blogPosts.map((post, index) => (
             <motion.article
               key={post.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.1 }}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
               className="group"
             >
-              {(post.id === 'truenas-scale-setup' || post.id === 'hybrid-edge-storage') ? (
+              {(post.id === 'centauri-plex-automation' || post.id === 'truenas-scale-setup' || post.id === 'hybrid-edge-storage') ? (
                 <div
                   onClick={() => setSelectedPost(post.id)}
-                  className="block h-full cursor-pointer"
+                  className="block cursor-pointer"
                 >
-                  <div className="bg-white/90 dark:bg-background/80 border border-border shadow-lg hover:shadow-xl hover:ring-2 hover:ring-accent/20 transition-all duration-200 rounded-2xl p-6 h-full">
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
-                      <div className="flex items-center gap-1">
-                        <Calendar className="w-4 h-4" />
-                        {new Date(post.date).toLocaleDateString('en-US', {
-                          year: 'numeric',
-                          month: 'short',
-                          day: 'numeric'
-                        })}
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Clock className="w-4 h-4" />
+                  {/* Terminal-Style List Item */}
+                  <div className="bg-background/60 backdrop-blur-sm border-l-4 border-accent/50 hover:border-accent hover:bg-background/80 transition-all duration-300 rounded-r-lg p-6 shadow-md hover:shadow-xl hover:translate-x-2">
+                    {/* Date Badge (Terminal Timestamp Style) */}
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="font-mono text-sm text-accent/70 bg-accent/10 px-3 py-1 rounded">
+                        [{new Date(post.date).toISOString().split('T')[0]}]
+                      </span>
+                      <span className="font-mono text-xs text-muted-foreground flex items-center gap-1">
+                        <Clock className="w-3 h-3" />
                         {post.readTime}
-                      </div>
+                      </span>
                     </div>
 
-                    <h3 className="text-xl font-semibold mb-3 group-hover:text-accent transition-colors">
+                    {/* Title */}
+                    <h3 className="text-xl md:text-2xl font-bold mb-3 group-hover:text-accent transition-colors font-mono">
                       {post.title}
                     </h3>
 
-                    <p className="text-muted-foreground mb-4 line-clamp-3">
+                    {/* Excerpt */}
+                    <p className="text-muted-foreground mb-4 leading-relaxed">
                       {post.excerpt}
                     </p>
 
+                    {/* Tags (Terminal Style) */}
                     <div className="flex flex-wrap gap-2 mb-4">
-                      {post.tags.map((tag) => (
+                      {post.tags.map((tag, idx) => (
                         <span
                           key={tag}
-                          className="text-xs px-2 py-1 bg-accent/10 text-accent rounded-full"
+                          className="font-mono text-xs px-3 py-1 bg-cyan-400/10 text-cyan-400 border border-cyan-400/20 rounded"
                         >
                           {tag}
                         </span>
                       ))}
                     </div>
 
-                    <div className="flex items-center text-accent font-medium text-sm group-hover:gap-2 transition-all">
-                      Read more
-                      <ExternalLink className="w-4 h-4 ml-1 group-hover:ml-0 transition-all" />
+                    {/* Read More (Terminal Prompt Style) */}
+                    <div className="flex items-center font-mono text-sm text-accent group-hover:gap-2 transition-all">
+                      <span className="text-emerald-400">$</span>
+                      <span className="ml-2">cat {post.id}.log</span>
+                      <ExternalLink className="w-4 h-4 ml-2 group-hover:ml-0 transition-all opacity-0 group-hover:opacity-100" />
                     </div>
                   </div>
                 </div>
@@ -203,46 +219,48 @@ export default function BlogPage() {
                   href={post.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block h-full"
+                  className="block"
                 >
-                  <div className="bg-white/90 dark:bg-background/80 border border-border shadow-lg hover:shadow-xl hover:ring-2 hover:ring-accent/20 transition-all duration-200 rounded-2xl p-6 h-full">
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
-                      <div className="flex items-center gap-1">
-                        <Calendar className="w-4 h-4" />
-                        {new Date(post.date).toLocaleDateString('en-US', {
-                          year: 'numeric',
-                          month: 'short',
-                          day: 'numeric'
-                        })}
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Clock className="w-4 h-4" />
+                  {/* Terminal-Style List Item (External) */}
+                  <div className="bg-background/60 backdrop-blur-sm border-l-4 border-accent/50 hover:border-accent hover:bg-background/80 transition-all duration-300 rounded-r-lg p-6 shadow-md hover:shadow-xl hover:translate-x-2">
+                    {/* Date Badge (Terminal Timestamp Style) */}
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="font-mono text-sm text-accent/70 bg-accent/10 px-3 py-1 rounded">
+                        [{new Date(post.date).toISOString().split('T')[0]}]
+                      </span>
+                      <span className="font-mono text-xs text-muted-foreground flex items-center gap-1">
+                        <Clock className="w-3 h-3" />
                         {post.readTime}
-                      </div>
+                      </span>
                     </div>
 
-                    <h3 className="text-xl font-semibold mb-3 group-hover:text-accent transition-colors">
+                    {/* Title */}
+                    <h3 className="text-xl md:text-2xl font-bold mb-3 group-hover:text-accent transition-colors font-mono">
                       {post.title}
                     </h3>
 
-                    <p className="text-muted-foreground mb-4 line-clamp-3">
+                    {/* Excerpt */}
+                    <p className="text-muted-foreground mb-4 leading-relaxed">
                       {post.excerpt}
                     </p>
 
+                    {/* Tags (Terminal Style) */}
                     <div className="flex flex-wrap gap-2 mb-4">
-                      {post.tags.map((tag) => (
+                      {post.tags.map((tag, idx) => (
                         <span
                           key={tag}
-                          className="text-xs px-2 py-1 bg-accent/10 text-accent rounded-full"
+                          className="font-mono text-xs px-3 py-1 bg-cyan-400/10 text-cyan-400 border border-cyan-400/20 rounded"
                         >
                           {tag}
                         </span>
                       ))}
                     </div>
 
-                    <div className="flex items-center text-accent font-medium text-sm group-hover:gap-2 transition-all">
-                      Read more
-                      <ExternalLink className="w-4 h-4 ml-1 group-hover:ml-0 transition-all" />
+                    {/* Read More (Terminal Prompt Style) */}
+                    <div className="flex items-center font-mono text-sm text-accent group-hover:gap-2 transition-all">
+                      <span className="text-emerald-400">$</span>
+                      <span className="ml-2">cat {post.id}.log</span>
+                      <ExternalLink className="w-4 h-4 ml-2 group-hover:ml-0 transition-all opacity-0 group-hover:opacity-100" />
                     </div>
                   </div>
                 </a>
