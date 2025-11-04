@@ -284,7 +284,7 @@ export default function Hero() {
             </span>
           </div>
         </div>
-        {/* Subtitle */}
+        {/* Subtitle with Terminal Typing Effect & Tagline */}
         <motion.div
           className="mb-12 min-h-[5.5rem] xs:min-h-[6.5rem] sm:min-h-[7.5rem] md:min-h-[8.5rem] flex flex-col justify-center"
           initial={{ opacity: 0, y: 30 }}
@@ -292,10 +292,23 @@ export default function Hero() {
           transition={{ duration: 0.9, ease: [0.77, 0, 0.175, 1] }}
           style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
         >
-          <h2 className="text-xl md:text-2xl text-muted mb-4 font-head">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl text-foreground mb-6 font-head">
             I am{' '}
             <span className="gradient-text font-bold font-head">Salman Ahmad</span>
           </h2>
+          
+          {/* Standout Tagline with Glitch Effect */}
+          <motion.p 
+            className="text-2xl md:text-3xl font-bold mb-6 bg-gradient-to-r from-accent via-accent2 to-accent bg-clip-text text-transparent"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: showSubtext ? 1 : 0 }}
+            transition={{ duration: 0.9, delay: 0.2 }}
+          >
+            <span className="inline-block hover:animate-glitch">Systems thinker.</span>{' '}
+            <span className="inline-block hover:animate-glitch">Self-host evangelist.</span>{' '}
+            <span className="inline-block hover:animate-glitch">Data whisperer.</span>
+          </motion.p>
+          
           <p className="text-lg md:text-xl text-muted max-w-2xl mx-auto leading-relaxed">
             <span className="text-accent2 font-semibold">DevOps</span>-inclined <span className="text-accent font-semibold">Full-Stack Developer</span>.<br />
             Studying Computer Information Systems. Solving problems. Occasionally breaking things — on purpose.<br />
@@ -324,7 +337,7 @@ export default function Hero() {
           </motion.a>
         </motion.div>
         
-        {/* Button Group */}
+        {/* CTA Buttons with Glow & Download Resume */}
         <motion.div
           className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6 mb-16 min-h-[4.5rem] xs:min-h-[5.5rem] sm:min-h-[6.5rem]"
           initial={{ opacity: 0, y: 30 }}
@@ -332,35 +345,65 @@ export default function Hero() {
           transition={{ duration: 0.9, delay: 0.3, ease: [0.77, 0, 0.175, 1] }}
           style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
         >
+          {/* Primary CTA with Enhanced Glow */}
           <motion.button
             onClick={scrollToProjects}
-            className={"btn-primary px-8 py-3 text-lg font-semibold rounded-full will-change-transform"}
+            className="btn-primary px-8 py-3 text-lg font-semibold rounded-full will-change-transform relative overflow-hidden group"
             aria-label="Explore My Work section"
-            whileHover={{ scale: 1.07, boxShadow: '0 4px 24px 0 rgba(139,92,246,0.13)', filter: 'brightness(1.08)' }}
-            whileTap={{ scale: 0.97, boxShadow: '0 1.5px 6px 0 rgba(139,92,246,0.08)', filter: 'brightness(0.98)' }}
+            whileHover={{ scale: 1.07, y: -2 }}
+            whileTap={{ scale: 0.97 }}
             transition={{ type: 'spring', stiffness: 420, damping: 18, mass: 1.05 }}
             style={{
               background: 'linear-gradient(90deg, #8b5cf6, #14b8a6)',
               color: '#fff',
               WebkitTapHighlightColor: 'transparent',
               backfaceVisibility: 'hidden',
-              willChange: 'transform'
+              willChange: 'transform',
+              boxShadow: '0 0 20px rgba(139, 92, 246, 0.4), 0 0 40px rgba(139, 92, 246, 0.2)'
             }}
           >
-            <span className="sr-only">Explore My Work section</span>
-            Explore My Work
+            {/* Hover Glow Effect */}
+            <span className="absolute inset-0 bg-gradient-to-r from-accent via-accent2 to-accent opacity-0 group-hover:opacity-30 transition-opacity duration-300 blur-xl" />
+            <span className="relative z-10">Explore My Work</span>
           </motion.button>
+          
+          {/* Secondary CTA - Download Resume */}
+          <motion.a
+            href="/resume.pdf"
+            download="Salman_Ahmad_Resume.pdf"
+            className="btn-border-pure px-8 py-3 text-lg font-semibold rounded-full will-change-transform relative overflow-hidden group flex items-center gap-2"
+            aria-label="Download Resume"
+            whileHover={{ scale: 1.07, y: -2 }}
+            whileTap={{ scale: 0.97 }}
+            transition={{ type: 'spring', stiffness: 420, damping: 18, mass: 1.05 }}
+            style={{ 
+              WebkitTapHighlightColor: 'transparent', 
+              backfaceVisibility: 'hidden', 
+              willChange: 'transform',
+              boxShadow: '0 0 15px rgba(168, 85, 247, 0.2)'
+            }}
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            <span className="relative z-10">Download Resume</span>
+          </motion.a>
+          
+          {/* Tertiary CTA - Contact */}
           <motion.button
             onClick={scrollToContact}
-            className={"btn-border-pure px-8 py-3 text-lg font-semibold sm:ml-4 will-change-transform"}
+            className="btn-border-pure px-8 py-3 text-lg font-semibold rounded-full will-change-transform"
             aria-label="Contact Me section"
-            whileHover={{ scale: 1.07, boxShadow: '0 4px 24px 0 #a855f733', backgroundColor: 'transparent', filter: 'brightness(1.08)' }}
-            whileTap={{ scale: 0.97, boxShadow: '0 1.5px 6px 0 #a855f722', backgroundColor: 'transparent', filter: 'brightness(0.98)' }}
+            whileHover={{ scale: 1.07, y: -2, boxShadow: '0 4px 24px 0 #a855f733', backgroundColor: 'rgba(168, 85, 247, 0.05)' }}
+            whileTap={{ scale: 0.97 }}
             transition={{ type: 'spring', stiffness: 420, damping: 18, mass: 1.05 }}
-            style={{ WebkitTapHighlightColor: 'transparent', boxShadow: 'none', backfaceVisibility: 'hidden', willChange: 'transform' }}
+            style={{ 
+              WebkitTapHighlightColor: 'transparent', 
+              backfaceVisibility: 'hidden', 
+              willChange: 'transform' 
+            }}
           >
-            <span className="sr-only">Contact Me section</span>
-            Contact Me
+            <span className="relative z-10">Contact Me</span>
           </motion.button>
         </motion.div>
         <motion.div

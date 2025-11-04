@@ -86,13 +86,17 @@ export default function Navbar() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -80, opacity: 0, pointerEvents: 'none' }}
           transition={{ duration: 0.65, ease: [0.77, 0, 0.175, 1] }}
-          className="fixed top-0 w-full z-50 bg-black/40 backdrop-blur-xl border-b border-white/20 rounded-b-3xl transition-none"
-          style={{ willChange: 'transform, opacity', backfaceVisibility: 'hidden' }}
+          className="fixed top-0 w-full z-50 backdrop-blur-2xl border-b border-accent/30 rounded-b-3xl transition-none shadow-lg shadow-accent/20"
+          style={{ 
+            willChange: 'transform, opacity', 
+            backfaceVisibility: 'hidden',
+            background: 'linear-gradient(180deg, rgba(10, 10, 10, 0.85) 0%, rgba(10, 10, 10, 0.75) 50%, rgba(10, 10, 10, 0.65) 100%)',
+          }}
         >
           <div className="relative w-full px-4 sm:px-6 lg:px-8">
-            {/* LED strip effect */}
-            <div className="absolute left-0 right-0 -bottom-2 h-6 pointer-events-none z-10">
-              <div className="w-full h-full bg-gradient-to-b from-accent/60 via-accent2/40 to-transparent blur-2xl opacity-80"></div>
+            {/* Enhanced LED strip with purple accent */}
+            <div className="absolute left-0 right-0 -bottom-2 h-8 pointer-events-none z-10">
+              <div className="w-full h-full bg-gradient-to-b from-accent/70 via-accent2/50 to-transparent blur-3xl opacity-90"></div>
             </div>
 
             <div className="flex items-center justify-between h-16 relative">
