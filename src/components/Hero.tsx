@@ -85,9 +85,11 @@ const DecryptText = ({ text, isVisible }: { text: string; isVisible: boolean }) 
   // Add fade-to-white animation when fully decrypted
   return (
     <span
-      className={`font-mono ${isDecrypting ? 'text-accent' : 'text-foreground'}`}
+      className={`${isDecrypting ? 'text-accent' : 'text-foreground'}`}
       dangerouslySetInnerHTML={{ __html: displayText }}
       style={{
+        fontFamily: 'Helvetica, Arial, sans-serif',
+        fontWeight: 'bold',
         transition: fullyDecrypted ? 'color 1.5s cubic-bezier(0.77,0,0.175,1)' : undefined
       }}
     />
@@ -259,7 +261,7 @@ export default function Hero() {
           <div className="flex items-center justify-center mb-4 w-full whitespace-nowrap" style={{ minHeight: '2.5em' }}>
             <span className="flex items-center w-full justify-center">
               <motion.span
-                className="font-bold text-center leading-none align-middle whitespace-nowrap w-full max-w-full overflow-hidden text-[clamp(2.2rem,8vw,5.5rem)] px-0"
+                className="text-center leading-none align-middle whitespace-nowrap w-full max-w-full overflow-hidden text-[clamp(2.2rem,8vw,5.5rem)] px-0"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.9, delay: 0.5, ease: [0.77, 0, 0.175, 1] }}
@@ -272,6 +274,8 @@ export default function Hero() {
                   willChange: 'opacity, transform',
                   fontSize: 'clamp(2.2rem, 8vw, 5.5rem)',
                   whiteSpace: 'nowrap',
+                  fontFamily: 'Helvetica, Arial, sans-serif',
+                  fontWeight: 'bold',
                 }}
               >
                 {hasMounted && showCinematicCursor ? (
