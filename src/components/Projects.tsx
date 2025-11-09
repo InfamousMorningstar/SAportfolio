@@ -154,7 +154,7 @@ const cardVariants = {
 };
 export default function Projects() {
   return (
-    <section id="projects" className="min-h-screen py-20 px-6 relative">
+    <section id="projects" className="py-16 lg:py-20 px-6 relative">
       <div className="max-w-7xl mx-auto">
         <motion.div
           className="text-center mb-16"

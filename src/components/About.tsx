@@ -15,8 +15,9 @@
  */
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import Head from 'next/head';
+import { useRef } from 'react';
 import { FaServer, FaCode, FaDocker, FaLinux, FaNetworkWired, FaCloud, FaUserTie } from 'react-icons/fa';
 
 
@@ -64,6 +65,17 @@ const itemVariants = {
 };
 
 export default function About() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  // Hologram glitch effects - RGB split on scroll
+  const rgbSplitR = useTransform(scrollYProgress, [0, 0.3, 0.5, 0.7, 1], [0, 2, 0, -2, 0]);
+  const rgbSplitB = useTransform(scrollYProgress, [0, 0.3, 0.5, 0.7, 1], [0, -2, 0, 2, 0]);
+  const glitchOpacity = useTransform(scrollYProgress, [0.2, 0.25, 0.3], [0, 1, 0]);
+
   return (
     <>
       <Head>
@@ -74,7 +86,7 @@ export default function About() {
           href="/images/profile-photo-1600.avif"
         />
       </Head>
-      <section id="about" className="min-h-screen py-20 px-6 relative">
+      <section ref={sectionRef} id="about" className="py-16 lg:py-20 px-6 relative overflow-hidden">
         <div className="max-w-7xl mx-auto">
         <motion.div
           className="text-center mb-16"
@@ -86,7 +98,7 @@ export default function About() {
           <h2 className="text-4xl md:text-6xl font-bold mb-6">
             About <span className="gradient-text">Me</span>
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-accent to-accent2 mx-auto mb-8"></div>
+          <div className="w-24 h-1 bg-gradient-to-r from-accent to-accent2 mx-auto mb-8" />
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
@@ -159,7 +171,39 @@ export default function About() {
             viewport={{ once: true }}
             style={{ willChange: 'transform, filter, opacity', backfaceVisibility: 'hidden' }}
           >
-            <div className="relative h-[32rem] max-w-sm mx-auto border-2 border-accent/30 rounded-lg overflow-hidden hover:border-accent/50 transition-colors duration-300">
+            <div className="relative h-[32rem] max-w-sm mx-auto border-2 border-accent/30 rounded-lg overflow-visible hover:border-accent/50 transition-colors duration-300 group">
+              {/* Inner container with overflow-hidden for image clipping */}
+              <div className="absolute inset-0 overflow-hidden rounded-lg">
+              {/* RGB Split layers for glitch effect */}
+              <motion.div 
+                className="absolute inset-0"
+                style={{ x: rgbSplitR }}
+              >
+                <picture>
+                  <source
+                    type="image/avif"
+                    srcSet="/images/profile-photo-320.avif 320w, /images/profile-photo-480.avif 480w, /images/profile-photo-768.avif 768w, /images/profile-photo-1024.avif 1024w, /images/profile-photo-1280.avif 1280w, /images/profile-photo-1600.avif 1600w"
+                    sizes="(max-width: 640px) 90vw, (max-width: 1024px) 60vw, 32rem"
+                  />
+                  <source
+                    type="image/webp"
+                    srcSet="/images/profile-photo-320.webp 320w, /images/profile-photo-480.webp 480w, /images/profile-photo-768.webp 768w, /images/profile-photo-1024.webp 1024w, /images/profile-photo-1280.webp 1280w, /images/profile-photo-1600.webp 1600w"
+                    sizes="(max-width: 640px) 90vw, (max-width: 1024px) 60vw, 32rem"
+                  />
+                  <img
+                    src="/images/profile-photo-1600.avif"
+                    alt="Ahmad Profile Photo"
+                    className="object-cover rounded-lg w-full h-full mix-blend-screen opacity-50"
+                    width="512"
+                    height="640"
+                    loading="eager"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'sepia(1) hue-rotate(-30deg) saturate(3)' }}
+                    fetchPriority="high"
+                  />
+                </picture>
+              </motion.div>
+
+              {/* Main image */}
               <picture>
                 <source
                   type="image/avif"
@@ -174,7 +218,7 @@ export default function About() {
                 <img
                   src="/images/profile-photo-1600.avif"
                   alt="Ahmad Profile Photo"
-                  className="object-cover rounded-lg w-full h-full"
+                  className="object-cover rounded-lg w-full h-full relative z-10"
                   width="512"
                   height="640"
                   loading="eager"
@@ -182,7 +226,38 @@ export default function About() {
                   fetchPriority="high"
                 />
               </picture>
-              <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent rounded-lg"></div>
+
+              {/* Blue channel offset */}
+              <motion.div 
+                className="absolute inset-0"
+                style={{ x: rgbSplitB }}
+              >
+                <picture>
+                  <source
+                    type="image/avif"
+                    srcSet="/images/profile-photo-320.avif 320w, /images/profile-photo-480.avif 480w, /images/profile-photo-768.avif 768w, /images/profile-photo-1024.avif 1024w, /images/profile-photo-1280.avif 1280w, /images/profile-photo-1600.avif 1600w"
+                    sizes="(max-width: 640px) 90vw, (max-width: 1024px) 60vw, 32rem"
+                  />
+                  <source
+                    type="image/webp"
+                    srcSet="/images/profile-photo-320.webp 320w, /images/profile-photo-480.webp 480w, /images/profile-photo-768.webp 768w, /images/profile-photo-1024.webp 1024w, /images/profile-photo-1280.webp 1280w, /images/profile-photo-1600.webp 1600w"
+                    sizes="(max-width: 640px) 90vw, (max-width: 1024px) 60vw, 32rem"
+                  />
+                  <img
+                    src="/images/profile-photo-1600.avif"
+                    alt=""
+                    className="object-cover rounded-lg w-full h-full mix-blend-screen opacity-50"
+                    width="512"
+                    height="640"
+                    loading="eager"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'sepia(1) hue-rotate(180deg) saturate(3)' }}
+                    aria-hidden="true"
+                  />
+                </picture>
+              </motion.div>
+
+              <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent rounded-lg z-30"></div>
+              </div>
             </div>
           </motion.div>
         </div>
@@ -198,19 +273,27 @@ export default function About() {
           {skills.map((skillGroup, index) => (
             <motion.div
               key={skillGroup.category}
-              className="card group hover:border-accent/50 transition-all duration-300"
+              className="card group hover:border-accent/50 transition-all duration-300 relative overflow-hidden"
               variants={itemVariants}
               whileHover={{ y: -5 }}
             >
-              <div className="flex items-center mb-4">
-                <div className="text-2xl mr-3 group-hover:scale-110 transition-transform">
+              <div className="flex items-center mb-4 relative z-10">
+                <motion.div 
+                  className="text-2xl mr-3"
+                  whileHover={{ 
+                    scale: 1.2, 
+                    rotate: 360,
+                    filter: 'drop-shadow(0 0 8px rgba(139, 92, 246, 0.6))'
+                  }}
+                  transition={{ duration: 0.5 }}
+                >
                   {skillGroup.icon}
-                </div>
+                </motion.div>
                 <h3 className="text-lg font-semibold text-foreground group-hover:text-accent transition-colors">
                   {skillGroup.category}
                 </h3>
               </div>
-              <ul className="space-y-2">
+              <ul className="space-y-2 relative z-10">
                 {skillGroup.items.map((skill) => (
                   <li key={skill} className="text-muted text-sm flex items-center">
                     <div className="w-1.5 h-1.5 bg-accent rounded-full mr-2"></div>

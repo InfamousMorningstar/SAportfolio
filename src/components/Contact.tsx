@@ -15,7 +15,8 @@
  */
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaGithub, FaLinkedin, FaDiscord } from 'react-icons/fa';
 
 const contactInfo = [
@@ -86,8 +87,14 @@ const button3dClass =
 	"rounded-full bg-transparent shadow-md border border-transparent hover:border-2 hover:border-accent focus:outline-none focus:ring-2 focus:ring-accent/60";
 
 export default function Contact() {
+	const sectionRef = useRef(null);
+	const { scrollYProgress } = useScroll({
+		target: sectionRef,
+		offset: ["start end", "end start"]
+	});
+
 	return (
-		<section id="contact" className="min-h-screen py-20 px-6 relative">
+		<section id="contact" ref={sectionRef} className="py-16 lg:py-20 px-6 relative" style={{ perspective: '1200px' }}>
 			<div className="max-w-6xl mx-auto">
 				<motion.div
 					className="text-center mb-16"
@@ -126,15 +133,45 @@ export default function Contact() {
 								</h3>
 
 <div className="grid md:grid-cols-2 gap-4">
-  {contactInfo.map((item, index) => (
-	item.simple ? (
-	  <a
+  {contactInfo.map((item, index) => {
+	// Origami fold directions - alternate between top and bottom
+	const foldOrigin = index === 0 ? 'top' : 'bottom';
+	const rotateXStart = index === 0 ? -90 : 90;
+	
+	return item.simple ? (
+	  <motion.a
 		key={item.label}
 		href={item.href}
 		target={item.href.startsWith('http') ? '_blank' : undefined}
 		rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
 		className="flex items-center space-x-4 p-4 bg-transparent rounded-lg border border-border hover:border-accent transition-colors"
-		style={{ color: '#fff', background: 'none', boxShadow: 'none', WebkitTapHighlightColor: 'transparent', border: 'none' }}
+		style={{ 
+		  color: '#fff', 
+		  background: 'none', 
+		  boxShadow: 'none', 
+		  WebkitTapHighlightColor: 'transparent', 
+		  border: 'none',
+		  transformOrigin: foldOrigin,
+		  transformStyle: 'preserve-3d'
+		}}
+		initial={{ 
+		  rotateX: rotateXStart, 
+		  opacity: 0, 
+		  scale: 0.85,
+		  filter: 'blur(4px)'
+		}}
+		whileInView={{ 
+		  rotateX: 0, 
+		  opacity: 1, 
+		  scale: 1,
+		  filter: 'blur(0px)'
+		}}
+		viewport={{ once: true, margin: "-100px" }}
+		transition={{
+		  duration: 0.9,
+		  delay: index * 0.18,
+		  ease: [0.33, 1, 0.68, 1]
+		}}
 	  >
 		<span className="text-2xl">{item.icon}</span>
 		<div>
@@ -142,7 +179,7 @@ export default function Contact() {
 		  <p className="text-lg text-muted">{item.value}</p>
 		  <p className="text-sm text-muted">{item.description}</p>
 		</div>
-	  </a>
+	  </motion.a>
 	) : (
 	  <motion.a
 		key={item.label}
@@ -157,14 +194,30 @@ export default function Contact() {
 		  WebkitTapHighlightColor: 'transparent',
 		  border: 'none',
 		  backfaceVisibility: 'hidden',
-		  willChange: 'opacity, transform'
+		  willChange: 'opacity, transform',
+		  transformOrigin: foldOrigin,
+		  transformStyle: 'preserve-3d'
+		}}
+		initial={{ 
+		  rotateX: rotateXStart, 
+		  opacity: 0, 
+		  scale: 0.85,
+		  filter: 'blur(4px)'
+		}}
+		whileInView={{ 
+		  rotateX: 0, 
+		  opacity: 1, 
+		  scale: 1,
+		  filter: 'blur(0px)'
+		}}
+		viewport={{ once: true, margin: "-100px" }}
+		transition={{
+		  duration: 0.9,
+		  delay: index * 0.18,
+		  ease: [0.33, 1, 0.68, 1]
 		}}
 		whileHover={{ scale: 1.13, boxShadow: '0 6px 32px 0 rgba(168,85,247,0.18)', backgroundColor: 'rgba(168,85,247,0.08)', filter: 'brightness(1.12)' }}
 		whileTap={{ scale: 0.96, boxShadow: '0 2px 8px 0 rgba(168,85,247,0.10)', backgroundColor: 'rgba(168,85,247,0.14)', filter: 'brightness(0.98)' }}
-		transition={{ type: 'spring', stiffness: 420, damping: 18, mass: 1.05 }}
-		initial={{ opacity: 0, y: 20 }}
-		whileInView={{ opacity: 1, y: 0 }}
-		viewport={{ once: true }}
 	  >
 		<motion.div
 		  className="text-2xl group-hover:scale-110 transition-transform"
@@ -183,8 +236,8 @@ export default function Contact() {
 		  </p>
 		</div>
 	  </motion.a>
-	)
-  ))}
+	);
+  })}
 </div>
 							</div>
 
@@ -199,20 +252,48 @@ export default function Contact() {
 								</h3>
 
 								<div className="grid md:grid-cols-3 gap-4">
-						{socialLinks.map((social, index) => (
+						{socialLinks.map((social, index) => {
+							// Origami fold from different angles: left, center, right
+							const foldConfig = [
+								{ origin: 'left', rotateY: -90 },   // GitHub - unfold from left
+								{ origin: 'center', rotateY: 90 },  // LinkedIn - unfold from center (flip)
+								{ origin: 'right', rotateY: 90 }    // Discord - unfold from right
+							][index];
+							
+							return (
 							<motion.a
 								key={social.label}
 								href={social.href}
 								target="_blank"
 								rel="noopener noreferrer"
 								className={`flex items-center space-x-4 p-4 ${button3dClass} group ${social.color}`}
+								style={{ 
+									WebkitTapHighlightColor: 'transparent', 
+									backfaceVisibility: 'hidden', 
+									willChange: 'opacity, transform',
+									transformOrigin: foldConfig.origin,
+									transformStyle: 'preserve-3d'
+								}}
+								initial={{ 
+									rotateY: foldConfig.rotateY, 
+									opacity: 0, 
+									scale: 0.85,
+									filter: 'blur(4px)'
+								}}
+								whileInView={{ 
+									rotateY: 0, 
+									opacity: 1, 
+									scale: 1,
+									filter: 'blur(0px)'
+								}}
+								viewport={{ once: true, margin: "-100px" }}
+								transition={{
+									duration: 0.9,
+									delay: 0.36 + (index * 0.18), // Start after contact info
+									ease: [0.33, 1, 0.68, 1]
+								}}
 								whileHover={{ scale: 1.13, boxShadow: '0 6px 32px 0 rgba(168,85,247,0.18)', backgroundColor: 'rgba(168,85,247,0.08)', filter: 'brightness(1.12)' }}
 								whileTap={{ scale: 0.96, boxShadow: '0 2px 8px 0 rgba(168,85,247,0.10)', backgroundColor: 'rgba(168,85,247,0.14)', filter: 'brightness(0.98)' }}
-								transition={{ type: 'spring', stiffness: 420, damping: 18, mass: 1.05 }}
-								style={{ WebkitTapHighlightColor: 'transparent', backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
-								initial={{ opacity: 0, y: 20 }}
-								whileInView={{ opacity: 1, y: 0 }}
-								viewport={{ once: true }}
 							>
 											<motion.div
 												className="text-2xl group-hover:scale-110 transition-transform"
@@ -228,7 +309,8 @@ export default function Contact() {
 												</p>
 											</div>
 										</motion.a>
-									))}
+							);
+						})}
 								</div>
 							</div>
 
@@ -243,7 +325,31 @@ export default function Contact() {
 								</h3>
 
 								<div className="grid md:grid-cols-2 gap-8">
-									<div className="p-6 bg-accent/5 border border-accent/20 rounded-lg">
+									<motion.div 
+										className="p-6 bg-accent/5 border border-accent/20 rounded-lg"
+										style={{
+											transformOrigin: 'left',
+											transformStyle: 'preserve-3d'
+										}}
+										initial={{ 
+											rotateY: -75, 
+											opacity: 0, 
+											scale: 0.9,
+											filter: 'blur(4px)'
+										}}
+										whileInView={{ 
+											rotateY: 0, 
+											opacity: 1, 
+											scale: 1,
+											filter: 'blur(0px)'
+										}}
+										viewport={{ once: true, margin: "-100px" }}
+										transition={{
+											duration: 0.9,
+											delay: 0.9, // After social links
+											ease: [0.33, 1, 0.68, 1]
+										}}
+									>
 										<h4 className="text-lg font-semibold text-accent mb-3">Currently Available For:</h4>
 										<ul className="space-y-2 text-muted">
 											<li className="flex items-center space-x-2">
@@ -263,9 +369,33 @@ export default function Contact() {
 												<span>Open source collaborations</span>
 											</li>
 										</ul>
-									</div>
+									</motion.div>
 
-									<div className="flex flex-col justify-center space-y-6">
+									<motion.div 
+										className="flex flex-col justify-center space-y-6"
+										style={{
+											transformOrigin: 'right',
+											transformStyle: 'preserve-3d'
+										}}
+										initial={{ 
+											rotateY: 75, 
+											opacity: 0, 
+											scale: 0.9,
+											filter: 'blur(4px)'
+										}}
+										whileInView={{ 
+											rotateY: 0, 
+											opacity: 1, 
+											scale: 1,
+											filter: 'blur(0px)'
+										}}
+										viewport={{ once: true, margin: "-100px" }}
+										transition={{
+											duration: 0.9,
+											delay: 1.05, // Slightly after availability card
+											ease: [0.33, 1, 0.68, 1]
+										}}
+									>
 										<div className="text-center">
 											<p className="text-muted mb-6">
 												Prefer email? Send me a message directly and I'll get back to you within 24 hours.
@@ -274,10 +404,37 @@ export default function Contact() {
 						<motion.a
 							href="mailto:s.ahmad0147@gmail.com?subject=Let's Connect!&body=Hi Salman,%0D%0A%0D%0AI'd like to discuss..."
 							className={`btn-primary inline-flex items-center space-x-2 px-8 py-4 text-lg ${button3dClass}`}
+							style={{ 
+								WebkitTapHighlightColor: 'transparent', 
+								background: 'linear-gradient(90deg, #a855f7 0%, #14b8a6 100%)', 
+								color: '#fff', 
+								border: 'none', 
+								backfaceVisibility: 'hidden', 
+								willChange: 'opacity, transform',
+								transformStyle: 'preserve-3d'
+							}}
+							initial={{
+								rotateX: -45,
+								rotateZ: -5,
+								opacity: 0,
+								scale: 0.85,
+								filter: 'blur(4px)'
+							}}
+							whileInView={{
+								rotateX: 0,
+								rotateZ: 0,
+								opacity: 1,
+								scale: 1,
+								filter: 'blur(0px)'
+							}}
+							viewport={{ once: true, margin: "-100px" }}
+							transition={{
+								duration: 0.9,
+								delay: 1.2,
+								ease: [0.33, 1, 0.68, 1]
+							}}
 							whileHover={{ scale: 1.13, boxShadow: '0 6px 32px 0 rgba(168,85,247,0.18)', background: 'linear-gradient(90deg, #a855f7 0%, #14b8a6 100%)', filter: 'brightness(1.12)' }}
 							whileTap={{ scale: 0.96, boxShadow: '0 2px 8px 0 rgba(168,85,247,0.10)', background: 'linear-gradient(90deg, #a855f7 0%, #14b8a6 100%)', filter: 'brightness(0.98)' }}
-							transition={{ type: 'spring', stiffness: 420, damping: 18, mass: 1.05 }}
-							style={{ WebkitTapHighlightColor: 'transparent', background: 'linear-gradient(90deg, #a855f7 0%, #14b8a6 100%)', color: '#fff', border: 'none', backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
 						>
 												<FaEnvelope />
 												<span>Send Email</span>
@@ -293,7 +450,7 @@ export default function Contact() {
 												</div>
 											</div>
 										</div>
-									</div>
+									</motion.div>
 								</div>
 							</div>
 						</div>

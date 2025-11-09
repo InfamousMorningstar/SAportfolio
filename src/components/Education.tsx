@@ -15,7 +15,8 @@
  */
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useScroll } from 'framer-motion';
+import { useRef } from 'react';
 import { FaGraduationCap, FaAward, FaTrophy, FaBook } from 'react-icons/fa';
 
 const education = [
@@ -104,9 +105,39 @@ const itemVariants = {
 	}
 };
 
-export default function Education() {
+// WebGL Fluid Simulation Wrapper
+const WaterBlob = ({ children, index }: { children: React.ReactNode; index: number }) => {
 	return (
-		<section id="education" className="min-h-screen py-20 px-6 relative">
+		<motion.div
+			className="relative"
+			initial={{ opacity: 0, y: 20 }}
+			whileInView={{ opacity: 1, y: 0 }}
+			viewport={{ once: true, margin: "-100px" }}
+			transition={{
+				duration: 0.6,
+				delay: index * 0.2,
+				ease: [0.25, 0.46, 0.45, 0.94],
+			}}
+		>
+			<div 
+				className="card group bg-white/5 dark:bg-black/20 backdrop-blur-xl border border-white/10 shadow-lg hover:border-white/30 transition-all duration-300 hover:scale-[1.02] rounded-2xl"
+				style={{ minHeight: '400px', position: 'relative' }}
+			>
+				{children}
+			</div>
+		</motion.div>
+	);
+};
+
+export default function Education() {
+	const sectionRef = useRef(null);
+	const { scrollYProgress } = useScroll({
+		target: sectionRef,
+		offset: ["start end", "end start"]
+	});
+
+	return (
+		<section id="education" ref={sectionRef} className="py-16 lg:py-20 px-6 relative">
 			<div className="max-w-6xl mx-auto">
 				<motion.div
 					className="text-center mb-16"
@@ -133,23 +164,8 @@ export default function Education() {
 		  whileInView="visible"
 		  viewport={{ once: true }}
 		>
-		  {education.map((edu) => (
-			<motion.div
-			  key={edu.institution}
-			  className="card group bg-white/10 dark:bg-black/30 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-lg hover:border-accent/60 transition-all duration-300"
-			  variants={itemVariants}
-			  whileHover={{
-				scale: 1.045,
-				y: -6,
-				boxShadow: '0 12px 40px 0 rgba(20,184,166,0.13)',
-				borderColor: 'var(--tw-accent)',
-				filter: 'blur(0px)'
-			  }}
-			  transition={{ type: 'spring', stiffness: 160, damping: 18, mass: 1.05 }}
-			  style={{ willChange: 'transform, box-shadow, border-color, filter', backfaceVisibility: 'hidden' }}
-			  tabIndex={0}
-			  aria-label={edu.institution}
-			>
+		  {education.map((edu, index) => (
+			<WaterBlob key={edu.institution} index={index}>
 							<div className="grid lg:grid-cols-3 gap-8">
 								{/* Left Column - Institution Info */}
 								<div className="lg:col-span-1">
@@ -238,13 +254,43 @@ export default function Education() {
 									<motion.li
 										key={highlight}
 										className="flex items-start space-x-2 text-sm text-muted"
-										initial={{ opacity: 0, x: 20 }}
-										whileInView={{ opacity: 1, x: 0 }}
-										transition={{ delay: idx * 0.1, duration: 0.7, ease: [0.77, 0, 0.175, 1] }}
+										initial={{ 
+											opacity: 0, 
+											x: -20,
+											scale: 0.7,
+											filter: 'blur(3px)'
+										}}
+										whileInView={{ 
+											opacity: 1, 
+											x: 0,
+											scale: 1,
+											filter: 'blur(0px)'
+										}}
+										transition={{ 
+											delay: 0.5 + (idx * 0.1), 
+											duration: 0.7, 
+											ease: [0.34, 1.56, 0.64, 1],
+											scale: {
+												type: 'spring',
+												stiffness: 130,
+												damping: 14,
+												mass: 0.7
+											}
+										}}
 										viewport={{ once: true }}
-										style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
+										style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform, filter' }}
 									>
-													<div className="w-1.5 h-1.5 bg-accent rounded-full mt-1.5 flex-shrink-0"></div>
+													<motion.div 
+														className="w-1.5 h-1.5 bg-accent rounded-full mt-1.5 flex-shrink-0"
+														initial={{ scale: 0, borderRadius: '0%' }}
+														whileInView={{ scale: 1, borderRadius: '50%' }}
+														transition={{
+															delay: 0.5 + (idx * 0.1) + 0.2,
+															duration: 0.4,
+															ease: [0.34, 1.56, 0.64, 1]
+														}}
+														viewport={{ once: true }}
+													/>
 													<span>{highlight}</span>
 												</motion.li>
 											))}
@@ -262,14 +308,48 @@ export default function Education() {
 										{edu.relevantCourses.map((course, idx) => (
 								<motion.div
 									key={course}
-									className="text-sm text-muted hover:text-foreground transition-colors cursor-default will-change-transform"
-									initial={{ opacity: 0, y: 10 }}
-									whileInView={{ opacity: 1, y: 0 }}
+									className="text-sm text-muted hover:text-foreground transition-colors cursor-default will-change-transform px-3 py-1.5 rounded-lg"
+									initial={{ 
+										opacity: 0, 
+										y: 10,
+										borderRadius: '50%',
+										scale: 0.6,
+										filter: 'blur(3px)',
+										background: 'radial-gradient(circle, rgba(20,184,166,0.2) 0%, transparent 100%)'
+									}}
+									whileInView={{ 
+										opacity: 1, 
+										y: 0,
+										borderRadius: '8px',
+										scale: 1,
+										filter: 'blur(0px)',
+										background: 'transparent'
+									}}
 									viewport={{ once: true }}
-									whileHover={{ x: 5, scale: 1.13, boxShadow: '0 6px 32px 0 rgba(168,85,247,0.18)', backgroundColor: 'rgba(168,85,247,0.08)', filter: 'brightness(1.12)' }}
-									whileTap={{ scale: 0.96, boxShadow: '0 2px 8px 0 rgba(168,85,247,0.10)', backgroundColor: 'rgba(168,85,247,0.14)', filter: 'brightness(0.98)' }}
-									transition={{ type: 'spring', stiffness: 540, damping: 16, mass: 1.01 }}
-									style={{ WebkitTapHighlightColor: 'transparent', backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
+									transition={{
+										duration: 0.6,
+										delay: 0.6 + (idx * 0.08),
+										ease: [0.34, 1.56, 0.64, 1],
+										borderRadius: {
+											duration: 0.5,
+											ease: [0.34, 1.56, 0.64, 1]
+										},
+										scale: {
+											type: 'spring',
+											stiffness: 140,
+											damping: 13,
+											mass: 0.6
+										}
+									}}
+									whileHover={{ 
+										x: 5, 
+										scale: 1.08, 
+										boxShadow: '0 4px 20px 0 rgba(20,184,166,0.2)', 
+										backgroundColor: 'rgba(20,184,166,0.08)', 
+										filter: 'brightness(1.12) blur(0px)' 
+									}}
+									whileTap={{ scale: 0.96, boxShadow: '0 2px 8px 0 rgba(20,184,166,0.10)', backgroundColor: 'rgba(20,184,166,0.14)', filter: 'brightness(0.98)' }}
+									style={{ WebkitTapHighlightColor: 'transparent', backfaceVisibility: 'hidden', willChange: 'opacity, transform, filter, border-radius' }}
 								>
 												• {course}
 											</motion.div>
@@ -277,7 +357,7 @@ export default function Education() {
 									</div>
 								</div>
 							</div>
-						</motion.div>
+						</WaterBlob>
 					))}
 				</motion.div>
 
@@ -297,16 +377,65 @@ export default function Education() {
 						{skills.map((skill, index) => (
 							<motion.span
 								key={skill}
-								className="px-4 py-2 bg-accent/10 border border-accent/30 rounded-full text-accent text-sm font-medium will-change-transform"
-								initial={{ opacity: 0, scale: 0.8 }}
-								whileInView={{ opacity: 1, scale: 1 }}
-								whileHover={{ scale: 1.08 }}
-								whileTap={{ scale: 0.97 }}
-								transition={{ type: 'spring', stiffness: 340, damping: 22, mass: 1.1 }}
-								viewport={{ once: true }}
-								style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
+								className="px-4 py-2 bg-accent/10 border border-accent/30 rounded-full text-accent text-sm font-medium will-change-transform relative overflow-hidden"
+								initial={{ 
+									opacity: 0, 
+									scale: 0.3,
+									borderRadius: '50%',
+									filter: 'blur(4px)',
+									background: 'radial-gradient(circle, rgba(168,85,247,0.4) 0%, rgba(20,184,166,0.4) 100%)'
+								}}
+								whileInView={{ 
+									opacity: 1, 
+									scale: 1,
+									borderRadius: '9999px',
+									filter: 'blur(0px)',
+									background: 'rgba(168,85,247,0.1)'
+								}}
+								viewport={{ once: true, margin: "-100px" }}
+								whileHover={{ 
+									scale: 1.1,
+									boxShadow: '0 4px 20px rgba(168,85,247,0.3), inset 0 1px 4px rgba(255,255,255,0.2)',
+									filter: 'blur(0px) brightness(1.2)',
+									borderColor: 'rgba(168,85,247,0.6)'
+								}}
+								whileTap={{ 
+									scale: 0.85,
+									transition: {
+										type: 'spring',
+										stiffness: 400,
+										damping: 10
+									}
+								}}
+								transition={{
+									duration: 0.9,
+									delay: index * 0.05,
+									ease: [0.25, 0.46, 0.45, 0.94],
+									scale: {
+										type: 'spring',
+										stiffness: 80,
+										damping: 18,
+										mass: 0.8
+									}
+								}}
+								style={{ 
+									backfaceVisibility: 'hidden', 
+									willChange: 'opacity, transform, filter',
+									// Water meniscus shadow - STATIC
+									boxShadow: '0 2px 8px rgba(20,184,166,0.15), inset 0 1px 2px rgba(255,255,255,0.1)',
+									cursor: 'pointer'
+								}}
 							>
-								{skill}
+								{/* Water refraction shimmer - STATIC */}
+								<div
+									className="absolute inset-0 rounded-full pointer-events-none"
+									style={{
+										background: 'linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%, rgba(20,184,166,0.08) 100%)',
+										mixBlendMode: 'overlay',
+										opacity: 0.8
+									}}
+								/>
+								<span className="relative z-10">{skill}</span>
 							</motion.span>
 						))}
 					</div>

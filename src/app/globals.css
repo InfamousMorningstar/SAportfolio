@@ -261,19 +261,22 @@ html.scrolling {
   border-radius: 12px;
   padding: 24px;
   backdrop-filter: blur(10px);
+}
+
+/* Card hover effects - only apply to cards without Framer Motion animations */
+.card:not([style*="will-change"]) {
   transition: all 0.3s ease;
 }
 
-.card:hover {
+.card:not([style*="will-change"]):hover {
   border-color: rgba(139, 92, 246, 0.5);
   transform: translateY(-5px);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
-/* Project Card Hover Effect */
+/* Project Card Hover Effect - only for project cards, not affected by our new animations */
 .project-card {
   position: relative;
-  overflow: hidden;
 }
 
 .project-card::before {
@@ -285,6 +288,8 @@ html.scrolling {
   height: 100%;
   background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.1), transparent);
   transition: left 0.5s;
+  pointer-events: none;
+  z-index: 1;
 }
 
 .project-card:hover::before {

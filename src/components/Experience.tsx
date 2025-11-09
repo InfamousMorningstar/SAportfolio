@@ -87,7 +87,7 @@ const itemVariants = {
 
 export default function Experience() {
   return (
-    <section id="experience" className="min-h-screen py-20 px-6 relative overflow-x-hidden">
+    <section id="experience" className="py-16 lg:py-20 px-6 relative overflow-x-hidden">
       <div className="max-w-6xl mx-auto">
         <motion.div
           className="text-center mb-16"
