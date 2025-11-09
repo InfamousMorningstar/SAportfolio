@@ -479,8 +479,8 @@ export default function Hero() {
                 <span className="text-accent font-semibold">software that scales</span>
                 <span>.</span>
                 <br />
-                <span className="mt-2 inline-block">From </span>
-                <span className="text-accent2 font-semibold">self-hosted infrastructure</span>
+                <span className="mt-2 inline-block">From</span>
+                <span className="text-accent2 font-semibold"> self-hosted infrastructure</span>
                 <span> to </span>
                 <span className="text-accent font-semibold">intelligent automation</span>
                 <span> — I architect the backend you </span>
