@@ -134,10 +134,6 @@ export default function Contact() {
 
 <div className="grid md:grid-cols-2 gap-4">
   {contactInfo.map((item, index) => {
-	// Origami fold directions - alternate between top and bottom
-	const foldOrigin = index === 0 ? 'top' : 'bottom';
-	const rotateXStart = index === 0 ? -90 : 90;
-	
 	return item.simple ? (
 	  <motion.a
 		key={item.label}
@@ -151,25 +147,19 @@ export default function Contact() {
 		  boxShadow: 'none', 
 		  WebkitTapHighlightColor: 'transparent', 
 		  border: 'none',
-		  transformOrigin: foldOrigin,
-		  transformStyle: 'preserve-3d'
 		}}
 		initial={{ 
-		  rotateX: rotateXStart, 
 		  opacity: 0, 
-		  scale: 0.85,
-		  filter: 'blur(4px)'
+		  y: 20,
 		}}
 		whileInView={{ 
-		  rotateX: 0, 
 		  opacity: 1, 
-		  scale: 1,
-		  filter: 'blur(0px)'
+		  y: 0,
 		}}
 		viewport={{ once: true, margin: "-100px" }}
 		transition={{
-		  duration: 0.9,
-		  delay: index * 0.18,
+		  duration: 0.6,
+		  delay: index * 0.1,
 		  ease: [0.33, 1, 0.68, 1]
 		}}
 	  >
@@ -193,31 +183,23 @@ export default function Contact() {
 		  boxShadow: 'none',
 		  WebkitTapHighlightColor: 'transparent',
 		  border: 'none',
-		  backfaceVisibility: 'hidden',
-		  willChange: 'opacity, transform',
-		  transformOrigin: foldOrigin,
-		  transformStyle: 'preserve-3d'
 		}}
 		initial={{ 
-		  rotateX: rotateXStart, 
 		  opacity: 0, 
-		  scale: 0.85,
-		  filter: 'blur(4px)'
+		  y: 20,
 		}}
 		whileInView={{ 
-		  rotateX: 0, 
 		  opacity: 1, 
-		  scale: 1,
-		  filter: 'blur(0px)'
+		  y: 0,
 		}}
 		viewport={{ once: true, margin: "-100px" }}
 		transition={{
-		  duration: 0.9,
-		  delay: index * 0.18,
+		  duration: 0.6,
+		  delay: index * 0.1,
 		  ease: [0.33, 1, 0.68, 1]
 		}}
-		whileHover={{ scale: 1.13, boxShadow: '0 6px 32px 0 rgba(168,85,247,0.18)', backgroundColor: 'rgba(168,85,247,0.08)', filter: 'brightness(1.12)' }}
-		whileTap={{ scale: 0.96, boxShadow: '0 2px 8px 0 rgba(168,85,247,0.10)', backgroundColor: 'rgba(168,85,247,0.14)', filter: 'brightness(0.98)' }}
+		whileHover={{ scale: 1.05, boxShadow: '0 6px 32px 0 rgba(168,85,247,0.18)', backgroundColor: 'rgba(168,85,247,0.08)' }}
+		whileTap={{ scale: 0.98 }}
 	  >
 		<motion.div
 		  className="text-2xl group-hover:scale-110 transition-transform"
@@ -253,13 +235,6 @@ export default function Contact() {
 
 								<div className="grid md:grid-cols-3 gap-4">
 						{socialLinks.map((social, index) => {
-							// Origami fold from different angles: left, center, right
-							const foldConfig = [
-								{ origin: 'left', rotateY: -90 },   // GitHub - unfold from left
-								{ origin: 'center', rotateY: 90 },  // LinkedIn - unfold from center (flip)
-								{ origin: 'right', rotateY: 90 }    // Discord - unfold from right
-							][index];
-							
 							return (
 							<motion.a
 								key={social.label}
@@ -269,31 +244,23 @@ export default function Contact() {
 								className={`flex items-center space-x-4 p-4 ${button3dClass} group ${social.color}`}
 								style={{ 
 									WebkitTapHighlightColor: 'transparent', 
-									backfaceVisibility: 'hidden', 
-									willChange: 'opacity, transform',
-									transformOrigin: foldConfig.origin,
-									transformStyle: 'preserve-3d'
 								}}
 								initial={{ 
-									rotateY: foldConfig.rotateY, 
 									opacity: 0, 
-									scale: 0.85,
-									filter: 'blur(4px)'
+									y: 20,
 								}}
 								whileInView={{ 
-									rotateY: 0, 
 									opacity: 1, 
-									scale: 1,
-									filter: 'blur(0px)'
+									y: 0,
 								}}
 								viewport={{ once: true, margin: "-100px" }}
 								transition={{
-									duration: 0.9,
-									delay: 0.36 + (index * 0.18), // Start after contact info
+									duration: 0.6,
+									delay: 0.2 + (index * 0.1),
 									ease: [0.33, 1, 0.68, 1]
 								}}
-								whileHover={{ scale: 1.13, boxShadow: '0 6px 32px 0 rgba(168,85,247,0.18)', backgroundColor: 'rgba(168,85,247,0.08)', filter: 'brightness(1.12)' }}
-								whileTap={{ scale: 0.96, boxShadow: '0 2px 8px 0 rgba(168,85,247,0.10)', backgroundColor: 'rgba(168,85,247,0.14)', filter: 'brightness(0.98)' }}
+								whileHover={{ scale: 1.05, boxShadow: '0 6px 32px 0 rgba(168,85,247,0.18)', backgroundColor: 'rgba(168,85,247,0.08)' }}
+								whileTap={{ scale: 0.98 }}
 							>
 											<motion.div
 												className="text-2xl group-hover:scale-110 transition-transform"
@@ -409,28 +376,19 @@ export default function Contact() {
 								background: 'linear-gradient(90deg, #a855f7 0%, #14b8a6 100%)', 
 								color: '#fff', 
 								border: 'none', 
-								backfaceVisibility: 'hidden', 
-								willChange: 'opacity, transform',
-								transformStyle: 'preserve-3d'
 							}}
 							initial={{
-								rotateX: -45,
-								rotateZ: -5,
 								opacity: 0,
-								scale: 0.85,
-								filter: 'blur(4px)'
+								y: 20,
 							}}
 							whileInView={{
-								rotateX: 0,
-								rotateZ: 0,
 								opacity: 1,
-								scale: 1,
-								filter: 'blur(0px)'
+								y: 0,
 							}}
 							viewport={{ once: true, margin: "-100px" }}
 							transition={{
-								duration: 0.9,
-								delay: 1.2,
+								duration: 0.6,
+								delay: 0.3,
 								ease: [0.33, 1, 0.68, 1]
 							}}
 							whileHover={{ scale: 1.13, boxShadow: '0 6px 32px 0 rgba(168,85,247,0.18)', background: 'linear-gradient(90deg, #a855f7 0%, #14b8a6 100%)', filter: 'brightness(1.12)' }}
