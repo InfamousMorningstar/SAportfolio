@@ -17,6 +17,7 @@
 
 import { motion } from 'framer-motion';
 import { Calendar, Clock, ArrowLeft } from 'lucide-react';
+import { LaserFlowBackground } from './ui/LaserFlowBackground';
 
 interface BlogPostProps {
   onBack?: () => void;
@@ -29,54 +30,24 @@ export default function BlogPost({ onBack }: BlogPostProps) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.5, ease: [0.77, 0, 0.175, 1] }}
-      className="min-h-screen py-20 relative bg-gradient-to-br from-background via-background/95 to-accent/5 overflow-hidden"
+      className="min-h-screen py-20 relative overflow-hidden bg-background"
     >
-      {/* Computer Science/Physics Background - Subtle for reading */}
-      <div className="absolute inset-0 opacity-3">
-        {/* Code Snippets */}
-        <div className="absolute top-16 right-16 text-accent/15 font-mono text-xs rotate-6 select-none">
-          for(int i=0; i&lt;n; i++)<br/>
-          {`{ data[i] = malloc(); }`}<br/>
-          return 0;<br/>
-        </div>
-        
-        {/* Network Topology */}
-        <div className="absolute bottom-24 left-16 text-accent2/15 text-sm rotate-[-12deg] select-none">
-          [Router]━━━[Switch]<br/>
-          ┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃<br/>
-          [Server]&nbsp;&nbsp;&nbsp;[Client]<br/>
-        </div>
-        
-        {/* Data Structures */}
-        <div className="absolute top-1/3 left-16 text-accent/15 font-mono text-xs rotate-12 select-none">
-          struct node {`{`}<br/>
-          &nbsp;&nbsp;int data;<br/>
-          &nbsp;&nbsp;node* next;<br/>
-          {`};`}<br/>
-        </div>
-        
-        {/* ZFS Commands */}
-        <div className="absolute bottom-1/3 right-24 text-accent2/15 font-mono text-xs rotate-[-8deg] select-none">
-          zfs create pool/dataset<br/>
-          zfs snapshot pool@backup<br/>
-          zpool status<br/>
-        </div>
+      {/* LaserFlow WebGL Background */}
+      <div className="fixed top-0 left-0 w-screen h-screen" style={{ zIndex: 0, pointerEvents: 'none' }}>
+        <LaserFlowBackground 
+          color="#8b5cf6"
+          wispDensity={1.5}
+          fogIntensity={0.6}
+          verticalBeamOffset={-0.2}
+          horizontalBeamOffset={0}
+          flowSpeed={0.4}
+          wispSpeed={20}
+        />
       </div>
-
-      {/* Subtle floating elements for depth */}
-      <div className="absolute inset-0 overflow-hidden">
-        {[...Array(8)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-0.5 h-0.5 bg-accent/5 rounded-full animate-pulse"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${4 + Math.random() * 6}s`
-            }}
-          />
-        ))}
+      
+      {/* Temporary test - visible overlay to confirm component renders */}
+      <div className="fixed top-4 right-4 bg-red-500 text-white px-3 py-1 rounded text-xs" style={{ zIndex: 9999 }}>
+        LaserFlow Active
       </div>
 
       <div className="container mx-auto px-6 max-w-4xl relative z-10">
@@ -154,7 +125,7 @@ export default function BlogPost({ onBack }: BlogPostProps) {
           <section className="mb-12">
             <h2 className="text-3xl font-bold mb-6 text-accent">2. The Hardware at a Glance</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              <div className="bg-background/50 border border-accent/20 rounded-lg p-6">
+              <div className="border border-accent/20 rounded-lg p-6">
                 <h3 className="text-xl font-semibold mb-4 text-accent2">System Specs</h3>
                 <div className="space-y-2 text-muted">
                   <div className="flex justify-between">
@@ -180,7 +151,7 @@ export default function BlogPost({ onBack }: BlogPostProps) {
                 </div>
               </div>
               
-              <div className="bg-background/50 border border-accent/20 rounded-lg p-6">
+              <div className="border border-accent/20 rounded-lg p-6">
                 <h3 className="text-xl font-semibold mb-4 text-accent2">GPU Purpose</h3>
                 <div className="space-y-2 text-muted">
                   <p>NVIDIA Quadro P1000 handles:</p>
@@ -271,21 +242,21 @@ export default function BlogPost({ onBack }: BlogPostProps) {
             
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="space-y-4">
-                <div className="bg-background/50 border border-accent/20 rounded-lg p-4">
+                <div className="border border-accent/20 rounded-lg p-4">
                   <h3 className="font-semibold text-accent2 mb-2">Plex</h3>
                   <p className="text-muted text-sm">
                     The media server that started it all. I digitise my Blu-ray library (yes, actual discs) and stream it seamlessly across devices.
                   </p>
                 </div>
                 
-                <div className="bg-background/50 border border-accent/20 rounded-lg p-4">
+                <div className="border border-accent/20 rounded-lg p-4">
                   <h3 className="font-semibold text-accent2 mb-2">Nextcloud</h3>
                   <p className="text-muted text-sm">
                     My self-hosted Google Drive alternative. Documents, spreadsheets, and files for the family are always a secure VPN away.
                   </p>
                 </div>
                 
-                <div className="bg-background/50 border border-accent/20 rounded-lg p-4">
+                <div className="border border-accent/20 rounded-lg p-4">
                   <h3 className="font-semibold text-accent2 mb-2">Immich</h3>
                   <p className="text-muted text-sm">
                     Think of it as our family's Google Photos. Automatic uploads, facial recognition, and private galleries—minus the privacy trade-offs.
@@ -294,28 +265,28 @@ export default function BlogPost({ onBack }: BlogPostProps) {
               </div>
               
               <div className="space-y-4">
-                <div className="bg-background/50 border border-accent/20 rounded-lg p-4">
+                <div className="border border-accent/20 rounded-lg p-4">
                   <h3 className="font-semibold text-accent2 mb-2">Glances</h3>
                   <p className="text-muted text-sm">
                     Real-time monitoring dashboard that tells me exactly when something's on fire.
                   </p>
                 </div>
                 
-                <div className="bg-background/50 border border-accent/20 rounded-lg p-4">
+                <div className="border border-accent/20 rounded-lg p-4">
                   <h3 className="font-semibold text-accent2 mb-2">Open-WebUI & Ollama</h3>
                   <p className="text-muted text-sm">
                     Local AI tinkering, because why not run a language model alongside movie night?
                   </p>
                 </div>
                 
-                <div className="bg-background/50 border border-accent/20 rounded-lg p-4">
+                <div className="border border-accent/20 rounded-lg p-4">
                   <h3 className="font-semibold text-accent2 mb-2">Tautulli</h3>
                   <p className="text-muted text-sm">
                     Media analytics for Plex (because yes, I want to know if my sister actually finished that show).
                   </p>
                 </div>
                 
-                <div className="bg-background/50 border border-accent/20 rounded-lg p-4">
+                <div className="border border-accent/20 rounded-lg p-4">
                   <h3 className="font-semibold text-accent2 mb-2">Cloudflare Tunnels</h3>
                   <p className="text-muted text-sm">
                     Zero-trust network access that eliminates the need for port forwarding while providing enterprise-grade security.
@@ -330,21 +301,21 @@ export default function BlogPost({ onBack }: BlogPostProps) {
             <h2 className="text-3xl font-bold mb-6 text-accent">5. Philosophy, Lessons & Quirks</h2>
             <div className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-background/50 border border-accent/20 rounded-lg p-6">
+                <div className="border border-accent/20 rounded-lg p-6">
                   <h3 className="font-semibold text-accent2 mb-3">Cables</h3>
                   <p className="text-muted text-sm">
                     No amount of zip ties could tame them. I've accepted the "SATA Medusa" aesthetic.
                   </p>
                 </div>
                 
-                <div className="bg-background/50 border border-accent/20 rounded-lg p-6">
+                <div className="border border-accent/20 rounded-lg p-6">
                   <h3 className="font-semibold text-accent2 mb-3">Fans</h3>
                   <p className="text-muted text-sm">
                     My cooling policy is a mix of optimism and glue. Not ideal, but functional.
                   </p>
                 </div>
                 
-                <div className="bg-background/50 border border-accent/20 rounded-lg p-6">
+                <div className="border border-accent/20 rounded-lg p-6">
                   <h3 className="font-semibold text-accent2 mb-3">Redundancy</h3>
                   <p className="text-muted text-sm">
                     With ZFS snapshots and backup tasks, I sleep at night knowing I won't lose everything to one bad sector.

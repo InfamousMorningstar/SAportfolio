@@ -117,7 +117,7 @@ export default function Contact() {
 				<div className="max-w-4xl mx-auto">
 					{/* Single Column - Complete Contact Information */}
 		<motion.div
-		  className="card bg-white/10 dark:bg-black/30 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-lg px-6 py-5 md:px-8 md:py-7"
+		  className="card border border-border-subtle/60 backdrop-blur-2xl rounded-2xl shadow-lg px-6 py-5 md:px-8 md:py-7"
 		  initial={{ scale: 0.96, filter: 'blur(12px)', opacity: 0.6 }}
 		  whileInView={{ scale: 1, filter: 'blur(0px)', opacity: 1 }}
 		  transition={{ duration: 1.05, ease: [0.77, 0, 0.175, 1] }}

@@ -191,7 +191,7 @@ export default function HybridEdgePost({ onBack }: HybridEdgePostProps) {
                 homelab, acting as both a bouncer and a buffer.
               </p>
               
-              <div className="bg-background/50 border border-emerald-400/20 rounded-lg p-6">
+              <div className="border border-emerald-400/20 rounded-lg p-6">
                 <h3 className="text-xl font-semibold mb-4 text-emerald-300">Here's what I imagine it running:</h3>
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
@@ -238,27 +238,27 @@ export default function HybridEdgePost({ onBack }: HybridEdgePostProps) {
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-background/50 border border-cyan-400/20 rounded-lg p-4">
+                <div className="border border-cyan-400/20 rounded-lg p-4">
                   <h3 className="font-semibold text-cyan-300 mb-2">ZFS Pool "Centauri"</h3>
                   <p className="text-muted text-sm">~72 TB usable (with about 15 TB free right now)</p>
                 </div>
                 
-                <div className="bg-background/50 border border-cyan-400/20 rounded-lg p-4">
+                <div className="border border-cyan-400/20 rounded-lg p-4">
                   <h3 className="font-semibold text-cyan-300 mb-2">Plex</h3>
                   <p className="text-muted text-sm">Streaming my ripped library</p>
                 </div>
                 
-                <div className="bg-background/50 border border-cyan-400/20 rounded-lg p-4">
+                <div className="border border-cyan-400/20 rounded-lg p-4">
                   <h3 className="font-semibold text-cyan-300 mb-2">Nextcloud</h3>
                   <p className="text-muted text-sm">Our personal Google Drive replacement for docs and files</p>
                 </div>
                 
-                <div className="bg-background/50 border border-cyan-400/20 rounded-lg p-4">
+                <div className="border border-cyan-400/20 rounded-lg p-4">
                   <h3 className="font-semibold text-cyan-300 mb-2">Immich</h3>
                   <p className="text-muted text-sm">The family photo vault, complete with automatic uploads and galleries</p>
                 </div>
                 
-                <div className="bg-background/50 border border-cyan-400/20 rounded-lg p-4 md:col-span-2">
+                <div className="border border-cyan-400/20 rounded-lg p-4 md:col-span-2">
                   <h3 className="font-semibold text-cyan-300 mb-2">Tautulli + friends</h3>
                   <p className="text-muted text-sm">Analytics and monitoring, because I'm curious who's watching what</p>
                 </div>
@@ -276,7 +276,7 @@ export default function HybridEdgePost({ onBack }: HybridEdgePostProps) {
             <div className="space-y-6">
               <p className="text-muted leading-relaxed">The way I picture it:</p>
               
-              <div className="bg-background/30 border border-violet-400/20 rounded-lg p-6">
+              <div className="border border-violet-400/20 rounded-lg p-6">
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-blue-400 rounded-full mt-2"></div>
@@ -312,22 +312,22 @@ export default function HybridEdgePost({ onBack }: HybridEdgePostProps) {
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-background/50 border border-emerald-400/20 rounded-lg p-6">
+                <div className="border border-emerald-400/20 rounded-lg p-6">
                   <h3 className="font-semibold text-emerald-300 mb-3">Less I/O stress</h3>
                   <p className="text-muted text-sm">Blu-ray rips happen on the ZimaBoard SSD, not directly on ZFS.</p>
                 </div>
                 
-                <div className="bg-background/50 border border-cyan-400/20 rounded-lg p-6">
+                <div className="border border-cyan-400/20 rounded-lg p-6">
                   <h3 className="font-semibold text-cyan-300 mb-3">Crash isolation</h3>
                   <p className="text-muted text-sm">If something blows up on the edge, TrueNAS stays clean.</p>
                 </div>
                 
-                <div className="bg-background/50 border border-violet-400/20 rounded-lg p-6">
+                <div className="border border-violet-400/20 rounded-lg p-6">
                   <h3 className="font-semibold text-violet-300 mb-3">Performance</h3>
                   <p className="text-muted text-sm">That private 2.5 GbE pipe should move files at ~300 MB/s.</p>
                 </div>
                 
-                <div className="bg-background/50 border border-blue-400/20 rounded-lg p-6">
+                <div className="border border-blue-400/20 rounded-lg p-6">
                   <h3 className="font-semibold text-blue-300 mb-3">Flexibility</h3>
                   <p className="text-muted text-sm">Edge box can run extra toys like monitoring dashboards or DNS filtering without cluttering the storage stack.</p>
                 </div>

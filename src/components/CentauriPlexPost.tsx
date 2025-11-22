@@ -204,15 +204,15 @@ export default function CentauriPlexPost({ onBack }: CentauriPlexPostProps) {
 
             {/* Key Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-              <div className="bg-background/50 border border-cyan-400/20 rounded-lg p-4">
+              <div className="border border-cyan-400/20 rounded-lg p-4">
                 <div className="text-cyan-400 font-mono text-2xl font-bold">61</div>
                 <div className="text-muted text-sm">Active Plex Users</div>
               </div>
-              <div className="bg-background/50 border border-purple-400/20 rounded-lg p-4">
+              <div className="border border-purple-400/20 rounded-lg p-4">
                 <div className="text-purple-400 font-mono text-2xl font-bold">95%</div>
                 <div className="text-muted text-sm">Automation Level</div>
               </div>
-              <div className="bg-background/50 border border-blue-400/20 rounded-lg p-4">
+              <div className="border border-blue-400/20 rounded-lg p-4">
                 <div className="text-blue-400 font-mono text-2xl font-bold">30d</div>
                 <div className="text-muted text-sm">Inactivity Threshold</div>
               </div>
@@ -222,7 +222,7 @@ export default function CentauriPlexPost({ onBack }: CentauriPlexPostProps) {
           {/* Section 2: What's Automated */}
           <section className="mb-12">
             <h2 className="text-3xl font-bold mb-6 text-cyan-400">2. Automated Workflows</h2>
-            <div className="bg-background/50 border border-cyan-400/20 rounded-lg p-6 space-y-4">
+            <div className="border border-cyan-400/20 rounded-lg p-6 space-y-4">
               <div className="flex items-start gap-3">
                 <span className="text-emerald-400 text-xl">✅</span>
                 <div>
@@ -318,7 +318,7 @@ export default function CentauriPlexPost({ onBack }: CentauriPlexPostProps) {
             
             <div className="space-y-6">
               {/* user_manager.py */}
-              <div className="bg-background/50 border border-blue-400/20 rounded-lg p-6">
+              <div className="border border-blue-400/20 rounded-lg p-6">
                 <h3 className="text-xl font-semibold mb-3 text-blue-300">user_manager.py — Main Cleanup Engine</h3>
                 <div className="space-y-2 text-muted">
                   <p><span className="text-cyan-400 font-mono">Location:</span> /mnt/app-pool/config/tautulli/scripts/</p>
@@ -336,7 +336,7 @@ export default function CentauriPlexPost({ onBack }: CentauriPlexPostProps) {
               </div>
 
               {/* check_new_users.py */}
-              <div className="bg-background/50 border border-purple-400/20 rounded-lg p-6">
+              <div className="border border-purple-400/20 rounded-lg p-6">
                 <h3 className="text-xl font-semibold mb-3 text-purple-300">check_new_users.py — Fast Detection</h3>
                 <div className="space-y-2 text-muted">
                   <p><span className="text-cyan-400 font-mono">Schedule:</span> Every 5 minutes (cron)</p>
@@ -351,7 +351,7 @@ export default function CentauriPlexPost({ onBack }: CentauriPlexPostProps) {
               </div>
 
               {/* config.py */}
-              <div className="bg-background/50 border border-cyan-400/20 rounded-lg p-6">
+              <div className="border border-cyan-400/20 rounded-lg p-6">
                 <h3 className="text-xl font-semibold mb-3 text-cyan-300">config.py — Central Configuration</h3>
                 <div className="space-y-2 text-muted text-sm">
                   <p>Single source of truth for all configuration:</p>
@@ -417,19 +417,19 @@ export default function CentauriPlexPost({ onBack }: CentauriPlexPostProps) {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-              <div className="bg-background/50 border border-cyan-400/20 rounded-lg p-4">
+              <div className="border border-cyan-400/20 rounded-lg p-4">
                 <h4 className="font-semibold text-cyan-300 mb-2">📧 Welcome Email</h4>
                 <p className="text-muted text-sm">Sent to new users within 5 minutes. Includes Plex access guide, Overseerr info, troubleshooting, Discord contact.</p>
               </div>
-              <div className="bg-background/50 border border-yellow-400/20 rounded-lg p-4">
+              <div className="border border-yellow-400/20 rounded-lg p-4">
                 <h4 className="font-semibold text-yellow-300 mb-2">⚠️ Inactivity Warning</h4>
                 <p className="text-muted text-sm">Sent at 27 days inactive. Professional reminder with 3-day countdown and instructions to stay active.</p>
               </div>
-              <div className="bg-background/50 border border-red-400/20 rounded-lg p-4">
+              <div className="border border-red-400/20 rounded-lg p-4">
                 <h4 className="font-semibold text-red-300 mb-2">🚫 Removal Notice</h4>
                 <p className="text-muted text-sm">Sent to removed users. Not accusatory—clear explanation with re-join instructions via Discord.</p>
               </div>
-              <div className="bg-background/50 border border-purple-400/20 rounded-lg p-4">
+              <div className="border border-purple-400/20 rounded-lg p-4">
                 <h4 className="font-semibold text-purple-300 mb-2">📊 Admin Alerts</h4>
                 <p className="text-muted text-sm">Admin receives notifications for new users and removals with full details (username, email, activity).</p>
               </div>
@@ -506,7 +506,7 @@ export default function CentauriPlexPost({ onBack }: CentauriPlexPostProps) {
               </p>
             </div>
 
-            <div className="bg-background/50 border border-purple-400/20 rounded-lg p-6 mt-6">
+            <div className="border border-purple-400/20 rounded-lg p-6 mt-6">
               <h3 className="text-lg font-semibold text-purple-300 mb-4">🚀 Planned Enhancements</h3>
               <ul className="space-y-2 text-muted text-sm">
                 <li className="flex items-start gap-2">

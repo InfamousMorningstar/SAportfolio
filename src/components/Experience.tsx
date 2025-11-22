@@ -138,7 +138,7 @@ export default function Experience() {
                 className={`w-full md:w-5/12 ml-16 md:ml-0 ${index % 2 === 0 ? 'md:mr-auto md:pr-8' : 'md:ml-auto md:pl-8'}`}
               >
                 <motion.div
-                  className="bg-white/90 dark:bg-background/80 border border-border shadow-lg hover:shadow-xl hover:ring-2 hover:ring-accent/20 transition-all duration-200 rounded-2xl px-6 py-5 md:px-8 md:py-7"
+                  className="card border border-border-subtle/60 shadow-lg hover:shadow-xl hover:ring-2 hover:ring-accent/20 transition-all duration-200 rounded-2xl px-6 py-5 md:px-8 md:py-7"
                   whileHover={{ y: -5, scale: 1.02 }}
                   whileTap={{ scale: 0.97 }}
                   transition={{ duration: 0.18, ease: [0.4, 0, 0.2, 1] }}
@@ -163,7 +163,7 @@ export default function Experience() {
                       </div>
                       {/* Pill box for desktop/tablet */}
                       <span
-                        className="hidden md:inline-flex absolute right-4 top-1 items-center justify-center px-2.5 py-0.5 sm:px-3 sm:py-1 bg-white/80 dark:bg-accent/10 border border-accent/15 rounded-full text-accent font-semibold shrink-0 text-xs max-w-[7.5rem] text-center whitespace-nowrap h-6 sm:h-7 leading-none select-none overflow-hidden text-ellipsis"
+                        className="hidden md:inline-flex absolute right-4 top-1 items-center justify-center px-2.5 py-0.5 sm:px-3 sm:py-1 bg-accent/10 border border-accent/20 rounded-full text-accent font-semibold shrink-0 text-xs max-w-[7.5rem] text-center whitespace-nowrap h-6 sm:h-7 leading-none select-none overflow-hidden text-ellipsis"
                         style={{ lineHeight: 1.15, WebkitFontSmoothing: 'antialiased', fontWeight: 600 }}
                       >
                         Full-Time
@@ -171,7 +171,7 @@ export default function Experience() {
                     </div>
                     {/* Pill box for mobile/tablet portrait */}
                     <span
-                      className="md:hidden inline-flex items-center justify-center px-2.5 py-0.5 bg-white/80 dark:bg-accent/10 border border-accent/15 rounded-full text-accent font-semibold shrink-0 text-xs max-w-[7.5rem] text-center whitespace-nowrap h-6 leading-none select-none overflow-hidden text-ellipsis mt-2"
+                      className="md:hidden inline-flex items-center justify-center px-2.5 py-0.5 bg-accent/10 border border-accent/20 rounded-full text-accent font-semibold shrink-0 text-xs max-w-[7.5rem] text-center whitespace-nowrap h-6 leading-none select-none overflow-hidden text-ellipsis mt-2"
                       style={{ lineHeight: 1.15, WebkitFontSmoothing: 'antialiased', fontWeight: 600 }}
                     >
                       Full-Time

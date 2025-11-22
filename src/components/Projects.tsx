@@ -20,6 +20,37 @@ import { FaGithub, FaExternalLinkAlt, FaServer, FaChartLine, FaRobot, FaMedium, 
 
 const projects = [
   {
+    title: 'Inter-Freight Auto Sales',
+    summary: 'Production-ready automotive dealership with advanced vehicle management and secure admin dashboard',
+    description: 'A premium, enterprise-grade car dealership web application featuring intelligent inquiry tracking, smooth 3D animations, CARFAX integration, Google Reviews, and a fully secure admin dashboard. Built with Next.js 15 and Supabase for optimal performance, security, and scalability.',
+    technologies: ['Next.js 15', 'TypeScript', 'Supabase', 'Framer Motion', 'Zod', 'PostgreSQL'],
+    techStack: [
+      { name: 'Next.js', icon: '⚡' },
+      { name: 'TypeScript', icon: '📘' },
+      { name: 'Supabase', icon: '🔒' },
+      { name: 'PostgreSQL', icon: '🐘' }
+    ],
+    features: [
+      '3D parallax hero with real-time Calgary weather widget',
+      'Advanced filtering: search by make, price, mileage, transmission',
+      'Intelligent inquiry system with vehicle tracking and rate limiting',
+      'CARFAX report integration with 30-day caching',
+      'Secure admin dashboard with CSRF protection and RLS policies',
+      'Bulk image upload with optimization and CDN delivery',
+      'Google Reviews infinite marquee with hover pause',
+      'Role-based authentication with protected routes'
+    ],
+    metrics: {
+      security: 'CSRF + RLS',
+      performance: '95+ Lighthouse',
+      capacity: '50 vehicles'
+    },
+    icon: <FaGlobe className="text-accent2" />,
+    status: 'Production',
+    github: '',
+    demo: 'https://inter-freight.vercel.app'
+  },
+  {
     title: 'Professional Portfolio Website',
     summary: 'Meticulously engineered single-page portfolio with Apple-style aesthetic and zero-config CI/CD',
     description: 'A meticulously engineered single-page portfolio that marries cutting-edge React 19 / Next.js 15 with a refined, Apple-style aesthetic. It runs on a zero-config, Git-driven CI/CD pipeline (GitHub → Vercel) and surfaces live performance telemetry, accessibility scores, and version metadata right in the UI.',
@@ -247,7 +278,7 @@ export default function Projects() {
                       {project.techStack.map((tech) => (
                         <motion.div
                           key={tech.name}
-                          className="px-3 py-1.5 bg-background/50 border border-border rounded-lg flex items-center gap-2 filter grayscale group-hover:grayscale-0 hover:border-accent/50 hover:bg-accent/5 transition-all duration-300"
+                          className="px-3 py-1.5 border border-border rounded-lg flex items-center gap-2 filter grayscale group-hover:grayscale-0 hover:border-accent/50 hover:bg-accent/5 transition-all duration-300"
                           whileHover={{ scale: 1.05, y: -2 }}
                         >
                           <span className="text-lg">{tech.icon}</span>

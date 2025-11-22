@@ -164,7 +164,7 @@ export default function Hero() {
     <>
       {showLoader && (
         <motion.div 
-          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black"
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-background"
           initial={{ opacity: 1 }}
           animate={{ opacity: 0 }}
           transition={{ duration: 0.8, delay: 4.0, ease: [0.33, 1, 0.68, 1] }}
@@ -467,7 +467,7 @@ export default function Hero() {
                 animate={{ opacity: loaderComplete ? 1 : 0 }}
                 transition={{ duration: 0.9, delay: 0.6 }}
               >
-                <span className="inline-block">Full-stack Engineer with a DevOps brain and automation DNA.</span>
+                <span className="inline-block">Full-stack Developer with a DevOps brain and automation DNA.</span>
               </motion.p>
               
               <p className="text-lg md:text-xl text-muted max-w-2xl mx-auto leading-relaxed mb-12">
@@ -499,7 +499,7 @@ export default function Hero() {
               <Magnetic strength={0.15}>
                 <motion.a
                   href="/blog"
-                  className="inline-flex items-center gap-2 px-4 py-2 text-sm text-muted-foreground hover:text-accent border border-border/50 hover:border-accent/30 rounded-lg transition-all duration-300 backdrop-blur-sm bg-background/10 hover:bg-background/20"
+                  className="inline-flex items-center gap-2 px-4 py-2 text-sm text-muted-foreground hover:text-accent border border-border/50 hover:border-accent/30 rounded-lg transition-all duration-300 backdrop-blur-sm"
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 20 }}

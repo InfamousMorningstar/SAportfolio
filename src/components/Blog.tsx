@@ -19,6 +19,7 @@ import { motion } from 'framer-motion';
 import { Calendar, ExternalLink, Clock } from 'lucide-react';
 import { useState } from 'react';
 import BlogPostComponent from './BlogPost';
+import { LaserFlowBackground } from './ui/LaserFlowBackground';
 
 interface BlogPostData {
   id: string;
@@ -70,8 +71,26 @@ export default function Blog() {
   }
 
   return (
-    <section id="blog" className="min-h-screen py-20 relative">
-      <div className="container mx-auto px-6 max-w-6xl">
+    <section id="blog" className="min-h-screen py-20 relative overflow-hidden bg-background">
+      {/* LaserFlow WebGL Background */}
+      <div className="fixed top-0 left-0 w-screen h-screen" style={{ zIndex: 0, pointerEvents: 'none' }}>
+        <LaserFlowBackground 
+          color="#8b5cf6"
+          wispDensity={1.5}
+          fogIntensity={0.6}
+          verticalBeamOffset={-0.2}
+          horizontalBeamOffset={0}
+          flowSpeed={0.4}
+          wispSpeed={20}
+        />
+      </div>
+      
+      {/* Test badge - MAIN BLOG */}
+      <div className="fixed top-4 left-4 bg-green-500 text-white px-3 py-1 rounded text-xs" style={{ zIndex: 9999 }}>
+        MAIN BLOG - LaserFlow Active
+      </div>
+      
+      <div className="container mx-auto px-6 max-w-6xl relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -104,7 +123,7 @@ export default function Blog() {
                   onClick={() => setSelectedPost('truenas-scale-setup')}
                   className="block h-full cursor-pointer"
                 >
-                  <div className="bg-white/90 dark:bg-background/80 border border-border shadow-lg hover:shadow-xl hover:ring-2 hover:ring-accent/20 transition-all duration-200 rounded-2xl p-6 h-full">
+                  <div className="card border border-border-subtle/60 shadow-lg hover:shadow-xl hover:ring-2 hover:ring-accent/20 transition-all duration-200 rounded-2xl p-6 h-full">
                     <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
                       <div className="flex items-center gap-1">
                         <Calendar className="w-4 h-4" />
@@ -152,7 +171,7 @@ export default function Blog() {
                   rel="noopener noreferrer"
                   className="block h-full"
                 >
-                  <div className="bg-white/90 dark:bg-background/80 border border-border shadow-lg hover:shadow-xl hover:ring-2 hover:ring-accent/20 transition-all duration-200 rounded-2xl p-6 h-full">
+                  <div className="card border border-border-subtle/60 shadow-lg hover:shadow-xl hover:ring-2 hover:ring-accent/20 transition-all duration-200 rounded-2xl p-6 h-full">
                     <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
                       <div className="flex items-center gap-1">
                         <Calendar className="w-4 h-4" />

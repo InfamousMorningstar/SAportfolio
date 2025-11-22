@@ -4,7 +4,8 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Github, Linkedin, Mail, Menu, X } from "lucide-react";
+import { Github, Linkedin, Mail, Moon, Sun, X } from "lucide-react";
+import { useTheme } from "./ThemeProvider";
 
 const links = ["Home", "About", "Projects", "Experience", "Education", "Blog", "Contact"];
 
@@ -14,6 +15,9 @@ export default function Navbar() {
   const [hidden, setHidden] = useState(false);
   const [time, setTime] = useState({ mdt: "--:--:--", utc: "--:--:--" });
   const [isTabletMode, setIsTabletMode] = useState(typeof window !== 'undefined' ? window.innerWidth < 1600 : false);
+  const { theme, toggleTheme } = useTheme();
+  const isDarkMode = theme === 'dark';
+  const baseHamburgerColor = isDarkMode ? '#BFC2C7' : '#475569';
 
   // Tablet/Desktop mode resize listener with animation triggers
   const [justSwitchedToTablet, setJustSwitchedToTablet] = useState(false);
@@ -86,11 +90,12 @@ export default function Navbar() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -80, opacity: 0, pointerEvents: 'none' }}
           transition={{ duration: 0.65, ease: [0.77, 0, 0.175, 1] }}
-          className="fixed top-0 w-full z-50 backdrop-blur-2xl border-b border-accent/30 rounded-b-3xl transition-none shadow-lg shadow-accent/20"
+          className="fixed top-0 w-full z-50 backdrop-blur-2xl border-b border-border-subtle/60 rounded-b-3xl transition-none shadow-lg shadow-accent/15 text-foreground"
           style={{ 
             willChange: 'transform, opacity', 
             backfaceVisibility: 'hidden',
-            background: 'linear-gradient(180deg, rgba(10, 10, 10, 0.85) 0%, rgba(10, 10, 10, 0.75) 50%, rgba(10, 10, 10, 0.65) 100%)',
+            background: 'var(--navbar-background)',
+            boxShadow: 'var(--motion-box-shadow)',
           }}
         >
           <div className="relative w-full px-4 sm:px-6 lg:px-8">
@@ -119,7 +124,7 @@ export default function Navbar() {
                     {links.map((link, i) => (
                       <Link key={link} href={link === 'Blog' ? '/blog' : `#${link.toLowerCase()}`}>
                         <motion.div
-                          className="navbar-btn-desktop px-4 py-1 border rounded-full text-sm font-medium text-neutral-200 border-accent transition-all duration-150 will-change-transform backdrop-blur-md bg-black/30 hover:text-white hover:border-accent2 focus-visible:ring-2 focus-visible:ring-accent/70 focus-visible:ring-offset-2 focus-visible:outline-none shadow-md font-sans"
+                          className="navbar-btn-desktop px-4 py-1 border rounded-full text-sm font-medium text-text-soft border-border-subtle/60 transition-all duration-150 will-change-transform backdrop-blur-md bg-[color:var(--navbar-pill-background)] hover:text-foreground hover:border-accent2 focus-visible:ring-2 focus-visible:ring-accent/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--surface-strong)] focus-visible:outline-none shadow-md font-sans"
                           tabIndex={0}
                           initial={justSwitchedToDesktop ? { opacity: 0, x: 60, z: -40, scale: 0.7, rotateY: 30, boxShadow: '0 0 0 rgba(0,0,0,0)' } : false}
                           animate={justSwitchedToDesktop ? { opacity: [0.7, 1], x: 0, z: 0, scale: [0.7, 1.08, 1], rotateY: [30, 0], boxShadow: ['0 0 0 rgba(0,0,0,0)', '0 6px 32px 0 rgba(139,92,246,0.13)', '0 0 0 rgba(0,0,0,0)'], transition: { duration: 0.7 + i * 0.13, ease: [0.4, 0, 0.2, 1] } } : { opacity: 1, x: 0, z: 0, scale: 1, rotateY: 0, boxShadow: '0 0 0 rgba(0,0,0,0)' }}
@@ -148,6 +153,18 @@ export default function Navbar() {
                       transition={justSwitchedToDesktop ? { duration: 0.9, ease: [0.4, 0, 0.2, 1], staggerChildren: 0.15, delayChildren: 0.18, staggerDirection: -1 } : justSwitchedToTablet ? { duration: 0.9, ease: [0.4, 0, 0.2, 1], staggerChildren: 0.15, delayChildren: 0.18, staggerDirection: 1 } : { duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
                       style={{ perspective: 1200 }}
                     >
+                      <motion.button
+                        key="theme-toggle"
+                        type="button"
+                        onClick={toggleTheme}
+                        aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+                        whileHover={{ scale: 1.1, rotate: isDarkMode ? 3 : -3, boxShadow: '0 4px 18px rgba(148,163,184,0.22)' }}
+                        whileTap={{ scale: 0.96, rotate: 0 }}
+                        className="flex h-9 w-9 items-center justify-center rounded-full border border-border-subtle/60 bg-[color:var(--navbar-pill-background)] text-text-soft transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--surface-strong)]"
+                        style={{ WebkitTapHighlightColor: 'transparent', backfaceVisibility: 'hidden', boxShadow: 'var(--motion-box-shadow)' }}
+                      >
+                        {isDarkMode ? <Sun size={18} className="text-text-soft" /> : <Moon size={18} className="text-text-soft" />}
+                      </motion.button>
                       {[{
                         href: "https://github.com/InfamousMorningstar",
                         label: "GitHub",
@@ -206,7 +223,7 @@ export default function Navbar() {
                 <AnimatePresence>
                   {!isTabletMode && (
                     <motion.div
-                      className="flex items-center px-3 py-1 rounded-full border border-neutral-800 text-sm font-mono backdrop-blur-md bg-black/30"
+                      className="flex items-center px-3 py-1 rounded-full border border-border-subtle/60 text-sm font-mono backdrop-blur-md bg-[color:var(--navbar-pill-background)] text-text-soft"
                       initial={justSwitchedToDesktop ? { opacity: 0, x: 60, z: -40, scale: 0.7, rotateY: 30, boxShadow: '0 0 0 rgba(0,0,0,0)' } : false}
                       animate={justSwitchedToDesktop ? { opacity: [0.7, 1], x: 0, z: 0, scale: [0.7, 1.08, 1], rotateY: [30, 0], boxShadow: ['0 0 0 rgba(0,0,0,0)', '0 6px 32px 0 rgba(139,92,246,0.13)', '0 0 0 rgba(0,0,0,0)'], transition: { duration: 0.8, ease: [0.4, 0, 0.2, 1] } } : { opacity: 1, x: 0, z: 0, scale: 1, rotateY: 0, boxShadow: '0 0 0 rgba(0,0,0,0)' }}
                       exit={justSwitchedToTablet ? { opacity: [1, 0.7, 0], x: 60, z: -40, scale: [1, 0.7], rotateY: [0, 30], boxShadow: ['0 6px 32px 0 rgba(139,92,246,0.13)', '0 0 0 rgba(0,0,0,0)'], transition: { duration: 0.7, ease: [0.4, 0, 0.2, 1] } } : { opacity: 0, x: 60, z: -40, scale: 0.7, rotateY: 30, boxShadow: '0 0 0 rgba(0,0,0,0)' }}
@@ -214,10 +231,10 @@ export default function Navbar() {
                       style={{ perspective: 1200, boxShadow: 'var(--motion-box-shadow)' }}
                     >
                       <span className="text-accent font-mono mr-1">{time.mdt}</span>
-                      <span className="text-white/50 text-xs">MDT</span>
-                      <span className="mx-2 text-white/30">|</span>
+                      <span className="text-text-soft/80 text-xs">MDT</span>
+                      <span className="mx-2 text-text-soft/50">|</span>
                       <span className="text-accent2 font-mono mr-1">{time.utc}</span>
-                      <span className="text-white/50 text-xs">UTC</span>
+                      <span className="text-text-soft/80 text-xs">UTC</span>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -237,7 +254,7 @@ export default function Navbar() {
                     >
                       <span className="sr-only">{isMobileMenuOpen ? "Close menu" : "Open menu"}</span>
                       {isMobileMenuOpen
-                        ? <X className="text-white drop-shadow-[0_1px_6px_rgba(34,211,238,0.7)]" size={24} />
+                        ? <X className="text-foreground drop-shadow-[0_1px_6px_rgba(34,211,238,0.7)]" size={24} />
                         : (
                           <motion.svg
                             key="hamburger-animated"
@@ -250,7 +267,7 @@ export default function Navbar() {
                               animate={isMobileMenuOpen ? {
                                 stroke: 'url(#hamburger-gradient)'
                               } : {
-                                stroke: '#BFC2C7'
+                                stroke: baseHamburgerColor
                               }}
                               whileHover={{ stroke: 'url(#hamburger-gradient)' }}
                               whileFocus={{ stroke: 'url(#hamburger-gradient)' }}
@@ -261,7 +278,7 @@ export default function Navbar() {
                               animate={isMobileMenuOpen ? {
                                 stroke: 'url(#hamburger-gradient)'
                               } : {
-                                stroke: '#BFC2C7'
+                                stroke: baseHamburgerColor
                               }}
                               whileHover={{ stroke: 'url(#hamburger-gradient)' }}
                               whileFocus={{ stroke: 'url(#hamburger-gradient)' }}
@@ -272,7 +289,7 @@ export default function Navbar() {
                               animate={isMobileMenuOpen ? {
                                 stroke: 'url(#hamburger-gradient)'
                               } : {
-                                stroke: '#BFC2C7'
+                                stroke: baseHamburgerColor
                               }}
                               whileHover={{ stroke: 'url(#hamburger-gradient)' }}
                               whileFocus={{ stroke: 'url(#hamburger-gradient)' }}
@@ -301,7 +318,7 @@ export default function Navbar() {
                 exit={{ opacity: 0, scale: 0.96, y: -20 }}
                 transition={{ duration: 0.8, ease: 'easeInOut' }}
                 style={{ transitionProperty: 'opacity, transform', willChange: 'opacity, transform' }}
-                className="bg-black/80 backdrop-blur-md px-4 pt-4 pb-8 space-y-4 text-center"
+                className="bg-surface-overlay/90 backdrop-blur-md px-4 pt-4 pb-8 space-y-4 text-center text-foreground"
               >
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -314,7 +331,7 @@ export default function Navbar() {
                     <Link key={link} href={link === 'Blog' ? '/blog' : `#${link.toLowerCase()}`}>
                       <div
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className="navbar-btn-mobile px-4 py-1 border rounded-full text-sm font-medium text-neutral-200 border-accent transition duration-300 backdrop-blur-md bg-black/30 active:text-white active:border-accent2 will-change-transform"
+                        className="navbar-btn-mobile px-4 py-1 border rounded-full text-sm font-medium text-text-soft border-border-subtle/60 transition duration-300 backdrop-blur-md bg-[color:var(--navbar-pill-background)] active:text-foreground active:border-accent2 will-change-transform"
                         style={{ transitionTimingFunction: 'cubic-bezier(0.4,0,0.2,1)' }}
                         tabIndex={0}
                       >
@@ -331,31 +348,50 @@ export default function Navbar() {
                   className="flex justify-center gap-4 pt-2"
                 >
                   <a href="https://github.com/InfamousMorningstar" target="_blank" aria-label="GitHub">
-                    <Github className="text-white" size={20} />
+                    <Github className="text-text-soft" size={20} />
                     <span className="sr-only">GitHub</span>
                   </a>
                   <a href="https://www.linkedin.com/in/salman-ahmad-6788811b6/" target="_blank" aria-label="LinkedIn">
-                    <Linkedin className="text-white" size={20} />
+                    <Linkedin className="text-text-soft" size={20} />
                     <span className="sr-only">LinkedIn</span>
                   </a>
                   <a href="mailto:s.ahmad0147@gmail.com" aria-label="Email">
-                    <Mail className="text-white" size={20} />
+                    <Mail className="text-text-soft" size={20} />
                     <span className="sr-only">Email</span>
                   </a>
                 </motion.div>
+                <motion.button
+                  type="button"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 30 }}
+                  transition={{ duration: 0.6, delay: 0.16, ease: [0.4, 0, 0.2, 1] }}
+                  onClick={() => {
+                    toggleTheme();
+                    setIsMobileMenuOpen(false);
+                  }}
+                  aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+                  className="mt-2 inline-flex items-center justify-center gap-2 rounded-full border border-border-subtle/60 bg-[color:var(--navbar-pill-background)] px-4 py-2 text-sm font-medium text-text-soft backdrop-blur-md transition"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  style={{ WebkitTapHighlightColor: 'transparent', backfaceVisibility: 'hidden', boxShadow: 'var(--motion-box-shadow)' }}
+                >
+                  {isDarkMode ? <Sun size={18} className="text-text-soft" /> : <Moon size={18} className="text-text-soft" />}
+                  <span>{isDarkMode ? 'Light mode' : 'Dark mode'}</span>
+                </motion.button>
                 {/* Mobile Clock */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 30 }}
                   transition={{ duration: 0.6, delay: 0.19, ease: [0.4, 0, 0.2, 1] }}
-                  className="mt-4 px-3 py-1 inline-block rounded-full border border-neutral-800 text-sm font-mono backdrop-blur-md bg-black/30"
+                  className="mt-4 px-3 py-1 inline-block rounded-full border border-border-subtle/60 text-sm font-mono backdrop-blur-md bg-[color:var(--navbar-pill-background)] text-text-soft"
                 >
                   <span className="text-accent font-mono mr-1">{time.mdt}</span>
-                  <span className="text-white/50 text-xs">MDT</span>
-                  <span className="mx-2 text-white/30">|</span>
+                  <span className="text-text-soft/80 text-xs">MDT</span>
+                  <span className="mx-2 text-text-soft/50">|</span>
                   <span className="text-accent2 font-mono mr-1">{time.utc}</span>
-                  <span className="text-white/50 text-xs">UTC</span>
+                  <span className="text-text-soft/80 text-xs">UTC</span>
                 </motion.div>
               </motion.div>
             )}

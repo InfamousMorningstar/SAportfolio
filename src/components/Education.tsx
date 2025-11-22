@@ -120,7 +120,7 @@ const WaterBlob = ({ children, index }: { children: React.ReactNode; index: numb
 			}}
 		>
 			<div 
-				className="card group bg-white/5 dark:bg-black/20 backdrop-blur-xl border border-white/10 shadow-lg hover:border-white/30 transition-all duration-300 hover:scale-[1.02] rounded-2xl"
+				className="card group border border-border-subtle/50 shadow-lg hover:border-border-strong/70 transition-all duration-300 hover:scale-[1.02] rounded-2xl"
 				style={{ minHeight: '400px', position: 'relative' }}
 			>
 				{children}

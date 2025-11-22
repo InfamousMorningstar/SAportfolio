@@ -22,11 +22,11 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="w-full z-50 bg-black/40 backdrop-blur-xl border-t border-white/20 rounded-t-3xl transition-none text-neutral-300 text-sm overflow-hidden">
+    <footer className="relative w-full z-50 bg-surface-overlay/80 backdrop-blur-xl border-t border-border-subtle/60 rounded-t-3xl transition-none text-text-soft text-sm overflow-hidden">
       {/* Glassy background overlays */}
-      <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/80 via-neutral-900/60 to-neutral-900/40 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-surface-strong/85 via-surface-strong/60 to-surface/40 pointer-events-none" />
       <div className="absolute inset-0 opacity-5 pointer-events-none">
-        <div className="absolute inset-0 bg-grid-pattern bg-grid" />
+  <div className="absolute inset-0 bg-grid-pattern bg-grid" />
       </div>
 
       {/* Floating accent dots */}
@@ -53,28 +53,28 @@ export default function Footer() {
       <div className="relative max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
         {/* Signature Left */}
         <div className="w-full md:w-1/3 text-center md:text-left">
-          <p className="font-mono text-neutral-300 text-sm leading-tight">
+          <p className="font-mono text-text-soft text-sm leading-tight">
             — Salman Ahmad · ahmxd.net · © {currentYear} —
           </p>
         </div>
 
         {/* Motto Center */}
         <div className="text-center w-full md:w-1/3">
-          <p className="italic text-neutral-300 font-medium tracking-wide text-sm">
+          <p className="italic text-text-soft font-medium tracking-wide text-sm">
             <span className="text-accent/80">Aut viam inveniam aut faciam</span>{' '}
             
           </p>
-          <p className="text-xs italic text-neutral-400 leading-tight">
-            <span className="text-neutral-500">»</span> I shall either find a way or make one.
+          <p className="text-xs italic text-text-soft/80 leading-tight">
+            <span className="text-text-soft/60">»</span> I shall either find a way or make one.
           </p>
         </div>
 
         {/* Tech Stack Right */}
         <div className="text-right w-full md:w-1/3">
-          <p className="text-sm md:text-xs text-neutral-400 font-semibold italic">
+          <p className="text-sm md:text-xs text-text-soft/80 font-semibold italic">
             Built using <span className="text-accent">Next.js 15</span>, <span className="text-accent2">Tailwind CSS</span>, <span className="text-secondary">Framer Motion</span>, <span className="text-accent">TypeScript</span>, and <span className="text-accent2">Lucide Icons</span> — deployed on <span className="text-secondary">Vercel</span>.
           </p>
-          <p className="text-[10px] text-neutral-600">Last updated: {LAST_UPDATED}</p>
+          <p className="text-[10px] text-text-soft/70">Last updated: {LAST_UPDATED}</p>
         </div>
       </div>
 
@@ -85,13 +85,13 @@ export default function Footer() {
 
       {/* Legal Notice */}
       <div className="w-full px-4 pb-3 pt-1">
-        <div className="max-w-6xl mx-auto text-xs text-neutral-500 leading-snug font-sans text-center">
+        <div className="max-w-6xl mx-auto text-xs text-text-soft/70 leading-snug font-sans text-center">
           This website and its source code are protected under the{' '}
-          <strong className="text-neutral-300 font-semibold">Copyright Act, R.S.C., 1985, c. C-42 (Canada)</strong>.
+          <strong className="text-text-soft font-semibold">Copyright Act, R.S.C., 1985, c. C-42 (Canada)</strong>.
           {' '}Unauthorized reproduction, redistribution, or modification is strictly prohibited. The{' '}
-          <strong className="text-neutral-300 font-semibold">Digital Millennium Copyright Act (DMCA)</strong> and international IP treaties may also apply.{' '}
-          <strong className="text-neutral-300 font-semibold">All Rights Reserved.</strong> <span className="italic">Unauthorized use is prohibited.</span>{' '}
-          For licensing or legal inquiries, contact: <span className="font-mono text-neutral-300 px-1">s.ahmad0147@gmail.com</span> with subject line <strong className="text-accent">"PERMISSION REQUEST"</strong>.
+          <strong className="text-text-soft font-semibold">Digital Millennium Copyright Act (DMCA)</strong> and international IP treaties may also apply.{' '}
+          <strong className="text-text-soft font-semibold">All Rights Reserved.</strong> <span className="italic">Unauthorized use is prohibited.</span>{' '}
+          For licensing or legal inquiries, contact: <span className="font-mono text-text-soft px-1">s.ahmad0147@gmail.com</span> with subject line <strong className="text-accent">"PERMISSION REQUEST"</strong>.
         </div>
       </div>
     </footer>

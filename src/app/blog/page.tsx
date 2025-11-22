@@ -7,6 +7,7 @@ import Link from 'next/link';
 import BlogPostComponent from '../../components/BlogPost';
 import HybridEdgePost from '../../components/HybridEdgePost';
 import CentauriPlexPost from '../../components/CentauriPlexPost';
+import LaserFlowBackground from '../../components/ui/LaserFlowBackground';
 
 interface BlogPostData {
   id: string;
@@ -64,66 +65,10 @@ export default function BlogPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-accent/5 relative overflow-hidden">
-      {/* Computer Science/Physics Background */}
-      <div className="absolute inset-0 opacity-5">
-        {/* Binary Code Pattern */}
-        <div className="absolute top-10 left-10 text-accent/20 font-mono text-xs rotate-12 select-none">
-          01001000 01100101 01101100 01101100 01101111<br/>
-          01010111 01101111 01110010 01101100 01100100<br/>
-          01000010 01101001 01101110 01100001 01110010<br/>
-        </div>
-        
-        {/* Mathematical Equations */}
-        <div className="absolute top-32 right-20 text-accent2/20 text-sm rotate-[-8deg] select-none">
-          ∫₋∞^∞ e^(-x²/2) dx = √(2π)<br/>
-          E = mc²<br/>
-          f(x) = Σ(n=0 to ∞) aₙ(x-c)ⁿ<br/>
-        </div>
-        
-        {/* Circuit Elements */}
-        <div className="absolute bottom-20 left-20 text-accent/20 text-lg rotate-45 select-none">
-          ─┤├─ ─||─ ─⧸⧸⧸─<br/>
-          ─⟲─ ─△─ ─◊─<br/>
-        </div>
-        
-        {/* More Binary */}
-        <div className="absolute top-1/2 left-1/4 text-accent2/15 font-mono text-xs rotate-[-15deg] select-none">
-          11010010 01001101<br/>
-          10110101 11100011<br/>
-          00101110 01110100<br/>
-        </div>
-        
-        {/* Physics Formulas */}
-        <div className="absolute bottom-32 right-32 text-accent/20 text-sm rotate-12 select-none">
-          F = ma<br/>
-          P = IV<br/>
-          λ = h/p<br/>
-          ∇²ψ = 0<br/>
-        </div>
-        
-        {/* Computer Science Symbols */}
-        <div className="absolute top-1/3 right-1/3 text-accent2/20 font-mono text-lg rotate-[-25deg] select-none">
-          {`{ } [ ] ( )`}<br/>
-          {`&& || !`}<br/>
-          {`=> -> <-`}<br/>
-        </div>
-      </div>
-
-      {/* Floating Particles Animation */}
-      <div className="absolute inset-0 overflow-hidden">
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-accent/10 rounded-full animate-pulse"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${3 + Math.random() * 4}s`
-            }}
-          />
-        ))}
+    <div className="min-h-screen relative overflow-hidden">
+      {/* LaserFlow WebGL Background */}
+      <div className="fixed inset-0 z-0">
+        <LaserFlowBackground />
       </div>
 
       {/* Content */}
@@ -172,7 +117,7 @@ export default function BlogPage() {
                   className="block cursor-pointer"
                 >
                   {/* Terminal-Style List Item */}
-                  <div className="bg-background/60 backdrop-blur-sm border-l-4 border-accent/50 hover:border-accent hover:bg-background/80 transition-all duration-300 rounded-r-lg p-6 shadow-md hover:shadow-xl hover:translate-x-2">
+                  <div className="border-l-4 border-accent/50 hover:border-accent transition-all duration-300 p-6 hover:translate-x-2">
                     {/* Date Badge (Terminal Timestamp Style) */}
                     <div className="flex items-center gap-3 mb-3">
                       <span className="font-mono text-sm text-accent/70 bg-accent/10 px-3 py-1 rounded">
@@ -222,7 +167,7 @@ export default function BlogPage() {
                   className="block"
                 >
                   {/* Terminal-Style List Item (External) */}
-                  <div className="bg-background/60 backdrop-blur-sm border-l-4 border-accent/50 hover:border-accent hover:bg-background/80 transition-all duration-300 rounded-r-lg p-6 shadow-md hover:shadow-xl hover:translate-x-2">
+                  <div className="border-l-4 border-accent/50 hover:border-accent transition-all duration-300 p-6 hover:translate-x-2">
                     {/* Date Badge (Terminal Timestamp Style) */}
                     <div className="flex items-center gap-3 mb-3">
                       <span className="font-mono text-sm text-accent/70 bg-accent/10 px-3 py-1 rounded">

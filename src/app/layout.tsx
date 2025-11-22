@@ -1,5 +1,4 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
 import type { Metadata } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import ScrollProgressBar from '../components/ScrollProgressBar'; // Only one import needed
@@ -9,6 +8,8 @@ import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 import { spaceGrotesk } from './fonts';
+import Script from 'next/script';
+import { ThemeProvider } from '../components/ThemeProvider';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -64,16 +65,37 @@ export const viewport = {
   initialScale: 1,
 };
 
+const themeScript = `(() => {
+  try {
+    const storageKey = 'portfolio-theme';
+    const stored = window.localStorage.getItem(storageKey);
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const theme = stored === 'light' || stored === 'dark' ? stored : (prefersDark ? 'dark' : 'light');
+    const root = document.documentElement;
+    root.classList.remove('light', 'dark');
+    root.classList.add(theme);
+    root.style.colorScheme = theme;
+    document.body?.setAttribute('data-theme', theme);
+  } catch (error) {
+    console.warn('[theme] Failed to set initial theme', error);
+  }
+})();`;
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
-      <body className={`min-h-screen bg-black text-white antialiased ${inter.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable}`}>
-        <ScrollProgressBar />
-        {children}
+    <html lang="en" className="dark" suppressHydrationWarning>
+      <body className={`min-h-screen bg-background text-foreground antialiased ${inter.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable}`} suppressHydrationWarning>
+        <Script id="theme-script" strategy="beforeInteractive">
+          {themeScript}
+        </Script>
+        <ThemeProvider>
+          <ScrollProgressBar />
+          {children}
+        </ThemeProvider>
         {/* Defer analytics for faster FCP/LCP */}
         <Analytics />
         <SpeedInsights />
