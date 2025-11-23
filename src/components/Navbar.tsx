@@ -15,6 +15,8 @@ export default function Navbar() {
   const [hidden, setHidden] = useState(false);
   const [time, setTime] = useState({ mdt: "--:--:--", utc: "--:--:--" });
   const [isTabletMode, setIsTabletMode] = useState(typeof window !== 'undefined' ? window.innerWidth < 1730 : false);
+  const [activeSection, setActiveSection] = useState('home');
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const isDarkMode = theme === 'dark';
   const baseHamburgerColor = isDarkMode ? '#BFC2C7' : '#475569';
@@ -42,6 +44,44 @@ export default function Navbar() {
   }, []);
 
   // Time updater
+  // Check for reduced motion preference
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+    const handleChange = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
+  // Active section detection
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = links.map(link => link.toLowerCase());
+      const scrollPosition = window.scrollY + 100;
+      
+      // Default to home if near the top
+      if (window.scrollY < 100) {
+        setActiveSection('home');
+        return;
+      }
+      
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const { offsetTop, offsetHeight } = element;
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
@@ -121,27 +161,35 @@ export default function Navbar() {
                     transition={justSwitchedToDesktop ? { duration: 0.9, ease: [0.4, 0, 0.2, 1], staggerChildren: 0.13, delayChildren: 0.13, staggerDirection: -1 } : justSwitchedToTablet ? { duration: 0.9, ease: [0.4, 0, 0.2, 1], staggerChildren: 0.13, delayChildren: 0.13, staggerDirection: 1 } : { duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
                     style={{ perspective: 1200 }}
                   >
-                    {links.map((link, i) => (
+                    {links.map((link, i) => {
+                      const isActive = activeSection === link.toLowerCase();
+                      return (
                       <Link key={link} href={link === 'Blog' ? '/blog' : `#${link.toLowerCase()}`}>
                         <motion.div
-                          className="navbar-btn-desktop px-4 py-1 border rounded-full text-sm font-medium text-text-soft border-border-subtle/60 transition-all duration-150 will-change-transform backdrop-blur-md bg-[color:var(--navbar-pill-background)] hover:text-foreground hover:border-accent2 focus-visible:ring-2 focus-visible:ring-accent/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--surface-strong)] focus-visible:outline-none shadow-md font-sans"
+                          className={`navbar-btn-desktop px-4 py-1 border rounded-full text-sm font-medium transition-all duration-150 will-change-transform backdrop-blur-md focus-visible:ring-2 focus-visible:ring-accent/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--surface-strong)] focus-visible:outline-none shadow-md font-sans ${
+                            isActive 
+                              ? 'text-foreground border-accent bg-accent/10' 
+                              : 'text-text-soft border-border-subtle/60 bg-[color:var(--navbar-pill-background)] hover:text-foreground hover:border-accent'
+                          }`}
                           tabIndex={0}
-                          initial={justSwitchedToDesktop ? { opacity: 0, x: 60, z: -40, scale: 0.7, rotateY: 30, boxShadow: '0 0 0 rgba(0,0,0,0)' } : false}
-                          animate={justSwitchedToDesktop ? { opacity: [0.7, 1], x: 0, z: 0, scale: [0.7, 1.08, 1], rotateY: [30, 0], boxShadow: ['0 0 0 rgba(0,0,0,0)', '0 6px 32px 0 rgba(139,92,246,0.13)', '0 0 0 rgba(0,0,0,0)'], transition: { duration: 0.7 + i * 0.13, ease: [0.4, 0, 0.2, 1] } } : { opacity: 1, x: 0, z: 0, scale: 1, rotateY: 0, boxShadow: '0 0 0 rgba(0,0,0,0)' }}
-                          exit={justSwitchedToTablet ? { opacity: [1, 0.7, 0], x: 60, z: -40, scale: [1, 0.7], rotateY: [0, 30], boxShadow: ['0 6px 32px 0 rgba(139,92,246,0.13)', '0 0 0 rgba(0,0,0,0)'], transition: { duration: 0.7 + i * 0.13, ease: [0.4, 0, 0.2, 1] } } : { opacity: 0, x: 60, z: -40, scale: 0.7, rotateY: 30, boxShadow: '0 0 0 rgba(0,0,0,0)' }}
-                          transition={{ duration: 0.7 + i * 0.13, ease: [0.4, 0, 0.2, 1] }}
+                          initial={justSwitchedToDesktop && !prefersReducedMotion ? { opacity: 0, x: 60, z: -40, scale: 0.7, rotateY: 30, boxShadow: '0 0 0 rgba(0,0,0,0)' } : false}
+                          animate={justSwitchedToDesktop && !prefersReducedMotion ? { opacity: [0.7, 1], x: 0, z: 0, scale: [0.7, 1.08, 1], rotateY: [30, 0], boxShadow: ['0 0 0 rgba(0,0,0,0)', '0 6px 32px 0 rgba(139,92,246,0.13)', '0 0 0 rgba(0,0,0,0)'], transition: { duration: 0.7 + i * 0.13, ease: [0.4, 0, 0.2, 1] } } : { opacity: 1, x: 0, z: 0, scale: 1, rotateY: 0, boxShadow: '0 0 0 rgba(0,0,0,0)' }}
+                          exit={justSwitchedToTablet && !prefersReducedMotion ? { opacity: [1, 0.7, 0], x: 60, z: -40, scale: [1, 0.7], rotateY: [0, 30], boxShadow: ['0 6px 32px 0 rgba(139,92,246,0.13)', '0 0 0 rgba(0,0,0,0)'], transition: { duration: 0.7 + i * 0.13, ease: [0.4, 0, 0.2, 1] } } : { opacity: 0, x: 60, z: -40, scale: 0.7, rotateY: 30, boxShadow: '0 0 0 rgba(0,0,0,0)' }}
+                          transition={{ duration: prefersReducedMotion ? 0.2 : 0.7 + i * 0.13, ease: [0.4, 0, 0.2, 1] }}
                           style={{ boxShadow: 'var(--motion-box-shadow)' }}
+                          whileHover={!prefersReducedMotion && isActive ? { scale: 1.05 } : !prefersReducedMotion ? { scale: 1.02 } : {}}
                         >
                           {link}
                         </motion.div>
                       </Link>
-                    ))}
+                    );
+                  })}
                   </motion.div>
                 )}
               </AnimatePresence>
 
               {/* Right */}
-              <div className="absolute right-0 pr-4 flex items-center space-x-3">
+              <div className="absolute right-0 pr-4 flex items-center gap-3">
                 {/* Social Icons Desktop */}
                 <AnimatePresence>
                   {!isTabletMode && (
@@ -153,18 +201,6 @@ export default function Navbar() {
                       transition={justSwitchedToDesktop ? { duration: 0.9, ease: [0.4, 0, 0.2, 1], staggerChildren: 0.15, delayChildren: 0.18, staggerDirection: -1 } : justSwitchedToTablet ? { duration: 0.9, ease: [0.4, 0, 0.2, 1], staggerChildren: 0.15, delayChildren: 0.18, staggerDirection: 1 } : { duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
                       style={{ perspective: 1200 }}
                     >
-                      <motion.button
-                        key="theme-toggle"
-                        type="button"
-                        onClick={toggleTheme}
-                        aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
-                        whileHover={{ scale: 1.1, rotate: isDarkMode ? 3 : -3, boxShadow: '0 4px 18px rgba(148,163,184,0.22)' }}
-                        whileTap={{ scale: 0.96, rotate: 0 }}
-                        className="flex h-9 w-9 items-center justify-center rounded-full border border-border-subtle/60 bg-[color:var(--navbar-pill-background)] text-text-soft transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--surface-strong)]"
-                        style={{ WebkitTapHighlightColor: 'transparent', backfaceVisibility: 'hidden', boxShadow: 'var(--motion-box-shadow)' }}
-                      >
-                        {isDarkMode ? <Sun size={18} className="text-text-soft" /> : <Moon size={18} className="text-text-soft" />}
-                      </motion.button>
                       {[{
                         href: "https://github.com/InfamousMorningstar",
                         label: "GitHub",
@@ -219,11 +255,35 @@ export default function Navbar() {
                     Resume
                   </motion.a>
                 </AnimatePresence>
+                {/* Theme Toggle - Desktop only (standalone) */}
+                <AnimatePresence>
+                  {!isTabletMode && (
+                    <motion.button
+                      type="button"
+                      onClick={toggleTheme}
+                      aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+                      whileHover={{ scale: 1.1, rotate: isDarkMode ? 3 : -3 }}
+                      whileTap={{ scale: 0.96, rotate: 0 }}
+                      className="flex items-center justify-center h-9 w-9 rounded-full border border-border-subtle/60 bg-[color:var(--navbar-pill-background)] text-text-soft transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--surface-strong)] shadow-md"
+                      initial={justSwitchedToDesktop ? { opacity: 0, x: 32, scale: 0.92 } : false}
+                      animate={justSwitchedToDesktop ? { opacity: 1, x: 0, scale: 1 } : { opacity: 1, x: 0, scale: 1 }}
+                      exit={justSwitchedToTablet ? { opacity: 0, x: 32, scale: 0.92 } : { opacity: 0, x: 32, scale: 0.92 }}
+                      transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                      style={{ 
+                        WebkitTapHighlightColor: 'transparent', 
+                        backfaceVisibility: 'hidden', 
+                        boxShadow: 'var(--motion-box-shadow)'
+                      }}
+                    >
+                      {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
+                    </motion.button>
+                  )}
+                </AnimatePresence>
                 {/* Desktop Clock */}
                 <AnimatePresence>
                   {!isTabletMode && (
                     <motion.div
-                      className="flex items-center px-3 py-1 rounded-full border border-border-subtle/60 text-sm font-mono backdrop-blur-md bg-[color:var(--navbar-pill-background)] text-text-soft"
+                      className="flex items-center px-3 py-1 rounded-full border border-border-subtle/60 text-sm font-mono backdrop-blur-md bg-[color:var(--navbar-pill-background)] text-text-soft shadow-md"
                       initial={justSwitchedToDesktop ? { opacity: 0, x: 60, z: -40, scale: 0.7, rotateY: 30, boxShadow: '0 0 0 rgba(0,0,0,0)' } : false}
                       animate={justSwitchedToDesktop ? { opacity: [0.7, 1], x: 0, z: 0, scale: [0.7, 1.08, 1], rotateY: [30, 0], boxShadow: ['0 0 0 rgba(0,0,0,0)', '0 6px 32px 0 rgba(139,92,246,0.13)', '0 0 0 rgba(0,0,0,0)'], transition: { duration: 0.8, ease: [0.4, 0, 0.2, 1] } } : { opacity: 1, x: 0, z: 0, scale: 1, rotateY: 0, boxShadow: '0 0 0 rgba(0,0,0,0)' }}
                       exit={justSwitchedToTablet ? { opacity: [1, 0.7, 0], x: 60, z: -40, scale: [1, 0.7], rotateY: [0, 30], boxShadow: ['0 6px 32px 0 rgba(139,92,246,0.13)', '0 0 0 rgba(0,0,0,0)'], transition: { duration: 0.7, ease: [0.4, 0, 0.2, 1] } } : { opacity: 0, x: 60, z: -40, scale: 0.7, rotateY: 30, boxShadow: '0 0 0 rgba(0,0,0,0)' }}
@@ -236,6 +296,30 @@ export default function Navbar() {
                       <span className="text-accent2 font-mono mr-1">{time.utc}</span>
                       <span className="text-text-soft/80 text-xs">UTC</span>
                     </motion.div>
+                  )}
+                </AnimatePresence>
+                {/* Theme Toggle - Mobile/Tablet */}
+                <AnimatePresence>
+                  {isTabletMode && (
+                    <motion.button
+                      type="button"
+                      onClick={toggleTheme}
+                      aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+                      whileHover={{ scale: 1.1, rotate: isDarkMode ? 3 : -3 }}
+                      whileTap={{ scale: 0.96, rotate: 0 }}
+                      className="flex items-center justify-center h-9 w-9 rounded-full border border-border-subtle/60 bg-[color:var(--navbar-pill-background)] text-text-soft transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--surface-strong)] shadow-md"
+                      initial={justSwitchedToTablet ? { opacity: 0, x: 32, scale: 0.92 } : false}
+                      animate={justSwitchedToTablet ? { opacity: 1, x: 0, scale: 1 } : { opacity: 1, x: 0, scale: 1 }}
+                      exit={justSwitchedToDesktop ? { opacity: 0, x: 32, scale: 0.92 } : { opacity: 0, x: 32, scale: 0.92 }}
+                      transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                      style={{ 
+                        WebkitTapHighlightColor: 'transparent', 
+                        backfaceVisibility: 'hidden', 
+                        boxShadow: 'var(--motion-box-shadow)'
+                      }}
+                    >
+                      {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
+                    </motion.button>
                   )}
                 </AnimatePresence>
                 {/* Tablet/Mobile menu button */}
@@ -360,25 +444,6 @@ export default function Navbar() {
                     <span className="sr-only">Email</span>
                   </a>
                 </motion.div>
-                <motion.button
-                  type="button"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 30 }}
-                  transition={{ duration: 0.6, delay: 0.16, ease: [0.4, 0, 0.2, 1] }}
-                  onClick={() => {
-                    toggleTheme();
-                    setIsMobileMenuOpen(false);
-                  }}
-                  aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
-                  className="mt-2 inline-flex items-center justify-center gap-2 rounded-full border border-border-subtle/60 bg-[color:var(--navbar-pill-background)] px-4 py-2 text-sm font-medium text-text-soft backdrop-blur-md transition"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  style={{ WebkitTapHighlightColor: 'transparent', backfaceVisibility: 'hidden', boxShadow: 'var(--motion-box-shadow)' }}
-                >
-                  {isDarkMode ? <Sun size={18} className="text-text-soft" /> : <Moon size={18} className="text-text-soft" />}
-                  <span>{isDarkMode ? 'Light mode' : 'Dark mode'}</span>
-                </motion.button>
                 {/* Mobile Clock */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}

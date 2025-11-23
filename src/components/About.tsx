@@ -116,18 +116,20 @@ export default function About() {
                 I&apos;m a passionate{' '}
                 <span className="text-accent font-semibold">Computer Information Systems student</span>{' '}
                 at Mount Royal University with a strong background in{' '}
-                <span className="text-accent2 font-semibold">IT support</span>,{' '}
+                <span className="text-accent2 font-semibold">web development</span>,{' '}
+                <span className="text-accent font-semibold">IT support</span>,{' '}
                 <span className="text-secondary font-semibold">home server architecture</span>, and{' '}
-                <span className="text-accent font-semibold">software development</span>.
+                <span className="text-accent2 font-semibold">software development</span>.
               </p>
               
               <p>
                 My journey began with a curiosity for technology and evolved into expertise in{' '}
+                <span className="text-accent font-semibold">full-stack web development</span>,{' '}
                 <span className="text-accent2 font-semibold">DevOps practices</span>,{' '}
-                <span className="text-accent font-semibold">container orchestration</span>, and{' '}
-                <span className="text-secondary font-semibold">infrastructure automation</span>.
-                I&apos;ve built and maintain a sophisticated home lab environment that serves as both
-                a learning platform and a production-grade media and monitoring solution.
+                <span className="text-secondary font-semibold">container orchestration</span>, and{' '}
+                <span className="text-accent font-semibold">infrastructure automation</span>.
+                I&apos;ve built production-ready web applications and maintain a sophisticated home lab
+                environment that serves as both a learning platform and a production-grade solution.
               </p>
               
               <p>

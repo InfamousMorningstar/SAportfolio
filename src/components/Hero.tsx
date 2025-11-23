@@ -14,7 +14,7 @@ const FloatingShape = ({ className, delay = 0 }: { className: string; delay?: nu
   />
 );
 
-// Rotating Hello World in multiple languages
+// Rotating Hello World in multiple languages with Apple-style gradient animation
 const RotatingHelloWorld = ({ isVisible }: { isVisible: boolean }) => {
   const greetings = [
     { hello: "Hello", world: "World" }, // English
@@ -34,15 +34,13 @@ const RotatingHelloWorld = ({ isVisible }: { isVisible: boolean }) => {
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [direction, setDirection] = useState(1);
 
   useEffect(() => {
     if (!isVisible) return;
     
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % greetings.length);
-      setDirection(1);
-    }, 3000); // Slower for premium feel
+    }, 3000);
 
     return () => clearInterval(interval);
   }, [isVisible, greetings.length]);
@@ -52,7 +50,7 @@ const RotatingHelloWorld = ({ isVisible }: { isVisible: boolean }) => {
   const chars = text.split('');
 
   return (
-    <div className="relative inline-block" style={{ perspective: '1000px' }}>
+    <div className="relative inline-block" style={{ padding: '2rem 2rem 2.5rem 2rem', overflow: 'visible' }}>
       <motion.div
         key={currentIndex}
         className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight flex items-center justify-center"
@@ -62,9 +60,12 @@ const RotatingHelloWorld = ({ isVisible }: { isVisible: boolean }) => {
         transition={{ duration: 0.4 }}
         style={{
           fontSize: 'clamp(2.2rem, 8vw, 5.5rem)',
-          fontFamily: 'Helvetica, Arial, sans-serif',
-          fontWeight: 'bold',
-          transformStyle: 'preserve-3d',
+          fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif',
+          fontWeight: 700,
+          letterSpacing: '-0.03em',
+          overflow: 'visible',
+          lineHeight: 1.4,
+          paddingBottom: '0.5rem',
         }}
       >
         {chars.map((char, i) => (
@@ -72,38 +73,33 @@ const RotatingHelloWorld = ({ isVisible }: { isVisible: boolean }) => {
             key={`${currentIndex}-${i}`}
             initial={{ 
               opacity: 0,
-              y: direction * 20,
-              rotateX: direction * 25,
-              filter: 'blur(10px)',
+              y: 30,
+              filter: 'blur(20px) brightness(0.5)',
               scale: 0.8,
             }}
             animate={{ 
               opacity: 1,
               y: 0,
-              rotateX: 0,
-              filter: 'blur(0px)',
+              filter: 'blur(0px) brightness(1)',
               scale: 1,
             }}
             exit={{
               opacity: 0,
-              y: -direction * 15,
-              rotateX: -direction * 20,
-              filter: 'blur(8px)',
+              y: -20,
+              filter: 'blur(15px) brightness(0.5)',
               scale: 0.9,
             }}
             transition={{
-              duration: 0.8,
-              delay: i * 0.03,
-              ease: [0.34, 1.56, 0.64, 1],
-              opacity: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
-              filter: { duration: 0.5 },
-              scale: { duration: 0.7, ease: [0.34, 1.56, 0.64, 1] },
+              duration: 0.9,
+              delay: i * 0.04,
+              ease: [0.25, 0.1, 0.25, 1],
+              opacity: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
             }}
             style={{
               display: 'inline-block',
               whiteSpace: 'pre',
-              transformStyle: 'preserve-3d',
-              backfaceVisibility: 'hidden',
+              color: '#ffffff',
+              willChange: 'transform, opacity, filter',
             }}
           >
             {char}
@@ -111,22 +107,22 @@ const RotatingHelloWorld = ({ isVisible }: { isVisible: boolean }) => {
         ))}
       </motion.div>
       
-      {/* Subtle glow effect */}
+      {/* Ambient glow layer */}
       <motion.div
         key={`glow-${currentIndex}`}
-        className="absolute inset-0 -z-10"
-        initial={{ opacity: 0, scale: 0.8 }}
+        className="absolute inset-0 -z-10 pointer-events-none"
+        initial={{ opacity: 0, scale: 0.9 }}
         animate={{ 
-          opacity: [0, 0.3, 0],
-          scale: [0.8, 1.1, 1.2],
+          opacity: [0, 0.15, 0.1],
+          scale: [0.9, 1.2, 1.1],
         }}
         transition={{
-          duration: 1.2,
+          duration: 1.5,
           ease: [0.16, 1, 0.3, 1],
         }}
         style={{
-          background: 'radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%)',
-          filter: 'blur(40px)',
+          background: 'radial-gradient(ellipse at center, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 40%, transparent 70%)',
+          filter: 'blur(60px)',
         }}
       />
     </div>
@@ -134,15 +130,28 @@ const RotatingHelloWorld = ({ isVisible }: { isVisible: boolean }) => {
 };
 
 export default function Hero() {
-  const [showLoader, setShowLoader] = useState(true);
+  const [showLoader, setShowLoader] = useState(false);
   const [loaderComplete, setLoaderComplete] = useState(false);
 
   useEffect(() => {
-    const loaderTimeout = setTimeout(() => {
+    // Only show loader on first visit (not on page refreshes or navigations)
+    const hasVisited = sessionStorage.getItem('portfolio-visited');
+    
+    if (!hasVisited) {
+      setShowLoader(true);
+      sessionStorage.setItem('portfolio-visited', 'true');
+      
+      const loaderTimeout = setTimeout(() => {
+        setLoaderComplete(true);
+        setShowLoader(false);
+      }, 3200);
+      
+      return () => clearTimeout(loaderTimeout);
+    } else {
+      // Skip loader - site already loaded in this session
       setLoaderComplete(true);
       setShowLoader(false);
-    }, 3200);
-    return () => clearTimeout(loaderTimeout);
+    }
   }, []);
 
   const scrollToAbout = () => {
@@ -350,7 +359,12 @@ export default function Hero() {
             {/* Rotating Hello World in Multiple Languages */}
             <motion.div
               className="mb-8 relative w-full flex items-center justify-center"
-              style={{ minHeight: 'clamp(3rem, 10vw, 6rem)' }}
+              style={{ 
+                minHeight: 'clamp(5rem, 14vw, 9rem)',
+                padding: '2.5rem 0',
+                overflow: 'visible',
+                marginBottom: '2rem'
+              }}
               initial={{ opacity: 0 }}
               animate={{ opacity: loaderComplete ? 1 : 0 }}
               transition={{ duration: 0.9, delay: 0.4 }}
@@ -461,7 +475,7 @@ export default function Hero() {
                 </span>
               </h2>
               
-              <motion.p 
+              <motion.p
                 className="text-2xl md:text-3xl font-bold mb-6 bg-gradient-to-r from-accent via-accent2 to-accent bg-clip-text text-transparent"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: loaderComplete ? 1 : 0 }}
@@ -471,27 +485,11 @@ export default function Hero() {
               </motion.p>
               
               <p className="text-lg md:text-xl text-muted max-w-2xl mx-auto leading-relaxed mb-12">
-                <span>I build </span>
-                <span className="text-accent font-semibold">systems that think</span>
-                <span>, </span>
-                <span className="text-accent2 font-semibold">workflows that run themselves</span>
-                <span>, and </span>
-                <span className="text-accent font-semibold">software that scales</span>
-                <span>.</span>
+                I engineer <span className="text-accent font-semibold">full-stack web applications</span> and <span className="text-accent2 font-semibold">infrastructure that scales</span> — from concept to production.
                 <br />
-                <span className="mt-2 inline-block">From</span>
-                <span className="text-accent2 font-semibold"> self-hosted infrastructure</span>
-                <span> to </span>
-                <span className="text-accent font-semibold">intelligent automation</span>
-                <span> — I architect the backend you </span>
-                <span className="italic">don't see</span>
-                <span>, but </span>
-                <span className="text-accent2 font-semibold">definitely feel</span>
-                <span>.</span>
+                <span className="mt-2 inline-block">Whether it&apos;s a <span className="text-accent font-semibold">web application</span>, <span className="text-accent2 font-semibold">automated DevOps pipelines</span>, or <span className="text-secondary font-semibold">self-hosted infrastructure</span>, I build systems that <span className="text-accent font-semibold">just work</span>.</span>
                 <br />
-                <span className="mt-2 inline-block">The best code? The kind that makes your life easier</span>
-                <span className="text-accent font-semibold"> without you noticing it's there</span>
-                <span>.</span>
+                <span className="mt-2 inline-block">Clean code. <span className="text-accent2 font-semibold">Secure architecture.</span> <span className="text-accent font-semibold">Zero compromises.</span></span>
               </p>
             </motion.div>
 

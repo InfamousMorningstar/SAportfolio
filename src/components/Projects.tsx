@@ -48,7 +48,7 @@ const projects = [
     icon: <FaGlobe className="text-accent2" />,
     status: 'Production',
     github: '',
-    demo: 'https://inter-freight.vercel.app'
+    demo: 'https://interfreightautosales.ca'
   },
   {
     title: 'Professional Portfolio Website',
@@ -199,7 +199,7 @@ export default function Projects() {
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-accent to-accent2 mx-auto mb-8"></div>
           <p className="text-xl text-muted max-w-3xl mx-auto">
-            Showcase of my technical expertise in DevOps, automation, and infrastructure management
+            Showcase of my technical expertise in Web Development, DevOps, automation, and infrastructure management
           </p>
         </motion.div>
 
