@@ -14,7 +14,7 @@ export default function Navbar() {
   const [scrollY, setScrollY] = useState(0);
   const [hidden, setHidden] = useState(false);
   const [time, setTime] = useState({ mdt: "--:--:--", utc: "--:--:--" });
-  const [isTabletMode, setIsTabletMode] = useState(typeof window !== 'undefined' ? window.innerWidth < 1280 : false);
+  const [isTabletMode, setIsTabletMode] = useState(typeof window !== 'undefined' ? window.innerWidth < 1730 : false);
   const { theme, toggleTheme } = useTheme();
   const isDarkMode = theme === 'dark';
   const baseHamburgerColor = isDarkMode ? '#BFC2C7' : '#475569';
@@ -23,9 +23,9 @@ export default function Navbar() {
   const [justSwitchedToTablet, setJustSwitchedToTablet] = useState(false);
   const [justSwitchedToDesktop, setJustSwitchedToDesktop] = useState(false);
   useEffect(() => {
-    let prevTablet = typeof window !== 'undefined' ? window.innerWidth < 1280 : false;
+    let prevTablet = typeof window !== 'undefined' ? window.innerWidth < 1730 : false;
     const handleResize = () => {
-      const nowTablet = window.innerWidth < 1280;
+      const nowTablet = window.innerWidth < 1730;
       setIsTabletMode(nowTablet);
       if (!prevTablet && nowTablet) {
         setJustSwitchedToTablet(true);
