@@ -3,16 +3,6 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import Magnetic from './Magnetic';
-import Hero3DParticles from './Hero3DParticles';
-
-const FloatingShape = ({ className, delay = 0 }: { className: string; delay?: number }) => (
-  <motion.div
-    className={`floating-shape ${className}`}
-    initial={{ opacity: 0, scale: 0 }}
-    animate={{ opacity: [0.3, 0.7, 0.3], scale: [1, 1.2, 1], rotate: [0, 180, 360] }}
-    transition={{ duration: 8, delay, repeat: Infinity, ease: 'easeInOut' }}
-  />
-);
 
 // Rotating Hello World in multiple languages with Apple-style gradient animation
 const RotatingHelloWorld = ({ isVisible }: { isVisible: boolean }) => {
@@ -98,7 +88,7 @@ const RotatingHelloWorld = ({ isVisible }: { isVisible: boolean }) => {
             style={{
               display: 'inline-block',
               whiteSpace: 'pre',
-              color: '#ffffff',
+              color: 'rgb(var(--foreground))',
               willChange: 'transform, opacity, filter',
             }}
           >
@@ -121,7 +111,7 @@ const RotatingHelloWorld = ({ isVisible }: { isVisible: boolean }) => {
           ease: [0.16, 1, 0.3, 1],
         }}
         style={{
-          background: 'radial-gradient(ellipse at center, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 40%, transparent 70%)',
+          background: 'radial-gradient(ellipse at center, rgb(var(--foreground) / 0.08) 0%, rgb(var(--foreground) / 0.04) 40%, transparent 70%)',
           filter: 'blur(60px)',
         }}
       />
@@ -134,24 +124,15 @@ export default function Hero() {
   const [loaderComplete, setLoaderComplete] = useState(false);
 
   useEffect(() => {
-    // Only show loader on first visit (not on page refreshes or navigations)
-    const hasVisited = sessionStorage.getItem('portfolio-visited');
+    // Always show loader for now
+    setShowLoader(true);
     
-    if (!hasVisited) {
-      setShowLoader(true);
-      sessionStorage.setItem('portfolio-visited', 'true');
-      
-      const loaderTimeout = setTimeout(() => {
-        setLoaderComplete(true);
-        setShowLoader(false);
-      }, 3200);
-      
-      return () => clearTimeout(loaderTimeout);
-    } else {
-      // Skip loader - site already loaded in this session
+    const loaderTimeout = setTimeout(() => {
       setLoaderComplete(true);
       setShowLoader(false);
-    }
+    }, 3200);
+    
+    return () => clearTimeout(loaderTimeout);
   }, []);
 
   const scrollToAbout = () => {
@@ -345,16 +326,11 @@ export default function Hero() {
 
       <motion.section 
         id="hero"
-        className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-background via-background/95 to-background/90"
+        className="relative min-h-screen flex items-center justify-center overflow-hidden"
         initial={{ opacity: 0 }}
         animate={{ opacity: loaderComplete ? 1 : 0 }}
         transition={{ duration: 0.8, delay: 0.1 }}
       >
-        <Hero3DParticles />
-        <FloatingShape className="floating-shape-1" delay={0} />
-        <FloatingShape className="floating-shape-2" delay={0.5} />
-        <FloatingShape className="floating-shape-3" delay={1} />
-
         <div className="relative z-10 mx-auto max-w-6xl px-6 sm:px-8 lg:px-12 text-center py-20 lg:py-24">
             {/* Rotating Hello World in Multiple Languages */}
             <motion.div

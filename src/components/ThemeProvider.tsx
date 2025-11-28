@@ -7,7 +7,7 @@ type Theme = "light" | "dark";
 type ThemeContextValue = {
   theme: Theme;
   setTheme: (value: Theme) => void;
-  toggleTheme: () => void;
+  toggleTheme: (e?: React.MouseEvent) => void;
 };
 
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
@@ -69,16 +69,49 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  const toggleTheme = useCallback(() => {
-    setThemeState((prev) => {
-      const next = prev === "dark" ? "light" : "dark";
-      if (typeof window !== "undefined") {
-        window.localStorage.setItem(STORAGE_KEY, next);
-        applyThemeToDocument(next);
-      }
-      return next;
+  const toggleTheme = useCallback((e?: React.MouseEvent) => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    
+    // @ts-ignore - View Transitions API is not yet in all TS definitions
+    if (!document.startViewTransition || !e) {
+      setThemeState(newTheme);
+      applyThemeToDocument(newTheme);
+      window.localStorage.setItem(STORAGE_KEY, newTheme);
+      return;
+    }
+
+    const x = e.clientX;
+    const y = e.clientY;
+    const endRadius = Math.hypot(
+      Math.max(x, innerWidth - x),
+      Math.max(y, innerHeight - y)
+    );
+
+    // @ts-ignore
+    const transition = document.startViewTransition(() => {
+      setThemeState(newTheme);
+      applyThemeToDocument(newTheme);
+      window.localStorage.setItem(STORAGE_KEY, newTheme);
     });
-  }, []);
+
+    transition.ready.then(() => {
+      const clipPath = [
+        `circle(0px at ${x}px ${y}px)`,
+        `circle(${endRadius}px at ${x}px ${y}px)`,
+      ];
+      
+      document.documentElement.animate(
+        {
+          clipPath: clipPath,
+        },
+        {
+          duration: 500,
+          easing: "ease-in",
+          pseudoElement: "::view-transition-new(root)",
+        }
+      );
+    });
+  }, [theme]);
 
   const value = useMemo<ThemeContextValue>(
     () => ({ theme, setTheme, toggleTheme }),

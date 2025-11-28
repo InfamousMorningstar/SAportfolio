@@ -8,22 +8,38 @@ import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import ScrollToTopArrow from '@/components/ScrollToTopArrow';
 import CursorTrail from '@/components/CursorTrail';
-import AmbientParticles from '@/components/AmbientParticles';
+import Scene3D from '@/components/Scene3D';
+import Section from '@/components/Section';
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-background text-foreground relative">
+    <div className="min-h-screen text-foreground relative">
       <CursorTrail />
-      <AmbientParticles />
+      <Scene3D />
       <Navbar />
 
-      <main>
+      <main className="flex flex-col gap-0">
         <Hero />
-        <About />
-        <Projects />
-        <Experience />
-        <Education />
-        <Contact />
+        
+        <Section>
+          <About />
+        </Section>
+        
+        <Section>
+          <Projects />
+        </Section>
+        
+        <Section>
+          <Experience />
+        </Section>
+        
+        <Section>
+          <Education />
+        </Section>
+        
+        <Section>
+          <Contact />
+        </Section>
       </main>
       <ScrollToTopArrow />
       <Footer />

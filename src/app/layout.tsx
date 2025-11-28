@@ -10,6 +10,7 @@ import './globals.css';
 import { spaceGrotesk } from './fonts';
 import Script from 'next/script';
 import { ThemeProvider } from '../components/ThemeProvider';
+import SmoothScroll from '../components/SmoothScroll';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -93,8 +94,10 @@ export default function RootLayout({
           {themeScript}
         </Script>
         <ThemeProvider>
-          <ScrollProgressBar />
-          {children}
+          <SmoothScroll>
+            <ScrollProgressBar />
+            {children}
+          </SmoothScroll>
         </ThemeProvider>
         {/* Defer analytics for faster FCP/LCP */}
         <Analytics />

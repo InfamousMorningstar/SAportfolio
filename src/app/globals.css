@@ -92,6 +92,13 @@
   color-scheme: dark;
 }
 
+/* View Transitions */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
 /* Base Styles */
 html {
   scroll-behavior: smooth;
