@@ -20,6 +20,37 @@ import { FaGithub, FaExternalLinkAlt, FaServer, FaChartLine, FaRobot, FaMedium, 
 
 const projects = [
   {
+    title: 'Starlight Tours',
+    summary: 'Interactive educational website documenting systemic racism and police misconduct in Saskatoon',
+    description: 'An immersive, educational platform exploring the Starlight Tours - incidents where Saskatoon police officers abandoned Indigenous men in freezing temperatures during the 1990s-2000s. Features cinematic WebGL animations, comprehensive academic research, and verified sources from the Wright Commission inquiry.',
+    technologies: ['React 19', 'TypeScript', 'Vite', 'Framer Motion', 'Three.js', 'Tailwind CSS'],
+    techStack: [
+      { name: 'React', icon: '⚛️' },
+      { name: 'TypeScript', icon: '📘' },
+      { name: 'Vite', icon: '⚡' },
+      { name: 'Three.js', icon: '🎨' }
+    ],
+    features: [
+      'Custom LaserFlow WebGL hero animation with interactive particles',
+      'Mac OS-style navigation with magnification effects',
+      'Interactive timeline documenting key events and victims',
+      'Comprehensive sources with links to academic papers and reports',
+      'Verified quotes from Justice David Wright Commission',
+      'Responsive design with snow effects and cursor trails',
+      'Educational focus on reconciliation and systemic change',
+      'Keyboard navigation support (arrow keys)'
+    ],
+    metrics: {
+      research: 'Academic',
+      sources: '25+ verified',
+      team: '9 members'
+    },
+    icon: <FaGlobe className="text-accent" />,
+    status: 'Live',
+    github: 'https://github.com/InfamousMorningstar/starlight',
+    demo: 'https://starlight-eight-ruby.vercel.app/'
+  },
+  {
     title: 'Inter-Freight Auto Sales',
     summary: 'Production-ready automotive dealership with advanced vehicle management and secure admin dashboard',
     description: 'A premium, enterprise-grade car dealership web application featuring intelligent inquiry tracking, smooth 3D animations, CARFAX integration, Google Reviews, and a fully secure admin dashboard. Built with Next.js 15 and Supabase for optimal performance, security, and scalability.',
@@ -183,7 +214,23 @@ const cardVariants = {
     transition: { duration: 0.85, ease: [0.22, 0.61, 0.36, 1] }
   }
 };
+
+import { useState, useEffect } from 'react';
+
 export default function Projects() {
+  const [expandedProject, setExpandedProject] = useState<number | null>(null);
+
+  // Prevent body scroll when a card is expanded
+  useEffect(() => {
+    if (expandedProject !== null) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [expandedProject]);
   return (
     <section id="projects" className="py-16 lg:py-20 px-6 relative">
       <div className="max-w-7xl mx-auto">
@@ -203,153 +250,503 @@ export default function Projects() {
           </p>
         </motion.div>
 
-        <motion.div
-          className="grid lg:grid-cols-1 gap-12"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          {projects.map((project, index) => (
-            <motion.div
-              key={project.title}
-              className="project-card card group hover:border-accent/60 transition-all duration-300 relative overflow-hidden"
-              variants={cardVariants}
-              whileHover={{
-                scale: 1.015,
-                boxShadow: '0 8px 32px 0 rgba(139,92,246,0.15)',
-                borderColor: 'rgba(139,92,246,0.6)'
-              }}
-              transition={{ type: 'spring', stiffness: 180, damping: 18, mass: 1.05 }}
-              style={{ willChange: 'transform, box-shadow, border-color, filter' }}
-            >
-              {/* Glitch Border Effect on Hover */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                <div className="absolute inset-0 border-2 border-accent/40 rounded-xl animate-pulse"></div>
-              </div>
+        {/* Desktop: Fan Layout | Mobile: Horizontal Carousel */}
+        <div className="hidden md:block relative w-full">
+          <div className="relative w-full h-[750px] flex items-center justify-center" style={{ perspective: '2500px' }}>
+            {projects.map((project, index) => {
+            const isExpanded = expandedProject === index;
+            const totalCards = projects.length;
+            const middleIndex = (totalCards - 1) / 2;
+            
+            // Calculate rotation and position for fan layout
+            const rotationRange = 50;
+            const xOffsetRange = 140;
+            const yOffsetRange = 20;
+            
+            const rotation = isExpanded ? 0 : ((index - middleIndex) / middleIndex) * rotationRange;
+            const xOffset = isExpanded ? 0 : (index - middleIndex) * xOffsetRange;
+            const yOffset = isExpanded ? 0 : Math.abs(index - middleIndex) * yOffsetRange;
+            // Latest project (index 0) should be on top - reverse z-index
+            const zIndex = isExpanded ? 50 : (totalCards - index);
 
-              <div className="grid lg:grid-cols-4 gap-6 relative z-10">
-                {/* Left Column - Icon & Title */}
-                <div className="lg:col-span-1 flex flex-col items-start">
-                  <motion.div
-                    className="text-5xl mb-4 filter grayscale group-hover:grayscale-0 transition-all duration-300"
-                    whileHover={{ scale: 1.15, rotate: 5 }}
-                    transition={{ type: 'spring', stiffness: 300 }}
-                  >
-                    {project.icon}
-                  </motion.div>
-                  <h3 className="text-2xl font-bold text-foreground group-hover:text-accent transition-colors mb-2">
-                    {project.title}
-                  </h3>
-                  <p className="text-sm text-muted mb-4">{project.summary}</p>
-                  
-                  {/* Status Badge */}
-                  <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
-                    project.status === 'Production' ? 'bg-green-500/20 text-green-400 border border-green-500/30' :
-                    project.status === 'Live' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' :
-                    'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
-                  }`}>
-                    ● {project.status}
-                  </span>
+            return (
+              <motion.div
+                key={project.title}
+                className="absolute cursor-pointer"
+                style={{ 
+                  zIndex,
+                  transformStyle: 'preserve-3d',
+                  width: isExpanded ? '90%' : '380px',
+                  filter: isExpanded ? 'none' : (expandedProject !== null ? 'blur(2px)' : 'none'),
+                  left: '50%',
+                  top: '50%'
+                }}
+                initial={{ 
+                  rotateZ: rotation,
+                  x: xOffset - 190,
+                  y: yOffset - 280,
+                  opacity: 0
+                }}
+                animate={{ 
+                  rotateZ: isExpanded ? 0 : rotation,
+                  x: isExpanded ? -190 : xOffset - 190,
+                  y: isExpanded ? -280 : yOffset - 280,
+                  scale: isExpanded ? 1.02 : 1,
+                  opacity: isExpanded ? 1 : (expandedProject !== null ? 0.3 : 1)
+                }}
+                whileInView={{ opacity: isExpanded ? 1 : (expandedProject !== null ? 0.3 : 1) }}
+                viewport={{ once: true }}
+                transition={{ 
+                  type: 'spring', 
+                  stiffness: 220, 
+                  damping: 22,
+                  opacity: { duration: 0.3 }
+                }}
+                whileHover={!isExpanded && expandedProject === null ? { 
+                  y: yOffset - 280 - 40,
+                  scale: 1.08,
+                  rotateZ: rotation * 0.7,
+                  zIndex: 100,
+                  transition: { duration: 0.2, type: 'spring', stiffness: 350 }
+                } : {}}
+                onClick={() => setExpandedProject(isExpanded ? null : index)}
+              >
+                <div 
+                  className="group transition-all duration-300 relative bg-gradient-to-br from-background via-background to-background/80 backdrop-blur-xl"
+                  style={{
+                    borderRadius: '20px',
+                    aspectRatio: isExpanded ? 'auto' : '2.5/3.5',
+                    height: isExpanded ? 'auto' : '560px',
+                    maxHeight: isExpanded ? '85vh' : '560px',
+                    border: '1px solid rgba(139, 92, 246, 0.15)',
+                    boxShadow: isExpanded 
+                      ? '0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(139, 92, 246, 0.1), inset 0 1px 0 0 rgba(255, 255, 255, 0.05)'
+                      : '0 20px 40px -15px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(139, 92, 246, 0.1), inset 0 1px 0 0 rgba(255, 255, 255, 0.03)',
+                    pointerEvents: isExpanded || expandedProject === null ? 'auto' : 'none'
+                  }}
+                >
+                  {/* Minimalist Inner Border */}
+                  <div className="absolute inset-[1px] rounded-[19px] pointer-events-none" style={{
+                    background: 'linear-gradient(135deg, rgba(255,255,255,0.02) 0%, transparent 50%, rgba(139,92,246,0.03) 100%)'
+                  }}></div>
 
-                  {/* Metrics */}
-                  {project.metrics && (
-                    <div className="mt-4 space-y-2 w-full">
-                      {Object.entries(project.metrics).map(([key, value]) => (
-                        <div key={key} className="flex justify-between text-xs">
-                          <span className="text-muted capitalize">{key}:</span>
-                          <span className="text-accent2 font-semibold font-mono">{value}</span>
+                  {/* Card Border Glow on Hover */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-[20px]" style={{
+                    boxShadow: '0 0 30px rgba(139, 92, 246, 0.3), inset 0 0 20px rgba(139, 92, 246, 0.05)'
+                  }}></div>
+
+                  <div className={`grid ${isExpanded ? 'lg:grid-cols-4' : 'lg:grid-cols-1'} gap-6 relative z-10 transition-all duration-300 ${isExpanded ? 'overflow-y-auto max-h-[85vh]' : 'h-full overflow-hidden'}`}>
+                    {/* Collapsed View - Enhanced Playing Card */}
+                    {!isExpanded && (
+                      <div className="flex flex-col h-full p-8 overflow-hidden">
+                        {/* Top Section - Icon & Title */}
+                        <div className="flex flex-col items-center space-y-4 mb-6">
+                          <div className="text-5xl filter grayscale-0 transition-all duration-300 group-hover:scale-110">
+                            {project.icon}
+                          </div>
+                          <div className="text-center">
+                            <h3 className="text-xl font-bold text-accent mb-2 leading-tight">
+                              {project.title}
+                            </h3>
+                            <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium mb-3 ${
+                              project.status === 'Production' ? 'bg-green-500/20 text-green-400 border border-green-500/30' :
+                              project.status === 'Live' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' :
+                              'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
+                            }`}>
+                              ● {project.status}
+                            </span>
+                          </div>
                         </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
 
-                {/* Middle Column - Description & Tech Stack */}
-                <div className="lg:col-span-2 space-y-4">
-                  <p className="text-muted leading-relaxed">
-                    {project.description}
-                  </p>
+                        {/* Tech Stack Pills */}
+                        <div className="mb-4">
+                          <div className="flex flex-wrap gap-1.5 justify-center">
+                            {project.techStack.map((tech) => (
+                              <span key={tech.name} className="px-2 py-1 bg-accent/10 border border-accent/20 rounded-md text-[10px] font-medium text-accent flex items-center gap-1">
+                                <span>{tech.icon}</span>
+                                <span>{tech.name}</span>
+                              </span>
+                            ))}
+                          </div>
+                        </div>
 
-                  {/* Tech Stack with Icons (Monochrome → Color on Hover) */}
-                  <div>
-                    <h4 className="text-sm font-semibold text-accent2 mb-3">Tech Stack</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {project.techStack.map((tech) => (
-                        <motion.div
-                          key={tech.name}
-                          className="px-3 py-1.5 border border-border rounded-lg flex items-center gap-2 filter grayscale group-hover:grayscale-0 hover:border-accent/50 hover:bg-accent/5 transition-all duration-300"
-                          whileHover={{ scale: 1.05, y: -2 }}
+                        {/* Key Features List */}
+                        <div className="flex-1 mb-4">
+                          <h4 className="text-xs font-semibold text-accent2 mb-2 uppercase tracking-wide">Features</h4>
+                          <ul className="space-y-1.5">
+                            {project.features.slice(0, 6).map((feature) => (
+                              <li key={feature} className="flex items-start text-[11px] text-muted leading-snug">
+                                <span className="text-accent2 mr-1.5 mt-0.5 text-xs">▸</span>
+                                <span className="flex-1">{feature}</span>
+                              </li>
+                            ))}
+                            {project.features.length > 6 && (
+                              <li className="text-[11px] text-accent/60 italic">+ {project.features.length - 6} more features</li>
+                            )}
+                          </ul>
+                        </div>
+
+                        {/* Metrics */}
+                        {project.metrics && (
+                          <div className="mb-4 grid grid-cols-3 gap-2">
+                            {Object.entries(project.metrics).map(([key, value]) => (
+                              <div key={key} className="text-center p-2 bg-accent/5 rounded-lg border border-accent/10">
+                                <div className="text-xs text-accent2 font-mono font-semibold">{value}</div>
+                                <div className="text-[9px] text-muted/70 uppercase tracking-wider mt-0.5">{key}</div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+
+                        {/* Action Buttons */}
+                        <div className="flex gap-2 mt-auto">
+                          {project.github && (
+                            <a
+                              href={project.github}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-accent/10 hover:bg-accent/20 border border-accent/30 rounded-lg text-accent text-xs font-medium transition-all"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <FaGithub size={12} />
+                              <span>Code</span>
+                            </a>
+                          )}
+                          {project.demo && (
+                            <a
+                              href={project.demo}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-accent2/10 hover:bg-accent2/20 border border-accent2/30 rounded-lg text-accent2 text-xs font-medium transition-all"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <FaExternalLinkAlt size={12} />
+                              <span>Live</span>
+                            </a>
+                          )}
+                        </div>
+
+                        <p className="text-center text-[10px] text-muted/50 mt-3">Click card for full details</p>
+                      </div>
+                    )}
+
+                    {/* Expanded View - Enhanced Full Details */}
+                    {isExpanded && (
+                      <>
+                        {/* Close Button - Top Right */}
+                        <motion.button
+                          className="absolute top-3 right-3 md:top-4 md:right-4 z-50 p-1.5 md:p-2 rounded-full bg-background/80 backdrop-blur-sm border border-accent/30 hover:border-accent hover:bg-accent/10 transition-all"
+                          whileHover={{ scale: 1.1, rotate: 90 }}
+                          whileTap={{ scale: 0.9 }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setExpandedProject(null);
+                          }}
                         >
-                          <span className="text-lg">{tech.icon}</span>
-                          <span className="text-sm font-medium text-muted group-hover:text-accent transition-colors">{tech.name}</span>
-                        </motion.div>
-                      ))}
+                          <svg className="w-4 h-4 md:w-5 md:h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </motion.button>
+
+                        {/* Left Column - Icon, Title & Metrics */}
+                        <div className="lg:col-span-1 flex flex-col items-start space-y-4 md:space-y-6 p-4 md:p-6">
+                          {/* Icon with Animated Background */}
+                          <div className="relative mx-auto lg:mx-0">
+                            <motion.div
+                              className="absolute inset-0 bg-accent/10 rounded-full blur-2xl"
+                              animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+                              transition={{ duration: 3, repeat: Infinity }}
+                            />
+                            <motion.div
+                              className="text-4xl md:text-5xl lg:text-6xl relative z-10"
+                              whileHover={{ scale: 1.15, rotate: [0, -5, 5, 0] }}
+                              transition={{ type: 'spring', stiffness: 300 }}
+                            >
+                              {project.icon}
+                            </motion.div>
+                          </div>
+                          
+                          {/* Title & Status */}
+                          <div className="space-y-2 md:space-y-3 text-center lg:text-left">
+                            <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-accent leading-tight">
+                              {project.title}
+                            </h3>
+                            <span className={`inline-block px-3 md:px-4 py-1.5 md:py-2 rounded-full text-xs md:text-sm font-medium ${
+                              project.status === 'Production' ? 'bg-green-500/20 text-green-400 border border-green-500/40' :
+                              project.status === 'Live' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/40' :
+                              'bg-yellow-500/20 text-yellow-400 border border-yellow-500/40'
+                            }`}>
+                              ● {project.status}
+                            </span>
+                          </div>
+
+                          {/* Summary */}
+                          <p className="text-xs md:text-sm text-muted/80 leading-relaxed italic border-l-2 border-accent/30 pl-3 md:pl-4">
+                            {project.summary}
+                          </p>
+
+                          {/* Metrics Grid - Enhanced */}
+                          {project.metrics && (
+                            <div className="w-full space-y-2 md:space-y-3">
+                              <h4 className="text-[10px] md:text-xs font-semibold text-accent2 uppercase tracking-wider">Metrics</h4>
+                              <div className="grid grid-cols-1 gap-2 md:gap-3">
+                                {Object.entries(project.metrics).map(([key, value]) => (
+                                  <motion.div 
+                                    key={key} 
+                                    className="p-2 md:p-3 bg-gradient-to-br from-accent/5 to-accent2/5 rounded-lg border border-accent/20 hover:border-accent/40 transition-all"
+                                    whileHover={{ scale: 1.02, x: 5 }}
+                                  >
+                                    <div className="flex justify-between items-center">
+                                      <span className="text-[10px] md:text-xs text-muted/70 uppercase tracking-wide">{key}</span>
+                                      <span className="text-sm md:text-lg font-bold font-mono text-accent2">{value}</span>
+                                    </div>
+                                  </motion.div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Primary Actions */}
+                          <div className="w-full space-y-2 pt-3 md:pt-4 border-t border-accent/10">
+                            {project.github && (
+                              <motion.a
+                                href={project.github}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center justify-center gap-2 w-full px-3 md:px-4 py-2 md:py-3 bg-accent/10 hover:bg-accent/20 border border-accent/30 rounded-xl text-accent text-sm md:text-base font-medium transition-all"
+                                whileHover={{ scale: 1.02, y: -2 }}
+                                whileTap={{ scale: 0.98 }}
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                <FaGithub size={16} className="md:hidden" />
+                                <FaGithub size={18} className="hidden md:block" />
+                                <span>View Code</span>
+                              </motion.a>
+                            )}
+                            {project.demo && (
+                              <motion.a
+                                href={project.demo}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center justify-center gap-2 w-full px-3 md:px-4 py-2 md:py-3 bg-gradient-to-r from-accent2/10 to-accent/10 hover:from-accent2/20 hover:to-accent/20 border border-accent2/30 rounded-xl text-accent2 text-sm md:text-base font-medium transition-all"
+                                whileHover={{ scale: 1.02, y: -2 }}
+                                whileTap={{ scale: 0.98 }}
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                <FaExternalLinkAlt size={14} className="md:hidden" />
+                                <FaExternalLinkAlt size={16} className="hidden md:block" />
+                                <span>Live Demo</span>
+                              </motion.a>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Middle Column - Description & Tech Stack */}
+                        <div className="lg:col-span-2 space-y-4 md:space-y-6 p-4 md:p-6">
+                          {/* Description */}
+                          <div>
+                            <h4 className="text-xs md:text-sm font-semibold text-accent2 mb-2 md:mb-3 uppercase tracking-wider flex items-center gap-2">
+                              <span className="w-1 h-3 md:h-4 bg-accent2 rounded"></span>
+                              Overview
+                            </h4>
+                            <p className="text-muted leading-relaxed text-sm md:text-base">
+                              {project.description}
+                            </p>
+                          </div>
+
+                          {/* Tech Stack with Enhanced Styling */}
+                          <div>
+                            <h4 className="text-xs md:text-sm font-semibold text-accent2 mb-3 md:mb-4 uppercase tracking-wider flex items-center gap-2">
+                              <span className="w-1 h-3 md:h-4 bg-accent2 rounded"></span>
+                              Tech Stack
+                            </h4>
+                            <div className="grid grid-cols-2 gap-2 md:gap-3">
+                              {project.techStack.map((tech) => (
+                                <motion.div
+                                  key={tech.name}
+                                  className="p-2 md:p-3 border border-accent/20 rounded-xl flex items-center gap-2 md:gap-3 bg-gradient-to-br from-accent/5 to-transparent hover:border-accent/50 hover:bg-accent/10 transition-all"
+                                  whileHover={{ scale: 1.03, x: 5 }}
+                                  whileTap={{ scale: 0.98 }}
+                                >
+                                  <span className="text-xl md:text-2xl">{tech.icon}</span>
+                                  <span className="text-xs md:text-sm font-semibold text-foreground">{tech.name}</span>
+                                </motion.div>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* All Technologies Pills */}
+                          <div>
+                            <h4 className="text-xs md:text-sm font-semibold text-accent2 mb-2 md:mb-3 uppercase tracking-wider flex items-center gap-2">
+                              <span className="w-1 h-3 md:h-4 bg-accent2 rounded"></span>
+                              Libraries
+                            </h4>
+                            <div className="flex flex-wrap gap-1.5 md:gap-2">
+                              {project.technologies.map((tech, idx) => (
+                                <motion.span
+                                  key={tech}
+                                  className="px-2 md:px-3 py-1 md:py-1.5 bg-accent/10 border border-accent/30 rounded-lg text-accent text-[10px] md:text-xs font-mono hover:bg-accent/20 hover:border-accent/50 transition-all cursor-default"
+                                  initial={{ opacity: 0, scale: 0.8 }}
+                                  animate={{ opacity: 1, scale: 1 }}
+                                  transition={{ delay: idx * 0.05 }}
+                                  whileHover={{ scale: 1.05, y: -2 }}
+                                >
+                                  {tech}
+                                </motion.span>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Right Column - Features */}
+                        <div className="lg:col-span-1 space-y-3 md:space-y-4 p-4 md:p-6 bg-gradient-to-br from-accent/5 to-accent2/5 rounded-xl border-l border-accent/10">
+                          <h4 className="text-xs md:text-sm font-semibold text-accent2 mb-3 md:mb-4 uppercase tracking-wider flex items-center gap-2">
+                            <span className="w-1 h-3 md:h-4 bg-accent2 rounded"></span>
+                            Features
+                          </h4>
+                          <div className="space-y-2 md:space-y-3 pr-2">
+                            {project.features.map((feature, idx) => (
+                              <motion.div
+                                key={feature}
+                                className="flex items-start gap-2 md:gap-3 p-2 md:p-3 bg-background/50 rounded-lg border border-accent/10 hover:border-accent/30 hover:bg-background/80 transition-all"
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: idx * 0.05 }}
+                                whileHover={{ x: 5 }}
+                              >
+                                <span className="text-accent2 mt-0.5 text-xs md:text-sm">▸</span>
+                                <span className="text-xs md:text-sm text-muted leading-relaxed flex-1">{feature}</span>
+                              </motion.div>
+                            ))}
+                          </div>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
+          </div>
+        </div>
+
+        {/* Mobile: Horizontal Scrollable Cards */}
+        <div className="md:hidden relative">
+          <div className="overflow-x-auto scrollbar-hide pb-8 px-4 -mx-4">
+            <div className="flex gap-4" style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
+              {projects.map((project, index) => (
+                <motion.div
+                  key={project.title}
+                  className="flex-shrink-0 w-[85vw] max-w-sm"
+                  initial={{ opacity: 0, x: 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <div className="bg-gradient-to-br from-background via-background to-background/80 backdrop-blur-xl rounded-2xl border border-accent/15 p-6 h-full shadow-xl">
+                    {/* Icon & Title */}
+                    <div className="flex items-start gap-4 mb-4">
+                      <div className="text-4xl">{project.icon}</div>
+                      <div className="flex-1">
+                        <h3 className="text-lg font-bold text-accent mb-1">{project.title}</h3>
+                        <span className={`inline-block px-2 py-1 rounded-full text-[10px] font-medium ${
+                          project.status === 'Production' ? 'bg-green-500/20 text-green-400 border border-green-500/30' :
+                          project.status === 'Live' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' :
+                          'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
+                        }`}>
+                          ● {project.status}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Summary */}
+                    <p className="text-sm text-muted leading-relaxed mb-4">{project.summary}</p>
+
+                    {/* Tech Stack */}
+                    <div className="mb-4">
+                      <h4 className="text-xs font-semibold text-accent2 mb-2 uppercase tracking-wide">Tech Stack</h4>
+                      <div className="flex flex-wrap gap-1.5">
+                        {project.techStack.map((tech) => (
+                          <span key={tech.name} className="px-2 py-1 bg-accent/10 border border-accent/20 rounded text-[10px] font-medium text-accent flex items-center gap-1">
+                            <span>{tech.icon}</span>
+                            <span>{tech.name}</span>
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Key Features */}
+                    <div className="mb-4">
+                      <h4 className="text-xs font-semibold text-accent2 mb-2 uppercase tracking-wide">Key Features</h4>
+                      <ul className="space-y-1.5">
+                        {project.features.slice(0, 4).map((feature) => (
+                          <li key={feature} className="flex items-start text-[11px] text-muted leading-snug">
+                            <span className="text-accent2 mr-1.5 mt-0.5">▸</span>
+                            <span className="flex-1">{feature}</span>
+                          </li>
+                        ))}
+                        {project.features.length > 4 && (
+                          <li className="text-[11px] text-accent/60 italic">+ {project.features.length - 4} more features</li>
+                        )}
+                      </ul>
+                    </div>
+
+                    {/* Metrics */}
+                    {project.metrics && (
+                      <div className="mb-4 grid grid-cols-3 gap-2">
+                        {Object.entries(project.metrics).map(([key, value]) => (
+                          <div key={key} className="text-center p-2 bg-accent/5 rounded-lg border border-accent/10">
+                            <div className="text-xs text-accent2 font-mono font-semibold">{value}</div>
+                            <div className="text-[8px] text-muted/70 uppercase tracking-wider mt-0.5">{key}</div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Action Buttons */}
+                    <div className="flex gap-2">
+                      {project.github && (
+                        <a
+                          href={project.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-accent/10 hover:bg-accent/20 border border-accent/30 rounded-lg text-accent text-xs font-medium transition-all"
+                        >
+                          <FaGithub size={12} />
+                          <span>Code</span>
+                        </a>
+                      )}
+                      {project.demo && (
+                        <a
+                          href={project.demo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-accent2/10 hover:bg-accent2/20 border border-accent2/30 rounded-lg text-accent2 text-xs font-medium transition-all"
+                        >
+                          <FaExternalLinkAlt size={12} />
+                          <span>Live</span>
+                        </a>
+                      )}
                     </div>
                   </div>
-
-                  {/* Technologies (Full List) */}
-                  <div className="flex flex-wrap gap-2 mt-4">
-                    {project.technologies.map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-2 py-1 bg-accent/10 border border-accent/30 rounded text-accent text-xs font-mono hover:bg-accent/20 transition-colors"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Right Column - Features & CTAs */}
-                <div className="space-y-4">
-                  <h4 className="text-sm font-semibold text-accent2 mb-3">Key Features</h4>
-                  <ul className="space-y-2">
-                    {project.features.map((feature) => (
-                      <li
-                        key={feature}
-                        className="flex items-start space-x-2 text-muted text-sm"
-                      >
-                        <span className="text-accent2 mt-1">▸</span>
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  {/* Action Buttons */}
-                  <div className="flex gap-3 mt-6">
-                    {project.github && (
-                      <motion.a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-4 py-2 bg-accent/10 hover:bg-accent/20 border border-accent/30 rounded-lg text-accent text-sm font-medium transition-all"
-                        whileHover={{ scale: 1.05, y: -2 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <FaGithub />
-                        <span>Code</span>
-                      </motion.a>
-                    )}
-                    {project.demo && (
-                      <motion.a
-                        href={project.demo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-4 py-2 bg-accent2/10 hover:bg-accent2/20 border border-accent2/30 rounded-lg text-accent2 text-sm font-medium transition-all"
-                        whileHover={{ scale: 1.05, y: -2 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <FaExternalLinkAlt />
-                        <span>Live Demo</span>
-                      </motion.a>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+          
+          {/* Scroll Indicator */}
+          <div className="flex justify-center gap-2 mt-4">
+            <div className="text-xs text-muted/50 flex items-center gap-2">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+              </svg>
+              Swipe to explore
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </div>
+          </div>
+        </div>
 
         {/* Additional Projects CTA */}
         <motion.div
