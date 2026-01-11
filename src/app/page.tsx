@@ -4,18 +4,17 @@ import About from '@/components/About';
 import Projects from '@/components/Projects';
 import Experience from '@/components/Experience';
 import Education from '@/components/Education';
-import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import ScrollToTopArrow from '@/components/ScrollToTopArrow';
 import CursorTrail from '@/components/CursorTrail';
-import Scene3D from '@/components/Scene3D';
+import { AuroraBackground } from '@/components/ui/AuroraBackground';
 import Section from '@/components/Section';
 
 export default function HomePage() {
   return (
     <div className="min-h-screen text-foreground relative">
       <CursorTrail />
-      <Scene3D />
+      <AuroraBackground />
       <Navbar />
 
       <main className="flex flex-col gap-0">
@@ -37,9 +36,7 @@ export default function HomePage() {
           <Education />
         </Section>
         
-        <Section>
-          <Contact />
-        </Section>
+
       </main>
       <ScrollToTopArrow />
       <Footer />

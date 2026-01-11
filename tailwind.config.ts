@@ -42,6 +42,7 @@ const config: Config = {
         head: ['var(--font-head)', 'Space Grotesk', 'sans-serif'],
       },
       animation: {
+        'aurora': "aurora 60s linear infinite",
         'float': 'float 6s ease-in-out infinite',
         'float-delayed': 'float 6s ease-in-out infinite 2s',
         'glow': 'glow 2s ease-in-out infinite alternate',
@@ -50,6 +51,10 @@ const config: Config = {
         'gradient': 'gradient 15s ease infinite',
       },
       keyframes: {
+        aurora: {
+          from: { backgroundPosition: "50% 50%, 50% 50%" },
+          to: { backgroundPosition: "350% 50%, 350% 50%" },
+        },
         float: {
           '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
           '50%': { transform: 'translateY(-20px) rotate(180deg)' },

@@ -16,6 +16,7 @@
 'use client';
 
 import { motion, useScroll } from 'framer-motion';
+import { CardWrapper } from './ui/CardWrapper';
 import { useRef } from 'react';
 import { FaGraduationCap, FaAward, FaTrophy, FaBook } from 'react-icons/fa';
 
@@ -138,7 +139,7 @@ export default function Education() {
 
 	return (
 		<section id="education" ref={sectionRef} className="py-16 lg:py-20 px-6 relative">
-			<div className="max-w-6xl mx-auto">
+			<CardWrapper>
 				<motion.div
 					className="text-center mb-16"
 					initial={{ opacity: 0, y: 30 }}
@@ -440,7 +441,7 @@ export default function Education() {
 						))}
 					</div>
 				</motion.div>
-			</div>
+			</CardWrapper>
 		</section>
 	);
 }

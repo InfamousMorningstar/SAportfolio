@@ -1,99 +1,261 @@
-/*
- * ███╗░░░███╗░█████╗░██████╗░██████╗░██╗░░░██╗███████╗██████╗░██████╗░
- * ████╗░░████║██╔══██╗██╔══██╗██╔══██╗██║░░░██║██╔════╝██╔══██╗██╔══██╗
- * ██╔████╔██║███████║██████╔╝██████╔╝██║░░░██║█████╗░░██████╔╝██████╔╝
- * ██║╚██╔╝██║██╔══██║██╔══██╗██╔══██╗██║░░░██║██╔══╝░░██╔══██╗██╔══██╗
- * ██║░╚═╝░██║██║░░██║██║░░██║██║░░██║╚██████╔╝███████╗██║░░██║██║░░██║
- * ╚═╝░░░░░╚═╝╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░░╚═╝░╚═════╝░╚══════╝╚═╝░░╚═╝╚═╝░░╚═╝
- *
- * 👤 Author  : Salman Ahmad
- * 🌐 URL     : https://portfolio.ahmxd.net
- * 📧 Contact : s.ahmad0147@gmail.com
- * 📝 License : MIT (Educational/Personal Use)
- * 📁 File    : Footer.tsx
- * 🕒 Updated : Jun 12, 2025
- */
-'use client';
+﻿'use client';
 
-import { motion } from 'framer-motion';
-import { LAST_UPDATED } from '../constants/lastUpdated';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Copy, ArrowUpRight, Github, Linkedin, Mail, Cloud } from 'lucide-react';
+import { FaDiscord } from 'react-icons/fa'; 
+import Link from 'next/link';
+import { CardWrapper } from './ui/CardWrapper';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const [time, setTime] = useState('');
+  const [temperature, setTemperature] = useState<string | null>(null);
+  const [isHoveringEmail, setIsHoveringEmail] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [showLegal, setShowLegal] = useState(false);
+
+  // Close legal section when scrolling up
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    
+    const handleScroll = () => {
+      if (!showLegal) return;
+      
+      const currentScrollY = window.scrollY;
+      // If scrolling UP significantly (more than 20px delta to prevent sensitive triggering), close formatting
+      if (lastScrollY > currentScrollY + 20) {
+        setShowLegal(false);
+      }
+      lastScrollY = currentScrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [showLegal]);
+
+  // Real-time clock for "Calgary" timezone (MST/MDT)
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      setTime(now.toLocaleTimeString('en-US', { 
+        hour: '2-digit', 
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false,
+        timeZone: 'America/Edmonton' // Calgary Timezone
+      }));
+    };
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Fetch Weather for Calgary via Open-Meteo (No API Key needed)
+  useEffect(() => {
+    const fetchWeather = async () => {
+      try {
+        const response = await fetch(
+          'https://api.open-meteo.com/v1/forecast?latitude=51.0447&longitude=-114.0719&current=temperature_2m'
+        );
+        const data = await response.json();
+        if (data.current) {
+          setTemperature(`${Math.round(data.current.temperature_2m)}°C`);
+        }
+      } catch (error) {
+        console.error('Failed to fetch weather:', error);
+        setTemperature('12°C'); // Fallback purely for aesthetic if API fails
+      }
+    };
+    fetchWeather();
+    // Refresh weather every 15 minutes
+    const interval = setInterval(fetchWeather, 900000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText('s.ahmad0147@gmail.com');
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const socialLinks = [
+    { name: 'GitHub', url: 'https://github.com/InfamousMorningstar', icon: <Github className='w-5 h-5' /> },
+    { name: 'LinkedIn', url: 'https://linkedin.com/in/salman-ahmad-698b6a18b', icon: <Linkedin className='w-5 h-5' /> },
+    { name: 'Discord', url: 'https://discord.com/users/699763177315106836', icon: <FaDiscord className='w-5 h-5' /> },
+  ];
 
   return (
-    <footer className="relative w-full z-50 bg-surface-overlay/80 backdrop-blur-xl border-t border-border-subtle/60 rounded-t-3xl transition-none text-text-soft text-sm overflow-hidden">
-      {/* Glassy background overlays */}
-      <div className="absolute inset-0 bg-gradient-to-t from-surface-strong/85 via-surface-strong/60 to-surface/40 pointer-events-none" />
-      <div className="absolute inset-0 opacity-5 pointer-events-none">
-  <div className="absolute inset-0 bg-grid-pattern bg-grid" />
-      </div>
-
-      {/* Floating accent dots */}
-      <motion.div
-        animate={{ y: [0, -10, 0], opacity: [0.3, 0.6, 0.3] }}
-        transition={{ duration: 8, repeat: Infinity, ease: [0.77, 0, 0.175, 1] }}
-        className="absolute top-6 left-12 w-1 h-1 bg-accent rounded-full"
-        style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
-      />
-      <motion.div
-        animate={{ y: [0, 8, 0], opacity: [0.2, 0.5, 0.2] }}
-        transition={{ duration: 6, repeat: Infinity, ease: [0.77, 0, 0.175, 1], delay: 2 }}
-        className="absolute bottom-8 right-16 w-1.5 h-1.5 bg-accent2 rounded-full"
-        style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
-      />
-      <motion.div
-        animate={{ y: [0, -6, 0], opacity: [0.4, 0.7, 0.4] }}
-        transition={{ duration: 7, repeat: Infinity, ease: [0.77, 0, 0.175, 1], delay: 4 }}
-        className="absolute top-12 right-24 w-0.5 h-0.5 bg-secondary rounded-full"
-        style={{ backfaceVisibility: 'hidden', willChange: 'opacity, transform' }}
-      />
-
-      {/* Signature, Motto, and Tech Info */}
-      <div className="relative max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
-        {/* Signature Left */}
-        <div className="w-full md:w-1/3 text-center md:text-left">
-          <p className="font-mono text-text-soft text-sm leading-tight">
-            — Salman Ahmad · ahmxd.net · © {currentYear} —
-          </p>
-        </div>
-
-        {/* Motto Center */}
-        <div className="text-center w-full md:w-1/3">
-          <p className="italic text-text-soft font-medium tracking-wide text-sm">
-            <span className="text-accent/80">Aut viam inveniam aut faciam</span>{' '}
+    <footer id="contact" className="relative w-full z-40 mt-32 pb-6 px-4 md:px-12 overflow-hidden">
+      
+      <CardWrapper>
+        <div className="relative z-10 flex flex-col md:grid md:grid-cols-12 gap-12">
+          
+          {/* LEFT: Call to Action + Status */}
+          <div className="col-span-12 md:col-span-7 flex flex-col justify-between h-full space-y-12">
+            <div>
+              <div className="flex items-center space-x-2 mb-6">
+                <span className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                </span>
+                <h3 className="text-xs font-mono text-zinc-500 uppercase tracking-widest">Say hello</h3>
+              </div>
+              
+              <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white/90">
+                Let's simplify <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-accent2/80">
+                  the complex.
+                </span>
+              </h2>
+            </div>
             
-          </p>
-          <p className="text-xs italic text-text-soft/80 leading-tight">
-            <span className="text-text-soft/60">»</span> I shall either find a way or make one.
-          </p>
+            <div className="flex flex-col space-y-4">
+              <p className="text-zinc-500 max-w-md text-sm md:text-base">
+                Specializing in cloud infrastructure, responsive design, and building the digital future one commit at a time.
+              </p>
+              
+              {/* Email Interaction */}
+              <button 
+                onClick={handleCopyEmail}
+                onMouseEnter={() => setIsHoveringEmail(true)}
+                onMouseLeave={() => setIsHoveringEmail(false)}
+                className="relative group w-fit cursor-pointer outline-none"
+              >
+                <div className="flex items-center space-x-3 bg-white/5 hover:bg-white/10 border border-white/10 px-5 py-3 rounded-xl transition-all duration-300">
+                  <Mail className="w-5 h-5 text-zinc-300" />
+                  <span className="text-zinc-200 font-mono text-sm">s.ahmad0147@gmail.com</span>
+                  <div className="w-px h-4 bg-white/10 mx-2" />
+                  <AnimatePresence mode="wait">
+                    {copied ? (
+                      <motion.span
+                        key="copied"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="text-green-400 text-xs font-bold"
+                      >
+                        COPIED!
+                      </motion.span>
+                    ) : (
+                      <motion.div
+                        key="copy-icon"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                      >
+                        <Copy className="w-4 h-4 text-zinc-500 group-hover:text-white transition-colors" />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          {/* RIGHT: Navigation & Meta Data */}
+          <div className="col-span-12 md:col-span-5 flex flex-col justify-between items-start md:items-end space-y-12">
+            
+            {/* Clock & Location */}
+            <div className="text-right hidden md:block">
+              <p className="text-4xl font-mono text-white/20 font-light tracking-tighter tabular-nums mb-1">
+                {time}
+              </p>
+              
+              {/* Weather & Location Tag */}
+               <div className="flex items-center justify-end space-x-2 text-zinc-500 text-xs font-mono uppercase">
+                  {temperature && (
+                    <>
+                      <span className="flex items-center text-zinc-400">
+                        <Cloud className="w-3 h-3 mr-1" />
+                        {temperature}
+                      </span>
+                      <span></span>
+                    </>
+                  )}
+                  <span className="hidden md:inline text-zinc-600">51.0447 N, 114.0719 W </span>
+                  <span>Calgary, Canada. Earth</span>
+               </div>
+            </div>
+
+            {/* Links Grid */}
+            <div className="grid grid-cols-2 gap-x-12 gap-y-4 w-full md:w-auto">
+              <div className="flex flex-col space-y-4">
+                 <h3 className="text-xs font-mono text-zinc-500 uppercase tracking-widest mb-1">Socials</h3>
+                 {socialLinks.map((link) => (
+                   <a 
+                    key={link.name} 
+                    href={link.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="group flex items-center space-x-2 text-zinc-300 hover:text-white transition-colors"
+                   >
+                     <span className="flex">{link.icon} &nbsp; {link.name}</span>
+                     <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 -translate-y-1 translate-x-1 group-hover:translate-y-0 group-hover:translate-x-0 transition-all" />
+                   </a>
+                 ))}
+              </div>
+              
+              <div className="flex flex-col space-y-4">
+                 <h3 className="text-xs font-mono text-zinc-500 uppercase tracking-widest mb-1">Index</h3>
+                 <Link href="/" className="text-zinc-300 hover:text-white transition-colors">Home</Link>
+                 <Link href="#projects" className="text-zinc-300 hover:text-white transition-colors">Projects</Link>
+                 <Link href="#contact" className="text-zinc-300 hover:text-white transition-colors">Contact</Link>
+              </div>
+            </div>
+
+          </div>
         </div>
 
-        {/* Tech Stack Right */}
-        <div className="text-right w-full md:w-1/3">
-          <p className="text-sm md:text-xs text-text-soft/80 font-semibold italic">
-            Built using <span className="text-accent">Next.js 15</span>, <span className="text-accent2">Tailwind CSS</span>, <span className="text-secondary">Framer Motion</span>, <span className="text-accent">TypeScript</span>, and <span className="text-accent2">Lucide Icons</span> — deployed on <span className="text-secondary">Vercel</span>.
-          </p>
-          <p className="text-[10px] text-text-soft/70">Last updated: {LAST_UPDATED}</p>
+        {/* BOTTOM: Copyright & Legal */}
+        <div className="relative mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-xs text-zinc-600 font-mono">
+            <div className="mb-4 md:mb-0 flex items-center gap-2">
+               <span> {currentYear} Salman Ahmad.</span>
+               <span className="hidden md:inline text-zinc-700">|</span>
+               <span className="text-zinc-500">Mission Status: Nominal</span>
+            </div>
+            <div className="flex space-x-6">
+               <button onClick={() => setShowLegal(!showLegal)} className="hover:text-zinc-400 cursor-pointer transition-colors outline-none">
+                 Legal & Terms
+               </button>
+               <Link href="/sitemap.xml" className="hover:text-zinc-400 cursor-pointer transition-colors">Sitemap</Link>
+            </div>
         </div>
-      </div>
-
-      {/* Divider */}
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="h-px w-full bg-gradient-to-r from-transparent via-accent2/60 to-transparent my-1" />
-      </div>
-
-      {/* Legal Notice */}
-      <div className="w-full px-4 pb-3 pt-1">
-        <div className="max-w-6xl mx-auto text-xs text-text-soft/70 leading-snug font-sans text-center">
-          This website and its source code are protected under the{' '}
-          <strong className="text-text-soft font-semibold">Copyright Act, R.S.C., 1985, c. C-42 (Canada)</strong>.
-          {' '}Unauthorized reproduction, redistribution, or modification is strictly prohibited. The{' '}
-          <strong className="text-text-soft font-semibold">Digital Millennium Copyright Act (DMCA)</strong> and international IP treaties may also apply.{' '}
-          <strong className="text-text-soft font-semibold">All Rights Reserved.</strong> <span className="italic">Unauthorized use is prohibited.</span>{' '}
-          For licensing or legal inquiries, contact: <span className="font-mono text-text-soft px-1">s.ahmad0147@gmail.com</span> with subject line <strong className="text-accent">"PERMISSION REQUEST"</strong>.
-        </div>
-      </div>
+        
+        {/* Expanded Legal Section */}
+        <AnimatePresence>
+          {showLegal && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="overflow-hidden"
+            >
+              <div className="pt-8 mt-8 border-t border-white/5 grid grid-cols-1 md:grid-cols-2 gap-8 text-zinc-500 text-sm font-mono leading-relaxed">
+                <div>
+                   <h4 className="text-white mb-2">Terms of Service</h4>
+                   <p>
+                     By accessing this portfolio, you agree that the content is provided "as-is" for demonstration purposes. 
+                     The design and code implementation are the intellectual property of Salman Ahmad, unless otherwise noted. 
+                     Commercial reproduction without permission is prohibited.
+                   </p>
+                </div>
+                <div>
+                   <h4 className="text-white mb-2">Privacy Policy</h4>
+                   <p>
+                     This site does not collect personal data beyond anonymous usage analytics (Vercel) to improve performance. 
+                     No cookies are used for ad tracking. Any information sent via email is strictly confidential.
+                   </p>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </CardWrapper>
+      
+      {/* Decorative "Wire" connecting to bottom */}
+      <div className="absolute bottom-0 left-1/2 w-px h-6 bg-gradient-to-b from-transparent to-white/20 -translate-x-1/2" />
     </footer>
   );
 }
