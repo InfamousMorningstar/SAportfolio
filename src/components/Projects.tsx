@@ -83,7 +83,7 @@ export default function Projects() {
           </div>
 
           {projects.map((project) => (
-            <div key={project.id} className="relative group h-[50vh] md:h-[70vh] w-[85vw] md:w-[60vw] flex-shrink-0">
+            <div key={project.id} className="relative group h-[65vh] md:h-[70vh] w-[85vw] md:w-[60vw] flex-shrink-0">
                {/* Card Container */}
               <div className="w-full h-full relative rounded-[2rem] overflow-hidden bg-surface-card/30 backdrop-blur-xl border border-border-subtle transition-colors hover:border-border-strong shadow-lg">
                     
@@ -95,41 +95,41 @@ export default function Projects() {
                         {/* Top */}
                         <div className="flex justify-between items-start">
                              <div className="flex flex-col">
-                                <span className={`text-sm font-bold tracking-widest uppercase bg-gradient-to-r ${project.gradient} bg-clip-text text-transparent mb-2`}>
+                                <span className={`text-xs md:text-sm font-bold tracking-widest uppercase bg-gradient-to-r ${project.gradient} bg-clip-text text-transparent mb-2`}>
                                     {project.category}
                                 </span>
-                                <h3 className="text-4xl md:text-6xl font-bold text-foreground max-w-lg leading-tight">
+                                <h3 className="text-3xl md:text-6xl font-bold text-foreground max-w-lg leading-tight">
                                     {project.title}
                                 </h3>
                              </div>
-                             <span className="text-6xl md:text-9xl font-black text-muted/10 font-mono">
+                             <span className="text-5xl md:text-9xl font-black text-muted/10 font-mono">
                                  {project.number}
                              </span>
                         </div>
 
                         {/* Bottom */}
                         <div>
-                             <p className="text-lg md:text-2xl text-muted max-w-2xl mb-8 leading-relaxed">
+                             <p className="text-base md:text-2xl text-muted max-w-2xl mb-6 md:mb-8 leading-relaxed line-clamp-4 md:line-clamp-none">
                                  {project.description}
                              </p>
 
-                             <div className="flex flex-wrap gap-2 md:gap-3 mb-8">
+                             <div className="flex flex-wrap gap-2 md:gap-3 mb-6 md:mb-8">
                                  {project.tech.map(t => (
-                                     <span key={t} className="px-4 py-2 rounded-full border border-border-subtle bg-surface-strong text-sm md:text-base text-muted-soft">
+                                     <span key={t} className="px-3 py-1 md:px-4 md:py-2 rounded-full border border-border-subtle bg-surface-strong text-xs md:text-base text-muted-soft">
                                          {t}
                                      </span>
                                  ))}
                              </div>
 
-                             <div className="flex gap-6">
+                             <div className="flex gap-6 mt-auto">
                                  {project.demo && (
-                                     <a href={project.demo} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-foreground font-medium hover:text-accent transition-colors group/link">
+                                     <a href={project.demo} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 md:gap-3 text-foreground font-medium hover:text-accent transition-colors group/link z-20">
                                          Visit Site 
                                          <FaArrowRight className="group-hover/link:translate-x-1 transition-transform" />
                                      </a>
                                  )}
                                  {project.github && (
-                                     <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-muted hover:text-foreground transition-colors">
+                                     <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 md:gap-3 text-muted hover:text-foreground transition-colors z-20">
                                          <FaGithub size={20} />
                                          Source Code
                                      </a>

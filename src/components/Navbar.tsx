@@ -1,468 +1,370 @@
 "use client";
-// Final layout fix with Apple-style pill clock and proper alignment
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Github, Linkedin, Mail, Moon, Sun, X } from "lucide-react";
+import { Moon, Sun, Menu, X, Terminal, Wifi, Cpu, Globe, Rocket } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 
-const links = ["Home", "About", "Projects", "Experience", "Education", "Interests", "Blog", "Contact"];
+const navLinks = [
+  { name: "HOME", href: "#home" },
+  { name: "ABOUT", href: "#about" },
+  { name: "PROJECTS", href: "#projects" },
+  { name: "EXP", href: "#experience" },
+  { name: "EDU", href: "#education" },
+  { name: "BLOG", href: "/blog" },
+];
+
+// --- Utility Components ---
+
+// 1. Scramble Text Effect Component
+const DecryptText = ({ text, isActive }: { text: string; isActive: boolean }) => {
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*";
+  const [displayText, setDisplayText] = useState(text);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  const scramble = () => {
+    let iteration = 0;
+    if (intervalRef.current) clearInterval(intervalRef.current);
+
+    intervalRef.current = setInterval(() => {
+      setDisplayText((prev) =>
+        prev
+          .split("")
+          .map((letter, index) => {
+            if (index < iteration) {
+              return text[index];
+            }
+            return letters[Math.floor(Math.random() * letters.length)];
+          })
+          .join("")
+      );
+
+      if (iteration >= text.length) {
+        if (intervalRef.current) clearInterval(intervalRef.current);
+      }
+
+      iteration += 1 / 3;
+    }, 30);
+  };
+
+  useEffect(() => {
+    if (isActive) scramble();
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [isActive]);
+
+  return (
+    <span 
+      onMouseEnter={scramble} 
+      className="font-mono tracking-widest relative z-10 block cursor-default"
+    >
+      {displayText}
+    </span>
+  );
+};
+
+// 2. Magnetic Button Wrapper
+const MagneticWrapper = ({ children, className }: { children: React.ReactNode; className?: string }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  const handleMouse = (e: React.MouseEvent) => {
+    const { clientX, clientY } = e;
+    const { height, width, left, top } = ref.current?.getBoundingClientRect() || { height: 0, width: 0, left: 0, top: 0 };
+    const middleX = clientX - (left + width / 2);
+    const middleY = clientY - (top + height / 2);
+    setPosition({ x: middleX * 0.1, y: middleY * 0.1 });
+  };
+
+  const reset = () => {
+    setPosition({ x: 0, y: 0 });
+  };
+
+  const { x, y } = position;
+  return (
+    <motion.div
+        ref={ref}
+        className={className}
+        onMouseMove={handleMouse}
+        onMouseLeave={reset}
+        animate={{ x, y }}
+        transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
+    >
+        {children}
+    </motion.div>
+  );
+};
 
 export default function Navbar() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
-  const [hidden, setHidden] = useState(false);
-  const [time, setTime] = useState({ mdt: "--:--:--", utc: "--:--:--" });
-  const [isTabletMode, setIsTabletMode] = useState(typeof window !== 'undefined' ? window.innerWidth < 1730 : false);
-  const [activeSection, setActiveSection] = useState('home');
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const { theme, toggleTheme } = useTheme();
-  const isDarkMode = theme === 'dark';
-  const baseHamburgerColor = isDarkMode ? '#BFC2C7' : '#475569';
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  
+  // Real-time system stats
+  const [sysTime, setSysTime] = useState("--:--:--");
+  const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
+  
+  // Orbital Descent Telemetry
+  const [altitude, setAltitude] = useState(100); // 100km to 0km
+  const [missionStatus, setMissionStatus] = useState("ORBIT_STABLE");
 
-  // Tablet/Desktop mode resize listener with animation triggers
-  const [justSwitchedToTablet, setJustSwitchedToTablet] = useState(false);
-  const [justSwitchedToDesktop, setJustSwitchedToDesktop] = useState(false);
+  // Scroll detection
   useEffect(() => {
-    let prevTablet = typeof window !== 'undefined' ? window.innerWidth < 1730 : false;
-    const handleResize = () => {
-      const nowTablet = window.innerWidth < 1730;
-      setIsTabletMode(nowTablet);
-      if (!prevTablet && nowTablet) {
-        setJustSwitchedToTablet(true);
-        setTimeout(() => setJustSwitchedToTablet(false), 700); // animation duration
-      } else if (prevTablet && !nowTablet) {
-        setJustSwitchedToDesktop(true);
-        setTimeout(() => setJustSwitchedToDesktop(false), 700); // animation duration
-      }
-      prevTablet = nowTablet;
-    };
-    window.addEventListener('resize', handleResize);
-    handleResize();
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+    let lastScrollY = window.scrollY;
 
-  // Time updater
-  // Check for reduced motion preference
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setPrefersReducedMotion(mediaQuery.matches);
-    const handleChange = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
-    mediaQuery.addEventListener('change', handleChange);
-    return () => mediaQuery.removeEventListener('change', handleChange);
-  }, []);
-
-  // Active section detection
-  useEffect(() => {
     const handleScroll = () => {
-      const sections = links.map(link => link.toLowerCase());
-      const scrollPosition = window.scrollY + 100;
+      const currentScrollY = window.scrollY;
+
+      // 1. Navbar Appearance
+      setIsScrolled(currentScrollY > 50);
+
+      // 2. Mission/Altitude Logic
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = Math.min(Math.max(currentScrollY / totalHeight, 0), 1);
       
-      // Default to home if near the top
-      if (window.scrollY < 100) {
-        setActiveSection('home');
-        return;
+      // Map 0-1 to 100km-0km (Linear descent)
+      const currentAlt = Math.floor(100 * (1 - progress));
+      setAltitude(currentAlt);
+
+      if (progress < 0.05) {
+        setMissionStatus("ORBIT_STABLE");
+      } else if (progress > 0.95) {
+        setMissionStatus("TOUCHDOWN");
+      } else {
+        setMissionStatus(currentScrollY > lastScrollY ? "DESCENT_SEQ" : "ASCENT_SEQ");
       }
+
+      lastScrollY = currentScrollY;
       
+      // 3. Active Section
+      const sections = navLinks.map(l => l.href.substring(1));
       for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const { offsetTop, offsetHeight } = element;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+        if (section === "blog") continue; // Skip checking blog section on home page as it is a separate page
+        const el = document.getElementById(section);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= 200 && rect.bottom >= 200) {
             setActiveSection(section);
             break;
           }
         }
       }
     };
-    
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      const mdt = now.toLocaleTimeString("en-US", { hour12: false, timeZone: "America/Edmonton" });
-      const utc = now.toUTCString().split(" ")[4];
-      setTime({ mdt, utc });
-    };
-    updateTime();
-    const interval = setInterval(updateTime, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    let scrollTimeout: ReturnType<typeof setTimeout> | null = null;
-    const handleScroll = () => {
-      document.documentElement.classList.add('scrolling');
-      if (scrollTimeout) clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => {
-        document.documentElement.classList.remove('scrolling');
-      }, 300);
-
-      const currentY = window.scrollY;
-      // Always show navbar at the very top (Safari/macOS fix)
-      if (currentY <= 0) {
-        setHidden(false);
-      } else {
-        setHidden(currentY > scrollY);
-      }
-      setScrollY(currentY);
-      if (isMobileMenuOpen) setIsMobileMenuOpen(false);
-    };
     window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      if (scrollTimeout) clearTimeout(scrollTimeout);
-      document.documentElement.classList.remove('scrolling');
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Time & Coords updater
+  useEffect(() => {
+    const interval = setInterval(() => {
+        const now = new Date();
+        setSysTime(now.toLocaleTimeString("en-US", { hour12: false }));
+    }, 1000);
+
+    const handleMouseMove = (e: MouseEvent) => {
+        setCoordinates({ x: e.clientX, y: e.clientY });
     };
-  }, [scrollY, isMobileMenuOpen]);
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => {
+        clearInterval(interval);
+        window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
 
   return (
-    <AnimatePresence mode="wait">
-      {!hidden && (
-        <motion.nav
-          key="navbar"
-          initial={{ y: -80, opacity: 0 }}
+    <>
+      {/* ---------------- DESKTOP HUD ---------------- */}
+      <motion.nav 
+        className="fixed top-0 left-0 right-0 z-50 hidden md:flex justify-center items-start pt-6 pointer-events-none"
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 1, duration: 0.8, type: "spring" }}
+      >
+        <div className="pointer-events-auto relative">
+            
+            {/* The "Island" Container */}
+            <motion.div 
+                className={`
+                    relative backdrop-blur-2xl border border-border-subtle shadow-lg
+                    rounded-full overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]
+                    flex items-center justify-between px-2
+                    ${isScrolled ? "bg-background/80 w-[750px] h-14" : "bg-background/60 w-[850px] h-16"}
+                `}
+            >
+                {/* 1. Left Wing: System Status */}
+                <div className="flex items-center gap-4 pl-4 min-w-[110px]">
+                    <div className="flex items-center gap-2 text-[10px] font-mono text-accent">
+                        <Terminal size={12} className="animate-pulse" />
+                        <span className="tracking-wider">SYS.ONLINE</span>
+                    </div>
+                </div>
+
+                {/* 2. Center: Navigation Links */}
+                <div className="flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
+                    {navLinks.map((link) => {
+                        // Handle internal links vs external/page links
+                        const isInternal = link.href.startsWith("#");
+                        const isActive = activeSection === link.href.substring(1);
+                        
+                        return (
+                            <MagneticWrapper key={link.name}>
+                                <Link href={link.href} className="relative group px-4 py-2 block">
+                                    {isActive && isInternal && (
+                                        <motion.div 
+                                            layoutId="nav-pill"
+                                            className="absolute inset-0 bg-foreground/5 rounded-full border border-foreground/5"
+                                            transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                                        />
+                                    )}
+                                    <span className={`relative text-xs font-bold transition-colors duration-300 ${isActive ? "text-accent" : "text-muted hover:text-foreground"}`}>
+                                        <DecryptText text={link.name} isActive={isActive} />
+                                    </span>
+                                    
+                                    {/* Hover glow */}
+                                    <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 bg-accent/5 blur-md transition-opacity duration-300" />
+                                </Link>
+                            </MagneticWrapper>
+                        );
+                    })}
+                </div>
+
+                {/* 3. Right Wing: Controls & Clock */}
+                <div className="flex items-center gap-3 pr-4 min-w-[110px] justify-end">
+                    
+                    {/* Theme Toggle */}
+                    <button 
+                        onClick={toggleTheme}
+                        className="w-8 h-8 rounded-full bg-foreground/5 flex items-center justify-center hover:bg-foreground/10 hover:text-accent transition-colors border border-foreground/5 text-foreground"
+                    >
+                        {theme === 'dark' ? <Moon size={14} /> : <Sun size={14} />}
+                    </button>
+
+                    <div className="h-4 w-[1px] bg-foreground/10" />
+
+                    {/* Clock */}
+                    <div className="text-[10px] font-mono text-foreground/60 tabular-nums">
+                        {sysTime}
+                    </div>
+                </div>
+
+                {/* Scanning Beam Effect */}
+                <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-full">
+                    <div className="absolute top-0 w-[20%] h-full bg-gradient-to-r from-transparent via-foreground/5 to-transparent skew-x-12 animate-scan-slow" />
+                </div>
+                
+                {/* Border Gradient */}
+                <div className="absolute inset-0 rounded-full border border-foreground/5 pointer-events-none" />
+
+            </motion.div>
+        </div>
+      </motion.nav>
+
+
+      {/* ---------------- MOBILE HUD ---------------- */}
+      <motion.nav 
+          className="fixed top-0 left-0 right-0 z-50 md:hidden flex justify-between items-center px-6 py-6 pointer-events-none"
+          initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          exit={{ y: -80, opacity: 0, pointerEvents: 'none' }}
-          transition={{ duration: 0.65, ease: [0.77, 0, 0.175, 1] }}
-          className="fixed top-0 w-full z-50 backdrop-blur-2xl border-b border-border-subtle/60 rounded-b-3xl transition-none shadow-lg shadow-accent/15 text-foreground"
-          style={{ 
-            willChange: 'transform, opacity', 
-            backfaceVisibility: 'hidden',
-            background: 'var(--navbar-background)',
-            boxShadow: 'var(--motion-box-shadow)',
-          }}
-        >
-          <div className="relative w-full px-4 sm:px-6 lg:px-8">
-            {/* Enhanced LED strip with purple accent */}
-            <div className="absolute left-0 right-0 -bottom-2 h-8 pointer-events-none z-10">
-              <div className="w-full h-full bg-gradient-to-b from-accent/70 via-accent2/50 to-transparent blur-3xl opacity-90"></div>
-            </div>
-
-            <div className="flex items-center justify-between h-16 relative">
-              {/* Left */}
-              <Link href="#home">
-                <div className="absolute left-0 top-1/2 -translate-y-1/2 pl-4 text-accent font-bold text-xl cursor-pointer" aria-label="Go to Home">SA</div>
-              </Link>
-
-              {/* Center - Desktop nav only if !isTabletMode */}
-              <AnimatePresence>
-                {!isTabletMode && (
-                  <motion.div
-                    className="flex mx-auto space-x-3"
-                    initial={justSwitchedToDesktop ? { opacity: 0, x: 60, z: -40, scale: 0.7, rotateY: 30 } : false}
-                    animate={justSwitchedToDesktop ? { opacity: 1, x: 0, z: 0, scale: 1, rotateY: 0 } : { opacity: 1, x: 0, z: 0, scale: 1, rotateY: 0 }}
-                    exit={justSwitchedToTablet ? { opacity: 0, x: 60, z: -40, scale: 0.7, rotateY: 30 } : { opacity: 0, x: 60, z: -40, scale: 0.7, rotateY: 30 }}
-                    transition={justSwitchedToDesktop ? { duration: 0.9, ease: [0.4, 0, 0.2, 1], staggerChildren: 0.13, delayChildren: 0.13, staggerDirection: -1 } : justSwitchedToTablet ? { duration: 0.9, ease: [0.4, 0, 0.2, 1], staggerChildren: 0.13, delayChildren: 0.13, staggerDirection: 1 } : { duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-                    style={{ perspective: 1200 }}
-                  >
-                    {links.map((link, i) => {
-                      const isActive = activeSection === link.toLowerCase();
-                      return (
-                      <Link key={link} href={link === 'Blog' ? '/blog' : `#${link.toLowerCase()}`}>
-                        <motion.div
-                          className={`navbar-btn-desktop px-4 py-1 border rounded-full text-sm font-medium transition-all duration-150 will-change-transform backdrop-blur-md focus-visible:ring-2 focus-visible:ring-accent/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--surface-strong)] focus-visible:outline-none shadow-md font-sans ${
-                            isActive 
-                              ? 'text-foreground border-accent bg-accent/10' 
-                              : 'text-text-soft border-border-subtle/60 bg-[color:var(--navbar-pill-background)] hover:text-foreground hover:border-accent'
-                          }`}
-                          tabIndex={0}
-                          initial={justSwitchedToDesktop && !prefersReducedMotion ? { opacity: 0, x: 60, z: -40, scale: 0.7, rotateY: 30, boxShadow: '0 0 0 rgba(0,0,0,0)' } : false}
-                          animate={justSwitchedToDesktop && !prefersReducedMotion ? { opacity: [0.7, 1], x: 0, z: 0, scale: [0.7, 1.08, 1], rotateY: [30, 0], boxShadow: ['0 0 0 rgba(0,0,0,0)', '0 6px 32px 0 rgba(139,92,246,0.13)', '0 0 0 rgba(0,0,0,0)'], transition: { duration: 0.7 + i * 0.13, ease: [0.4, 0, 0.2, 1] } } : { opacity: 1, x: 0, z: 0, scale: 1, rotateY: 0, boxShadow: '0 0 0 rgba(0,0,0,0)' }}
-                          exit={justSwitchedToTablet && !prefersReducedMotion ? { opacity: [1, 0.7, 0], x: 60, z: -40, scale: [1, 0.7], rotateY: [0, 30], boxShadow: ['0 6px 32px 0 rgba(139,92,246,0.13)', '0 0 0 rgba(0,0,0,0)'], transition: { duration: 0.7 + i * 0.13, ease: [0.4, 0, 0.2, 1] } } : { opacity: 0, x: 60, z: -40, scale: 0.7, rotateY: 30, boxShadow: '0 0 0 rgba(0,0,0,0)' }}
-                          transition={{ duration: prefersReducedMotion ? 0.2 : 0.7 + i * 0.13, ease: [0.4, 0, 0.2, 1] }}
-                          style={{ boxShadow: 'var(--motion-box-shadow)' }}
-                          whileHover={!prefersReducedMotion && isActive ? { scale: 1.05 } : !prefersReducedMotion ? { scale: 1.02 } : {}}
-                        >
-                          {link}
-                        </motion.div>
-                      </Link>
-                    );
-                  })}
-                  </motion.div>
+          transition={{ duration: 0.5 }}
+      >
+          {/* Logo / Home */}
+          <Link href="/" className="relative z-50 pointer-events-auto">
+             <div className="flex items-center gap-3 bg-background/50 backdrop-blur-md px-3 py-1.5 rounded-full border border-border-subtle shadow-sm transition-all duration-300">
+                {missionStatus === "TOUCHDOWN" ? (
+                   <div className="w-2 h-2 bg-emerald-500 rounded-sm" /> 
+                ) : missionStatus === "ASCENT_SEQ" ? (
+                   <Rocket size={14} className="text-accent animate-pulse" />
+                ) : (
+                   <Globe size={14} className={`text-accent ${missionStatus === "DESCENT_SEQ" ? 'animate-spin-slow' : ''}`} />
                 )}
-              </AnimatePresence>
+                
+                <div className="flex flex-col leading-none w-[70px]">
+                    <span className="text-[10px] font-mono font-bold text-foreground tracking-tighter">
+                       {missionStatus === "TOUCHDOWN" ? "SURFACE" : `FL: ${altitude.toString().padStart(3, '0')}`}
+                    </span>
+                    <span className="text-[8px] font-mono text-muted-soft tracking-widest">
+                       {missionStatus}
+                    </span>
+                </div>
+             </div>
+          </Link>
 
-              {/* Right */}
-              <div className="absolute right-0 pr-4 flex items-center gap-3">
-                {/* Social Icons Desktop */}
-                <AnimatePresence>
-                  {!isTabletMode && (
+          {/* Menu Trigger */}
+          <button 
+            onClick={() => setIsMobileMenuOpen(true)}
+            className="relative z-50 pointer-events-auto bg-background/50 backdrop-blur-md p-2 rounded-full border border-border-subtle text-foreground active:scale-95 transition-transform shadow-sm"
+          >
+             <Menu size={20} />
+          </button>
+      </motion.nav>
+
+      {/* Mobile Fullscreen Menu "Cyberdeck" */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div 
+            className="fixed inset-0 z-[60] bg-background/95 backdrop-blur-3xl flex flex-col items-center justify-center"
+            initial={{ opacity: 0, clipPath: "circle(0% at 100% 0%)" }}
+            animate={{ opacity: 1, clipPath: "circle(150% at 100% 0%)" }}
+            exit={{ opacity: 0, clipPath: "circle(0% at 100% 0%)" }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }} 
+          >
+             {/* Background Grid */}
+             <div className="absolute inset-0 w-full h-full opacity-10 pointer-events-none bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
+
+             {/* Theme Toggle (Mobile) */}
+             <button 
+                onClick={toggleTheme}
+                className="absolute top-6 left-6 p-4 rounded-full bg-foreground/5 hover:bg-foreground/10 text-foreground transition-colors border border-foreground/10"
+             >
+                {theme === 'dark' ? <Moon size={24} /> : <Sun size={24} />}
+             </button>
+
+             {/* Close Button */}
+             <button 
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="absolute top-6 right-6 p-4 rounded-full bg-foreground/5 hover:bg-foreground/10 text-foreground transition-colors border border-foreground/10"
+             >
+                <X size={24} />
+             </button>
+
+             {/* Navigation Items */}
+             <div className="flex flex-col gap-6 text-center relative z-10 index-10">
+                {navLinks.map((link, i) => (
                     <motion.div
-                      className="flex items-center gap-3"
-                      initial={justSwitchedToDesktop ? { opacity: 0, x: 60, z: -40, scale: 0.7, rotateY: 30 } : false}
-                      animate={justSwitchedToDesktop ? { opacity: 1, x: 0, z: 0, scale: 1, rotateY: 0 } : { opacity: 1, x: 0, z: 0, scale: 1, rotateY: 0 }}
-                      exit={justSwitchedToTablet ? { opacity: 0, x: 60, z: -40, scale: 0.7, rotateY: 30 } : { opacity: 0, x: 60, z: -40, scale: 0.7, rotateY: 30 }}
-                      transition={justSwitchedToDesktop ? { duration: 0.9, ease: [0.4, 0, 0.2, 1], staggerChildren: 0.15, delayChildren: 0.18, staggerDirection: -1 } : justSwitchedToTablet ? { duration: 0.9, ease: [0.4, 0, 0.2, 1], staggerChildren: 0.15, delayChildren: 0.18, staggerDirection: 1 } : { duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-                      style={{ perspective: 1200 }}
+                        key={link.name}
+                        initial={{ opacity: 0, y: 40 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1 + (i * 0.1), duration: 0.5 }}
                     >
-                      {[{
-                        href: "https://github.com/InfamousMorningstar",
-                        label: "GitHub",
-                        icon: <Github className="text-accent2" size={20} />,
-                        ring: "focus-visible:ring-accent/70"
-                      }, {
-                        href: "https://www.linkedin.com/in/salman-ahmad-6788811b6/",
-                        label: "LinkedIn",
-                        icon: <Linkedin className="text-accent2" size={20} />,
-                        ring: "focus-visible:ring-accent2/70"
-                      }, {
-                        href: "mailto:s.ahmad0147@gmail.com",
-                        label: "Email",
-                        icon: <Mail className="text-accent2" size={20} />,
-                        ring: "focus-visible:ring-secondary/70"
-                      }].map((item, i) => (
-                        <motion.a
-                          key={item.label}
-                          href={item.href}
-                          target={item.href.startsWith('http') ? '_blank' : undefined}
-                          aria-label={item.label}
-                          whileHover={{ scale: 1.18, boxShadow: '0 2px 16px 0 rgba(168,85,247,0.32)' }}
-                          whileTap={{ scale: 0.93, boxShadow: '0 1px 6px 0 rgba(168,85,247,0.18)' }}
-                          className={`transition-all duration-150 rounded-full ${item.ring} focus-visible:outline-none`}
-                          style={{ WebkitTapHighlightColor: 'transparent', backfaceVisibility: 'hidden', boxShadow: 'var(--motion-box-shadow)' }}
-                          initial={justSwitchedToDesktop ? { opacity: 0, x: 60, z: -40, scale: 0.7, rotateY: 30, boxShadow: '0 0 0 rgba(0,0,0,0)' } : false}
-                          animate={justSwitchedToDesktop ? { opacity: [0.7, 1], x: 0, z: 0, scale: [0.7, 1.08, 1], rotateY: [30, 0], boxShadow: ['0 0 0 rgba(0,0,0,0)', '0 6px 32px 0 rgba(139,92,246,0.13)', '0 0 0 rgba(0,0,0,0)'], transition: { duration: 0.7 + i * 0.15, ease: [0.4, 0, 0.2, 1] } } : { opacity: 1, x: 0, z: 0, scale: 1, rotateY: 0, boxShadow: '0 0 0 rgba(0,0,0,0)' }}
-                          exit={justSwitchedToTablet ? { opacity: [1, 0.7, 0], x: 60, z: -40, scale: [1, 0.7], rotateY: [0, 30], boxShadow: ['0 6px 32px 0 rgba(139,92,246,0.13)', '0 0 0 rgba(0,0,0,0)'], transition: { duration: 0.7 + i * 0.15, ease: [0.4, 0, 0.2, 1] } } : { opacity: 0, x: 60, z: -40, scale: 0.7, rotateY: 30, boxShadow: '0 0 0 rgba(0,0,0,0)' }}
-                          transition={{ duration: 0.7 + i * 0.15, ease: [0.4, 0, 0.2, 1] }}
+                        <Link 
+                            href={link.href} 
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-foreground to-muted hover:to-accent transition-all tracking-tighter"
                         >
-                          {item.icon}
-                          <span className="sr-only">{item.label}</span>
-                        </motion.a>
-                      ))}
+                            {link.name}
+                        </Link>
                     </motion.div>
-                  )}
-                </AnimatePresence>
-                {/* Resume button always visible, with micro-animation for navbar transitions */}
-                <AnimatePresence>
-                  <motion.a
-                    href="/resume.pdf"
-                    className="px-4 py-1 rounded-full border-2 border-accent text-accent text-sm font-semibold shadow-lg hover:bg-accent hover:text-white will-change-transform transition-all duration-150"
-                    aria-label="Download Resume PDF"
-                    whileHover={{ scale: 1.04, boxShadow: '0 4px 16px 0 rgba(6,182,212,0.13)', backgroundColor: 'rgba(34,211,238,0.08)', filter: 'brightness(1.04)' }}
-                    whileTap={{ scale: 0.98, boxShadow: '0 1.5px 6px 0 rgba(6,182,212,0.08)', backgroundColor: 'rgba(34,211,238,0.14)', filter: 'brightness(0.98)' }}
-                    initial={justSwitchedToDesktop ? { opacity: 0, x: 32, scale: 0.92 } : justSwitchedToTablet ? { opacity: 1, x: 0, scale: 1 } : false}
-                    animate={justSwitchedToDesktop ? { opacity: 1, x: 0, scale: [0.92, 1], transition: { duration: 0.48, ease: [0.5, 0, 0.2, 1] } } : { opacity: 1, x: 0, scale: 1 }}
-                    exit={justSwitchedToTablet ? { opacity: [1, 0.7, 0], x: 32, scale: [1, 0.92], transition: { duration: 0.38, ease: [0.5, 0, 0.2, 1] } } : { opacity: 0, x: 32, scale: 0.92 }}
-                    style={{ WebkitTapHighlightColor: 'transparent', backfaceVisibility: 'hidden', boxShadow: 'var(--motion-box-shadow)' }}
-                  >
-                    <span className="sr-only">Download Resume PDF</span>
-                    Resume
-                  </motion.a>
-                </AnimatePresence>
-                {/* Theme Toggle - Desktop only (standalone) */}
-                <AnimatePresence>
-                  {!isTabletMode && (
-                    <motion.button
-                      type="button"
-                      onClick={toggleTheme}
-                      aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
-                      whileHover={{ scale: 1.1, rotate: isDarkMode ? 3 : -3 }}
-                      whileTap={{ scale: 0.96, rotate: 0 }}
-                      className="flex items-center justify-center h-9 w-9 rounded-full border border-border-subtle/60 bg-[color:var(--navbar-pill-background)] text-text-soft transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--surface-strong)] shadow-md"
-                      initial={justSwitchedToDesktop ? { opacity: 0, x: 32, scale: 0.92 } : false}
-                      animate={justSwitchedToDesktop ? { opacity: 1, x: 0, scale: 1 } : { opacity: 1, x: 0, scale: 1 }}
-                      exit={justSwitchedToTablet ? { opacity: 0, x: 32, scale: 0.92 } : { opacity: 0, x: 32, scale: 0.92 }}
-                      transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-                      style={{ 
-                        WebkitTapHighlightColor: 'transparent', 
-                        backfaceVisibility: 'hidden', 
-                        boxShadow: 'var(--motion-box-shadow)'
-                      }}
-                    >
-                      {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
-                    </motion.button>
-                  )}
-                </AnimatePresence>
-                {/* Desktop Clock */}
-                <AnimatePresence>
-                  {!isTabletMode && (
-                    <motion.div
-                      className="flex items-center px-3 py-1 rounded-full border border-border-subtle/60 text-sm font-mono backdrop-blur-md bg-[color:var(--navbar-pill-background)] text-text-soft shadow-md"
-                      initial={justSwitchedToDesktop ? { opacity: 0, x: 60, z: -40, scale: 0.7, rotateY: 30, boxShadow: '0 0 0 rgba(0,0,0,0)' } : false}
-                      animate={justSwitchedToDesktop ? { opacity: [0.7, 1], x: 0, z: 0, scale: [0.7, 1.08, 1], rotateY: [30, 0], boxShadow: ['0 0 0 rgba(0,0,0,0)', '0 6px 32px 0 rgba(139,92,246,0.13)', '0 0 0 rgba(0,0,0,0)'], transition: { duration: 0.8, ease: [0.4, 0, 0.2, 1] } } : { opacity: 1, x: 0, z: 0, scale: 1, rotateY: 0, boxShadow: '0 0 0 rgba(0,0,0,0)' }}
-                      exit={justSwitchedToTablet ? { opacity: [1, 0.7, 0], x: 60, z: -40, scale: [1, 0.7], rotateY: [0, 30], boxShadow: ['0 6px 32px 0 rgba(139,92,246,0.13)', '0 0 0 rgba(0,0,0,0)'], transition: { duration: 0.7, ease: [0.4, 0, 0.2, 1] } } : { opacity: 0, x: 60, z: -40, scale: 0.7, rotateY: 30, boxShadow: '0 0 0 rgba(0,0,0,0)' }}
-                      transition={justSwitchedToDesktop || justSwitchedToTablet ? { duration: 0.8, ease: [0.4, 0, 0.2, 1], delay: 0.22 } : { duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-                      style={{ perspective: 1200, boxShadow: 'var(--motion-box-shadow)' }}
-                    >
-                      <span className="text-accent font-mono mr-1">{time.mdt}</span>
-                      <span className="text-text-soft/80 text-xs">MST</span>
-                      <span className="mx-2 text-text-soft/50">|</span>
-                      <span className="text-accent2 font-mono mr-1">{time.utc}</span>
-                      <span className="text-text-soft/80 text-xs">UTC</span>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-                {/* Theme Toggle - Mobile/Tablet */}
-                <AnimatePresence>
-                  {isTabletMode && (
-                    <motion.button
-                      type="button"
-                      onClick={toggleTheme}
-                      aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
-                      whileHover={{ scale: 1.1, rotate: isDarkMode ? 3 : -3 }}
-                      whileTap={{ scale: 0.96, rotate: 0 }}
-                      className="flex items-center justify-center h-9 w-9 rounded-full border border-border-subtle/60 bg-[color:var(--navbar-pill-background)] text-text-soft transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--surface-strong)] shadow-md"
-                      initial={justSwitchedToTablet ? { opacity: 0, x: 32, scale: 0.92 } : false}
-                      animate={justSwitchedToTablet ? { opacity: 1, x: 0, scale: 1 } : { opacity: 1, x: 0, scale: 1 }}
-                      exit={justSwitchedToDesktop ? { opacity: 0, x: 32, scale: 0.92 } : { opacity: 0, x: 32, scale: 0.92 }}
-                      transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-                      style={{ 
-                        WebkitTapHighlightColor: 'transparent', 
-                        backfaceVisibility: 'hidden', 
-                        boxShadow: 'var(--motion-box-shadow)'
-                      }}
-                    >
-                      {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
-                    </motion.button>
-                  )}
-                </AnimatePresence>
-                {/* Tablet/Mobile menu button */}
-                <AnimatePresence>
-                  {isTabletMode && (
-                    <motion.button
-                      className="rounded-full"
-                      onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                      aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
-                      whileHover={{ scale: 1.13, filter: 'brightness(1.25)' }}
-                      whileTap={{ scale: 0.97, filter: 'brightness(1.05)' }}
-                      style={{ WebkitTapHighlightColor: 'transparent', background: 'transparent', boxShadow: 'none' }}
-                      initial={justSwitchedToTablet ? { scale: 1.1, opacity: 0, x: 0, z: -40, rotateY: 0 } : false}
-                      animate={justSwitchedToTablet ? { scale: [1, 1.18, 1], opacity: 1, x: 0, z: 0, rotateY: 0 } : {}}
-                      transition={justSwitchedToTablet ? { duration: 1.05, ease: [0.4, 0, 0.2, 1], delay: 0.36, scale: { duration: 0.5, ease: [0.4, 0, 0.2, 1] } } : { type: 'spring', stiffness: 420, damping: 18, mass: 1.05 }}
-                    >
-                      <span className="sr-only">{isMobileMenuOpen ? "Close menu" : "Open menu"}</span>
-                      {isMobileMenuOpen
-                        ? <X className="text-foreground drop-shadow-[0_1px_6px_rgba(34,211,238,0.7)]" size={24} />
-                        : (
-                          <motion.svg
-                            key="hamburger-animated"
-                            width="28" height="28" viewBox="0 0 24 24" fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                            style={{ background: 'transparent', display: 'block' }}
-                          >
-                            <motion.line
-                              x1="4" y1="7" x2="20" y2="7" strokeWidth="2.5" strokeLinecap="round"
-                              animate={isMobileMenuOpen ? {
-                                stroke: 'url(#hamburger-gradient)'
-                              } : {
-                                stroke: baseHamburgerColor
-                              }}
-                              whileHover={{ stroke: 'url(#hamburger-gradient)' }}
-                              whileFocus={{ stroke: 'url(#hamburger-gradient)' }}
-                              transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-                            />
-                            <motion.line
-                              x1="4" y1="12" x2="20" y2="12" strokeWidth="2.5" strokeLinecap="round"
-                              animate={isMobileMenuOpen ? {
-                                stroke: 'url(#hamburger-gradient)'
-                              } : {
-                                stroke: baseHamburgerColor
-                              }}
-                              whileHover={{ stroke: 'url(#hamburger-gradient)' }}
-                              whileFocus={{ stroke: 'url(#hamburger-gradient)' }}
-                              transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-                            />
-                            <motion.line
-                              x1="4" y1="17" x2="20" y2="17" strokeWidth="2.5" strokeLinecap="round"
-                              animate={isMobileMenuOpen ? {
-                                stroke: 'url(#hamburger-gradient)'
-                              } : {
-                                stroke: baseHamburgerColor
-                              }}
-                              whileHover={{ stroke: 'url(#hamburger-gradient)' }}
-                              whileFocus={{ stroke: 'url(#hamburger-gradient)' }}
-                              transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-                            />
-                            <defs>
-                              <linearGradient id="hamburger-gradient" x1="4" y1="7" x2="20" y2="17" gradientUnits="userSpaceOnUse">
-                                <stop offset="0%" stopColor="#9B51E0" />
-                                <stop offset="100%" stopColor="#2DD4BF" />
-                              </linearGradient>
-                            </defs>
-                          </motion.svg>
-                        )}
-                    </motion.button>
-                  )}
-                </AnimatePresence>
-              </div>
-            </div>
-          </div>
+                ))}
+             </div>
 
-          <AnimatePresence>
-            {isTabletMode && isMobileMenuOpen && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.98, y: -10 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.96, y: -20 }}
-                transition={{ duration: 0.8, ease: 'easeInOut' }}
-                style={{ transitionProperty: 'opacity, transform', willChange: 'opacity, transform' }}
-                className="bg-surface-overlay/90 backdrop-blur-md px-4 pt-4 pb-8 space-y-4 text-center text-foreground"
-              >
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 30 }}
-                  transition={{ duration: 0.6, delay: 0.05, ease: [0.4, 0, 0.2, 1] }}
-                  className="flex flex-col items-center space-y-3 md:flex-row md:space-y-0 md:space-x-4 md:justify-center md:items-center"
-                >
-                  {links.map((link) => (
-                    <Link key={link} href={link === 'Blog' ? '/blog' : `#${link.toLowerCase()}`}>
-                      <div
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="navbar-btn-mobile px-4 py-1 border rounded-full text-sm font-medium text-text-soft border-border-subtle/60 transition duration-300 backdrop-blur-md bg-[color:var(--navbar-pill-background)] active:text-foreground active:border-accent2 will-change-transform"
-                        style={{ transitionTimingFunction: 'cubic-bezier(0.4,0,0.2,1)' }}
-                        tabIndex={0}
-                      >
-                        {link}
-                      </div>
-                    </Link>
-                  ))}
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 30 }}
-                  transition={{ duration: 0.6, delay: 0.12, ease: [0.4, 0, 0.2, 1] }}
-                  className="flex justify-center gap-4 pt-2"
-                >
-                  <a href="https://github.com/InfamousMorningstar" target="_blank" aria-label="GitHub">
-                    <Github className="text-text-soft" size={20} />
-                    <span className="sr-only">GitHub</span>
-                  </a>
-                  <a href="https://www.linkedin.com/in/salman-ahmad-6788811b6/" target="_blank" aria-label="LinkedIn">
-                    <Linkedin className="text-text-soft" size={20} />
-                    <span className="sr-only">LinkedIn</span>
-                  </a>
-                  <a href="mailto:s.ahmad0147@gmail.com" aria-label="Email">
-                    <Mail className="text-text-soft" size={20} />
-                    <span className="sr-only">Email</span>
-                  </a>
-                </motion.div>
-                {/* Mobile Clock */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 30 }}
-                  transition={{ duration: 0.6, delay: 0.19, ease: [0.4, 0, 0.2, 1] }}
-                  className="mt-4 px-3 py-1 inline-block rounded-full border border-border-subtle/60 text-sm font-mono backdrop-blur-md bg-[color:var(--navbar-pill-background)] text-text-soft"
-                >
-                  <span className="text-accent font-mono mr-1">{time.mdt}</span>
-                  <span className="text-text-soft/80 text-xs">MDT</span>
-                  <span className="mx-2 text-text-soft/50">|</span>
-                  <span className="text-accent2 font-mono mr-1">{time.utc}</span>
-                  <span className="text-text-soft/80 text-xs">UTC</span>
-                </motion.div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.nav>
-      )}
-    </AnimatePresence>
+             {/* Mobile Footer Status */}
+             <div className="absolute bottom-12 w-full px-12 flex justify-between text-xs font-mono text-muted-soft">
+                 <div className="flex flex-col gap-2">
+                    <span className="flex items-center gap-2"><Wifi size={10} /> LINK_ESTABLISHED</span>
+                    <span className="flex items-center gap-2"><Cpu size={10} /> MEM: OPTIMAL</span>
+                 </div>
+                 <div className="text-right">
+                    <div>{sysTime}</div>
+                    <div>{coordinates.x} . {coordinates.y}</div>
+                 </div>
+             </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

@@ -53,7 +53,7 @@ export default function LoadingScreen() {
               </h2>
               <div className="flex justify-between text-xs font-mono text-muted uppercase tracking-widest">
                 <span>System Initialization</span>
-                <span>v2.0.24</span>
+                <span>v2.3.0</span>
               </div>
             </motion.div>
 

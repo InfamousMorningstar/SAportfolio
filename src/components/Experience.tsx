@@ -80,7 +80,7 @@ export default function Experience() {
   const selectedExp = experiences.find(e => e.id === selectedId) || experiences[0];
 
   return (
-    <section ref={containerRef} className="py-32 relative overflow-hidden transition-colors duration-500">
+    <section id="experience" ref={containerRef} className="py-32 relative overflow-hidden transition-colors duration-500">
       {/* Background Decor */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-10 pointer-events-none">
         <div className="absolute top-[10%] left-[5%] text-9xl font-black text-foreground opacity-5 select-none">

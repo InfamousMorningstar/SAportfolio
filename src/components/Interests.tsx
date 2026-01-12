@@ -90,16 +90,16 @@ export default function Interests() {
                 {activeTab.id === item.id && (
                   <motion.div
                     layoutId="active-glow"
-                    className={`absolute inset-0 rounded-xl bg-gradient-to-r ${item.color} opacity-5`}
+                    className={`absolute inset-0 rounded-xl bg-gradient-to-r ${item.color} opacity-100 dark:opacity-20`}
                     transition={{ duration: 0.3 }}
                   />
                 )}
                 
                 {/* Icon Box */}
                 <div className={cn(
-                  "mr-4 p-2 rounded-lg transition-colors duration-300",
+                  "relative z-10 mr-4 p-2 rounded-lg transition-colors duration-300",
                   activeTab.id === item.id 
-                    ? 'bg-surface-card/30 backdrop-blur-md border border-border-subtle text-foreground' 
+                    ? 'bg-surface-card/30 backdrop-blur-md border border-white/20 text-foreground shadow-sm' 
                     : 'text-muted-soft group-hover:text-muted'
                 )}>
                    <div className="text-lg">
@@ -109,8 +109,8 @@ export default function Interests() {
 
                 {/* Text */}
                 <span className={cn(
-                  "text-lg font-medium transition-colors duration-300",
-                  activeTab.id === item.id ? 'text-foreground' : 'text-muted-soft group-hover:text-muted'
+                  "relative z-10 text-lg font-bold transition-colors duration-300",
+                  activeTab.id === item.id ? 'text-white dark:text-foreground' : 'text-muted-soft group-hover:text-muted'
                 )}>
                   {item.title}
                 </span>

@@ -100,6 +100,23 @@ export default function Footer() {
             Say <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-accent2">Hello</span>
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-accent to-accent2 mx-auto mb-8" />
+          
+          {/* Mobile Clock - Below "Say Hello" */}
+          <div className="block md:hidden mb-12">
+              <p className="text-4xl font-mono text-foreground/20 font-light tracking-tighter tabular-nums mb-2">
+                {time}
+              </p>
+              <div className="flex flex-col items-center space-y-1 text-muted text-xs font-mono uppercase">
+                  {temperature && (
+                    <span className="flex items-center text-text-soft">
+                      <Cloud className="w-3 h-3 mr-1" />
+                      {temperature}
+                    </span>
+                  )}
+                  <span className="text-text-soft">51.0447 N, 114.0719 W </span>
+                  <span>Calgary, CA. Terra (Sol III)</span>
+              </div>
+          </div>
         </motion.div>
 
         <div className="relative z-10 flex flex-col md:grid md:grid-cols-12 gap-12">
@@ -169,8 +186,8 @@ export default function Footer() {
           {/* RIGHT: Navigation & Meta Data */}
           <div className="col-span-12 md:col-span-5 flex flex-col justify-between items-start md:items-end space-y-12">
             
-            {/* Clock & Location */}
-            <div className="text-right hidden md:block">
+            {/* Clock & Location - Desktop Only */}
+            <div className="hidden md:block w-full text-right">
               <p className="text-4xl font-mono text-foreground/20 font-light tracking-tighter tabular-nums mb-1">
                 {time}
               </p>
@@ -186,7 +203,7 @@ export default function Footer() {
                       <span></span>
                     </>
                   )}
-                  <span className="hidden md:inline text-text-soft">51.0447 N, 114.0719 W </span>
+                  <span className="text-text-soft">51.0447 N, 114.0719 W </span>
                   <span>Calgary, CA. Terra (Sol III)</span>
                </div>
             </div>
