@@ -7,7 +7,7 @@ import Link from 'next/link';
 import BlogPostComponent from '../../components/BlogPost';
 import HybridEdgePost from '../../components/HybridEdgePost';
 import CentauriPlexPost from '../../components/CentauriPlexPost';
-import LaserFlowBackground from '../../components/ui/LaserFlowBackground';
+import { ParticleNetworkBackground } from '../../components/ui/ParticleNetworkBackground';
 
 interface BlogPostData {
   id: string;
@@ -66,9 +66,9 @@ export default function BlogPage() {
 
   return (
     <div className="min-h-screen relative overflow-hidden">
-      {/* LaserFlow WebGL Background */}
+      {/* Network Particle Background */}
       <div className="fixed inset-0 z-0">
-        <LaserFlowBackground />
+        <ParticleNetworkBackground />
       </div>
 
       {/* Content */}

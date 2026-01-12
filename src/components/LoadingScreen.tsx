@@ -8,12 +8,25 @@ export default function LoadingScreen() {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
+    // Check session storage for previous load
+    const hasLoaded = typeof window !== 'undefined' ? sessionStorage.getItem('portfolio-loaded') : null;
+    
+    if (hasLoaded) {
+      setIsLoading(false);
+      return;
+    }
+
     // Simulate loading progress
     const timer = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(timer);
-          setTimeout(() => setIsLoading(false), 500); // Slight delay at 100%
+          setTimeout(() => {
+            setIsLoading(false);
+            if (typeof window !== 'undefined') {
+                sessionStorage.setItem('portfolio-loaded', 'true');
+            }
+          }, 500); // Slight delay at 100%
           return 100;
         }
         return prev + Math.floor(Math.random() * 10) + 1; // Random increment

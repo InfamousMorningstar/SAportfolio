@@ -17,7 +17,7 @@
 
 import { motion } from 'framer-motion';
 import { Calendar, Clock, ArrowLeft } from 'lucide-react';
-import { LaserFlowBackground } from './ui/LaserFlowBackground';
+import { ParticleNetworkBackground } from './ui/ParticleNetworkBackground';
 
 interface BlogPostProps {
   onBack?: () => void;
@@ -32,22 +32,9 @@ export default function BlogPost({ onBack }: BlogPostProps) {
       transition={{ duration: 0.5, ease: [0.77, 0, 0.175, 1] }}
       className="min-h-screen py-20 relative overflow-hidden bg-background"
     >
-      {/* LaserFlow WebGL Background */}
+      {/* Network Particle Background */}
       <div className="fixed top-0 left-0 w-screen h-screen" style={{ zIndex: 0, pointerEvents: 'none' }}>
-        <LaserFlowBackground 
-          color="#8b5cf6"
-          wispDensity={1.5}
-          fogIntensity={0.6}
-          verticalBeamOffset={-0.2}
-          horizontalBeamOffset={0}
-          flowSpeed={0.4}
-          wispSpeed={20}
-        />
-      </div>
-      
-      {/* Temporary test - visible overlay to confirm component renders */}
-      <div className="fixed top-4 right-4 bg-red-500 text-white px-3 py-1 rounded text-xs" style={{ zIndex: 9999 }}>
-        LaserFlow Active
+        <ParticleNetworkBackground />
       </div>
 
       <div className="container mx-auto px-6 max-w-4xl relative z-10">
