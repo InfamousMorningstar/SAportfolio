@@ -13,6 +13,7 @@ const navLinks = [
   { name: "EXP", href: "#experience" },
   { name: "EDU", href: "#education" },
   { name: "BLOG", href: "/blog" },
+  { name: "RESUME", href: "/resume" },
 ];
 
 // --- Utility Components ---
