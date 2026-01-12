@@ -40,9 +40,9 @@ export default function Hero() {
             </p>
             
             <div className="flex justify-end gap-6 text-2xl md:text-3xl text-muted-soft">
-                <a href="#" className="hover:text-foreground hover:scale-110 transition-all duration-300"><FaGithub /></a>
-                <a href="#" className="hover:text-accent hover:scale-110 transition-all duration-300"><FaLinkedin /></a>
-                <a href="#" className="hover:text-accent2 hover:scale-110 transition-all duration-300"><FaEnvelope /></a>
+                <a href="https://github.com/InfamousMorningstar" target="_blank" rel="noopener noreferrer" className="hover:text-foreground hover:scale-110 transition-all duration-300"><FaGithub /></a>
+                <a href="https://www.linkedin.com/in/salman-ahmad-6788811b6/" target="_blank" rel="noopener noreferrer" className="hover:text-accent hover:scale-110 transition-all duration-300"><FaLinkedin /></a>
+                <a href="mailto:s.ahmad0147@gmail.com" className="hover:text-accent2 hover:scale-110 transition-all duration-300"><FaEnvelope /></a>
             </div>
         </motion.div>
 
