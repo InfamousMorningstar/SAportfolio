@@ -1,315 +1,139 @@
-﻿/*
- * â–ˆâ–ˆâ–ˆâ•—â–‘â–‘â–‘â–ˆâ–ˆâ–ˆâ•—â–‘â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•—â–‘â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•—â–‘â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•—â–‘â–ˆâ–ˆâ•—â–‘â–‘â–‘â–ˆâ–ˆâ•—â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•—â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•—â–‘â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•—â–‘
- * â–ˆâ–ˆâ–ˆâ–ˆâ•—â–‘â–‘â–ˆâ–ˆâ–ˆâ–ˆâ•‘â–ˆâ–ˆâ•”â•â•â–ˆâ–ˆâ•—â–ˆâ–ˆâ•”â•â•â–ˆâ–ˆâ•—â–ˆâ–ˆâ•”â•â•â–ˆâ–ˆâ•—â–ˆâ–ˆâ•‘â–‘â–‘â–‘â–ˆâ–ˆâ•‘â–ˆâ–ˆâ•”â•â•â•â•â•â–ˆâ–ˆâ•”â•â•â–ˆâ–ˆâ•—â–ˆâ–ˆâ•”â•â•â–ˆâ–ˆâ•—
- * â–ˆâ–ˆâ•”â–ˆâ–ˆâ–ˆâ–ˆâ•”â–ˆâ–ˆâ•‘â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•‘â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•”â•â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•”â•â–ˆâ–ˆâ•‘â–‘â–‘â–‘â–ˆâ–ˆâ•‘â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•—â–‘â–‘â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•”â•â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•”â•
- * â–ˆâ–ˆâ•‘â•šâ–ˆâ–ˆâ•”â•â–ˆâ–ˆâ•‘â–ˆâ–ˆâ•”â•â•â–ˆâ–ˆâ•‘â–ˆâ–ˆâ•”â•â•â–ˆâ–ˆâ•—â–ˆâ–ˆâ•”â•â•â–ˆâ–ˆâ•—â–ˆâ–ˆâ•‘â–‘â–‘â–‘â–ˆâ–ˆâ•‘â–ˆâ–ˆâ•”â•â•â•â–‘â–‘â–ˆâ–ˆâ•”â•â•â–ˆâ–ˆâ•—â–ˆâ–ˆâ•”â•â•â–ˆâ–ˆâ•—
- * â–ˆâ–ˆâ•‘â–‘â•šâ•â•â–‘â–ˆâ–ˆâ•‘â–ˆâ–ˆâ•‘â–‘â–‘â–ˆâ–ˆâ•‘â–ˆâ–ˆâ•‘â–‘â–‘â–ˆâ–ˆâ•‘â–ˆâ–ˆâ•‘â–‘â–‘â–ˆâ–ˆâ•‘â•šâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•”â•â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•—â–ˆâ–ˆâ•‘â–‘â–‘â–ˆâ–ˆâ•‘â–ˆâ–ˆâ•‘â–‘â–‘â–ˆâ–ˆâ•‘
- * â•šâ•â•â–‘â–‘â–‘â–‘â–‘â•šâ•â•â•šâ•â•â–‘â–‘â•šâ•â•â•šâ•â•â–‘â–‘â•šâ•â•â•šâ•â•â–‘â–‘â•šâ•â•â–‘â•šâ•â•â•â•â•â•â–‘â•šâ•â•â•â•â•â•â•â•šâ•â•â–‘â–‘â•šâ•â•â•šâ•â•â–‘â–‘â•šâ•â•
- *
- * ðŸ‘¤ Author  : Salman Ahmad
- * ðŸŒ URL     : https://portfolio.ahmxd.net
- * ðŸ“§ Contact : s.ahmad0147@gmail.com
- * ðŸ“ License : MIT (Educational/Personal Use)
- * ðŸ“ File    : About.tsx
- * ðŸ•’ Updated : Jun 12, 2025
- */
 'use client';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { CardWrapper } from './ui/CardWrapper';
-import Head from 'next/head';
-import { useRef } from 'react';
-import { FaServer, FaCode, FaDocker, FaLinux, FaNetworkWired, FaCloud, FaUserTie } from 'react-icons/fa';
-
-
-const skills = [
-  {
-    category: 'DevOps & Infrastructure',
-    icon: <FaServer className="text-accent" />,
-    items: ['Docker', 'Kubernetes', 'TrueNAS SCALE', 'Prometheus/Grafana', 'VPN Architecture', 'CI/CD Pipelines']
-  },
-  {
-    category: 'Programming',
-    icon: <FaCode className="text-accent2" />,
-    items: ['JavaScript', 'Java', 'Python', 'TypeScript', 'HTML/CSS', 'React/Next.js']
-  },
-  {
-    category: 'Systems & Networking',
-    icon: <FaLinux className="text-secondary" />,
-    items: ['Linux Administration', 'MySQL/PostgreSQL', 'Network Configuration', 'Security Protocols', 'Cloudflare', 'DNS Management']
-  },
-  {
-    category: 'Soft Skills',
-    icon: <FaUserTie className="text-accent" />,
-    items: ['Customer Service', 'Team Leadership', 'Problem Solving', 'Technical Documentation', 'Project Management', 'Mentoring']
-  }
-];
-
-// Ultra-premium cinematic animation
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.28
-    }
-  }
-};
-
-const itemVariants = {
-  hidden: { scale: 0.96, filter: 'blur(12px)', opacity: 0.6 },
-  visible: {
-    scale: 1,
-    filter: 'blur(0px)',
-    opacity: 1,
-    transition: { duration: 1.05, ease: [0.77, 0, 0.175, 1] }
-  }
-};
+import { motion } from 'framer-motion';
+import { FaCode, FaServer, FaLayerGroup, FaUniversity, FaMapMarkerAlt, FaGlobeAmericas } from 'react-icons/fa';
 
 export default function About() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"]
-  });
-
-  // Hologram glitch effects - RGB split on scroll
-  const rgbSplitR = useTransform(scrollYProgress, [0, 0.3, 0.5, 0.7, 1], [0, 2, 0, -2, 0]);
-  const rgbSplitB = useTransform(scrollYProgress, [0, 0.3, 0.5, 0.7, 1], [0, -2, 0, 2, 0]);
-  const glitchOpacity = useTransform(scrollYProgress, [0.2, 0.25, 0.3], [0, 1, 0]);
-
   return (
-    <>
-      <Head>
-        {/* Preload the largest image for LCP (HTML attributes, not React props) */}
-        <link
-          rel="preload"
-          as="image"
-          href="/images/profile-photo-1600.avif"
-        />
-      </Head>
-      <section ref={sectionRef} id="about" className="py-16 lg:py-20 px-6 relative overflow-hidden">
-        <CardWrapper>
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 30 }}
+    <section id="about" className="py-24 px-4 md:px-8 relative transition-colors duration-500">
+      <div className="max-w-7xl mx-auto">
+        
+        {/* Section Header */}
+        <motion.div 
+          className="mb-16 md:mb-24"
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
           viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl md:text-6xl font-bold mb-6">
-            About <span className="gradient-text">Me</span>
+          <h2 className="text-4xl md:text-8xl font-black mb-8 text-foreground tracking-tighter">
+            ABOUT <span className="text-muted-soft">ME</span>
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-accent to-accent2 mx-auto mb-8" />
+          <div className="h-[1px] w-full bg-divider" />
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
-          {/* Left Column - Text */}
-          <motion.div
-            className="space-y-6"
-            initial={{ scale: 0.96, filter: 'blur(12px)', opacity: 0.6 }}
-            whileInView={{ scale: 1, filter: 'blur(0px)', opacity: 1 }}
-            transition={{ duration: 1.05, ease: [0.77, 0, 0.175, 1] }}
+        {/* Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-6 h-auto md:h-[800px]">
+          
+          {/* 1. Main Bio (Large, Top Left) */}
+          <motion.div 
+            className="md:col-span-2 row-span-1 bg-surface-card/30 backdrop-blur-xl border border-border-subtle rounded-3xl p-6 md:p-12 relative overflow-hidden group shadow-sm"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            style={{ willChange: 'transform, filter, opacity', backfaceVisibility: 'hidden' }}
           >
-            <div className="text-lg md:text-xl text-muted leading-relaxed space-y-6">
-              <p>
-                I&apos;m a passionate{' '}
-                <span className="text-accent font-semibold">Computer Information Systems student</span>{' '}
-                at Mount Royal University with a strong background in{' '}
-                <span className="text-accent2 font-semibold">web development</span>,{' '}
-                <span className="text-accent font-semibold">IT support</span>,{' '}
-                <span className="text-secondary font-semibold">home server architecture</span>, and{' '}
-                <span className="text-accent2 font-semibold">software development</span>.
-              </p>
-              
-              <p>
-                My journey began with a curiosity for technology and evolved into expertise in{' '}
-                <span className="text-accent font-semibold">full-stack web development</span>,{' '}
-                <span className="text-accent2 font-semibold">DevOps practices</span>,{' '}
-                <span className="text-secondary font-semibold">container orchestration</span>, and{' '}
-                <span className="text-accent font-semibold">infrastructure automation</span>.
-                I&apos;ve built production-ready web applications and maintain a sophisticated home lab
-                environment that serves as both a learning platform and a production-grade solution.
-              </p>
-              
-              <p>
-                Beyond technical skills, I bring{' '}
-                <span className="text-accent font-semibold">6+ years of customer service experience</span>{' '}
-                and proven leadership abilities from my roles in retail and manufacturing environments.
-                This unique combination allows me to bridge technical complexity with clear communication
-                and user-focused solutions.
-              </p>
-            </div>
-
-            <motion.div
-              className="flex flex-wrap gap-3 mt-8"
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-            >
-              {['Problem Solver', 'Team Player', 'Self-Learner', 'Innovation-Driven'].map((trait) => (
-                <motion.span
-                  key={trait}
-                  className="px-4 py-2 bg-accent/10 border border-accent/30 rounded-full text-accent text-sm font-medium transition-all duration-300 focus-visible:outline focus-visible:ring-2 focus-visible:ring-accent/70"
-                  variants={itemVariants}
-                  whileHover={{ scale: 1.11, y: -6, boxShadow: '0 8px 32px 0 rgba(139,92,246,0.13)', borderColor: 'var(--tw-accent)', backgroundColor: 'rgba(139, 92, 246, 0.22)' }}
-                  style={{ willChange: 'transform, box-shadow, border-color, background-color, filter', backfaceVisibility: 'hidden' }}
-                  tabIndex={0}
-                  aria-label={trait}
-                >
-                  {trait}
-                </motion.span>
-              ))}
-            </motion.div>
+             <div className="absolute top-0 right-0 p-32 bg-accent/5 blur-[100px] rounded-full pointer-events-none" />
+             
+             <h3 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-3">
+                <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+                The Narrative
+             </h3>
+             <div className="space-y-6 text-lg md:text-xl text-muted leading-relaxed font-light">
+                <p>
+                  I am a <span className="text-accent font-medium">Software Development graduate from Southern Alberta Institute of Technology (SAIT)</span> with a strong foundation in building and operating production-ready systems, currently completing a <span className="text-accent2 font-medium">Bachelor of Computer Information Systems</span> at Mount Royal University.
+                </p>
+                <p>
+                  My experience spans <span className="text-foreground">full-stack development</span>, <span className="text-foreground">DevOps-driven infrastructure</span>, and advanced home-lab environments. Backed by years in customer-facing roles, I specialize in delivering sound solutions that act as the bridge between complex engineering and end-user accessibility.
+                </p>
+             </div>
           </motion.div>
 
-          {/* Right Column - Profile Image */}
-          <motion.div
-            className="relative"
-            initial={{ scale: 0.96, filter: 'blur(12px)', opacity: 0.6 }}
-            whileInView={{ scale: 1, filter: 'blur(0px)', opacity: 1 }}
-            transition={{ duration: 1.05, ease: [0.77, 0, 0.175, 1] }}
+          {/* 2. Profile / Visual (Top Right) */}
+          <motion.div 
+            className="min-h-[500px] md:min-h-0 md:col-span-1 row-span-2 relative rounded-3xl overflow-hidden border border-border-subtle group"
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            style={{ willChange: 'transform, filter, opacity', backfaceVisibility: 'hidden' }}
+            transition={{ delay: 0.1 }}
           >
-            <div className="relative h-[32rem] max-w-sm mx-auto border-2 border-accent/30 rounded-lg overflow-visible hover:border-accent/50 transition-colors duration-300 group">
-              {/* Inner container with overflow-hidden for image clipping */}
-              <div className="absolute inset-0 overflow-hidden rounded-lg">
-              {/* RGB Split layers for glitch effect */}
-              <motion.div 
-                className="absolute inset-0"
-                style={{ x: rgbSplitR }}
-              >
-                <picture>
-                  <source
-                    type="image/avif"
-                    srcSet="/images/profile-photo-320.avif 320w, /images/profile-photo-480.avif 480w, /images/profile-photo-768.avif 768w, /images/profile-photo-1024.avif 1024w, /images/profile-photo-1280.avif 1280w, /images/profile-photo-1600.avif 1600w"
-                    sizes="(max-width: 640px) 90vw, (max-width: 1024px) 60vw, 32rem"
-                  />
-                  <source
-                    type="image/webp"
-                    srcSet="/images/profile-photo-320.webp 320w, /images/profile-photo-480.webp 480w, /images/profile-photo-768.webp 768w, /images/profile-photo-1024.webp 1024w, /images/profile-photo-1280.webp 1280w, /images/profile-photo-1600.webp 1600w"
-                    sizes="(max-width: 640px) 90vw, (max-width: 1024px) 60vw, 32rem"
-                  />
-                  <img
-                    src="/images/profile-photo-1600.avif"
-                    alt="Ahmad Profile Photo"
-                    className="object-cover rounded-lg w-full h-full mix-blend-screen opacity-50"
-                    width="512"
-                    height="640"
-                    loading="eager"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'sepia(1) hue-rotate(-30deg) saturate(3)' }}
-                    fetchPriority="high"
-                  />
-                </picture>
-              </motion.div>
-
-              {/* Main image */}
-              <picture>
-                <source
-                  type="image/avif"
-                  srcSet="/images/profile-photo-320.avif 320w, /images/profile-photo-480.avif 480w, /images/profile-photo-768.avif 768w, /images/profile-photo-1024.avif 1024w, /images/profile-photo-1280.avif 1280w, /images/profile-photo-1600.avif 1600w"
-                  sizes="(max-width: 640px) 90vw, (max-width: 1024px) 60vw, 32rem"
-                />
-                <source
-                  type="image/webp"
-                  srcSet="/images/profile-photo-320.webp 320w, /images/profile-photo-480.webp 480w, /images/profile-photo-768.webp 768w, /images/profile-photo-1024.webp 1024w, /images/profile-photo-1280.webp 1280w, /images/profile-photo-1600.webp 1600w"
-                  sizes="(max-width: 640px) 90vw, (max-width: 1024px) 60vw, 32rem"
-                />
-                <img
-                  src="/images/profile-photo-1600.avif"
-                  alt="Ahmad Profile Photo"
-                  className="object-cover rounded-lg w-full h-full relative z-10"
-                  width="512"
-                  height="640"
-                  loading="eager"
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  fetchPriority="high"
-                />
-              </picture>
-
-              {/* Blue channel offset */}
-              <motion.div 
-                className="absolute inset-0"
-                style={{ x: rgbSplitB }}
-              >
-                <picture>
-                  <source
-                    type="image/avif"
-                    srcSet="/images/profile-photo-320.avif 320w, /images/profile-photo-480.avif 480w, /images/profile-photo-768.avif 768w, /images/profile-photo-1024.avif 1024w, /images/profile-photo-1280.avif 1280w, /images/profile-photo-1600.avif 1600w"
-                    sizes="(max-width: 640px) 90vw, (max-width: 1024px) 60vw, 32rem"
-                  />
-                  <source
-                    type="image/webp"
-                    srcSet="/images/profile-photo-320.webp 320w, /images/profile-photo-480.webp 480w, /images/profile-photo-768.webp 768w, /images/profile-photo-1024.webp 1024w, /images/profile-photo-1280.webp 1280w, /images/profile-photo-1600.webp 1600w"
-                    sizes="(max-width: 640px) 90vw, (max-width: 1024px) 60vw, 32rem"
-                  />
-                  <img
-                    src="/images/profile-photo-1600.avif"
-                    alt=""
-                    className="object-cover rounded-lg w-full h-full mix-blend-screen opacity-50"
-                    width="512"
-                    height="640"
-                    loading="eager"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'sepia(1) hue-rotate(180deg) saturate(3)' }}
-                    aria-hidden="true"
-                  />
-                </picture>
-              </motion.div>
-
-              <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent rounded-lg z-30"></div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Skills Grid */}
-        <motion.div
-          className="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          {skills.map((skillGroup, index) => (
-            <motion.div
-              key={skillGroup.category}
-              className="card group hover:border-accent/50 transition-all duration-300 relative overflow-hidden"
-              variants={itemVariants}
-              whileHover={{ y: -5 }}
-            >
-              <div className="flex items-center mb-4 relative z-10">
-                <motion.div 
-                  className="text-2xl mr-3"
-                  whileHover={{ 
-                    scale: 1.2, 
-                    rotate: 360,
-                    filter: 'drop-shadow(0 0 8px rgba(139, 92, 246, 0.6))'
-                  }}
-                  transition={{ duration: 0.5 }}
-                >
-                  {skillGroup.icon}
-                </motion.div>
-                <h3 className="text-lg font-semibold text-foreground group-hover:text-accent transition-colors">
-                  {skillGroup.category}
+             {/* Actual Image Background */}
+             <div 
+               className="absolute inset-0 bg-[url('/images/profile-photo-1600.avif')] bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+             />
+             <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80" />
+             
+             <div className="absolute bottom-8 left-8 right-8">
+                <div className="flex items-center gap-2 mb-2 text-accent text-sm font-mono uppercase tracking-wider">
+                  <FaMapMarkerAlt /> Calgary, AB
+                </div>
+                <h3 className="text-3xl font-bold text-foreground leading-none">
+                  Salman Ahmad
                 </h3>
-              </div>
-              <ul className="space-y-2 relative z-10">
-                {skillGroup.items.map((skill) => (
-                  <li key={skill} className="text-muted text-sm flex items-center">
-                    <div className="w-1.5 h-1.5 bg-accent rounded-full mr-2"></div>
-                    {skill}
-                  </li>
+                <p className="text-muted mt-2">Full Stack Engineer</p>
+             </div>
+          </motion.div>
+
+          {/* 3. Stats / Quick Info (Bottom Left) */}
+          <motion.div 
+            className="md:col-span-1 row-span-1 bg-surface-card/30 backdrop-blur-xl border border-border-subtle rounded-3xl p-6 md:p-8 flex flex-col justify-between group overflow-hidden shadow-sm"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+          >
+             <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-secondary/10 rounded-full blur-[80px] group-hover:bg-secondary/20 transition-colors" />
+             
+             <h3 className="text-xl font-bold text-foreground mb-8 flex items-center gap-2">
+               <FaUniversity className="text-secondary" />
+               Education
+             </h3>
+             
+             <div className="space-y-6">
+                <div>
+                   <div className="text-base font-bold text-foreground">Southern Alberta Institute of Technology (SAIT)</div>
+                   <div className="text-sm text-muted">Software Development (Graduated)</div>
+                </div>
+                <div>
+                   <div className="text-xl font-bold text-foreground">Mount Royal University</div>
+                   <div className="text-sm text-muted">BCIS (In Progress)</div>
+                </div>
+             </div>
+          </motion.div>
+
+          {/* 4. Tech Stack Glitch (Bottom Middle) */}
+          <motion.div 
+             className="md:col-span-1 row-span-1 bg-surface-strong/30 backdrop-blur-xl border border-border-subtle rounded-3xl p-6 md:p-8 relative overflow-hidden shadow-inner"
+             initial={{ opacity: 0, y: 20 }}
+             whileInView={{ opacity: 1, y: 0 }}
+             viewport={{ once: true }}
+             transition={{ delay: 0.3 }}
+          >
+             <div className="absolute inset-0 grid grid-cols-6 gap-2 opacity-10 transform -rotate-12 scale-150 pointer-events-none">
+                {Array.from({ length: 24 }).map((_, i) => (
+                   <div key={i} className="bg-foreground/20 w-full h-8 rounded-full" />
                 ))}
-              </ul>
-            </motion.div>
-          ))}
-        </motion.div>
-      </CardWrapper>
-      </section>
-    </>
+             </div>
+
+             <h3 className="text-xl font-bold text-foreground mb-6 relative z-10 flex items-center gap-2">
+                <FaCode className="text-accent" />
+                Stack
+             </h3>
+
+             <div className="relative z-10 flex flex-wrap gap-2">
+                {['Next.js', 'React', 'TypeScript', 'Node.js', 'Docker', 'Kubernetes', 'PostgreSQL', 'Tailwind', 'Python', 'AWS'].map((tech) => (
+                   <span key={tech} className="px-3 py-1.5 text-xs font-medium text-foreground bg-background border border-border-subtle rounded-lg hover:border-accent transition-colors cursor-default shadow-sm">
+                      {tech}
+                   </span>
+                ))}
+            </div>
+            
+            <div className="absolute bottom-4 right-4 text-[10px] mobile-only-hide text-muted-soft font-mono">
+               SYS.OP.READY
+            </div>
+          </motion.div>
+
+        </div>
+      </div>
+    </section>
   );
 }
-

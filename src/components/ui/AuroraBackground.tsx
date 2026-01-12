@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { cn } from "@/lib/utils";
+import { useTheme } from "../ThemeProvider";
 
 interface AuroraBackgroundProps extends React.HTMLProps<HTMLDivElement> {
   showRadialGradient?: boolean;
@@ -15,6 +16,7 @@ export const AuroraBackground = ({
 }: AuroraBackgroundProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef(0);
+  const { theme } = useTheme();
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -264,8 +266,8 @@ export const AuroraBackground = ({
     <div
       ref={containerRef}
       className={cn(
-        "fixed inset-0 z-0 pointer-events-none",
-        "bg-[#050608] transition-colors duration-500", // Fallback: near-black
+        "fixed inset-0 -z-10 pointer-events-none opacity-0 dark:opacity-100 transition-opacity duration-1000",
+        "bg-background",
         className
       )}
       {...props}

@@ -11,13 +11,22 @@
  * 📧 Contact : s.ahmad0147@gmail.com
  * 📝 License : MIT (Educational/Personal Use)
  * 📁 File    : README.md
- * 🕒 Updated : Oct 30, 2025
+ * 🕒 Updated : Jan 12, 2026
 -->
-# 🚀 Salman Ahmad – Professional Portfolio
+# 🚀 0xPortfolio v2.0 – Salman Ahmad
 
-A visually stunning, Apple-inspired portfolio website built with Next.js, Tailwind CSS, and Framer Motion. Features a complete SYSADMIN_ARCHIVES blog system showcasing technical infrastructure documentation, homelab adventures, and production system deep-dives with glassmorphic design, neon accents, and S-tier polish.
+A high-performance, sci-fi/cyberpunk-inspired portfolio website built with Next.js, Tailwind CSS, and Framer Motion. This **Version 2.0 Overhaul** transitions from the previous Apple-inspired aesthetics to a "System Initialization" theme, featuring advanced glassmorphism, Aurora backgrounds, comprehensive theming support (Light/Dark/System), and a cinematic loading experience.
 
 ---
+
+## 🟢 v2.0 Update Highlights
+
+- **Theme Overhaul:** Complete redesign with a "0xPortfolio" cyberpunk aesthetic.
+- **Cinematic Loading Screen:** System boot-up sequence with "DESIGN / CODE / REPEAT" mantra animations.
+- **Advanced Glassmorphism:** Enhanced transparency, blur effects (`backdrop-blur-xl`), and aurora background integration.
+- **Dynamic Theming:** Seamless Light/Dark mode switching with `next-themes` and custom Tailwind variables.
+- **Mobile First:** Optimized layout with responsive typography (`text-[17vw]`) and touch-friendly interactions.
+- **Techno-Guide Navigation:** Replaced generic scroll indicators with custom animated rails.
 
 ## 🟢 CLS Optimization & Deployment Readiness
 

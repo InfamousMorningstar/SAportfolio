@@ -1,4 +1,7 @@
-'use client';
+const fs = require('fs');
+const path = require('path');
+
+const content = `'use client';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaEnvelope, FaChevronDown } from 'react-icons/fa';
@@ -9,7 +12,7 @@ export default function Hero() {
   const y2 = useTransform(scrollY, [0, 500], [0, -150]);
 
   return (
-    <section id="home" className="relative h-screen w-full overflow-hidden flex flex-col justify-center px-4 md:px-12 pt-20 transition-colors duration-500">
+    <section id="home" className="relative h-screen w-full overflow-hidden flex flex-col justify-center px-4 md:px-12 pt-20 bg-background transition-colors duration-500">
       
       {/* Background Noise/Gradient - Adapted for Theming */}
       <div className="absolute inset-0 -z-10 opacity-30">
@@ -22,9 +25,9 @@ export default function Hero() {
         
         {/* Top/Left: Massive Name */}
         <motion.div style={{ y: y1 }} className="relative">
-            <h1 className="text-[17vw] md:text-[11vw] font-black leading-[0.85] tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-foreground via-foreground/80 to-muted select-none">
+            <h1 className="text-[12vw] md:text-[11vw] font-black leading-[0.85] tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-foreground via-foreground/80 to-muted select-none">
                 SALMAN<br/>
-                <span className="ml-[15vw] md:ml-[15vw]">AHMAD</span>
+                <span className="ml-[10vw] md:ml-[15vw]">AHMAD</span>
             </h1>
         </motion.div>
 
@@ -48,37 +51,19 @@ export default function Hero() {
 
       </div>
 
-      {/* Scroll Indicator - Techno Guide */}
+      {/* Scroll Indicator */}
       <motion.div 
-        className="absolute bottom-6 md:bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-30 cursor-pointer group"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 1 }}
-        onClick={() => {
-          const nextSection = document.getElementById('about');
-          if (nextSection) nextSection.scrollIntoView({ behavior: 'smooth' });
-        }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-muted-soft flex flex-col items-center gap-2"
+        animate={{ y: [0, 10, 0] }}
+        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
       >
-        <span className="text-[10px] md:text-xs font-mono tracking-[0.2em] text-muted-soft/70 uppercase group-hover:text-accent group-hover:tracking-[0.4em] transition-all duration-500">
-            Explore
-        </span>
-        
-        {/* Animated Rail */}
-        <div className="relative w-[1px] h-12 md:h-16 bg-gradient-to-b from-transparent via-muted/20 to-transparent overflow-hidden">
-            <motion.div 
-                className="absolute top-0 w-full bg-accent shadow-[0_0_10px_1px_rgba(var(--accent),0.5)]"
-                style={{ height: '30%' }}
-                animate={{ top: ['-100%', '100%'], opacity: [0, 1, 0] }}
-                transition={{ 
-                    duration: 2.5, 
-                    repeat: Infinity, 
-                    ease: "easeInOut",
-                    repeatDelay: 0.1
-                }}
-            />
-        </div>
+        <span className="text-xs tracking-[0.2em] font-medium">SCROLL</span>
+        <FaChevronDown />
       </motion.div>
 
     </section>
   );
 }
+`;
+
+fs.writeFileSync(path.join(process.cwd(), 'src/components/Hero.tsx'), content);

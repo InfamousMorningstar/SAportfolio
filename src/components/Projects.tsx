@@ -1,277 +1,150 @@
-﻿'use client';
+'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
-import { createPortal } from 'react-dom';
-import { CardWrapper } from './ui/CardWrapper';
-import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
-import { useState, useEffect } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
+import { FaGithub, FaExternalLinkAlt, FaArrowRight } from 'react-icons/fa';
 
 const projects = [
   {
+    id: 1,
     title: 'Starlight Tours',
-    summary: 'Interactive educational website documenting systemic racism and police misconduct in Saskatoon',
-    description: 'An immersive, educational platform exploring the Starlight Tours - incidents where Saskatoon police officers abandoned Indigenous men in freezing temperatures during the 1990s-2000s. Features cinematic WebGL animations, comprehensive academic research, and verified sources from the Wright Commission inquiry.',
-    technologies: ['React 19', 'TypeScript', 'Vite', 'Framer Motion', 'Three.js', 'Tailwind CSS'],
-    techStack: [
-      { name: 'React', icon: '' },
-      { name: 'TypeScript', icon: '' },
-      { name: 'Vite', icon: '' },
-      { name: 'Three.js', icon: '' }
-    ],
-    features: [
-      'Custom LaserFlow WebGL hero animation with interactive particles',
-      'Mac OS-style navigation with magnification effects',
-      'Interactive timeline documenting key events and victims',
-      'Comprehensive sources with links to academic papers and reports',
-      'Verified quotes from Justice David Wright Commission',
-      'Responsive design with snow effects and cursor trails',
-      'Educational focus on reconciliation and systemic change',
-      'Keyboard navigation support (arrow keys)'
-    ],
-    metrics: {
-      research: 'Academic',
-      sources: '25+ verified',
-      team: '9 members'
-    },
-    icon: '',
-    status: 'Live',
+    category: 'Interactive Education',
+    description: 'An immersive educational platform documenting documented cases of systemic racism. Features WebGL animations, verified academic research, and interactive timelines.',
+    tech: ['React 19', 'Three.js', 'WebGL', 'Vite'],
     github: 'https://github.com/InfamousMorningstar/starlight',
-    demo: 'https://starlight-eight-ruby.vercel.app/'
+    demo: 'https://starlight-eight-ruby.vercel.app/',
+    gradient: 'from-blue-600 to-cyan-500',
+    number: '01'
   },
   {
-    title: 'Inter-Freight Auto Sales',
-    summary: 'Production-ready automotive dealership with advanced vehicle management and secure admin dashboard',
-    description: 'A premium, enterprise-grade car dealership web application featuring intelligent inquiry tracking, smooth 3D animations, CARFAX integration, Google Reviews, and a fully secure admin dashboard. Built with Next.js 15 and Supabase for optimal performance, security, and scalability.',
-    technologies: ['Next.js 15', 'TypeScript', 'Supabase', 'Framer Motion', 'Zod', 'PostgreSQL'],
-    techStack: [
-      { name: 'Next.js', icon: '' },
-      { name: 'TypeScript', icon: '' },
-      { name: 'Supabase', icon: '' },
-      { name: 'PostgreSQL', icon: '' }
-    ],
-    features: [
-      '3D parallax hero with real-time Calgary weather widget',
-      'Advanced filtering: search by make, price, mileage, transmission',
-      'Intelligent inquiry system with vehicle tracking and rate limiting',
-      'CARFAX report integration with 30-day caching',
-      'Secure admin dashboard with CSRF protection and RLS policies',
-      'Bulk image upload with optimization and CDN delivery',
-      'Google Reviews infinite marquee with hover pause',
-      'Role-based authentication with protected routes'
-    ],
-    metrics: {
-      security: 'CSRF + RLS',
-      performance: '95+ Lighthouse',
-      capacity: '50 vehicles'
-    },
-    icon: '',
-    status: 'Production',
+    id: 2,
+    title: 'Inter-Freight Auto',
+    category: 'Enterprise Production',
+    description: 'A premium automotive dealership platform with intelligent inquiry tracking, CARFAX integration, and a secure admin dashboard. Built for scale.',
+    tech: ['Next.js 15', 'Supabase', 'PostgreSQL', 'Zod'],
     github: '',
-    demo: 'https://interfreightautosales.ca'
+    demo: 'https://interfreightautosales.ca',
+    gradient: 'from-orange-500 to-red-600',
+    number: '02'
   },
   {
-    title: 'Professional Portfolio Website',
-    summary: 'Meticulously engineered single-page portfolio with Apple-style aesthetic and zero-config CI/CD',
-    description: 'A meticulously engineered single-page portfolio that marries cutting-edge React 19 / Next.js 15 with a refined, Apple-style aesthetic. It runs on a zero-config, Git-driven CI/CD pipeline (GitHub  Vercel) and surfaces live performance telemetry, accessibility scores, and version metadata right in the UI.',
-    technologies: ['Next.js 15', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'Vercel Analytics'],
-    techStack: [
-      { name: 'Next.js', icon: '' },
-      { name: 'TypeScript', icon: '' },
-      { name: 'Tailwind', icon: '' },
-      { name: 'Framer Motion', icon: '' }
-    ],
-    features: [
-      'Liquid-glass navbar with LED under-glow and < 0.01 CLS',
-      'Motion-driven mobile UX with Framer Motion',
-      'Live dual-timezone clock (MDT/UTC)',
-      'Decrypt-style hero with zero layout shift',
-      'Real-time Core Web Vitals monitoring'
-    ],
-    metrics: {
-      ui: 'Glassmorphism',
-      perf: '100/100',
-      deploy: 'Auto C/CD'
-    },
-    icon: '',
-    status: 'Live',
+    id: 3,
+    title: 'Portfolio V2',
+    category: 'Personal Brand',
+    description: 'Meticulously engineered single-page portfolio with Apple-style aesthetic. Features liquid-glass navbar, motion-driven UX, and zero-config CI/CD',
+    tech: ['Next.js', 'Framer Motion', 'Tailwind', 'Vercel'],
     github: 'https://github.com/InfamousMorningstar/portfolio',
-    demo: 'https://portfolio.ahmxd.net'
+    demo: 'https://portfolio.ahmxd.net',
+    gradient: 'from-purple-500 to-pink-500',
+    number: '03'
   }
 ];
 
 export default function Projects() {
-  const [selectedProject, setSelectedProject] = useState<number | null>(null);
-  const [mounted, setMounted] = useState(false);
+  const targetRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+  });
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const x = useTransform(scrollYProgress, [0, 1], ["1%", "-75%"]);
 
   return (
-    <section id="projects" className="py-16 lg:py-20 px-6 relative">
-      <CardWrapper>
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-        >
-          <h2 className="text-4xl md:text-6xl font-bold mb-6">
-            Featured <span className="gradient-text">Projects</span>
-          </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-accent to-accent2 mx-auto mb-8"></div>
-          <p className="text-xl text-muted max-w-3xl mx-auto">
-            Showcase of my technical expertise in Web Development, DevOps, automation, and infrastructure management
-          </p>
-        </motion.div>
-
-        {/* Standard Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
-            <motion.div
-              key={index}
-              className="card group relative flex flex-col h-full cursor-pointer hover:border-accent/40 transition-all duration-300"
-              whileHover={{ y: -6 }}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              onClick={() => {
-                console.log('Clicked project:', index);
-                setSelectedProject(index);
-              }}
-            >
-              {/* Minimalist Inner Gradient */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none" />
-
-              <div className="relative z-10 flex flex-col h-full space-y-4">
-                {/* Header */}
-                <div className="flex items-start justify-between">
-                   <span className="text-4xl">{project.icon}</span>
-                   <span className="px-2 py-1 rounded-full text-[10px] uppercase font-bold tracking-wider border border-white/10 bg-white/5 text-zinc-400">
-                     {project.status}
-                   </span>
-                </div>
-
-                {/* Title & Summary */}
-                <div>
-                   <h3 className="text-xl font-bold text-white group-hover:text-accent transition-colors mb-2">{project.title}</h3>
-                   <p className="text-zinc-400 text-sm leading-relaxed line-clamp-3">{project.summary}</p>
-                </div>
-
-                {/* Tech Tags - Limit to 3 */}
-                <div className="mt-auto pt-4 flex flex-wrap gap-2">
-                   {project.technologies.slice(0, 3).map(t => (
-                      <span key={t} className="text-xs text-zinc-500 bg-zinc-900/50 px-2 py-1 rounded border border-white/5">
-                        {t}
-                      </span>
-                   ))}
-                   {project.technologies.length > 3 && (
-                      <span className="text-xs text-zinc-600 px-1 py-1">+{project.technologies.length - 3}</span>
-                   )}
-                </div>
-              </div>
-            </motion.div>
-          ))}
+    <section ref={targetRef} id="projects" className="relative h-[300vh]">
+      <div className="sticky top-0 flex h-screen items-center overflow-hidden bg-surface-strong transition-colors duration-500">
+        
+        {/* Abstract Background Elements */}
+        <div className="absolute inset-0 w-full h-full pointer-events-none">
+            <div className="absolute top-20 left-20 w-96 h-96 bg-accent/10 rounded-full blur-[100px]" />
+            <div className="absolute bottom-20 right-20 w-96 h-96 bg-secondary/10 rounded-full blur-[100px]" />
         </div>
 
-        {/* Project Modal */}
-        {mounted && createPortal(
-          <AnimatePresence>
-            {selectedProject !== null && (
-              <motion.div 
-                 key="modal"
-                 className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
-                 initial={{ opacity: 0 }}
-                 animate={{ opacity: 1 }}
-                 exit={{ opacity: 0 }}
-                 onClick={() => setSelectedProject(null)}
-              >
-                 <motion.div 
-                   className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-zinc-900 border border-white/10 rounded-3xl p-6 md:p-10 shadow-2xl"
-                   initial={{ scale: 0.9, y: 20 }}
-                   animate={{ scale: 1, y: 0 }}
-                   exit={{ scale: 0.9, y: 20 }}
-                   onClick={(e) => e.stopPropagation()}
-                 >
-                   <button 
-                     onClick={() => setSelectedProject(null)}
-                     className="absolute top-4 right-4 p-2 rounded-full bg-white/5 hover:bg-white/10 transition-colors z-50"
-                   >
-                     <span className="sr-only">Close</span>
-                     ✕
-                   </button>
+        {/* Section Title - Fixed Position until scroll passes */}
+        <motion.div 
+            style={{ opacity: useTransform(scrollYProgress, [0, 0.2], [1, 0]) }}
+            className="absolute top-12 left-6 md:left-12 z-20"
+        >
+            <h2 className="text-4xl md:text-8xl font-black tracking-tighter text-foreground">
+                SELECTED<br/><span className="text-muted-soft">WORKS</span>
+            </h2>
+            <div className="mt-4 flex items-center gap-2 text-muted">
+                <span className="w-12 h-[1px] bg-muted-soft"></span>
+                <span>SCROLL TO EXPLORE</span>
+            </div>
+        </motion.div>
 
-                   <div className="grid md:grid-cols-3 gap-8">
-                      {/* Sidebar / Top Info */}
-                      <div className="md:col-span-1 space-y-6">
-                          <div className="text-6xl">{projects[selectedProject].icon}</div>
-                          <div>
-                             <h3 className="text-2xl font-bold text-white mb-2">{projects[selectedProject].title}</h3>
-                             <div className="flex flex-wrap gap-2">
-                                {projects[selectedProject].status && (
-                                  <span className="text-xs font-mono text-green-400 bg-green-400/10 px-2 py-1 rounded border border-green-400/20">
-                                     {projects[selectedProject].status}
-                                  </span>
-                                )}
+        {/* Horizontal Scroll Track */}
+        <motion.div style={{ x }} className="flex gap-6 md:gap-24 px-6 md:px-24">
+          
+          {/* Spacer to push first card visible after title fade */}
+          <div className="min-w-[50vw] md:min-w-[40vw] flex flex-col justify-center">
+             <div className="text-2xl text-muted max-w-sm font-light">
+                Engineering digital experiences with a focus on <span className="text-foreground">performance</span>, <span className="text-foreground">accessibility</span>, and <span className="text-foreground">motion</span>.
+             </div>
+          </div>
+
+          {projects.map((project) => (
+            <div key={project.id} className="relative group h-[50vh] md:h-[70vh] w-[85vw] md:w-[60vw] flex-shrink-0">
+               {/* Card Container */}
+              <div className="w-full h-full relative rounded-[2rem] overflow-hidden bg-surface-card/30 backdrop-blur-xl border border-border-subtle transition-colors hover:border-border-strong shadow-lg">
+                    
+                    {/* Gradient Background */}
+                    <div className={`absolute inset-0 opacity-10 bg-gradient-to-br ${project.gradient} transition-opacity duration-500 group-hover:opacity-20`} />
+                    
+                    {/* Content */}
+                    <div className="absolute inset-0 p-6 md:p-12 flex flex-col justify-between z-10">
+                        {/* Top */}
+                        <div className="flex justify-between items-start">
+                             <div className="flex flex-col">
+                                <span className={`text-sm font-bold tracking-widest uppercase bg-gradient-to-r ${project.gradient} bg-clip-text text-transparent mb-2`}>
+                                    {project.category}
+                                </span>
+                                <h3 className="text-4xl md:text-6xl font-bold text-foreground max-w-lg leading-tight">
+                                    {project.title}
+                                </h3>
                              </div>
-                          </div>
-                          
-                          {/* Links */}
-                          <div className="flex flex-col gap-3">
-                              {projects[selectedProject].github && (
-                                 <a href={projects[selectedProject].github} target="_blank" className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors">
-                                    <FaGithub /> View Source
-                                 </a>
-                              )}
-                              {projects[selectedProject].demo && (
-                                 <a href={projects[selectedProject].demo} target="_blank" className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors">
-                                    <FaExternalLinkAlt /> Live Demo
-                                 </a>
-                              )}
-                          </div>
-                      </div>
+                             <span className="text-6xl md:text-9xl font-black text-muted/10 font-mono">
+                                 {project.number}
+                             </span>
+                        </div>
 
-                      {/* Content */}
-                      <div className="md:col-span-2 space-y-8">
-                         <div>
-                            <h4 className="text-lg font-bold text-white mb-3">About</h4>
-                            <p className="text-zinc-400 leading-relaxed">{projects[selectedProject].description}</p>
-                         </div>
+                        {/* Bottom */}
+                        <div>
+                             <p className="text-lg md:text-2xl text-muted max-w-2xl mb-8 leading-relaxed">
+                                 {project.description}
+                             </p>
 
-                         <div>
-                            <h4 className="text-lg font-bold text-white mb-3">Key Features</h4>
-                            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                               {projects[selectedProject].features.map(f => (
-                                  <li key={f} className="flex items-start gap-2 text-sm text-zinc-400">
-                                     <span className="text-accent mt-1">›</span>
-                                     {f}
-                                  </li>
-                               ))}
-                            </ul>
-                         </div>
+                             <div className="flex flex-wrap gap-2 md:gap-3 mb-8">
+                                 {project.tech.map(t => (
+                                     <span key={t} className="px-4 py-2 rounded-full border border-border-subtle bg-surface-strong text-sm md:text-base text-muted-soft">
+                                         {t}
+                                     </span>
+                                 ))}
+                             </div>
 
-                         <div>
-                            <h4 className="text-lg font-bold text-white mb-3">Tech Stack</h4>
-                            <div className="flex flex-wrap gap-2">
-                               {projects[selectedProject].technologies.map(t => (
-                                  <span key={t} className="px-3 py-1.5 rounded bg-white/5 border border-white/5 text-sm text-zinc-300">
-                                     {t}
-                                  </span>
-                               ))}
-                            </div>
-                         </div>
-                      </div>
-                   </div>
-                 </motion.div>
-              </motion.div>
-            )}
-          </AnimatePresence>,
-          document.body
-        )}
-
-      </CardWrapper>
+                             <div className="flex gap-6">
+                                 {project.demo && (
+                                     <a href={project.demo} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-foreground font-medium hover:text-accent transition-colors group/link">
+                                         Visit Site 
+                                         <FaArrowRight className="group-hover/link:translate-x-1 transition-transform" />
+                                     </a>
+                                 )}
+                                 {project.github && (
+                                     <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-muted hover:text-foreground transition-colors">
+                                         <FaGithub size={20} />
+                                         Source Code
+                                     </a>
+                                 )}
+                             </div>
+                        </div>
+                    </div>
+              </div>
+            </div>
+          ))}
+          
+          {/* Final Spacer */}
+          <div className="min-w-[20vw]" />
+        </motion.div>
+      </div>
     </section>
   );
 }

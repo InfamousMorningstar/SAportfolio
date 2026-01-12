@@ -1,263 +1,263 @@
-﻿/*
- * â–ˆâ–ˆâ–ˆâ•—â–‘â–‘â–‘â–ˆâ–ˆâ–ˆâ•—â–‘â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•—â–‘â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•—â–‘â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•—â–‘â–ˆâ–ˆâ•—â–‘â–‘â–‘â–ˆâ–ˆâ•—â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•—â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•—â–‘â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•—â–‘
- * â–ˆâ–ˆâ–ˆâ–ˆâ•—â–‘â–‘â–ˆâ–ˆâ–ˆâ–ˆâ•‘â–ˆâ–ˆâ•”â•â•â–ˆâ–ˆâ•—â–ˆâ–ˆâ•”â•â•â–ˆâ–ˆâ•—â–ˆâ–ˆâ•”â•â•â–ˆâ–ˆâ•—â–ˆâ–ˆâ•‘â–‘â–‘â–‘â–ˆâ–ˆâ•‘â–ˆâ–ˆâ•”â•â•â•â•â•â–ˆâ–ˆâ•”â•â•â–ˆâ–ˆâ•—â–ˆâ–ˆâ•”â•â•â–ˆâ–ˆâ•—
- * â–ˆâ–ˆâ•”â–ˆâ–ˆâ–ˆâ–ˆâ•”â–ˆâ–ˆâ•‘â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•‘â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•”â•â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•”â•â–ˆâ–ˆâ•‘â–‘â–‘â–‘â–ˆâ–ˆâ•‘â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•—â–‘â–‘â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•”â•â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•”â•
- * â–ˆâ–ˆâ•‘â•šâ–ˆâ–ˆâ•”â•â–ˆâ–ˆâ•‘â–ˆâ–ˆâ•”â•â•â–ˆâ–ˆâ•‘â–ˆâ–ˆâ•”â•â•â–ˆâ–ˆâ•—â–ˆâ–ˆâ•”â•â•â–ˆâ–ˆâ•—â–ˆâ–ˆâ•‘â–‘â–‘â–‘â–ˆâ–ˆâ•‘â–ˆâ–ˆâ•”â•â•â•â–‘â–‘â–ˆâ–ˆâ•”â•â•â–ˆâ–ˆâ•—â–ˆâ–ˆâ•”â•â•â–ˆâ–ˆâ•—
- * â–ˆâ–ˆâ•‘â–‘â•šâ•â•â–‘â–ˆâ–ˆâ•‘â–ˆâ–ˆâ•‘â–‘â–‘â–ˆâ–ˆâ•‘â–ˆâ–ˆâ•‘â–‘â–‘â–ˆâ–ˆâ•‘â–ˆâ–ˆâ•‘â–‘â–‘â–ˆâ–ˆâ•‘â•šâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•”â•â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•—â–ˆâ–ˆâ•‘â–‘â–‘â–ˆâ–ˆâ•‘â–ˆâ–ˆâ•‘â–‘â–‘â–ˆâ–ˆâ•‘
- * â•šâ•â•â–‘â–‘â–‘â–‘â–‘â•šâ•â•â•šâ•â•â–‘â–‘â•šâ•â•â•šâ•â•â–‘â–‘â•šâ•â•â•šâ•â•â–‘â–‘â•šâ•â•â–‘â•šâ•â•â•â•â•â•â–‘â•šâ•â•â•â•â•â•â•â•šâ•â•â–‘â–‘â•šâ•â•â•šâ•â•â–‘â–‘â•šâ•â•
- *
- * ðŸ‘¤ Author  : Salman Ahmad
- * ðŸŒ URL     : https://portfolio.ahmxd.net
- * ðŸ“§ Contact : s.ahmad0147@gmail.com
- * ðŸ“ License : MIT (Educational/Personal Use)
- * ðŸ“ File    : Experience.tsx
- * ðŸ•’ Updated : Jun 12, 2025
- */
 'use client';
 
-import { motion } from 'framer-motion';
-import { CardWrapper } from './ui/CardWrapper';
-import { FaBriefcase, FaCogs, FaUsers, FaTools } from 'react-icons/fa';
+import { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { FaBuilding, FaMapMarkerAlt, FaCalendarAlt, FaCheckCircle, FaBriefcase, FaTerminal } from 'react-icons/fa';
+
+// ----------------------------------------------------------------------
+// DATA
+// ----------------------------------------------------------------------
 
 const experiences = [
   {
+    id: 'EXP-01',
     title: 'Assembler',
     company: 'DIRTT Environmental Solutions',
     period: 'Sep 2023 - Sep 2024',
     location: 'Calgary, AB',
     type: 'Full-Time',
-    description: 'Specialized in precision assembly of modular architectural components with focus on quality control and efficiency optimization.',
+    role_code: 'ASM-Lvl1',
+    description: 'Executed high-precision assembly of modular architectural components within a lean manufacturing environment. Focused on quality assurance protocols and production efficiency.',
+    metrics: {
+      accuracy: '99.8%',
+      team_size: '15+',
+      efficiency_boost: '15%'
+    },
     responsibilities: [
       'Operated precision assembly equipment with 99.8% accuracy rate',
       'Mentored new team members on assembly procedures and safety protocols',
-      'Collaborated with engineering teams to optimize assembly processes',
-      'Maintained detailed quality control documentation',
-      'Contributed to lean manufacturing initiatives'
+      'Collaborated with engineering to optimize assembly processes',
+      'Maintained detailed quality control documentation'
     ],
-    skills: ['Precision Assembly', 'Quality Control', 'Team Leadership', 'Process Optimization', 'Safety Protocols'],
-    icon: <FaCogs className="text-accent" />,
-    achievements: [
-      'Achieved top performer status in quality metrics',
-      'Led training sessions for 5+ new employees',
-      'Contributed to 15% efficiency improvement in assembly line'
-    ]
+    tech_stack: ['Precision Assembly', 'QC Protocols', 'Lean Mfg', 'Safety Compliance']
   },
   {
-    title: 'Customer Service Representative',
+    id: 'EXP-02',
+    title: 'Customer Service Rep',
     company: 'Circle K',
     period: 'Jul 2017 - Sep 2023',
     location: 'Calgary, AB',
     type: 'Full-Time',
-    description: 'Provided exceptional customer service while managing daily operations, inventory, and team coordination in high-volume retail environment.',
+    role_code: 'CSR-Lead',
+    description: 'Orchestrated daily retail operations including inventory management, financial reconciliation, and team leadership. Maintained high-volume transaction integrity.',
+    metrics: {
+      retention: '95%',
+      trainees: '20+',
+      tenure: '6 Years'
+    },
     responsibilities: [
       'Managed customer transactions and resolved complex service issues',
       'Maintained inventory systems and coordinated stock replenishment',
       'Trained and supervised new employees on company procedures',
-      'Handled cash management and daily financial reconciliation',
       'Ensured compliance with health and safety regulations'
     ],
-    skills: ['Customer Service', 'Inventory Management', 'Cash Handling', 'Team Training', 'Problem Solving'],
-    icon: <FaUsers className="text-accent2" />,
-    achievements: [
-      '6+ years of consistent performance excellence',
-      'Trained 20+ new employees with 95% retention rate',
-      'Maintained perfect cash handling record',
-      'Received multiple customer service recognition awards'
-    ]
+    tech_stack: ['Inventory Mgmt', 'Leadership', 'Conflict Resolution', 'Financial Rec.']
   }
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.3
-    }
-  }
-};
+// ----------------------------------------------------------------------
+// COMPONENTS
+// ----------------------------------------------------------------------
 
-const itemVariants = {
-  hidden: { opacity: 0, x: -50 },
-  visible: { 
-    opacity: 1, 
-    x: 0,
-    transition: { duration: 0.8, ease: 'easeOut' }
-  }
+const GlitchText = ({ text }: { text: string }) => {
+  return (
+    <span className="relative inline-block group">
+      <span className="relative z-10">{text}</span>
+      <span className="absolute top-0 left-0 -z-10 w-full h-full text-accent opacity-0 group-hover:opacity-70 group-hover:translate-x-[2px] transition-all duration-100">
+        {text}
+      </span>
+      <span className="absolute top-0 left-0 -z-10 w-full h-full text-blue-500 opacity-0 group-hover:opacity-70 group-hover:-translate-x-[2px] transition-all duration-100">
+        {text}
+      </span>
+    </span>
+  );
 };
 
 export default function Experience() {
+  const [selectedId, setSelectedId] = useState(experiences[0].id);
+  const containerRef = useRef(null);
+  
+  const selectedExp = experiences.find(e => e.id === selectedId) || experiences[0];
+
   return (
-    <section id="experience" className="py-16 lg:py-20 px-6 relative overflow-x-hidden">
-      <CardWrapper>
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.65, ease: [0.77, 0, 0.175, 1] }}
-          viewport={{ once: true }}
-          style={{ backfaceVisibility: 'hidden', willChange: 'transform, opacity' }}
-        >
-          <h2 className="text-4xl md:text-6xl font-bold mb-6">
-            Work <span className="gradient-text">Experience</span>
-          </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-accent to-accent2 mx-auto mb-8"></div>
-          <p className="text-xl text-muted max-w-3xl mx-auto">
-            Building valuable skills through diverse professional experiences
-          </p>
-        </motion.div>
+    <section ref={containerRef} className="py-32 relative overflow-hidden transition-colors duration-500">
+      {/* Background Decor */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-10 pointer-events-none">
+        <div className="absolute top-[10%] left-[5%] text-9xl font-black text-foreground opacity-5 select-none">
+          EXP
+        </div>
+        <div className="absolute bottom-[10%] right-[5%] text-[10rem] font-black text-foreground opacity-5 select-none">
+          LOGS
+        </div>
+      </div>
 
-        <motion.div
-          className="relative"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          style={{ backfaceVisibility: 'hidden', willChange: 'transform, opacity' }}
-        >
-          {/* Timeline Line */}
-          <div className="absolute left-8 md:left-1/2 md:-translate-x-1/2 w-0.5 h-full bg-gradient-to-b from-accent via-accent2 to-secondary pointer-events-none select-none"></div>
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row justify-between items-end mb-20 border-b border-border-strong pb-8">
+          <div>
+            <h2 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-foreground to-muted mb-4">
+              EXPERIENCE
+            </h2>
+            <div className="flex items-center gap-3 text-accent font-mono text-sm">
+              <span className="w-2 h-2 bg-accent rounded-full animate-pulse" />
+              SYSTEM_STATUS: ONLINE
+              <span className="text-muted-foreground">// ACCESSING CAREER_DB</span>
+            </div>
+          </div>
+          <div className="hidden md:block text-right">
+            <div className="text-xs text-muted-foreground font-mono mb-1">DATA INTEGRITY</div>
+            <div className="text-2xl font-bold font-mono text-accent">100%</div>
+          </div>
+        </div>
 
-          {experiences.map((experience, index) => (
-            <motion.div
-              key={experience.title + experience.company}
-              className={`relative flex items-center mb-16 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} group`}
-              variants={itemVariants}
-              style={{ backfaceVisibility: 'hidden', willChange: 'transform, opacity' }}
-            >
-              {/* Timeline Node */}
-              <motion.div
-                className="absolute left-6 md:left-1/2 md:-translate-x-1/2 w-6 h-6 bg-gradient-to-r from-accent to-accent2 rounded-full border-4 border-background z-10"
-                whileHover={{ scale: 1.13, boxShadow: '0 4px 16px 0 rgba(168,85,247,0.13)', backgroundColor: 'rgba(168,85,247,0.08)', filter: 'brightness(1.12)' }}
-                whileTap={{ scale: 0.96, boxShadow: '0 1.5px 6px 0 rgba(168,85,247,0.08)', backgroundColor: 'rgba(168,85,247,0.14)', filter: 'brightness(0.98)' }}
-                transition={{ duration: 0.18, ease: [0.4, 0, 0.2, 1] }}
-                style={{ WebkitTapHighlightColor: 'transparent', backfaceVisibility: 'hidden' }}
-              />
-
-              {/* Content Card */}
-              <div
-                className={`w-full md:w-5/12 ml-16 md:ml-0 ${index % 2 === 0 ? 'md:mr-auto md:pr-8' : 'md:ml-auto md:pl-8'}`}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          
+          {/* LEFT COLUMN: SELECTION LIST */}
+          <div className="lg:col-span-4 flex flex-col gap-4">
+            {experiences.map((exp) => (
+              <button
+                key={exp.id}
+                onClick={() => setSelectedId(exp.id)}
+                className={`relative group w-full text-left p-6 transition-all duration-300 border-l-2 ${
+                  selectedId === exp.id 
+                    ? 'bg-surface-strong border-accent' 
+                    : 'bg-transparent border-border-subtle hover:bg-surface-strong hover:border-text-muted'
+                }`}
               >
-                <motion.div
-                  className="card border border-border-subtle/60 shadow-lg hover:shadow-xl hover:ring-2 hover:ring-accent/20 transition-all duration-200 rounded-2xl px-6 py-5 md:px-8 md:py-7"
-                  whileHover={{ y: -5, scale: 1.02 }}
-                  whileTap={{ scale: 0.97 }}
-                  transition={{ duration: 0.18, ease: [0.4, 0, 0.2, 1] }}
-                  style={{ backfaceVisibility: 'hidden', willChange: 'transform, opacity' }}
-                >
-                  {/* Header */}
-                  <div className="flex flex-col md:flex-row items-start mb-4 md:relative md:pr-24 gap-2 md:gap-0">
-                    <div className="flex flex-col md:flex-col lg:flex-row items-start gap-3 w-full">
-                      <motion.div
-                        className="text-2xl mb-1 md:mb-2 lg:mb-0"
-                        whileHover={{ rotate: 10, scale: 1.08 }}
-                        whileTap={{ scale: 0.97 }}
-                        transition={{ type: 'spring', stiffness: 340, damping: 22, mass: 1.1 }}
-                      >
-                        {experience.icon}
-                      </motion.div>
-                      <div className="flex-1">
-                        <h3 className="text-xl font-bold text-foreground group-hover:text-accent transition-colors">
-                          {experience.title}
-                        </h3>
-                        <p className="text-accent2 font-semibold">{experience.company}</p>
-                      </div>
-                      {/* Pill box for desktop/tablet */}
-                      <span
-                        className="hidden md:inline-flex absolute right-4 top-1 items-center justify-center px-2.5 py-0.5 sm:px-3 sm:py-1 bg-accent/10 border border-accent/20 rounded-full text-accent font-semibold shrink-0 text-xs max-w-[7.5rem] text-center whitespace-nowrap h-6 sm:h-7 leading-none select-none overflow-hidden text-ellipsis"
-                        style={{ lineHeight: 1.15, WebkitFontSmoothing: 'antialiased', fontWeight: 600 }}
-                      >
-                        Full-Time
-                      </span>
-                    </div>
-                    {/* Pill box for mobile/tablet portrait */}
-                    <span
-                      className="md:hidden inline-flex items-center justify-center px-2.5 py-0.5 bg-accent/10 border border-accent/20 rounded-full text-accent font-semibold shrink-0 text-xs max-w-[7.5rem] text-center whitespace-nowrap h-6 leading-none select-none overflow-hidden text-ellipsis mt-2"
-                      style={{ lineHeight: 1.15, WebkitFontSmoothing: 'antialiased', fontWeight: 600 }}
-                    >
-                      Full-Time
+                {/* Active Indicator */}
+                {selectedId === exp.id && (
+                  <motion.div 
+                    layoutId="active-glow"
+                    className="absolute inset-0 bg-accent/5 z-0"
+                    transition={{ duration: 0.3 }}
+                  />
+                )}
+
+                <div className="relative z-10">
+                  <div className="flex justify-between items-start mb-2">
+                    <span className={`font-mono text-xs px-2 py-1 rounded border ${
+                       selectedId === exp.id 
+                       ? 'text-accent border-accent/30 bg-accent/10' 
+                       : 'text-muted border-border-subtle'
+                    }`}>
+                      {exp.period}
                     </span>
+                    <FaTerminal className={`text-xs ${selectedId === exp.id ? 'text-accent' : 'text-muted'}`} />
                   </div>
+                  <h3 className={`text-xl font-bold mb-1 transition-colors ${
+                    selectedId === exp.id ? 'text-foreground' : 'text-muted group-hover:text-foreground'
+                  }`}>
+                    {exp.company}
+                  </h3>
+                  <p className="text-sm text-muted font-mono">{exp.title}</p>
+                </div>
+              </button>
+            ))}
 
-                  {/* Period & Location */}
-                  <div className="flex items-center justify-between text-sm text-muted mb-4">
-                    <span className="font-mono">{experience.period}</span>
-                    <span>{experience.location}</span>
-                  </div>
+            {/* Decor box */}
+            <div className="mt-8 p-6 border border-dashed border-border-subtle rounded-lg bg-surface-strong font-mono text-xs text-muted">
+              <p className="mb-2">{`> SCANNING_HISTORY...`}</p>
+              <p className="mb-2">{`> FOUND ${experiences.length} RECORDS`}</p>
+              <p>{`> LAST_UPDATED: ${new Date().toLocaleDateString()}`}</p>
+            </div>
+          </div>
 
-                  {/* Description */}
-                  <p className="text-muted mb-6 leading-relaxed">
-                    {experience.description}
-                  </p>
+          {/* RIGHT COLUMN: DETAILS PANE */}
+          <div className="lg:col-span-8">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={selectedId}
+                initial={{ opacity: 0, y: 20, filter: 'blur(10px)' }}
+                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                exit={{ opacity: 0, y: -20, filter: 'blur(10px)' }}
+                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                className="bg-surface-card/30 backdrop-blur-xl border border-border-subtle p-6 md:p-10 rounded-xl relative overflow-hidden shadow-lg"
+              >
+                 {/* ID Watermark */}
+                 <div className="absolute -top-6 -right-6 text-9xl font-black text-foreground/[0.04] select-none pointer-events-none">
+                  {selectedExp.id}
+                 </div>
 
-                  {/* Responsibilities */}
-                  <div className="mb-6">
-                    <h4 className="text-sm font-semibold text-accent2 mb-3 uppercase tracking-wide">
-                      Key Responsibilities
-                    </h4>
-                    <ul className="space-y-2">
-                      {experience.responsibilities.map((responsibility, idx) => (
-                        <motion.li
-                          key={responsibility}
-                          className="flex items-start gap-2 text-sm text-muted"
-                          initial={{ opacity: 0, x: 20 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          transition={{ duration: 0.18, delay: idx * 0.08, ease: [0.4, 0, 0.2, 1] }}
-                          viewport={{ once: true }}
-                          style={{ backfaceVisibility: 'hidden', willChange: 'transform, opacity' }}
-                        >
-                          <div className="w-1.5 h-1.5 bg-accent rounded-full mt-1.5 flex-shrink-0"></div>
-                          <span>{responsibility}</span>
-                        </motion.li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Skills */}
-                  <div className="mb-6">
-                    <h4 className="text-sm font-semibold text-secondary mb-3 uppercase tracking-wide">
-                      Skills Developed
-                    </h4>
-                    <div className="flex flex-wrap gap-2 max-w-full md:max-w-[90%] overflow-x-auto scrollbar-hide">
-                      {experience.skills.map((skill) => (
-                        <span
-                          key={skill}
-                          className="px-2 py-1 bg-secondary/10 border border-secondary/30 rounded text-secondary text-xs font-medium whitespace-nowrap"
-                        >
-                          {skill}
-                        </span>
-                      ))}
+                 <div className="relative z-10">
+                    {/* Header */}
+                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+                      <div>
+                        <h3 className="text-3xl font-bold text-foreground mb-2">{selectedExp.title}</h3>
+                        <div className="flex items-center gap-2 text-accent text-lg">
+                          <FaBriefcase />
+                          <span>{selectedExp.company}</span>
+                        </div>
+                      </div>
+                      <div className="flex flex-col items-end gap-1">
+                         <span className="font-mono text-sm text-muted">{selectedExp.location}</span>
+                         <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/10 text-green-500 text-xs font-bold border border-green-500/20">
+                            <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                            {selectedExp.type.toUpperCase()}
+                         </span>
+                      </div>
                     </div>
-                  </div>
 
-                  {/* Achievements */}
-                  <div>
-                    <h4 className="text-sm font-semibold text-accent mb-3 uppercase tracking-wide">
-                      Key Achievements
-                    </h4>
-                    <ul className="space-y-1">
-                      {experience.achievements.map((achievement, idx) => (
-                        <motion.li
-                          key={achievement}
-                          className="flex items-start gap-2 text-sm text-muted"
-                          initial={{ opacity: 0, x: 20 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          transition={{ duration: 0.18, delay: idx * 0.08 + 0.12, ease: [0.4, 0, 0.2, 1] }}
-                          viewport={{ once: true }}
-                          style={{ backfaceVisibility: 'hidden', willChange: 'transform, opacity' }}
-                        >
-                          <div className="w-1.5 h-1.5 bg-accent rounded-full mt-1.5 flex-shrink-0"></div>
-                          <span>{achievement}</span>
-                        </motion.li>
-                      ))}
-                    </ul>
-                  </div>
-                </motion.div>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-      </CardWrapper>
+                    <div className="h-px w-full bg-gradient-to-r from-accent/50 to-transparent mb-8" />
+
+                    {/* Main Content Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-8">
+                        <div>
+                          <h4 className="text-sm font-bold text-muted mb-4 uppercase tracking-wider flex items-center gap-2">
+                             <span className="w-4 h-px bg-accent" /> Mission Brief
+                          </h4>
+                          <p className="text-text-soft leading-relaxed mb-6">
+                            {selectedExp.description}
+                          </p>
+                          
+                          <div className="space-y-4">
+                            {selectedExp.responsibilities.map((item, i) => (
+                              <div key={i} className="flex gap-3 text-sm text-text-muted">
+                                <span className="text-accent mt-1">▹</span>
+                                <span>{item}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Stats / Metrics Side */}
+                        <div className="space-y-6">
+                           <div className="bg-surface-strong border border-border-subtle p-5 rounded-lg">
+                              <h4 className="text-xs font-bold text-muted mb-4 uppercase tracking-wider">
+                                Key Metrics
+                              </h4>
+                              <div className="grid grid-cols-2 gap-4">
+                                {Object.entries(selectedExp.metrics).map(([key, value]) => (
+                                  <div key={key}>
+                                    <div className="text-2xl font-mono text-foreground font-bold">{value}</div>
+                                    <div className="text-xs text-muted uppercase">{key.replace('_', ' ')}</div>
+                                  </div>
+                                ))}
+                              </div>
+                           </div>
+                           
+                           <div className="bg-surface-strong border border-border-subtle p-5 rounded-lg">
+                              <h4 className="text-xs font-bold text-muted mb-4 uppercase tracking-wider">
+                                Technologies & Methods
+                              </h4>
+                              <div className="flex flex-wrap gap-2">
+                                {selectedExp.tech_stack.map((tech) => (
+                                  <span key={tech} className="px-2 py-1 bg-surface-card/30 backdrop-blur-xl border border-border-subtle rounded text-xs text-text-soft font-mono">
+                                    {tech}
+                                  </span>
+                                ))}
+                              </div>
+                           </div>
+                        </div>
+                    </div>
+                 </div>
+
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+        </div>
+      </div>
     </section>
   );
 }

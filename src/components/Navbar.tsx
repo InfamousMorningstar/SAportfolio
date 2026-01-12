@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Github, Linkedin, Mail, Moon, Sun, X } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 
-const links = ["Home", "About", "Projects", "Experience", "Education", "Blog", "Contact"];
+const links = ["Home", "About", "Projects", "Experience", "Education", "Interests", "Blog", "Contact"];
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -291,7 +291,7 @@ export default function Navbar() {
                       style={{ perspective: 1200, boxShadow: 'var(--motion-box-shadow)' }}
                     >
                       <span className="text-accent font-mono mr-1">{time.mdt}</span>
-                      <span className="text-text-soft/80 text-xs">MDT</span>
+                      <span className="text-text-soft/80 text-xs">MST</span>
                       <span className="mx-2 text-text-soft/50">|</span>
                       <span className="text-accent2 font-mono mr-1">{time.utc}</span>
                       <span className="text-text-soft/80 text-xs">UTC</span>

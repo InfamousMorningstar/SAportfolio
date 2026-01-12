@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -10,7 +10,7 @@ import { CardWrapper } from './ui/CardWrapper';
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   const [time, setTime] = useState('');
-  const [temperature, setTemperature] = useState<string | null>(null);
+  const [temperature, setTemperature] = useState(null);
   const [isHoveringEmail, setIsHoveringEmail] = useState(false);
   const [copied, setCopied] = useState(false);
   const [showLegal, setShowLegal] = useState(false);
@@ -86,9 +86,22 @@ export default function Footer() {
   ];
 
   return (
-    <footer id="contact" className="relative w-full z-40 mt-32 pb-6 px-4 md:px-12 overflow-hidden">
+    <footer id="contact" className="relative w-full z-40 mt-32 pb-6 px-4 md:px-12 overflow-hidden transition-colors duration-500">
       
       <CardWrapper>
+        <motion.div
+          className="text-center mb-12 md:mb-20"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+        >
+          <h2 className="text-4xl md:text-6xl font-bold mb-6 text-foreground">
+            Say <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-accent2">Hello</span>
+          </h2>
+          <div className="w-24 h-1 bg-gradient-to-r from-accent to-accent2 mx-auto mb-8" />
+        </motion.div>
+
         <div className="relative z-10 flex flex-col md:grid md:grid-cols-12 gap-12">
           
           {/* LEFT: Call to Action + Status */}
@@ -99,10 +112,10 @@ export default function Footer() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
                 </span>
-                <h3 className="text-xs font-mono text-zinc-500 uppercase tracking-widest">Say hello</h3>
+                <h3 className="text-xs font-mono text-muted uppercase tracking-widest">Comms Link</h3>
               </div>
               
-              <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white/90">
+              <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-foreground/90">
                 Let's simplify <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-accent2/80">
                   the complex.
@@ -111,7 +124,7 @@ export default function Footer() {
             </div>
             
             <div className="flex flex-col space-y-4">
-              <p className="text-zinc-500 max-w-md text-sm md:text-base">
+              <p className="text-muted max-w-md text-sm md:text-base">
                 Specializing in cloud infrastructure, responsive design, and building the digital future one commit at a time.
               </p>
               
@@ -122,10 +135,10 @@ export default function Footer() {
                 onMouseLeave={() => setIsHoveringEmail(false)}
                 className="relative group w-fit cursor-pointer outline-none"
               >
-                <div className="flex items-center space-x-3 bg-white/5 hover:bg-white/10 border border-white/10 px-5 py-3 rounded-xl transition-all duration-300">
-                  <Mail className="w-5 h-5 text-zinc-300" />
-                  <span className="text-zinc-200 font-mono text-sm">s.ahmad0147@gmail.com</span>
-                  <div className="w-px h-4 bg-white/10 mx-2" />
+                <div className="flex items-center space-x-3 bg-surface-card hover:bg-surface-strong border border-border-subtle px-5 py-3 rounded-xl transition-all duration-300">
+                  <Mail className="w-5 h-5 text-muted-soft" />
+                  <span className="text-foreground font-mono text-sm">s.ahmad0147@gmail.com</span>
+                  <div className="w-px h-4 bg-border-subtle mx-2" />
                   <AnimatePresence mode="wait">
                     {copied ? (
                       <motion.span
@@ -133,7 +146,7 @@ export default function Footer() {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
-                        className="text-green-400 text-xs font-bold"
+                        className="text-green-500 text-xs font-bold"
                       >
                         COPIED!
                       </motion.span>
@@ -144,7 +157,7 @@ export default function Footer() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
                       >
-                        <Copy className="w-4 h-4 text-zinc-500 group-hover:text-white transition-colors" />
+                        <Copy className="w-4 h-4 text-muted group-hover:text-foreground transition-colors" />
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -158,37 +171,37 @@ export default function Footer() {
             
             {/* Clock & Location */}
             <div className="text-right hidden md:block">
-              <p className="text-4xl font-mono text-white/20 font-light tracking-tighter tabular-nums mb-1">
+              <p className="text-4xl font-mono text-foreground/20 font-light tracking-tighter tabular-nums mb-1">
                 {time}
               </p>
               
               {/* Weather & Location Tag */}
-               <div className="flex items-center justify-end space-x-2 text-zinc-500 text-xs font-mono uppercase">
+               <div className="flex items-center justify-end space-x-2 text-muted text-xs font-mono uppercase">
                   {temperature && (
                     <>
-                      <span className="flex items-center text-zinc-400">
+                      <span className="flex items-center text-text-soft">
                         <Cloud className="w-3 h-3 mr-1" />
                         {temperature}
                       </span>
                       <span></span>
                     </>
                   )}
-                  <span className="hidden md:inline text-zinc-600">51.0447 N, 114.0719 W </span>
-                  <span>Calgary, Canada. Earth</span>
+                  <span className="hidden md:inline text-text-soft">51.0447 N, 114.0719 W </span>
+                  <span>Calgary, CA. Terra (Sol III)</span>
                </div>
             </div>
 
             {/* Links Grid */}
             <div className="grid grid-cols-2 gap-x-12 gap-y-4 w-full md:w-auto">
               <div className="flex flex-col space-y-4">
-                 <h3 className="text-xs font-mono text-zinc-500 uppercase tracking-widest mb-1">Socials</h3>
+                 <h3 className="text-xs font-mono text-muted uppercase tracking-widest mb-1">Uplinks</h3>
                  {socialLinks.map((link) => (
                    <a 
                     key={link.name} 
                     href={link.url} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="group flex items-center space-x-2 text-zinc-300 hover:text-white transition-colors"
+                    className="group flex items-center space-x-2 text-foreground/70 hover:text-foreground transition-colors"
                    >
                      <span className="flex">{link.icon} &nbsp; {link.name}</span>
                      <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 -translate-y-1 translate-x-1 group-hover:translate-y-0 group-hover:translate-x-0 transition-all" />
@@ -197,10 +210,10 @@ export default function Footer() {
               </div>
               
               <div className="flex flex-col space-y-4">
-                 <h3 className="text-xs font-mono text-zinc-500 uppercase tracking-widest mb-1">Index</h3>
-                 <Link href="/" className="text-zinc-300 hover:text-white transition-colors">Home</Link>
-                 <Link href="#projects" className="text-zinc-300 hover:text-white transition-colors">Projects</Link>
-                 <Link href="#contact" className="text-zinc-300 hover:text-white transition-colors">Contact</Link>
+                 <h3 className="text-xs font-mono text-muted uppercase tracking-widest mb-1">Systems</h3>
+                 <Link href="/" className="text-foreground/70 hover:text-foreground transition-colors">Home</Link>
+                 <Link href="#projects" className="text-foreground/70 hover:text-foreground transition-colors">Projects</Link>
+                 <Link href="#education" className="text-foreground/70 hover:text-foreground transition-colors">Education</Link>
               </div>
             </div>
 
@@ -208,17 +221,17 @@ export default function Footer() {
         </div>
 
         {/* BOTTOM: Copyright & Legal */}
-        <div className="relative mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-xs text-zinc-600 font-mono">
+        <div className="relative mt-20 pt-8 border-t border-border-subtle flex flex-col md:flex-row justify-between items-center text-xs text-text-soft font-mono">
             <div className="mb-4 md:mb-0 flex items-center gap-2">
                <span> {currentYear} Salman Ahmad.</span>
-               <span className="hidden md:inline text-zinc-700">|</span>
-               <span className="text-zinc-500">Mission Status: Nominal</span>
+               <span className="hidden md:inline text-muted">|</span>
+               <span className="text-muted">Mission Status: Nominal</span>
             </div>
             <div className="flex space-x-6">
-               <button onClick={() => setShowLegal(!showLegal)} className="hover:text-zinc-400 cursor-pointer transition-colors outline-none">
+               <button onClick={() => setShowLegal(!showLegal)} className="hover:text-foreground cursor-pointer transition-colors outline-none">
                  Legal & Terms
                </button>
-               <Link href="/sitemap.xml" className="hover:text-zinc-400 cursor-pointer transition-colors">Sitemap</Link>
+               <Link href="/sitemap.xml" className="hover:text-foreground cursor-pointer transition-colors">Sitemap</Link>
             </div>
         </div>
         
@@ -232,9 +245,9 @@ export default function Footer() {
               transition={{ duration: 0.3, ease: "easeInOut" }}
               className="overflow-hidden"
             >
-              <div className="pt-8 mt-8 border-t border-white/5 grid grid-cols-1 md:grid-cols-2 gap-8 text-zinc-500 text-sm font-mono leading-relaxed">
+              <div className="pt-8 mt-8 border-t border-border-subtle grid grid-cols-1 md:grid-cols-2 gap-8 text-text-soft text-sm font-mono leading-relaxed">
                 <div>
-                   <h4 className="text-white mb-2">Terms of Service</h4>
+                   <h4 className="text-foreground mb-2">Terms of Service</h4>
                    <p>
                      By accessing this portfolio, you agree that the content is provided "as-is" for demonstration purposes. 
                      The design and code implementation are the intellectual property of Salman Ahmad, unless otherwise noted. 
@@ -242,7 +255,7 @@ export default function Footer() {
                    </p>
                 </div>
                 <div>
-                   <h4 className="text-white mb-2">Privacy Policy</h4>
+                   <h4 className="text-foreground mb-2">Privacy Policy</h4>
                    <p>
                      This site does not collect personal data beyond anonymous usage analytics (Vercel) to improve performance. 
                      No cookies are used for ad tracking. Any information sent via email is strictly confidential.
@@ -255,7 +268,7 @@ export default function Footer() {
       </CardWrapper>
       
       {/* Decorative "Wire" connecting to bottom */}
-      <div className="absolute bottom-0 left-1/2 w-px h-6 bg-gradient-to-b from-transparent to-white/20 -translate-x-1/2" />
+      <div className="absolute bottom-0 left-1/2 w-px h-6 bg-gradient-to-b from-transparent to-border-subtle -translate-x-1/2" />
     </footer>
   );
 }
