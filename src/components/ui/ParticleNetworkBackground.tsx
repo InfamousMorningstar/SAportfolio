@@ -19,7 +19,7 @@ export const ParticleNetworkBackground = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const particlesRef = useRef<any[]>([]);
   const mouseRef = useRef<{ x: number; y: number }>({ x: -1000, y: -1000 });
-  const rafRef = useRef<number>();
+  const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
