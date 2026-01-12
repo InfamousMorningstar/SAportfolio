@@ -10,7 +10,7 @@ import { CardWrapper } from './ui/CardWrapper';
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   const [time, setTime] = useState('');
-  const [temperature, setTemperature] = useState(null);
+  const [temperature, setTemperature] = useState<string | null>(null);
   const [isHoveringEmail, setIsHoveringEmail] = useState(false);
   const [copied, setCopied] = useState(false);
   const [showLegal, setShowLegal] = useState(false);
