@@ -193,7 +193,7 @@ export default function Navbar() {
                     relative backdrop-blur-2xl border border-border-subtle shadow-lg
                     rounded-full overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]
                     flex items-center justify-between px-2
-                    ${isScrolled ? "bg-background/80 w-[750px] h-14" : "bg-background/60 w-[850px] h-16"}
+                    ${isScrolled ? "bg-background/80 w-[880px] h-14" : "bg-background/60 w-[980px] h-16"}
                 `}
             >
                 {/* 1. Left Wing: System Status */}
@@ -210,23 +210,38 @@ export default function Navbar() {
                         // Handle internal links vs external/page links
                         const isInternal = link.href.startsWith("#");
                         const isActive = activeSection === link.href.substring(1);
+                        const isResume = link.name === "RESUME";
                         
                         return (
                             <MagneticWrapper key={link.name}>
-                                <Link href={link.href} className="relative group px-4 py-2 block">
-                                    {isActive && isInternal && (
+                                <Link 
+                                    href={link.href} 
+                                    className={`
+                                        relative group block transition-all duration-300
+                                        ${isResume 
+                                            ? "px-5 py-1.5 ml-2 border border-accent/20 bg-accent/5 rounded-full hover:bg-accent/10 hover:border-accent/40" 
+                                            : "px-4 py-2"
+                                        }
+                                    `}
+                                >
+                                    {isActive && isInternal && !isResume && (
                                         <motion.div 
                                             layoutId="nav-pill"
                                             className="absolute inset-0 bg-foreground/5 rounded-full border border-foreground/5"
                                             transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                                         />
                                     )}
-                                    <span className={`relative text-xs font-bold transition-colors duration-300 ${isActive ? "text-accent" : "text-muted hover:text-foreground"}`}>
-                                        <DecryptText text={link.name} isActive={isActive} />
+                                    <span className={`
+                                        relative text-xs font-bold transition-colors duration-300
+                                        ${isResume ? "text-accent" : isActive ? "text-accent" : "text-muted hover:text-foreground"}
+                                    `}>
+                                        {isResume ? link.name : <DecryptText text={link.name} isActive={isActive} />}
                                     </span>
                                     
-                                    {/* Hover glow */}
-                                    <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 bg-accent/5 blur-md transition-opacity duration-300" />
+                                    {/* Hover glow (Standard Links) */}
+                                    {!isResume && (
+                                        <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 bg-accent/5 blur-md transition-opacity duration-300" />
+                                    )}
                                 </Link>
                             </MagneticWrapper>
                         );

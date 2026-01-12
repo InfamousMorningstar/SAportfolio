@@ -39,6 +39,17 @@ export default function Hero() {
                 distributed systems, and interactive design.
             </p>
             
+            <div className="flex justify-end mb-8">
+                <motion.button 
+                    onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="px-8 py-3 rounded-full bg-accent/5 border border-accent/20 text-accent hover:bg-accent/10 hover:border-accent transition-all duration-300 backdrop-blur-sm font-medium tracking-wide text-sm"
+                >
+                    LET'S CONNECT
+                </motion.button>
+            </div>
+
             <div className="flex justify-end gap-6 text-2xl md:text-3xl text-muted-soft">
                 <a href="https://github.com/InfamousMorningstar" target="_blank" rel="noopener noreferrer" className="hover:text-foreground hover:scale-110 transition-all duration-300"><FaGithub /></a>
                 <a href="https://www.linkedin.com/in/salman-ahmad-6788811b6/" target="_blank" rel="noopener noreferrer" className="hover:text-accent hover:scale-110 transition-all duration-300"><FaLinkedin /></a>
