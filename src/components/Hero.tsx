@@ -22,9 +22,9 @@ export default function Hero() {
         
         {/* Top/Left: Massive Name */}
         <motion.div style={{ y: y1 }} className="relative">
-            <h1 className="text-[17vw] md:text-[11vw] font-black leading-[0.85] tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-foreground via-foreground/80 to-muted select-none">
+            <h1 className="text-[17vw] md:text-[min(11vw,210px)] font-black leading-[0.85] tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-foreground via-foreground/80 to-muted select-none">
                 SALMAN<br/>
-                <span className="ml-[15vw] md:ml-[15vw]">AHMAD</span>
+                <span className="ml-[15vw] md:ml-[min(15vw,290px)]">AHMAD</span>
             </h1>
         </motion.div>
 

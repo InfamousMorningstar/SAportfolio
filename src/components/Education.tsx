@@ -75,10 +75,9 @@ export default function Education() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-7xl font-bold text-foreground tracking-tight mb-4"
+            className="text-4xl md:text-8xl font-black tracking-tighter text-foreground mb-8"
           >
             EDUCATION
-            <span className="text-accent">.</span>
           </motion.h2>
         </div>
 
@@ -91,13 +90,13 @@ export default function Education() {
               transition={{ delay: index * 0.2 }}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
-              className="group relative h-[500px] perspective-1000"
+              className="group relative h-[500px]"
             >
               {/* Card Container */}
-              <div className="relative w-full h-full transition-all duration-500 transform-style-3d group-hover:rotate-x-12">
+              <div className="relative w-full h-full transition-all duration-500 hover:-translate-y-2">
                 
                 {/* Main Card Face */}
-                <div className="absolute inset-0 bg-surface-card/30 backdrop-blur-xl border border-border-subtle rounded-2xl p-6 md:p-8 flex flex-col justify-between overflow-hidden shadow-xl">
+                <div className="absolute inset-0 bg-surface-card/30 backdrop-blur-xl border border-border-subtle rounded-2xl p-6 md:p-8 flex flex-col justify-between overflow-hidden shadow-xl hover:shadow-2xl hover:border-accent/20 transition-all duration-300">
                     {/* Active Status Pulse */}
                     {edu.status === 'IN_PROGRESS' && (
                         <div className="absolute top-0 right-0 p-4">
@@ -131,7 +130,7 @@ export default function Education() {
                     </div>
 
                     {/* Bottom Section - Stats */}
-                    <div className="relative z-10 grid grid-cols-3 gap-2 border-t border-border-subtle pt-6">
+                    <div className="relative z-10 grid grid-cols-3 gap-2 border-t border-border-subtle pt-6 transition-opacity duration-300 group-hover:opacity-0">
                         {Object.entries(edu.stats).map(([key, value]) => (
                             <div key={key}>
                                 <div className="text-xs text-muted uppercase tracking-wider mb-1">{key}</div>
@@ -139,31 +138,30 @@ export default function Education() {
                             </div>
                         ))}
                     </div>
+
+                    {/* Hover Reveal Layer (Coursework) */}
+                    <motion.div 
+                        initial={{ opacity: 0, y: 100 }}
+                        animate={{ 
+                            opacity: hoveredIndex === index ? 1 : 0,
+                            y: hoveredIndex === index ? 0 : 100 
+                        }}
+                        transition={{ duration: 0.3 }}
+                        className="absolute inset-x-0 bottom-0 bg-surface-strong/95 backdrop-blur-md border-t border-border-subtle p-6 z-20"
+                    >
+                        <h4 className="text-xs font-bold text-accent uppercase tracking-wider mb-4 border-b border-border-subtle pb-2">
+                            Relevant Coursework
+                        </h4>
+                        <div className="grid grid-cols-2 gap-2">
+                            {edu.courses.map((course, i) => (
+                                <div key={i} className="flex items-center gap-2 text-xs text-text-soft">
+                                    <FaCheckCircle className="text-accent/50 text-[10px]" />
+                                    <span>{course}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </motion.div>
                 </div>
-
-                {/* Hover Reveal Layer (Coursework) */}
-                <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ 
-                        opacity: hoveredIndex === index ? 1 : 0,
-                        y: hoveredIndex === index ? -10 : 20 
-                    }}
-                    transition={{ duration: 0.3 }}
-                    className="absolute inset-x-4 -bottom-4 bg-surface-overlay/95 backdrop-blur-md border border-border-subtle rounded-xl p-6 shadow-2xl z-20"
-                >
-                    <h4 className="text-xs font-bold text-accent uppercase tracking-wider mb-4 border-b border-border-subtle pb-2">
-                        Relevant Coursework
-                    </h4>
-                    <div className="grid grid-cols-2 gap-2">
-                        {edu.courses.map((course, i) => (
-                            <div key={i} className="flex items-center gap-2 text-xs text-text-soft">
-                                <FaCheckCircle className="text-accent/50 text-[10px]" />
-                                <span>{course}</span>
-                            </div>
-                        ))}
-                    </div>
-                </motion.div>
-
               </div>
             </motion.div>
           ))}

@@ -97,7 +97,7 @@ export default function Footer() {
           viewport={{ once: true }}
         >
           <h2 className="text-4xl md:text-6xl font-bold mb-6 text-foreground">
-            Say <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-accent2">Hello</span>
+            SAY <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-accent2">HELLO</span>
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-accent to-accent2 mx-auto mb-8" />
           

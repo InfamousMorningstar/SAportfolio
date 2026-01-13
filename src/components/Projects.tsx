@@ -31,10 +31,10 @@ const projects = [
     id: 3,
     title: 'Portfolio V2',
     category: 'Personal Brand',
-    description: 'Meticulously engineered single-page portfolio with Apple-style aesthetic. Features liquid-glass navbar, motion-driven UX, and zero-config CI/CD',
+    description: 'High-performance personal site built with Next.js. Features immersive aurora backgrounds, bento-grid layouts, magnetic interactions, and a custom markdown blog engine.',
     tech: ['Next.js', 'Framer Motion', 'Tailwind', 'Vercel'],
     github: 'https://github.com/InfamousMorningstar/portfolio',
-    demo: 'https://portfolio.ahmxd.net',
+    demo: '',
     gradient: 'from-purple-500 to-pink-500',
     number: '03'
   }

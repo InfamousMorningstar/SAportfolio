@@ -63,8 +63,8 @@ export default function Interests() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
-            Interests & <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-cyan-400 to-violet-400">Curiosity</span>
+          <h2 className="text-4xl md:text-8xl font-black tracking-tighter text-foreground mb-8">
+            INTERESTS
           </h2>
           <p className="text-lg text-muted max-w-2xl">
              Beyond the terminal: a look into what keeps me tinkering, playing, and learning.

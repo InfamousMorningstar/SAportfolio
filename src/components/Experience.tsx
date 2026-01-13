@@ -96,7 +96,7 @@ export default function Experience() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row justify-between items-end mb-20 border-b border-border-strong pb-8">
           <div>
-            <h2 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-foreground to-muted mb-4">
+            <h2 className="text-4xl md:text-8xl font-black tracking-tighter text-foreground mb-8">
               EXPERIENCE
             </h2>
             <div className="flex items-center gap-3 text-accent font-mono text-sm">
