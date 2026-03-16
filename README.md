@@ -11,22 +11,21 @@
  * 📧 Contact : s.ahmad0147@gmail.com
  * 📝 License : MIT (Educational/Personal Use)
  * 📁 File    : README.md
- * 🕒 Updated : Jan 12, 2026
+ * 🕒 Updated : March 16, 2026
 -->
-# 🚀 0xPortfolio v2.0 – Salman Ahmad
+# 🚀 0xPortfolio v2.1 – Salman Ahmad
 
-A high-performance, sci-fi/cyberpunk-inspired portfolio website built with Next.js, Tailwind CSS, and Framer Motion. This **Version 2.0 Overhaul** transitions from the previous Apple-inspired aesthetics to a "System Initialization" theme, featuring advanced glassmorphism, Aurora backgrounds, comprehensive theming support (Light/Dark/System), and a cinematic loading experience.
+A high-performance, sci-fi/cyberpunk-inspired portfolio website built with Next.js, Tailwind CSS, and Framer Motion. This **Version 2.1 Update** refines the visual identity with a sophisticated "Particle Network" aesthetic, advanced canvas animations, and improved system theming.
 
 ---
 
-## 🟢 v2.0 Update Highlights
+## 🟢 v2.1 Update Highlights
 
-- **Theme Overhaul:** Complete redesign with a "0xPortfolio" cyberpunk aesthetic.
-- **Cinematic Loading Screen:** System boot-up sequence with "DESIGN / CODE / REPEAT" mantra animations.
-- **Advanced Glassmorphism:** Enhanced transparency, blur effects (`backdrop-blur-xl`), and aurora background integration.
-- **Dynamic Theming:** Seamless Light/Dark mode switching with `next-themes` and custom Tailwind variables.
-- **Mobile First:** Optimized layout with responsive typography (`text-[17vw]`) and touch-friendly interactions.
-- **Techno-Guide Navigation:** Replaced generic scroll indicators with custom animated rails.
+- **Particle Network Background:** A dynamic, interactive constellation mesh that reacts to mouse movement and adapts seamlessly to light/dark themes.
+- **Enhanced Loading Sequence:** Upgraded "Gyroscopic Core" animation with HUD elements and glitch-free transitions.
+- **Improved Theming:** robust state management for the background system, ensuring instant and smooth transitions between light and dark modes.
+- **Performance Optimization:** Replaced heavy GLSL shaders with optimized Canvas 2D implementations for better battery life on mobile devices.
+- **Codebase Cleanup:** Removed unused assets and simplified the component architecture for better maintainability.
 
 ## 🟢 CLS Optimization & Deployment Readiness
 
