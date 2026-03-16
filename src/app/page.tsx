@@ -8,7 +8,7 @@ import Interests from '@/components/Interests';
 import Footer from '@/components/Footer';
 import ScrollToTopArrow from '@/components/ScrollToTopArrow';
 import CursorTrail from '@/components/CursorTrail';
-import { AuroraBackground } from '@/components/ui/AuroraBackground';
+import { ParticleNetworkBackground } from '@/components/ui/ParticleNetworkBackground';
 import Section from '@/components/Section';
 import LoadingScreen from '@/components/LoadingScreen';
 
@@ -17,7 +17,7 @@ export default function HomePage() {
     <div className="min-h-screen text-foreground relative">
       <LoadingScreen />
       <CursorTrail />
-      <AuroraBackground />
+      <ParticleNetworkBackground />
       <Navbar />
 
       <main className="flex flex-col gap-0">
