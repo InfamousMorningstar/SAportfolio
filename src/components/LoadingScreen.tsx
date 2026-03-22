@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Logo from '@/components/Logo';
 
 export default function LoadingScreen() {
   const [isLoading, setIsLoading] = useState(true);
@@ -116,6 +117,11 @@ export default function LoadingScreen() {
             <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,black_40%,transparent_100%)] opacity-20" />
             
             {/* Scanline Texture */}
+
+             {/* Background Emblem - The Abstract Logo */}
+            <div className="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none mix-blend-overlay">
+               <Logo className="w-[80vw] h-[80vw] md:w-[60vh] md:h-[60vh] text-white animate-pulse-slow" variant="simple" />
+            </div>
             <div className="absolute inset-0 pointer-events-none opacity-[0.03]" style={{ background: "linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.5) 50%)", backgroundSize: "100% 4px" }} />
           </div>
 

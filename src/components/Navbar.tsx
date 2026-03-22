@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Moon, Sun, Menu, X, Terminal, Wifi, Cpu, Globe, Rocket } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
+import Logo from "@/components/Logo";
 
 const navLinks = [
   { name: "HOME", href: "#home" },
@@ -178,6 +179,18 @@ export default function Navbar() {
 
   return (
     <>
+      {/* ---------------- BRAND MARK (Top Left) ---------------- */}
+      <motion.div 
+        className="fixed top-6 left-6 z-50 hidden md:block pointer-events-auto"
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 1.2, duration: 0.8 }}
+      >
+        <Link href="/" aria-label="Home">
+           <Logo className="w-12 h-12 text-accent transition-transform duration-300 hover:scale-110 hover:rotate-3" variant="full" />
+        </Link>
+      </motion.div>
+
       {/* ---------------- DESKTOP HUD ---------------- */}
       <motion.nav 
         className="fixed top-0 left-0 right-0 z-50 hidden md:flex justify-center items-start pt-6 pointer-events-none"
