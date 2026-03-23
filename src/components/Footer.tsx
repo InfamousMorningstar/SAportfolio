@@ -6,6 +6,7 @@ import { Copy, ArrowUpRight, Github, Linkedin, Mail, Cloud } from 'lucide-react'
 import { FaDiscord } from 'react-icons/fa'; 
 import Link from 'next/link';
 import { CardWrapper } from './ui/CardWrapper';
+import Logo from '@/components/Logo';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -239,10 +240,12 @@ export default function Footer() {
 
         {/* BOTTOM: Copyright & Legal */}
         <div className="relative mt-20 pt-8 border-t border-border-subtle flex flex-col md:flex-row justify-between items-center text-xs text-text-soft font-mono">
-            <div className="mb-4 md:mb-0 flex items-center gap-2">
-               <span> {currentYear} Salman Ahmad.</span>
-               <span className="hidden md:inline text-muted">|</span>
-               <span className="text-muted">Mission Status: Nominal</span>
+            <div className="mb-4 md:mb-0 flex items-center gap-4">
+               <Logo className="w-8 h-8 text-muted hover:text-accent transition-colors" variant="simple" />
+               <div className="flex flex-col">
+                  <span className="text-foreground">© {currentYear} Salman Ahmad</span>
+                  <span className="text-muted-soft text-[10px]">All Systems Nominal</span>
+               </div>
             </div>
             <div className="flex space-x-6">
                <button onClick={() => setShowLegal(!showLegal)} className="hover:text-foreground cursor-pointer transition-colors outline-none">
