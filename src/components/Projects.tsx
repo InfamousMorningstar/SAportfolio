@@ -37,6 +37,17 @@ const projects = [
     demo: '',
     gradient: 'from-purple-500 to-pink-500',
     number: '03'
+  },
+  {
+    id: 4,
+    title: 'CDN DayZ',
+    category: 'Community Platform',
+    description: 'Production DayZ community platform with live server status, launcher-verified mod inventories, official news ingestion, and a searchable diagnostics hub for DayZ error codes.',
+    tech: ['Next.js 15', 'TypeScript', 'Tailwind', 'GameDig'],
+    github: '',
+    demo: 'https://cdndayz.com',
+    gradient: 'from-emerald-500 to-teal-500',
+    number: '04'
   }
 ];
 
@@ -46,10 +57,10 @@ export default function Projects() {
     target: targetRef,
   });
 
-  const x = useTransform(scrollYProgress, [0, 1], ["1%", "-75%"]);
+  const x = useTransform(scrollYProgress, [0, 1], ["1%", "-100%"]);
 
   return (
-    <section ref={targetRef} id="projects" className="relative h-[300vh]">
+    <section ref={targetRef} id="projects" className="relative h-[360vh]">
       <div className="sticky top-0 flex h-screen items-center overflow-hidden bg-surface-strong transition-colors duration-500">
         
         {/* Abstract Background Elements */}
