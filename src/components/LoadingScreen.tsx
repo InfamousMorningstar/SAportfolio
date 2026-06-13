@@ -119,11 +119,11 @@ export default function LoadingScreen() {
               transition={{ delay: 0.4, duration: 0.6 }}
               className="font-mono text-[9px] md:text-[11px] uppercase tracking-[0.35em] text-white/50 flex items-center gap-3 mb-8"
             >
-              <span>VIGILANTE</span>
-              <span className="text-accent/70">//</span>
               <span>ENGINEER</span>
+              <span className="text-accent/70">//</span>
+              <span>DEVELOPER</span>
               <span className="text-accent2/70">//</span>
-              <span>OPERATOR</span>
+              <span>ARCHITECT</span>
             </motion.div>
 
             {/* Boot log */}
