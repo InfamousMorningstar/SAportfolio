@@ -4,224 +4,287 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Logo from '@/components/Logo';
 
+const BOOT_LINES = [
+  '> ESTABLISHING SECURE UPLINK...',
+  '> DECRYPTING IDENTITY [████████] OK',
+  '> MOUNTING /dev/wayne_protocol',
+  '> LOADING COMBAT SUBROUTINES...',
+  '> ACCESS GRANTED',
+];
+
 export default function LoadingScreen() {
   const [isLoading, setIsLoading] = useState(true);
-  const [text, setText] = useState("");
-  const fullText = "BOOTING PORTFOLIO_OS";
+  const [bootIndex, setBootIndex] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const [glitchBurst, setGlitchBurst] = useState(false);
 
   useEffect(() => {
-    // Check if already loaded in this session
-    const hasLoaded = typeof window !== 'undefined' ? sessionStorage.getItem('portfolio-loaded') : null;
-    
+    const hasLoaded =
+      typeof window !== 'undefined'
+        ? sessionStorage.getItem('portfolio-loaded')
+        : null;
+
     if (hasLoaded) {
       setIsLoading(false);
       return;
     }
 
-    // Phase 1: Text Scramble Effect
-    let currentIndex = 0;
-    const interval = setInterval(() => {
-      if (currentIndex <= fullText.length) {
-        setText(fullText.slice(0, currentIndex));
-        currentIndex++;
-      } else {
-        clearInterval(interval);
-      }
-    }, 30); // Speed of typing
+    // Boot log lines
+    const bootInterval = setInterval(() => {
+      setBootIndex((i) => (i < BOOT_LINES.length ? i + 1 : i));
+    }, 240);
 
-    // Complete loading sequence
+    // Progress bar
+    const progInterval = setInterval(() => {
+      setProgress((p) => Math.min(100, p + Math.random() * 14 + 4));
+    }, 110);
+
+    // Random glitch bursts
+    const glitchInterval = setInterval(() => {
+      setGlitchBurst(true);
+      setTimeout(() => setGlitchBurst(false), 140);
+    }, 700);
+
     const timer = setTimeout(() => {
       setIsLoading(false);
       if (typeof window !== 'undefined') {
         sessionStorage.setItem('portfolio-loaded', 'true');
       }
-    }, 1600); // Total duration ~2.0s incl. exit
+    }, 2000);
 
     return () => {
-      clearInterval(interval);
+      clearInterval(bootInterval);
+      clearInterval(progInterval);
+      clearInterval(glitchInterval);
       clearTimeout(timer);
     };
   }, []);
-
-  const containerVariants = {
-    exit: {
-      opacity: 0,
-      scale: 1.1,
-      filter: "blur(10px)",
-      transition: { 
-        duration: 0.6, 
-        ease: "easeInOut",
-        when: "beforeChildren",
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const nameVariants = {
-    hidden: { opacity: 0, y: 20, filter: 'blur(10px)' },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      filter: 'blur(0px)',
-      transition: { 
-        delay: 0.5, 
-        duration: 0.8, 
-        ease: [0.22, 1, 0.36, 1] 
-      } 
-    }
-  };
-
-  const subheadingVariants = {
-    hidden: { opacity: 0, y: 10, letterSpacing: "0.1em" },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      letterSpacing: "0.2em",
-      transition: { 
-        delay: 0.8, 
-        duration: 0.8, 
-        ease: "easeOut" 
-      }
-    }
-  };
-
-  const lineVariants = {
-    hidden: { width: 0, opacity: 0 },
-    visible: { 
-      width: "120px", 
-      opacity: 1,
-      transition: { 
-        delay: 0.8, 
-        duration: 0.8, 
-        ease: "easeInOut" 
-      } 
-    }
-  };
 
   return (
     <AnimatePresence>
       {isLoading && (
         <motion.div
-          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#030303] text-white overflow-hidden"
+          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black text-white overflow-hidden select-none"
           initial={{ opacity: 1 }}
-          exit="exit"
-          variants={containerVariants}
+          exit={{
+            opacity: 0,
+            filter: 'blur(8px) brightness(2)',
+            transition: { duration: 0.5, ease: 'easeInOut' },
+          }}
         >
-          {/* Subtle Background Effects */}
+          {/* ===== Background layers ===== */}
           <div className="absolute inset-0 z-0 pointer-events-none">
-            {/* Soft Ambient Glow - Purple/Cyan mix */}
-            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-900/20 rounded-full blur-[128px] mix-blend-screen animate-pulse" />
-            <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-900/20 rounded-full blur-[128px] mix-blend-screen animate-pulse" />
-            
-            {/* Grid Overlay */}
-            <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,black_40%,transparent_100%)] opacity-20" />
-            
-            {/* Scanline Texture */}
+            {/* Theme accent glow (violet + teal) */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] bg-accent/20 rounded-full blur-[140px] animate-pulse" />
+            <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-accent2/20 rounded-full blur-[120px]" />
 
-             {/* Background Emblem - The Abstract Logo */}
-            <div className="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none mix-blend-overlay">
-               <Logo className="w-[80vw] h-[80vw] md:w-[60vh] md:h-[60vh] text-white animate-pulse-slow" variant="simple" />
-            </div>
-            <div className="absolute inset-0 pointer-events-none opacity-[0.03]" style={{ background: "linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.5) 50%)", backgroundSize: "100% 4px" }} />
-          </div>
+            {/* Grid */}
+            <div className="absolute inset-0 bg-[linear-gradient(rgb(var(--accent)/0.06)_1px,transparent_1px),linear-gradient(90deg,rgb(var(--accent)/0.06)_1px,transparent_1px)] bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_70%_70%_at_50%_50%,black_30%,transparent_100%)]" />
 
-          <div className="relative z-10 flex flex-col items-center justify-center p-4">
-            
-            {/* Phase 1: System Boot Text */}
-            <div className="h-6 mb-8 flex items-center justify-center overflow-hidden">
-               <motion.div 
-                 className="font-mono text-xs md:text-sm text-cyan-500/90 tracking-widest flex items-center gap-2"
-                 initial={{ opacity: 0 }}
-                 animate={{ opacity: 1 }}
-               >
-                 <span className="w-1.5 h-1.5 bg-cyan-500 rounded-full animate-ping" />
-                 {text}
-                 <motion.span 
-                   animate={{ opacity: [0, 1, 0] }} 
-                   transition={{ duration: 0.8, repeat: Infinity }}
-                   className="font-bold text-cyan-400"
-                 >_</motion.span>
-               </motion.div>
-            </div>
-
-            {/* Phase 2: Name Reveal with Shine */}
-            <div className="relative mb-4 group">
-              <motion.h1 
-                className="font-head text-4xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white text-center mix-blend-overlay"
-                variants={nameVariants}
-                initial="hidden"
-                animate="visible"
-              >
-                SALMAN AHMAD
-              </motion.h1>
-              
-              {/* Duplicate for "Glow" effect */}
-              <motion.h1 
-                className="absolute inset-0 font-head text-4xl md:text-7xl lg:text-8xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-tr from-white/80 via-white to-white/60 blur-[1px] select-none pointer-events-none"
-                variants={nameVariants}
-                initial="hidden"
-                animate="visible"
-              >
-                SALMAN AHMAD
-              </motion.h1>
-
-              {/* Energy Sweep */}
-              <motion.div 
-                className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12"
-                initial={{ x: '-150%' }}
-                animate={{ x: '150%' }}
-                transition={{ delay: 1.0, duration: 1.5, ease: "easeInOut" }}
+            {/* Glitchy emblem */}
+            <div
+              className={`absolute inset-0 flex items-center justify-center mix-blend-screen ${
+                glitchBurst ? 'ls-glitch-shift' : ''
+              }`}
+            >
+              <Logo
+                className="w-[78vw] h-[78vw] md:w-[62vh] md:h-[62vh] text-accent/[0.08]"
+                variant="simple"
               />
             </div>
 
-            {/* Separator Line */}
-             <motion.div 
-              className="h-[1px] bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent mb-6"
-              variants={lineVariants}
-              initial="hidden"
-              animate="visible"
-            />
+            {/* CRT scanlines */}
+            <div className="absolute inset-0 ls-scanlines opacity-[0.18]" />
 
-            {/* Phase 3: Role Reveal */}
-            <motion.div 
-              className="font-mono text-[10px] md:text-xs text-white/60 uppercase tracking-widest flex items-center gap-3"
-              variants={subheadingVariants}
-              initial="hidden"
-              animate="visible"
+            {/* Vignette */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_50%,rgba(0,0,0,0.85)_100%)]" />
+          </div>
+
+          {/* ===== Foreground content ===== */}
+          <div className="relative z-10 flex flex-col items-center justify-center px-6 w-full max-w-2xl">
+            {/* Status line */}
+            <motion.div
+              className="font-mono text-[10px] md:text-xs tracking-[0.3em] text-accent/80 mb-6 flex items-center gap-2"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
             >
+              <span className="w-1.5 h-1.5 bg-accent rounded-full animate-ping" />
+              SYSTEM BREACH // AUTHORIZING
+            </motion.div>
+
+            {/* Roles */}
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+              className="font-mono text-[9px] md:text-[11px] uppercase tracking-[0.35em] text-white/50 flex items-center gap-3 mb-8"
+            >
+              <span>VIGILANTE</span>
+              <span className="text-accent/70">//</span>
               <span>ENGINEER</span>
-              <span className="text-cyan-500/60">//</span>
-              <span>BUILDER</span>
-              <span className="text-violet-500/60">//</span>
+              <span className="text-accent2/70">//</span>
               <span>OPERATOR</span>
             </motion.div>
 
+            {/* Boot log */}
+            <div className="font-mono text-[10px] md:text-xs text-accent/60 h-24 w-full max-w-md flex flex-col justify-end gap-1 mb-6">
+              {BOOT_LINES.slice(0, bootIndex).map((line, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className={
+                    line.includes('GRANTED')
+                      ? 'text-accent2 font-bold'
+                      : ''
+                  }
+                >
+                  {line}
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Progress bar */}
+            <div className="w-full max-w-md">
+              <div className="flex justify-between font-mono text-[9px] text-white/40 mb-1.5 tracking-widest">
+                <span>DECRYPTING</span>
+                <span>{Math.floor(progress)}%</span>
+              </div>
+              <div className="h-[3px] w-full bg-white/10 overflow-hidden">
+                <motion.div
+                  className="h-full bg-gradient-to-r from-accent via-secondary to-accent2"
+                  style={{ width: `${progress}%` }}
+                  transition={{ ease: 'linear' }}
+                />
+              </div>
+            </div>
           </div>
 
-          {/* Bottom HUD Details */}
-          <div className="absolute bottom-10 inset-x-0 px-10 flex justify-between items-end pointer-events-none">
-             <motion.div 
-               className="font-mono text-[9px] text-white/20 flex flex-col gap-1"
-               initial={{ opacity: 0 }}
-               animate={{ opacity: 1, transition: { delay: 1.2 } }}
-             >
-                <div className="flex items-center gap-2">
-                   <div className="w-1 h-1 bg-green-500 rounded-full" />
-                   <span>SYSTEM: ONLINE</span>
-                </div>
-                <div>VER 2.5.0</div>
-             </motion.div>
-
-             <motion.div 
-               className="font-mono text-[9px] text-white/20 text-right"
-               initial={{ opacity: 0 }}
-               animate={{ opacity: 1, transition: { delay: 1.4 } }}
-             >
-                <div>EST. LATENCY: 12ms</div>
-                <div className="text-cyan-500/40">SECURE CONNECTION</div>
-             </motion.div>
+          {/* ===== Corner HUD ===== */}
+          <div className="absolute inset-0 pointer-events-none z-10 font-mono text-[9px] text-accent/40">
+            <div className="absolute top-6 left-6 flex flex-col gap-1">
+              <div className="w-6 h-6 border-l border-t border-accent/40" />
+              <span>NODE: GOTHAM-01</span>
+            </div>
+            <div className="absolute top-6 right-6 flex flex-col items-end gap-1">
+              <div className="w-6 h-6 border-r border-t border-accent/40" />
+              <span>ENC: AES-256</span>
+            </div>
+            <div className="absolute bottom-6 left-6 flex flex-col gap-1">
+              <span className="flex items-center gap-2">
+                <span className="w-1 h-1 bg-accent2 rounded-full animate-pulse" />
+                LINK STABLE
+              </span>
+              <div className="w-6 h-6 border-l border-b border-accent/40" />
+            </div>
+            <div className="absolute bottom-6 right-6 flex flex-col items-end gap-1">
+              <span>VER 3.0.0</span>
+              <div className="w-6 h-6 border-r border-b border-accent/40" />
+            </div>
           </div>
 
+          {/* ===== Scoped glitch / CRT styles ===== */}
+          <style jsx>{`
+            .ls-scanlines {
+              background: repeating-linear-gradient(
+                to bottom,
+                rgba(0, 0, 0, 0) 0px,
+                rgba(0, 0, 0, 0) 2px,
+                rgb(var(--accent) / 0.08) 3px,
+                rgba(0, 0, 0, 0) 4px
+              );
+              animation: ls-flicker 3s steps(2) infinite;
+            }
+
+            @keyframes ls-flicker {
+              0%,
+              100% {
+                opacity: 0.18;
+              }
+              48% {
+                opacity: 0.18;
+              }
+              50% {
+                opacity: 0.32;
+              }
+              52% {
+                opacity: 0.14;
+              }
+            }
+
+            .ls-glitch {
+              position: relative;
+            }
+            .ls-glitch::before,
+            .ls-glitch::after {
+              content: attr(data-text);
+              position: absolute;
+              inset: 0;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-family: var(--font-head), 'Space Grotesk', sans-serif;
+              font-weight: 700;
+              letter-spacing: -0.02em;
+              line-height: 1;
+              opacity: 0;
+              pointer-events: none;
+            }
+            .ls-glitch::before {
+              color: rgb(var(--accent2));
+              z-index: -1;
+            }
+            .ls-glitch::after {
+              color: rgb(var(--accent));
+              z-index: -2;
+            }
+            .ls-glitch-active::before {
+              opacity: 0.85;
+              animation: ls-shift-x 0.14s steps(2) infinite;
+              transform: translate(-3px, 1px);
+            }
+            .ls-glitch-active::after {
+              opacity: 0.85;
+              animation: ls-shift-y 0.14s steps(2) infinite;
+              transform: translate(3px, -1px);
+            }
+
+            @keyframes ls-shift-x {
+              0% {
+                transform: translate(-3px, 1px);
+                clip-path: inset(0 0 60% 0);
+              }
+              100% {
+                transform: translate(-5px, -1px);
+                clip-path: inset(40% 0 0 0);
+              }
+            }
+            @keyframes ls-shift-y {
+              0% {
+                transform: translate(3px, -1px);
+                clip-path: inset(50% 0 10% 0);
+              }
+              100% {
+                transform: translate(5px, 1px);
+                clip-path: inset(10% 0 50% 0);
+              }
+            }
+
+            .ls-glitch-shift {
+              animation: ls-jitter 0.14s steps(2) infinite;
+            }
+            @keyframes ls-jitter {
+              0% {
+                transform: translate(0, 0);
+              }
+              50% {
+                transform: translate(-2px, 1px);
+              }
+              100% {
+                transform: translate(2px, -1px);
+              }
+            }
+          `}</style>
         </motion.div>
       )}
     </AnimatePresence>
