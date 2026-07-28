@@ -1,63 +1,131 @@
 'use client';
 
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FaServer, FaGamepad, FaAtom, FaTv, FaArrowRight } from 'react-icons/fa';
-import { cn } from '@/lib/utils';
+import { motion } from 'framer-motion';
+
+/*
+ * An editorial index, not a tab strip.
+ *
+ * This section used to hide three of its four entries behind buttons nobody had
+ * a reason to press. It is also the one part of the site that is supposed to
+ * read as a person rather than a system, so it deliberately drops the glass
+ * cards, blurred blobs and pill tags used everywhere else: rules, numbers and
+ * prose only.
+ */
 
 const interests = [
   {
-    id: 'homelab',
-    title: 'Home Lab',
-    fullTitle: 'Home Lab & Automation',
-    icon: <FaServer className="text-4xl" />,
-    description: 'Outside of formal coursework, I spend significant time tinkering with my TrueNAS home server. I treat it as a personal data center—experimenting with storage arrays, container orchestration, and automating daily workflows.',
-    tags: ['TrueNAS', 'ZFS', 'Docker', 'Network Security'],
-    color: 'from-emerald-400 to-teal-500',
-    bg: 'bg-emerald-500/10'
+    n: '01',
+    label: 'Home Lab',
+    meta: [
+      ['host', 'Lenovo ThinkCentre (repurposed)'],
+      ['array', '8 × RAID-Z2 · 160 TB raw'],
+      ['usable', '~120 TB, dual parity'],
+      ['running', '25 containers · 10 apps'],
+      ['exposure', '0 open ports · Tailscale mesh'],
+    ],
+    body: (
+      <>
+        <p>
+          The whole thing runs on a Lenovo ThinkCentre that somebody, somewhere, wrote off as
+          e-waste. Bolted to it is an eight-drive RAID-Z2 array — 160 TB raw, about 120 TB usable —
+          which scrubs itself on a schedule, quietly heals its own bit rot, and ships a copy to
+          Backblaze so the library survives my house doing something dramatic. Three copies, two
+          media, one offsite. Not bad for an office desktop nobody wanted.
+        </p>
+        <p>
+          On top of it sit 25 Docker containers across 10 applications: Plex and Immich for media,
+          Recyclarr and Maintainerr tidying up after me, Traccar swallowing GPS telemetry for
+          reasons that were extremely compelling at the time. All of it reachable over a Tailscale
+          WireGuard mesh and none of it exposed to the internet — zero open ports, the only security
+          posture I actually trust. Portainer runs the stack, Scrutiny watches the disks for early
+          signs of betrayal, and Dozzle streams the logs I fully intend to read one day.
+        </p>
+        <p>
+          Formally: storage architecture, capacity planning, container orchestration, secure
+          networking and observability, end to end, owned by one person. Informally: a deeply
+          over-engineered guarantee that nobody in my family ever loses a photo.
+        </p>
+      </>
+    ),
   },
   {
-    id: 'gaming',
-    title: 'Gaming',
-    fullTitle: 'Competitive Gaming',
-    icon: <FaGamepad className="text-4xl" />,
-    description: 'I’m an avid gamer with a focus on high-stakes competitive play. Whether it’s the tactical speed of Apex Legends or the grand scale of Battlefield 6, I enjoy environments that test reflexes and strategic decision-making.',
-    tags: ['Apex Legends', 'Battlefield 6', 'GTA Online', 'Strategy'],
-    color: 'from-violet-400 to-purple-500',
-    bg: 'bg-violet-500/10'
+    n: '02',
+    label: 'Gaming',
+    meta: [
+      ['mostly', 'Apex Legends'],
+      ['also', 'Battlefield 6 · DayZ'],
+      ['side effect', 'cdndayz.com'],
+    ],
+    body: (
+      <>
+        <p>
+          I like games that punish hesitation — Apex especially, where the fight is usually decided
+          in the second before it actually starts.
+        </p>
+        <p>
+          Somewhere along the way playing turned into building. I run the website and the support
+          bot for a DayZ community, which means I now spend considerably more time reading server
+          logs and error codes than I do surviving anything. I&apos;m not sure that counts as a
+          hobby any more, but I&apos;m also not stopping.
+        </p>
+      </>
+    ),
   },
   {
-    id: 'physics',
-    title: 'Physics',
-    fullTitle: 'Cosmology & Physics',
-    icon: <FaAtom className="text-4xl" />,
-    description: 'A long-standing fascination with the fundamental nature of reality. I consume content related to general relativity, quantum mechanics, and the theoretical origins of the universe.',
-    tags: ['Relativity', 'Quantum Mechanics', 'Cosmology', 'Theory'],
-    color: 'from-cyan-400 to-blue-500',
-    bg: 'bg-cyan-500/10'
+    n: '03',
+    label: 'Physics',
+    meta: [
+      ['reading', 'general relativity'],
+      ['also', 'quantum mechanics · cosmology'],
+      ['shipped', 'nothing'],
+    ],
+    body: (
+      <>
+        <p>
+          General relativity is the closest thing I have to a hobby that produces absolutely
+          nothing. I read about it constantly and build with it never.
+        </p>
+        <p>
+          With one exception. I once spent a weekend trying to render a black hole for the top of
+          this website — integrating null geodesics per pixel so the far side of the accretion disk
+          would lens up over the event horizon the way the real thing does. It never shipped. It was
+          the most fun I&apos;ve had writing code I deleted.
+        </p>
+      </>
+    ),
   },
   {
-    id: 'media',
-    title: 'Media',
-    fullTitle: 'Anime & Storytelling',
-    icon: <FaTv className="text-4xl" />,
-    description: 'I regularly unwind with anime, appreciating unique visual art styles and complex narrative structures often found in the medium. It serves as a creative reset from technical work.',
-    tags: ['Visual Arts', 'Storytelling', 'J-Culture', 'Animation'],
-    color: 'from-rose-400 to-pink-500',
-    bg: 'bg-rose-500/10'
-  }
+    n: '04',
+    label: 'Anime',
+    meta: [
+      ['for', 'art direction · structure'],
+      ['all-time', 'Dragon Ball Z · Demon Slayer · Jujutsu Kaisen'],
+    ],
+    body: (
+      <>
+        <p>
+          Where I go when I&apos;ve been staring at a terminal too long. I&apos;m there for the art
+          direction and the structure more than the plot — the medium gets away with visual choices
+          live action can&apos;t afford, and the best of it commits to a single idea harder than
+          most films are willing to.
+        </p>
+        <p>
+          It&apos;s also the only thing on this list I don&apos;t try to optimise, measure or
+          automate, which is probably why it works as a reset.
+        </p>
+      </>
+    ),
+  },
 ];
 
 export default function Interests() {
-  const [activeTab, setActiveTab] = useState(interests[0]);
-
   return (
-    <section id="interests" className="py-24 px-6 relative overflow-hidden">
+    <section id="interests" className="py-24 px-6 relative transition-colors duration-500">
       <div className="max-w-6xl mx-auto">
-        
+
         {/* Section Header */}
-        <motion.div 
-          className="mb-16 md:mb-24"
+        <motion.div
+          className="mb-16 md:mb-20"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -67,122 +135,54 @@ export default function Interests() {
             INTERESTS
           </h2>
           <p className="text-lg text-muted max-w-2xl">
-             Beyond the terminal: a look into what keeps me tinkering, playing, and learning.
+            Beyond the terminal: four things I do when nobody is paying me to.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-start">
-          
-          {/* Navigation Column (Left) */}
-          <div className="lg:col-span-4 flex flex-row lg:flex-col gap-4 overflow-x-auto pb-4 lg:pb-0 scrollbar-hide">
-            {interests.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => setActiveTab(item)}
-                className={cn(
-                  "relative group flex items-center p-4 rounded-xl text-left transition-all duration-300 min-w-[160px] lg:min-w-0 border",
-                  activeTab.id === item.id 
-                    ? 'bg-surface-strong border-border-subtle' 
-                    : 'bg-transparent border-transparent hover:bg-surface-card/80'
-                )}
-              >
-                {/* Active Indicator Line */}
-                {activeTab.id === item.id && (
-                  <motion.div
-                    layoutId="active-glow"
-                    className={`absolute inset-0 rounded-xl bg-gradient-to-r ${item.color} opacity-100 dark:opacity-20`}
-                    transition={{ duration: 0.3 }}
-                  />
-                )}
-                
-                {/* Icon Box */}
-                <div className={cn(
-                  "relative z-10 mr-4 p-2 rounded-lg transition-colors duration-300",
-                  activeTab.id === item.id 
-                    ? 'bg-surface-card/30 backdrop-blur-md border border-white/20 text-foreground shadow-sm' 
-                    : 'text-muted-soft group-hover:text-muted'
-                )}>
-                   <div className="text-lg">
-                      {item.icon}
-                   </div>
-                </div>
+        <ol>
+          {interests.map((item, i) => (
+            <motion.li
+              key={item.n}
+              className="border-t border-divider py-10 md:py-14"
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.5, delay: Math.min(i * 0.08, 0.24) }}
+            >
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-12">
 
-                {/* Text */}
-                <span className={cn(
-                  "relative z-10 text-lg font-bold transition-colors duration-300",
-                  activeTab.id === item.id ? 'text-white dark:text-foreground' : 'text-muted-soft group-hover:text-muted'
-                )}>
-                  {item.title}
-                </span>
-
-                {/* Arrow (Desktop Only) */}
-                {activeTab.id === item.id && (
-                  <motion.div 
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    className="hidden lg:block ml-auto text-muted-soft"
-                  >
-                    <FaArrowRight size={12} />
-                  </motion.div>
-                )}
-              </button>
-            ))}
-          </div>
-
-          {/* Display Panel (Right) */}
-          <div className="lg:col-span-8 relative min-h-[400px]">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeTab.id}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.4, ease: "easeInOut" }}
-                className="relative z-10 h-full"
-              >
-                {/* Glass Card */}
-                <div className="group h-full p-6 md:p-12 rounded-[2.5rem] bg-surface-card/30 backdrop-blur-xl border border-border-subtle relative overflow-hidden">
-                  
-                  {/* Background Gradient Blob */}
-                  <div className={`absolute top-0 right-0 w-[400px] h-[400px] bg-gradient-to-br ${activeTab.color} rounded-full blur-[100px] opacity-10 -translate-y-1/2 translate-x-1/2 group-hover:opacity-20 transition-opacity duration-1000`} />
-                  
-                  <div className="relative z-10 flex flex-col h-full">
-                    {/* Header */}
-                    <div className="flex items-start justify-between mb-8">
-                      <div className={`p-4 rounded-2xl ${activeTab.bg} border border-white/5`}>
-                         <div className={`text-4xl bg-gradient-to-br ${activeTab.color} bg-clip-text text-transparent`}>
-                            {activeTab.icon}
-                         </div>
-                      </div>
-                      <div className="text-6xl md:text-8xl font-bold text-foreground/5 absolute top-8 right-8 select-none">
-                        0{interests.indexOf(activeTab) + 1}
-                      </div>
-                    </div>
-
-                    <h3 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-                      {activeTab.fullTitle}
+                {/* Index + label + the hard numbers */}
+                <div className="md:col-span-4">
+                  <div className="flex items-baseline gap-4">
+                    <span className="font-mono text-sm text-muted-soft">{item.n}</span>
+                    <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground">
+                      {item.label}
                     </h3>
-                    
-                    <p className="text-lg md:text-xl text-muted leading-relaxed mb-12 max-w-2xl">
-                      {activeTab.description}
-                    </p>
-
-                    {/* Tags */}
-                    <div className="mt-auto flex flex-wrap gap-3">
-                      {activeTab.tags.map(tag => (
-                        <span key={tag} className="px-4 py-2 rounded-full text-sm font-medium bg-surface-strong border border-border-subtle text-muted">
-                          #{tag}
-                        </span>
-                      ))}
-                    </div>
-
                   </div>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
 
-        </div>
+                  <dl className="mt-5 space-y-2 font-mono text-xs md:text-sm">
+                    {item.meta.map(([key, value], k) => (
+                      <div key={k} className="flex gap-3">
+                        <dt className="w-24 shrink-0 text-muted-soft">{key}</dt>
+                        <dd className="text-muted">{value}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </div>
+
+                {/* The actual writing */}
+                <div className="md:col-span-8 space-y-4 text-lg md:text-xl font-light leading-relaxed text-muted">
+                  {item.body}
+                </div>
+
+              </div>
+            </motion.li>
+          ))}
+        </ol>
+
+        {/* Closes the index so the last entry doesn't float. */}
+        <div className="border-t border-divider" />
+
       </div>
     </section>
   );
