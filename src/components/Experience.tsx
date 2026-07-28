@@ -158,8 +158,7 @@ export default function Experience() {
             {/* Decor box */}
             <div className="mt-8 p-6 border border-dashed border-border-subtle rounded-lg bg-surface-strong font-mono text-xs text-muted">
               <p className="mb-2">{`> SCANNING_HISTORY...`}</p>
-              <p className="mb-2">{`> FOUND ${experiences.length} RECORDS`}</p>
-              <p>{`> LAST_UPDATED: ${new Date().toLocaleDateString()}`}</p>
+              <p>{`> FOUND ${experiences.length} RECORDS`}</p>
             </div>
           </div>
 
