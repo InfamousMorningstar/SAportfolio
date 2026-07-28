@@ -7,6 +7,7 @@ import Link from 'next/link';
 import BlogPostComponent from '../../components/BlogPost';
 import HybridEdgePost from '../../components/HybridEdgePost';
 import CentauriPlexPost from '../../components/CentauriPlexPost';
+import CDNCaptainPost from '../../components/CDNCaptainPost';
 import { ParticleNetworkBackground } from '../../components/ui/ParticleNetworkBackground';
 
 interface BlogPostData {
@@ -20,6 +21,15 @@ interface BlogPostData {
 }
 
 const blogPosts: BlogPostData[] = [
+  {
+    id: 'cdn-captain-bot',
+    title: 'CDN_Captain: Teaching a Discord Bot to Shut Up',
+    excerpt: 'A retrieval-first Discord helper for a DayZ community, built around an unusual goal: its most important feature is silence. A free local gate before any API call, citations verified in code rather than trusted, and a test suite assembled entirely from the bot\'s own past lies.',
+    date: '2026-07-28',
+    readTime: '11 min read',
+    tags: ['Python', 'Discord', 'Retrieval', 'RAG', 'Playwright', 'SQLite', 'Docker'],
+    url: '#'
+  },
   {
     id: 'centauri-plex-automation',
     title: 'Centauri (Plex) Automation System',
@@ -51,6 +61,10 @@ const blogPosts: BlogPostData[] = [
 
 export default function BlogPage() {
   const [selectedPost, setSelectedPost] = useState<string | null>(null);
+
+  if (selectedPost === 'cdn-captain-bot') {
+    return <CDNCaptainPost onBack={() => setSelectedPost(null)} />;
+  }
 
   if (selectedPost === 'centauri-plex-automation') {
     return <CentauriPlexPost onBack={() => setSelectedPost(null)} />;
@@ -111,7 +125,7 @@ export default function BlogPage() {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               className="group"
             >
-              {(post.id === 'centauri-plex-automation' || post.id === 'truenas-scale-setup' || post.id === 'hybrid-edge-storage') ? (
+              {(post.id === 'cdn-captain-bot' || post.id === 'centauri-plex-automation' || post.id === 'truenas-scale-setup' || post.id === 'hybrid-edge-storage') ? (
                 <div
                   onClick={() => setSelectedPost(post.id)}
                   className="block cursor-pointer"
