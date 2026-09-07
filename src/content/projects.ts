@@ -102,8 +102,8 @@ export const projects: Project[] = [
     tier: 'client',
     description:
       'A paid build for a licensed home dayhome. Mockup, client sign-off, then the whole site solo — a single-page tour of the space with a photo gallery, daily rhythm and a booking form. Plus a round of changes after sign-off, which is how client work actually goes.',
-    tech: ['Next.js', 'Tailwind', 'Vercel'],
-    github: '',
+    tech: ['Next.js 16', 'React 19', 'Tailwind v4', 'Framer Motion'],
+    github: 'https://github.com/InfamousMorningstar/Pearl-s-Haven',
     demo: 'https://pearlshaven.ca',
     caseStudy: '',
     gradient: 'from-rose-400 to-amber-400',
