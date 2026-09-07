@@ -25,7 +25,6 @@ export interface Project {
   caseStudy: string;
   /** Tailwind gradient pair, used for card theming. */
   gradient: string;
-  number: string;
   /** Included in the generated resume when present. */
   resumeBullets?: string[];
   /** Excluded from the resume when false. */
@@ -47,7 +46,6 @@ export const projects: Project[] = [
     demo: 'https://starlight-eight-ruby.vercel.app/',
     caseStudy: '',
     gradient: 'from-blue-600 to-cyan-500',
-    number: '01',
     resumeBullets: [
       'Built an interactive 3D educational experience with Three.js and React Three Fiber.',
       'Optimised WebGL rendering of particle systems and timelines for consumer hardware.',
@@ -68,7 +66,6 @@ export const projects: Project[] = [
     demo: 'https://interfreightautosales.ca',
     caseStudy: '',
     gradient: 'from-orange-500 to-red-600',
-    number: '02',
     resumeBullets: [
       'Paid client engagement. Scoped the build with the owner, produced a mockup for sign-off, then delivered the platform end to end as sole developer.',
       'Built on Next.js 15 and Supabase with a secure internal dashboard for inventory management and Zod for runtime schema validation.',
@@ -90,10 +87,30 @@ export const projects: Project[] = [
     demo: 'https://cdndayz.com',
     caseStudy: '/work/cdn-captain',
     gradient: 'from-emerald-500 to-teal-500',
-    number: '03',
     resumeBullets: [
       'Paid client engagement. Community platform with live server status via GameDig, launcher-verified mod inventories, news ingestion and a searchable error-code diagnostics hub.',
       'Also built and self-host CDN_Captain, the retrieval-first support bot serving the same community.',
+    ],
+    onResume: true,
+  },
+  {
+    id: 6,
+    slug: 'pearls-haven',
+    title: "Pearl's Haven",
+    shot: '/works/pearlshaven.webp',
+    category: 'Licensed Dayhome',
+    tier: 'client',
+    description:
+      'A paid build for a licensed home dayhome. Mockup, client sign-off, then the whole site solo — a single-page tour of the space with a photo gallery, daily rhythm and a booking form. Plus a round of changes after sign-off, which is how client work actually goes.',
+    tech: ['Next.js', 'Tailwind', 'Vercel'],
+    github: '',
+    demo: 'https://pearlshaven.ca',
+    caseStudy: '',
+    gradient: 'from-rose-400 to-amber-400',
+    resumeBullets: [
+      'Paid client engagement. Produced a mockup, took it through sign-off with the owner, then built and shipped the site solo — including a further round of changes requested after sign-off.',
+      'Single-page marketing site for a licensed childcare provider: programmes, daily schedule, photo gallery with lightbox, and an enquiry form.',
+      'Built with accessibility in mind — skip-to-content link, descriptive alt text across the gallery, and properly labelled form fields.',
     ],
     onResume: true,
   },
@@ -111,7 +128,6 @@ export const projects: Project[] = [
     demo: 'https://nitor-peach.vercel.app',
     caseStudy: '',
     gradient: 'from-amber-400 to-yellow-600',
-    number: '04',
     onResume: false,
   },
   {
@@ -128,7 +144,6 @@ export const projects: Project[] = [
     demo: '',
     caseStudy: '',
     gradient: 'from-zinc-400 to-red-600',
-    number: '05',
     resumeBullets: [
       'Windows static analyzer that reports what an untrusted executable appears capable of without executing or uploading it.',
       'PE/CLR parsing that cites exact imports, strings and IL as evidence, behind a fail-closed isolation core.',

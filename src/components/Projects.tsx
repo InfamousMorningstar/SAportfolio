@@ -156,7 +156,7 @@ export default function Projects() {
              </div>
           </div>
 
-          {projects.map((project) => (
+          {projects.map((project, index) => (
             <div
               key={project.id}
               data-project-card
@@ -210,8 +210,11 @@ export default function Projects() {
                                     {project.title}
                                 </h3>
                              </div>
+                             {/* Derived from position rather than stored, so
+                                 inserting a project does not mean renumbering
+                                 every one after it. */}
                              <span className="text-4xl md:text-7xl font-black text-muted/10 font-mono leading-none">
-                                 {project.number}
+                                 {String(index + 1).padStart(2, '0')}
                              </span>
                         </div>
 
