@@ -1,77 +1,17 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import { FaBuilding, FaMapMarkerAlt, FaCalendarAlt, FaCheckCircle, FaBriefcase, FaTerminal } from 'react-icons/fa';
+import { useState, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaBriefcase, FaTerminal } from 'react-icons/fa';
+import { roles } from '@/content/career';
 
-// ----------------------------------------------------------------------
-// DATA
-// ----------------------------------------------------------------------
+// Rendered from the shared career data so the site and /resume cannot drift.
+const experiences = roles;
 
-const experiences = [
-  {
-    id: 'EXP-01',
-    title: 'Assembler',
-    company: 'DIRTT Environmental Solutions',
-    period: 'Sep 2023 - Sep 2024',
-    location: 'Calgary, AB',
-    type: 'Full-Time',
-    role_code: 'ASM-Lvl1',
-    description: 'Executed high-precision assembly of modular architectural components within a lean manufacturing environment. Focused on quality assurance protocols and production efficiency.',
-    metrics: {
-      accuracy: '99.8%',
-      team_size: '15+',
-      efficiency_boost: '15%'
-    },
-    responsibilities: [
-      'Operated precision assembly equipment with 99.8% accuracy rate',
-      'Mentored new team members on assembly procedures and safety protocols',
-      'Collaborated with engineering to optimize assembly processes',
-      'Maintained detailed quality control documentation'
-    ],
-    tech_stack: ['Precision Assembly', 'QC Protocols', 'Lean Mfg', 'Safety Compliance']
-  },
-  {
-    id: 'EXP-02',
-    title: 'Customer Service Rep',
-    company: 'Circle K',
-    period: 'Jul 2017 - Sep 2023',
-    location: 'Calgary, AB',
-    type: 'Full-Time',
-    role_code: 'CSR-Lead',
-    description: 'Orchestrated daily retail operations including inventory management, financial reconciliation, and team leadership. Maintained high-volume transaction integrity.',
-    metrics: {
-      retention: '95%',
-      trainees: '20+',
-      tenure: '6 Years'
-    },
-    responsibilities: [
-      'Managed customer transactions and resolved complex service issues',
-      'Maintained inventory systems and coordinated stock replenishment',
-      'Trained and supervised new employees on company procedures',
-      'Ensured compliance with health and safety regulations'
-    ],
-    tech_stack: ['Inventory Mgmt', 'Leadership', 'Conflict Resolution', 'Financial Rec.']
-  }
-];
 
 // ----------------------------------------------------------------------
 // COMPONENTS
 // ----------------------------------------------------------------------
-
-const GlitchText = ({ text }: { text: string }) => {
-  return (
-    <span className="relative inline-block group">
-      <span className="relative z-10">{text}</span>
-      <span className="absolute top-0 left-0 -z-10 w-full h-full text-accent opacity-0 group-hover:opacity-70 group-hover:translate-x-[2px] transition-all duration-100">
-        {text}
-      </span>
-      <span className="absolute top-0 left-0 -z-10 w-full h-full text-blue-500 opacity-0 group-hover:opacity-70 group-hover:-translate-x-[2px] transition-all duration-100">
-        {text}
-      </span>
-    </span>
-  );
-};
 
 export default function Experience() {
   const [selectedId, setSelectedId] = useState(experiences[0].id);
@@ -101,13 +41,13 @@ export default function Experience() {
             </h2>
             <div className="flex items-center gap-3 text-accent font-mono text-sm">
               <span className="w-2 h-2 bg-accent rounded-full animate-pulse" />
-              SYSTEM_STATUS: ONLINE
-              <span className="text-muted-foreground">// ACCESSING CAREER_DB</span>
+              CAREER_DB
+              <span className="text-muted-foreground">{'// Calgary, AB'}</span>
             </div>
           </div>
           <div className="hidden md:block text-right">
-            <div className="text-xs text-muted-foreground font-mono mb-1">DATA INTEGRITY</div>
-            <div className="text-2xl font-bold font-mono text-accent">100%</div>
+            <div className="text-xs text-muted-foreground font-mono mb-1">RECORDS</div>
+            <div className="text-2xl font-bold font-mono text-accent">{experiences.length.toString().padStart(2, '0')}</div>
           </div>
         </div>
 
@@ -223,10 +163,10 @@ export default function Experience() {
                         <div className="space-y-6">
                            <div className="bg-surface-strong border border-border-subtle p-5 rounded-lg">
                               <h4 className="text-xs font-bold text-muted mb-4 uppercase tracking-wider">
-                                Key Metrics
+                                At a Glance
                               </h4>
                               <div className="grid grid-cols-2 gap-4">
-                                {Object.entries(selectedExp.metrics).map(([key, value]) => (
+                                {Object.entries(selectedExp.glance).map(([key, value]) => (
                                   <div key={key}>
                                     <div className="text-2xl font-mono text-foreground font-bold">{value}</div>
                                     <div className="text-xs text-muted uppercase">{key.replace('_', ' ')}</div>
@@ -240,7 +180,7 @@ export default function Experience() {
                                 Technologies & Methods
                               </h4>
                               <div className="flex flex-wrap gap-2">
-                                {selectedExp.tech_stack.map((tech) => (
+                                {selectedExp.stack.map((tech: string) => (
                                   <span key={tech} className="px-2 py-1 bg-surface-card/30 backdrop-blur-xl border border-border-subtle rounded text-xs text-text-soft font-mono">
                                     {tech}
                                   </span>

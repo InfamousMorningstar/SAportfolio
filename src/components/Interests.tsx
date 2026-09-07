@@ -17,28 +17,37 @@ const interests = [
     n: '01',
     label: 'Home Lab',
     meta: [
-      ['host', 'Lenovo ThinkCentre (repurposed)'],
-      ['array', '8 × RAID-Z2 · 160 TB raw'],
-      ['usable', '~120 TB, dual parity'],
-      ['running', '25 containers · 10 apps'],
-      ['exposure', '0 open ports · Tailscale mesh'],
+      ['host', 'Lenovo ThinkCentre + custom JBOD'],
+      ['array', '8 × 20 TB · RAID-Z2 · 146 TiB raw'],
+      ['usable', '~109 TiB · 76% full'],
+      ['running', '38 containers'],
+      ['access', 'Tailscale (admin) · Cloudflare Tunnel (public)'],
     ],
     body: (
       <>
         <p>
           The whole thing runs on a Lenovo ThinkCentre that somebody, somewhere, wrote off as
-          e-waste. Bolted to it is an eight-drive RAID-Z2 array — 160 TB raw, about 120 TB usable —
-          which scrubs itself on a schedule, quietly heals its own bit rot, and ships a copy to
-          Backblaze so the library survives my house doing something dramatic. Three copies, two
-          media, one offsite. Not bad for an office desktop nobody wanted.
+          e-waste. The drives don&apos;t fit in it — eight 20 TB disks live in a JBOD I fabricated
+          out of steel at my last job, wired back to the host through an LSI SAS HBA in IT mode so
+          that ZFS owns the disks directly instead of a RAID controller pretending to. Dual parity,
+          about 109 TiB usable, currently 76% full. A full scrub takes just under two days and has
+          never found anything it couldn&apos;t repair.
         </p>
         <p>
-          On top of it sit 25 Docker containers across 10 applications: Plex and Immich for media,
-          Recyclarr and Maintainerr tidying up after me, Traccar swallowing GPS telemetry for
-          reasons that were extremely compelling at the time. All of it reachable over a Tailscale
-          WireGuard mesh and none of it exposed to the internet — zero open ports, the only security
-          posture I actually trust. Portainer runs the stack, Scrutiny watches the disks for early
-          signs of betrayal, and Dozzle streams the logs I fully intend to read one day.
+          On top of it sit 38 containers. Jellyfin and Immich for media and photos, the usual *arr
+          stack tidying up after me, Traccar swallowing GPS telemetry for reasons that were
+          extremely compelling at the time. The admin surfaces — TrueNAS, SSH, Portainer, logs —
+          are reachable only across a Tailscale WireGuard mesh. A short list of things my family
+          actually use is published through a Cloudflare Tunnel. Either way there is not one
+          inbound port open on the router, which is the only network posture I actually trust.
+        </p>
+        <p>
+          Backups are the part I&apos;d fix first. Photos and configs go to encrypted cloud storage
+          once a week, so my worst case is losing seven days of pictures. The media library
+          isn&apos;t backed up at all — it&apos;s the one thing I can rebuild, so it&apos;s the one
+          thing I let go. There&apos;s no UPS yet either, and the JBOD has to be powered up before
+          the host or the array simply isn&apos;t there when it boots. None of that is an accident;
+          I just know exactly what it costs me.
         </p>
         <p>
           Formally: storage architecture, capacity planning, container orchestration, secure

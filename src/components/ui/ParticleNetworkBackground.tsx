@@ -46,6 +46,13 @@ export const ParticleNetworkBackground: React.FC<ParticleNetworkBackgroundProps>
     let height = window.innerHeight;
     let animationId: number;
 
+    // Under reduced motion the constellation is still drawn — an empty
+    // background would be a worse experience than a still one — but the frame
+    // loop never starts, so nothing drifts.
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
     const resize = () => {
       width = window.innerWidth;
       height = window.innerHeight;
@@ -136,7 +143,9 @@ export const ParticleNetworkBackground: React.FC<ParticleNetworkBackgroundProps>
         }
       }
 
-      animationId = requestAnimationFrame(draw);
+      if (!prefersReducedMotion) {
+        animationId = requestAnimationFrame(draw);
+      }
     };
     draw();
 

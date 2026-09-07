@@ -1,7 +1,13 @@
 import type { Config } from "tailwindcss";
 
-const withOpacityValue = (variable: string) => {
-  return ({ opacityValue }: { opacityValue?: string }) => {
+/*
+ * Every colour token is stored as an RGB triple so Tailwind's opacity
+ * modifiers (bg-accent/30) work against CSS variables in both themes.
+ */
+type OpacityCallback = (options: { opacityValue?: string }) => string;
+
+const withOpacityValue = (variable: string): OpacityCallback => {
+  return ({ opacityValue }) => {
     if (opacityValue !== undefined) {
       return `rgb(var(${variable}) / ${opacityValue})`;
     }
@@ -9,33 +15,50 @@ const withOpacityValue = (variable: string) => {
   };
 };
 
+/*
+ * Tailwind resolves a function per colour key at runtime, but its published
+ * types only model string values there — so this needs a cast either way. It
+ * casts to the string shape Tailwind expects rather than to `any`, which keeps
+ * the rest of the config type-checked instead of opting the whole object out.
+ */
+const colorTokens = {
+  background: withOpacityValue("--background"),
+  foreground: withOpacityValue("--foreground"),
+  muted: withOpacityValue("--muted"),
+  "muted-soft": withOpacityValue("--muted-soft"),
+  accent: withOpacityValue("--accent"),
+  accent2: withOpacityValue("--accent2"),
+  secondary: withOpacityValue("--secondary"),
+  surface: withOpacityValue("--surface"),
+  "surface-strong": withOpacityValue("--surface-strong"),
+  "surface-card": withOpacityValue("--surface-card"),
+  "surface-overlay": withOpacityValue("--surface-overlay"),
+  "border-subtle": withOpacityValue("--border-subtle"),
+  "border-strong": withOpacityValue("--border-strong"),
+  divider: withOpacityValue("--divider"),
+  "text-muted": withOpacityValue("--text-muted"),
+  "text-soft": withOpacityValue("--text-soft"),
+} as unknown as Record<string, string>;
+
 const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    /*
+     * The content model holds class names too — per-project gradient pairs
+     * live in content/projects.ts. Tailwind only generates utilities it can
+     * see as literal strings, so omitting this directory silently dropped
+     * every `from-*`/`to-*` gradient, leaving `bg-clip-text text-transparent`
+     * category labels with no background to clip: invisible text that still
+     * occupied layout. Failure mode of a missed glob is silence, not an error.
+     */
+    "./src/content/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   darkMode: 'class',
   theme: {
     extend: {
-      colors: {
-        background: withOpacityValue("--background"),
-        foreground: withOpacityValue("--foreground"),
-        muted: withOpacityValue("--muted"),
-        "muted-soft": withOpacityValue("--muted-soft"),
-        accent: withOpacityValue("--accent"),
-        accent2: withOpacityValue("--accent2"),
-        secondary: withOpacityValue("--secondary"),
-        surface: withOpacityValue("--surface"),
-        "surface-strong": withOpacityValue("--surface-strong"),
-        "surface-card": withOpacityValue("--surface-card"),
-        "surface-overlay": withOpacityValue("--surface-overlay"),
-        "border-subtle": withOpacityValue("--border-subtle"),
-        "border-strong": withOpacityValue("--border-strong"),
-        divider: withOpacityValue("--divider"),
-        "text-muted": withOpacityValue("--text-muted"),
-        "text-soft": withOpacityValue("--text-soft"),
-      } as any,
+      colors: colorTokens,
       fontFamily: {
         mono: ['var(--font-jetbrains)', 'JetBrains Mono', 'Fira Code', 'monospace'],
         sans: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],

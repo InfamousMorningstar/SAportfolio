@@ -25,6 +25,12 @@ export default function LoadingScreen() {
         : null;
 
     if (hasLoaded) {
+      /*
+       * sessionStorage is unavailable during SSR, so whether the loader has
+       * already been shown this session cannot be known until after mount.
+       * One-time read of an external store, not a cascading update.
+       */
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsLoading(false);
       return;
     }
@@ -120,9 +126,9 @@ export default function LoadingScreen() {
               className="font-mono text-[9px] md:text-[11px] uppercase tracking-[0.35em] text-white/50 flex items-center gap-3 mb-8"
             >
               <span>ENGINEER</span>
-              <span className="text-accent/70">//</span>
+              <span className="text-accent/70">{'//'}</span>
               <span>DEVELOPER</span>
-              <span className="text-accent2/70">//</span>
+              <span className="text-accent2/70">{'//'}</span>
               <span>ARCHITECT</span>
             </motion.div>
 

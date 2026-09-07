@@ -18,6 +18,12 @@
 import { motion } from 'framer-motion';
 import { Calendar, Clock, ArrowLeft } from 'lucide-react';
 
+import { fieldDots, fieldLines } from '@/lib/decorativeField';
+
+// Seeded at module scope: same output on server and client, no hydration risk.
+const DOTS = fieldDots(20, 2011);
+const LINES = fieldLines(8, 2012, { delay: 3, widthBase: 50, widthSpread: 100 });
+
 interface CentauriPlexPostProps {
   onBack?: () => void;
 }
@@ -53,7 +59,7 @@ export default function CentauriPlexPost({ onBack }: CentauriPlexPostProps) {
         <div className="absolute bottom-32 left-24 text-purple-400/15 font-mono text-xs rotate-15 select-none">
           */5 * * * * check_new_users.py<br/>
           0 3 * * * user_manager.py<br/>
-          # Automation: 95%<br/>
+          # cron: 0 3 * * *<br/>
         </div>
         
         {/* API Endpoints */}
@@ -91,7 +97,7 @@ export default function CentauriPlexPost({ onBack }: CentauriPlexPostProps) {
         
         {/* Automation Stats */}
         <div className="absolute top-1/2 left-12 text-blue-300/20 text-sm rotate-12 select-none">
-          🤖 Automation Level: 95%<br/>
+          🤖 Status: retired<br/>
           👥 Active Users: 61<br/>
           🛡️ Protected: 11<br/>
           ⏱️ Threshold: 30 days<br/>
@@ -100,31 +106,20 @@ export default function CentauriPlexPost({ onBack }: CentauriPlexPostProps) {
 
       {/* Animated Stars/Particles (Automation Tasks) */}
       <div className="absolute inset-0 overflow-hidden">
-        {[...Array(20)].map((_, i) => (
+        {DOTS.map((dot, i) => (
           <div
             key={i}
             className="absolute w-1 h-1 bg-cyan-400/10 rounded-full animate-pulse"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${2 + Math.random() * 6}s`
-            }}
+            style={dot}
           />
         ))}
-        
+
         {/* Constellation Connection Lines */}
-        {[...Array(8)].map((_, i) => (
+        {LINES.map((line, i) => (
           <div
             key={`line-${i}`}
             className="absolute h-px bg-gradient-to-r from-transparent via-cyan-400/5 to-transparent"
-            style={{
-              left: `${10 + Math.random() * 80}%`,
-              top: `${10 + Math.random() * 80}%`,
-              width: `${50 + Math.random() * 100}px`,
-              transform: `rotate(${Math.random() * 360}deg)`,
-              animationDelay: `${Math.random() * 3}s`,
-            }}
+            style={line}
           />
         ))}
       </div>
@@ -157,14 +152,44 @@ export default function CentauriPlexPost({ onBack }: CentauriPlexPostProps) {
           <div className="flex items-center gap-6 text-muted-foreground mb-6">
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4" />
-              <span>Oct 29, 2025</span>
+              <span>Published Oct 2025 &middot; system retired 2026</span>
             </div>
             <div className="flex items-center gap-2">
               <Clock className="w-4 h-4" />
               <span>15 min read</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-emerald-400">✅ Fully Operational</span>
+              <span className="text-amber-400">◼ Retired</span>
+            </div>
+          </div>
+
+          {/* Retirement notice. The post below is written in the present tense
+              because it was true when written; this system no longer runs. */}
+          <div className="mb-8 border-l-2 border-amber-400/60 bg-amber-400/5 p-5 rounded-r-lg">
+            <h2 className="font-mono text-sm font-bold text-amber-400 mb-2 tracking-wide">
+              STATUS: RETIRED
+            </h2>
+            <div className="text-muted text-sm leading-relaxed space-y-3">
+              <p>
+                This system no longer runs. It is documented here because building it and deciding to
+                switch it off were both worth writing down, but everything below is written in the
+                present tense and describes a machine that has been turned off.
+              </p>
+              <p>
+                It was retired for two independent reasons. The first is that it was built against the
+                Plex.tv API &mdash; a third-party interface I did not control &mdash; and when Plex changed
+                its pricing and policy, continuing to build against it stopped making sense. Roughly all
+                of the integration work became worthless in an afternoon, which is the most useful lesson
+                this project ever produced.
+              </p>
+              <p>
+                The second reason is less obvious and matters more. This automation existed to solve
+                problems created by scale: detecting inactivity, warning people, removing accounts I had
+                no personal relationship with. When the userbase came back down to close friends and
+                family, that problem stopped existing. I did not rewrite it against Jellyfin&rsquo;s API;
+                I replaced the parts still worth having with maintained off-the-shelf tools and deleted
+                the rest. Keeping software alive after its requirement has gone is its own kind of debt.
+              </p>
             </div>
           </div>
 
@@ -194,7 +219,7 @@ export default function CentauriPlexPost({ onBack }: CentauriPlexPostProps) {
               <p>
                 My Centauri Plex Automation System is a production-grade user lifecycle management platform that I built to handle
                 everything from welcoming new users to automated cleanup of inactive accounts. What started as a simple
-                script evolved into a comprehensive automation suite that now manages 61 users with 95% automation.
+                script grew into a lifecycle suite that ran for 61 users with almost no day-to-day intervention.
               </p>
               <p>
                 I built this system with Python, integrated it with Tautulli for activity tracking, and leveraged the Plex.tv API for user
@@ -209,8 +234,8 @@ export default function CentauriPlexPost({ onBack }: CentauriPlexPostProps) {
                 <div className="text-muted text-sm">Active Plex Users</div>
               </div>
               <div className="border border-purple-400/20 rounded-lg p-4">
-                <div className="text-purple-400 font-mono text-2xl font-bold">95%</div>
-                <div className="text-muted text-sm">Automation Level</div>
+                <div className="text-purple-400 font-mono text-2xl font-bold">4</div>
+                <div className="text-muted text-sm">Python Scripts</div>
               </div>
               <div className="border border-blue-400/20 rounded-lg p-4">
                 <div className="text-blue-400 font-mono text-2xl font-bold">30d</div>
@@ -538,7 +563,7 @@ export default function CentauriPlexPost({ onBack }: CentauriPlexPostProps) {
             <h2 className="text-3xl font-bold mb-6 text-cyan-400">10. Key Technical Achievements</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="bg-gradient-to-br from-cyan-900/20 to-blue-900/20 border border-cyan-400/30 rounded-lg p-6">
-                <h3 className="text-lg font-semibold text-cyan-300 mb-3">🔧 95% Automation</h3>
+                <h3 className="text-lg font-semibold text-cyan-300 mb-3">🔧 Hands-off Operation</h3>
                 <p className="text-muted text-sm">
                   Zero manual intervention required. System runs autonomously via cron jobs. Only setup and protected
                   user list require human input.
@@ -597,9 +622,9 @@ export default function CentauriPlexPost({ onBack }: CentauriPlexPostProps) {
                 communications throughout.
               </p>
               <p>
-                I've tested the system in production, successfully removing inactive users while protecting VIPs,
-                and sending professional notifications to all stakeholders. With 95% automation achieved, it runs
-                autonomously on my server, requiring zero daily intervention from me.
+                It ran in production, removing inactive users while protecting a protected list and notifying everyone
+                involved. Once configured it needed no daily attention — which is the only claim about its
+                automation level I can actually stand behind, since I never measured one.
               </p>
               <p className="text-cyan-300 font-semibold">
                 Key Takeaway: Automation isn't just about running scripts—it's about building resilient systems that

@@ -1,18 +1,18 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Moon, Sun, Menu, X, Terminal, Wifi, Cpu, Globe, Rocket } from "lucide-react";
+import { Moon, Sun, Menu, X, Terminal, Wifi, Cpu, Globe } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 import Logo from "@/components/Logo";
 
 const navLinks = [
   { name: "HOME", href: "#home" },
+  { name: "SYSTEMS", href: "/work" },
   { name: "ABOUT", href: "#about" },
   { name: "PROJECTS", href: "#projects" },
   { name: "EXP", href: "#experience" },
-  { name: "EDU", href: "#education" },
   { name: "BLOG", href: "/blog" },
   { name: "RESUME", href: "/resume" },
 ];
@@ -25,7 +25,7 @@ const DecryptText = ({ text, isActive }: { text: string; isActive: boolean }) =>
   const [displayText, setDisplayText] = useState(text);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  const scramble = () => {
+  const scramble = useCallback(() => {
     let iteration = 0;
     if (intervalRef.current) clearInterval(intervalRef.current);
 
@@ -48,14 +48,14 @@ const DecryptText = ({ text, isActive }: { text: string; isActive: boolean }) =>
 
       iteration += 1 / 3;
     }, 30);
-  };
+  }, [text]);
 
   useEffect(() => {
     if (isActive) scramble();
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
-  }, [isActive]);
+  }, [isActive, scramble]);
 
   return (
     <span 
@@ -108,40 +108,16 @@ export default function Navbar() {
   // Real-time system stats
   const [sysTime, setSysTime] = useState("--:--:--");
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
-  
-  // Orbital Descent Telemetry
-  const [altitude, setAltitude] = useState(100); // 100km to 0km
-  const [missionStatus, setMissionStatus] = useState("ORBIT_STABLE");
 
   // Scroll detection
   useEffect(() => {
-    let lastScrollY = window.scrollY;
-
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
       // 1. Navbar Appearance
       setIsScrolled(currentScrollY > 50);
 
-      // 2. Mission/Altitude Logic
-      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = Math.min(Math.max(currentScrollY / totalHeight, 0), 1);
-      
-      // Map 0-1 to 100km-0km (Linear descent)
-      const currentAlt = Math.floor(100 * (1 - progress));
-      setAltitude(currentAlt);
-
-      if (progress < 0.05) {
-        setMissionStatus("ORBIT_STABLE");
-      } else if (progress > 0.95) {
-        setMissionStatus("TOUCHDOWN");
-      } else {
-        setMissionStatus(currentScrollY > lastScrollY ? "DESCENT_SEQ" : "ASCENT_SEQ");
-      }
-
-      lastScrollY = currentScrollY;
-      
-      // 3. Active Section
+      // 2. Active Section
       const sections = navLinks.map(l => l.href.substring(1));
       for (const section of sections) {
         if (section === "blog") continue; // Skip checking blog section on home page as it is a separate page
@@ -303,20 +279,17 @@ export default function Navbar() {
           {/* Logo / Home */}
           <Link href="/" className="relative z-50 pointer-events-auto">
              <div className="flex items-center gap-3 bg-background/50 backdrop-blur-md px-3 py-1.5 rounded-full border border-border-subtle shadow-sm transition-all duration-300">
-                {missionStatus === "TOUCHDOWN" ? (
-                   <div className="w-2 h-2 bg-emerald-500 rounded-sm" /> 
-                ) : missionStatus === "ASCENT_SEQ" ? (
-                   <Rocket size={14} className="text-accent animate-pulse" />
-                ) : (
-                   <Globe size={14} className={`text-accent ${missionStatus === "DESCENT_SEQ" ? 'animate-spin-slow' : ''}`} />
-                )}
-                
+                <Globe size={14} className="text-accent" />
+
+                {/* Node identity + the section actually in view. Both are real:
+                    this replaced a scroll-derived "orbital altitude" readout
+                    that looked like telemetry but measured nothing. */}
                 <div className="flex flex-col leading-none w-[70px]">
                     <span className="text-[10px] font-mono font-bold text-foreground tracking-tighter">
-                       {missionStatus === "TOUCHDOWN" ? "SURFACE" : `FL: ${altitude.toString().padStart(3, '0')}`}
+                       GOTHAM-01
                     </span>
-                    <span className="text-[8px] font-mono text-muted-soft tracking-widest">
-                       {missionStatus}
+                    <span className="text-[8px] font-mono text-muted-soft tracking-widest uppercase">
+                       {activeSection}
                     </span>
                 </div>
              </div>

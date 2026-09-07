@@ -12,7 +12,6 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
   const [time, setTime] = useState('');
   const [temperature, setTemperature] = useState<string | null>(null);
-  const [isHoveringEmail, setIsHoveringEmail] = useState(false);
   const [copied, setCopied] = useState(false);
   const [showLegal, setShowLegal] = useState(false);
 
@@ -65,7 +64,10 @@ export default function Footer() {
         }
       } catch (error) {
         console.error('Failed to fetch weather:', error);
-        setTemperature('12°C'); // Fallback purely for aesthetic if API fails
+        // Show nothing rather than a fabricated reading. A made-up temperature
+        // is a small lie that teaches a reader to distrust every other number
+        // on the site.
+        setTemperature(null);
       }
     };
     fetchWeather();
@@ -82,7 +84,7 @@ export default function Footer() {
 
   const socialLinks = [
     { name: 'GitHub', url: 'https://github.com/InfamousMorningstar', icon: <Github className='w-5 h-5' /> },
-    { name: 'LinkedIn', url: 'https://linkedin.com/in/salman-ahmad-698b6a18b', icon: <Linkedin className='w-5 h-5' /> },
+    { name: 'LinkedIn', url: 'https://www.linkedin.com/in/salman-ahmad-6788811b6/', icon: <Linkedin className='w-5 h-5' /> },
     { name: 'Discord', url: 'https://discord.com/users/699763177315106836', icon: <FaDiscord className='w-5 h-5' /> },
   ];
 
@@ -149,8 +151,6 @@ export default function Footer() {
               {/* Email Interaction */}
               <button 
                 onClick={handleCopyEmail}
-                onMouseEnter={() => setIsHoveringEmail(true)}
-                onMouseLeave={() => setIsHoveringEmail(false)}
                 className="relative group w-fit cursor-pointer outline-none"
               >
                 <div className="flex items-center space-x-3 bg-surface-card hover:bg-surface-strong border border-border-subtle px-5 py-3 rounded-xl transition-all duration-300">

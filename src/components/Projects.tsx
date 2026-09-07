@@ -2,70 +2,12 @@
 
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
-import { FaGithub, FaExternalLinkAlt, FaArrowRight } from 'react-icons/fa';
+import Link from 'next/link';
+import { FaGithub, FaArrowRight } from 'react-icons/fa';
+import { TierBadge } from '@/components/ui/TierBadge';
+import { projects } from '@/content/projects';
+import { scrollToY } from '@/lib/smoothScroll';
 
-const projects = [
-  {
-    id: 1,
-    title: 'Starlight Tours',
-    shot: '/works/starlight.webp',
-    category: 'Interactive Education',
-    description: 'An immersive educational platform documenting documented cases of systemic racism. Features WebGL animations, verified academic research, and interactive timelines.',
-    tech: ['React 19', 'Three.js', 'WebGL', 'Vite'],
-    github: 'https://github.com/InfamousMorningstar/starlight',
-    demo: 'https://starlight-eight-ruby.vercel.app/',
-    gradient: 'from-blue-600 to-cyan-500',
-    number: '01'
-  },
-  {
-    id: 2,
-    title: 'Inter-Freight Auto',
-    shot: '/works/interfreight.webp',
-    category: 'Enterprise Production',
-    description: 'A premium automotive dealership platform with intelligent inquiry tracking, CARFAX integration, and a secure admin dashboard. Built for scale.',
-    tech: ['Next.js 15', 'Supabase', 'PostgreSQL', 'Zod'],
-    github: '',
-    demo: 'https://interfreightautosales.ca',
-    gradient: 'from-orange-500 to-red-600',
-    number: '02'
-  },
-  {
-    id: 3,
-    title: 'CDN DayZ',
-    shot: '/works/cdndayz.webp',
-    category: 'Community Platform',
-    description: 'Production DayZ community platform with live server status, launcher-verified mod inventories, official news ingestion, and a searchable diagnostics hub for DayZ error codes.',
-    tech: ['Next.js 15', 'TypeScript', 'Tailwind', 'GameDig'],
-    github: '',
-    demo: 'https://cdndayz.com',
-    gradient: 'from-emerald-500 to-teal-500',
-    number: '03'
-  },
-  {
-    id: 4,
-    title: 'Nitor',
-    shot: '/works/nitor.webp',
-    category: 'Product Design',
-    description: 'A desktop-first habit tracker with a forgiving streak model — no streak anxiety — and insights that explain why you succeed, not just whether. Supabase auth, row-level-secured persistence, and a GSAP scroll story.',
-    tech: ['Next.js 16', 'Supabase', 'GSAP', 'Zustand'],
-    github: 'https://github.com/InfamousMorningstar/Nitor',
-    demo: 'https://nitor-peach.vercel.app',
-    gradient: 'from-amber-400 to-yellow-600',
-    number: '04'
-  },
-  {
-    id: 5,
-    title: 'RunOrNope',
-    shot: '/works/runornope.webp',
-    category: 'Security Tooling',
-    description: 'A Windows static analyzer that explains what an untrusted executable appears capable of — without ever running or uploading it. Fail-closed isolation core and PE/CLR analysis that cites exact imports, strings, and IL as evidence.',
-    tech: ['C#', '.NET', 'Static Analysis', 'Windows'],
-    github: 'https://github.com/InfamousMorningstar/RunOrNope',
-    demo: '',
-    gradient: 'from-zinc-400 to-red-600',
-    number: '05'
-  }
-];
 
 export default function Projects() {
   const targetRef = useRef<HTMLElement>(null);
@@ -108,6 +50,57 @@ export default function Projects() {
   const x = useTransform(scrollYProgress, [0, 1], [0, -maxTravel]);
 
   /*
+   * Keyboard access.
+   *
+   * The pan is driven entirely by vertical scroll, so a keyboard user tabbing
+   * into a card's links would move focus to an element sitting outside the
+   * viewport with no way to bring it in — the focus ring simply vanished. The
+   * links were reachable but unusable.
+   *
+   * Rather than trap focus or add custom arrow-key handling, this listens for
+   * focus landing inside the track and translates the focused card's position
+   * back into the window scroll offset that reveals it. Native tab order is
+   * preserved; the page just follows along.
+   */
+  useEffect(() => {
+    const track = trackRef.current;
+    const section = targetRef.current;
+    if (!track || !section) return;
+
+    const handleFocusIn = (event: FocusEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (!target || maxTravel <= 0) return;
+
+      const card = target.closest<HTMLElement>('[data-project-card]');
+      if (!card || !track.contains(card)) return;
+
+      // Where this card sits along the track, independent of current transform.
+      const cardLeft = card.offsetLeft;
+      const cardWidth = card.offsetWidth;
+
+      // Centre it when it fits, otherwise align its left edge with a margin.
+      const desiredShift =
+        cardWidth < window.innerWidth
+          ? cardLeft - (window.innerWidth - cardWidth) / 2
+          : cardLeft - 24;
+
+      const progress = Math.min(Math.max(desiredShift / maxTravel, 0), 1);
+
+      const sectionTop = section.offsetTop;
+      const scrollableHeight = section.offsetHeight - window.innerHeight;
+
+      // Must go through Lenis where it is running — a raw window.scrollTo
+      // competes with its animation loop and lands somewhere else entirely.
+      scrollToY(sectionTop + progress * scrollableHeight, {
+        immediate: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+      });
+    };
+
+    track.addEventListener('focusin', handleFocusIn);
+    return () => track.removeEventListener('focusin', handleFocusIn);
+  }, [maxTravel]);
+
+  /*
    * Section height sets the pan *speed*, not its extent — the travel above is
    * clamped to what the track actually needs, so a generous height just pans
    * more slowly instead of scrolling into nothing.
@@ -144,6 +137,13 @@ export default function Projects() {
                 <span className="w-12 h-[1px] bg-muted-soft"></span>
                 <span>SCROLL TO EXPLORE</span>
             </div>
+            {/* Announced to screen readers only: the pan is a visual device,
+                but keyboard users need to know tabbing works and will bring
+                each card into view. */}
+            <p className="sr-only">
+                This section scrolls horizontally as you scroll down. Pressing Tab moves through
+                each project and brings it into view automatically.
+            </p>
         </motion.div>
 
         {/* Horizontal Scroll Track */}
@@ -157,7 +157,11 @@ export default function Projects() {
           </div>
 
           {projects.map((project) => (
-            <div key={project.id} className="relative group h-[65vh] md:h-[70vh] w-[85vw] md:w-[44vw] flex-shrink-0">
+            <div
+              key={project.id}
+              data-project-card
+              className="relative group h-[65vh] md:h-[70vh] w-[85vw] md:w-[44vw] flex-shrink-0"
+            >
                {/* Card Container */}
               <div className="w-full h-full relative rounded-[2rem] overflow-hidden bg-surface-card/30 backdrop-blur-xl border border-border-subtle transition-colors hover:border-border-strong shadow-lg flex flex-col">
 
@@ -171,6 +175,10 @@ export default function Projects() {
                       completely. The top band is the only place with real room.
                     */}
                     <div className="relative h-[35%] shrink-0 overflow-hidden bg-surface-strong border-b border-border-subtle">
+                        {/* Raw <img> is deliberate: next/image's optimiser
+                            cannot run under `output: 'export'`, so <Image>
+                            would either fail the build or add nothing here. */}
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                             src={project.shot}
                             alt=""
@@ -192,9 +200,12 @@ export default function Projects() {
                         {/* Top */}
                         <div className="flex justify-between items-start">
                              <div className="flex flex-col">
-                                <span className={`text-xs md:text-sm font-bold tracking-widest uppercase bg-gradient-to-r ${project.gradient} bg-clip-text text-transparent mb-2`}>
-                                    {project.category}
-                                </span>
+                                <div className="flex items-center gap-2 mb-2">
+                                    <span className={`text-xs md:text-sm font-bold tracking-widest uppercase bg-gradient-to-r ${project.gradient} bg-clip-text text-transparent`}>
+                                        {project.category}
+                                    </span>
+                                    <TierBadge tier={project.tier} />
+                                </div>
                                 <h3 className="text-2xl md:text-5xl font-bold text-foreground max-w-lg leading-tight">
                                     {project.title}
                                 </h3>
@@ -218,7 +229,13 @@ export default function Projects() {
                                  ))}
                              </div>
 
-                             <div className="flex gap-6 mt-auto">
+                             <div className="flex flex-wrap gap-x-6 gap-y-2 mt-auto">
+                                 {project.caseStudy && (
+                                     <Link href={project.caseStudy} className="flex items-center gap-2 md:gap-3 text-accent font-medium hover:text-accent2 transition-colors group/link z-20">
+                                         Case study
+                                         <FaArrowRight className="group-hover/link:translate-x-1 transition-transform" />
+                                     </Link>
+                                 )}
                                  {project.demo && (
                                      <a href={project.demo} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 md:gap-3 text-foreground font-medium hover:text-accent transition-colors group/link z-20">
                                          Visit Site 

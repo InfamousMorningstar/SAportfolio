@@ -18,6 +18,12 @@
 import { motion } from 'framer-motion';
 import { Calendar, Clock, ArrowLeft } from 'lucide-react';
 
+import { fieldDots, fieldLines } from '@/lib/decorativeField';
+
+// Seeded at module scope: identical on server and client.
+const DOTS = fieldDots(12, 3011, { delay: 4, durationSpread: 5 });
+const LINES = fieldLines(6, 3012, { widthBase: 100, widthSpread: 200 });
+
 interface HybridEdgePostProps {
   onBack?: () => void;
 }
@@ -82,32 +88,20 @@ export default function HybridEdgePost({ onBack }: HybridEdgePostProps) {
 
       {/* Animated Network Nodes */}
       <div className="absolute inset-0 overflow-hidden">
-        {[...Array(12)].map((_, i) => (
+        {DOTS.map((dot, i) => (
           <div
             key={i}
             className="absolute w-1 h-1 bg-emerald-400/10 rounded-full animate-pulse"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 4}s`,
-              animationDuration: `${2 + Math.random() * 5}s`
-            }}
+            style={dot}
           />
         ))}
-        
+
         {/* Connecting Lines Animation */}
-        {[...Array(6)].map((_, i) => (
+        {LINES.map((line, i) => (
           <div
             key={`line-${i}`}
             className="absolute h-px bg-gradient-to-r from-transparent via-cyan-400/5 to-transparent animate-pulse"
-            style={{
-              left: `${10 + Math.random() * 80}%`,
-              top: `${10 + Math.random() * 80}%`,
-              width: `${100 + Math.random() * 200}px`,
-              transform: `rotate(${Math.random() * 360}deg)`,
-              animationDelay: `${Math.random() * 6}s`,
-              animationDuration: `${3 + Math.random() * 4}s`
-            }}
+            style={line}
           />
         ))}
       </div>
@@ -140,12 +134,32 @@ export default function HybridEdgePost({ onBack }: HybridEdgePostProps) {
           <div className="flex items-center gap-6 text-muted-foreground mb-6">
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4" />
-              <span>Sep 20, 2024</span>
+              <span>Sep 2025</span>
             </div>
             <div className="flex items-center gap-2">
               <Clock className="w-4 h-4" />
               <span>6 min read</span>
             </div>
+            <div className="flex items-center gap-2">
+              <span className="text-cyan-400">◇ Planned</span>
+            </div>
+          </div>
+
+          {/* Written as a design and still queued. Saying where it sits in the
+              queue is more useful than leaving it in an undated future tense. */}
+          <div className="mb-8 border-l-2 border-cyan-400/60 bg-cyan-400/5 p-5 rounded-r-lg">
+            <h2 className="font-mono text-sm font-bold text-cyan-400 mb-2 tracking-wide">
+              STATUS: PLANNED
+            </h2>
+            <p className="text-muted text-sm leading-relaxed">
+              Written in September 2025 and still on the roadmap rather than in the rack &mdash;
+              everything described below currently runs on the single TrueNAS host. What moved it down
+              the queue was measurement rather than enthusiasm: the real constraint on that machine
+              turned out to be its single 2.5 GbE link, not the workloads I wanted to offload. A second
+              box would not have fixed a network bottleneck, so 10 GbE and a managed switch went ahead
+              of it. The design below still holds; it is waiting on the upgrade that actually unblocks
+              it.
+            </p>
           </div>
 
           <div className="flex flex-wrap gap-2 mb-8">

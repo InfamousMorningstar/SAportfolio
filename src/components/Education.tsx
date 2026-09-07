@@ -1,57 +1,19 @@
 'use client';
 
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FaGraduationCap, FaUniversity, FaCertificate, FaDatabase, FaCode, FaServer, FaShieldAlt, FaCheckCircle } from 'react-icons/fa';
+import { motion } from 'framer-motion';
+import { FaUniversity, FaCode, FaCheckCircle } from 'react-icons/fa';
+import { education as studies } from '@/content/career';
 
-const education = [
-  {
-    id: 'EDU-MRU',
-    institution: 'Mount Royal University',
-    degree: 'Bachelor of Science - CIS',
-    period: '2024 - Present',
-    status: 'IN_PROGRESS',
-    statusColor: 'text-emerald-500', // Adjusted for light/dark visibility
-    description: 'Advanced studies in Computer Information Systems optimizing the intersection of business strategy and software engineering.',
-    courses: [
-      'Data Structures & Algorithms',
-      'Database Systems',
-      'Software Engineering',
-      'Network Security',
-      'System Analysis',
-      'Web Development'
-    ],
-    icon: <FaUniversity />,
-    stats: {
-      gpa: '3.8',
-      credits: 'Active',
-      level: 'Undergrad'
-    }
-  },
-  {
-    id: 'EDU-SAIT',
-    institution: 'SAIT',
-    degree: 'IT Software Development',
-    period: '2020 - 2023',
-    status: 'COMPLETED',
-    statusColor: 'text-blue-500', // Adjusted for light/dark visibility
-    description: 'Intensive polytechnic training focused on full-stack development, database architecture, and enterprise application deployment.',
-    courses: [
-      'Java Programming',
-      'Full Stack Web',
-      'Database (MySQL)',
-      'Software QA',
-      'Mobile App Dev',
-      'Project Mgmt'
-    ],
-    icon: <FaCode />,
-    stats: {
-      gpa: '3.7',
-      credits: 'Diploma',
-      level: 'Honors'
-    }
-  }
-];
+// Rendered from shared career data. Icons and colours stay here because they
+// are presentation, not content — /resume has no use for either.
+const education = studies.map((s) => ({
+  ...s,
+  icon: s.id === 'EDU-SAIT' ? <FaCode /> : <FaUniversity />,
+  statusColor: s.status === 'in-progress' ? 'text-emerald-500' : 'text-blue-500',
+  statusLabel: s.status === 'in-progress' ? 'IN_PROGRESS' : 'COMPLETED',
+}));
+
 
 export default function Education() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -98,7 +60,7 @@ export default function Education() {
                 {/* Main Card Face */}
                 <div className="absolute inset-0 bg-surface-card/30 backdrop-blur-xl border border-border-subtle rounded-2xl p-6 md:p-8 flex flex-col justify-between overflow-hidden shadow-xl hover:shadow-2xl hover:border-accent/20 transition-all duration-300">
                     {/* Active Status Pulse */}
-                    {edu.status === 'IN_PROGRESS' && (
+                    {edu.status === 'in-progress' && (
                         <div className="absolute top-0 right-0 p-4">
                             <span className="relative flex h-3 w-3">
                               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>

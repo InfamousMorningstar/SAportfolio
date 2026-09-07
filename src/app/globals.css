@@ -460,3 +460,25 @@ html.scrolling {
   100% { opacity: 0.1; }
 }
 
+
+/* --------------------------------------------------------------------------
+   Reduced motion.
+
+   The site runs a canvas particle field, a cursor trail, scroll-driven
+   transforms, a horizontal pan and several looping CSS animations. None of
+   that previously checked whether the visitor had asked for less of it.
+
+   Framer Motion is handled separately via MotionConfig in SmoothScroll; this
+   blanket rule covers the CSS-driven animations, and the canvas components
+   opt out in JS.
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

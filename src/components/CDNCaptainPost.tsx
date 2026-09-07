@@ -18,6 +18,11 @@
 import { motion } from 'framer-motion';
 import { Calendar, Clock, ArrowLeft } from 'lucide-react';
 
+import { fieldDots } from '@/lib/decorativeField';
+
+// Seeded at module scope: identical on server and client.
+const DOTS = fieldDots(14, 4011, { delay: 4, durationSpread: 5 });
+
 interface CDNCaptainPostProps {
   onBack?: () => void;
 }
@@ -73,16 +78,11 @@ export default function CDNCaptainPost({ onBack }: CDNCaptainPostProps) {
 
       {/* Drifting "fact" nodes */}
       <div className="absolute inset-0 overflow-hidden">
-        {[...Array(14)].map((_, i) => (
+        {DOTS.map((dot, i) => (
           <div
             key={i}
             className="absolute w-1 h-1 bg-indigo-400/10 rounded-full animate-pulse"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 4}s`,
-              animationDuration: `${2 + Math.random() * 5}s`
-            }}
+            style={dot}
           />
         ))}
       </div>

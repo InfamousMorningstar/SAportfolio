@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { FaGithub, FaLinkedin, FaEnvelope, FaChevronDown } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
 
 export default function Hero() {
   const { scrollY } = useScroll();
@@ -31,12 +31,13 @@ export default function Hero() {
         {/* Bottom/Right: Role & Intro - Offset */}
         <motion.div style={{ y: y2 }} className="self-end text-right max-w-lg md:max-w-2xl relative mt-auto">
             <h2 className="text-3xl md:text-5xl font-light text-foreground mb-6">
-                Software <span className="font-serif italic text-accent">Engineer</span> &<br/>
-                Creative <span className="font-serif italic text-accent2">Developer</span>
+                Software <span className="font-serif italic text-accent">Developer</span>,<br/>
+                Systems <span className="font-serif italic text-accent2">Builder</span>.
             </h2>
             <p className="text-muted text-lg md:text-xl leading-relaxed mb-8">
-                Crafting digital experiences at the intersection of performance, aesthetics, and engineering. Specialized in Next.js, 
-                distributed systems, and interactive design.
+                I build software, run infrastructure, and figure out what breaks in between. From
+                full-stack applications to self-hosted systems, networking, containers, and automation
+                &mdash; I learn by building, breaking, troubleshooting, and documenting real systems.
             </p>
             
             <div className="flex justify-end mb-8">

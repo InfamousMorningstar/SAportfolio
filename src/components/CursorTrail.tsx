@@ -1,9 +1,12 @@
 'use client';
 
-import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useReducedMotion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
 export default function CursorTrail() {
+  // Purely decorative and continuously in motion — the right behaviour under
+  // prefers-reduced-motion is not to render it at all.
+  const prefersReducedMotion = useReducedMotion();
   const [particles, setParticles] = useState<Array<{ id: number; x: number; y: number; timestamp: number }>>([]);
   const cursorX = useMotionValue(0);
   const cursorY = useMotionValue(0);
@@ -47,6 +50,10 @@ export default function CursorTrail() {
     return null;
   }
 
+  if (prefersReducedMotion) {
+    return null;
+  }
+
   return (
     <div className="fixed inset-0 pointer-events-none z-[9997]" style={{ mixBlendMode: 'screen' }}>
       {/* Main cursor glow */}
@@ -63,10 +70,10 @@ export default function CursorTrail() {
       />
       
       {/* Particle trail */}
+      {/* The fade is driven entirely by the animate/transition props below.
+          Two locals here computed particle age from Date.now() during render
+          and then went unused — impure, and pointless. */}
       {particles.map((particle, index) => {
-        const age = Date.now() - particle.timestamp;
-        const progress = age / 1000;
-        
         return (
           <motion.div
             key={particle.id}

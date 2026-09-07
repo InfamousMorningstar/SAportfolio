@@ -42,3 +42,10 @@ yarn-error.log*
 
 # OS
 Thumbs.db
+
+# Working notes from the content audit — kept local.
+# CONTENT_INTERVIEW.md in particular holds drive serials, infrastructure
+# specifics and personal contact details that do not belong in a public repo.
+PORTFOLIO_AUDIT.md
+CONTENT_INTERVIEW.md
+DRAFT_ANSWERS.md

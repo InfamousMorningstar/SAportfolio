@@ -58,7 +58,7 @@ export default function ScrollToTopArrow() {
   };
 
   // Calculate the absolute position above the footer
-  let style: React.CSSProperties = {
+  const style: React.CSSProperties = {
     pointerEvents: show ? "auto" : "none",
     left: "50%",
     transform: "translateX(-50%)",
@@ -71,13 +71,6 @@ export default function ScrollToTopArrow() {
     style.top = footerTop - 56;
   }
 
-  // S-tier spring animation config
-  const spring = {
-    type: "spring",
-    stiffness: 120,
-    damping: 18,
-    mass: 0.7,
-  };
 
   return (
     <motion.div

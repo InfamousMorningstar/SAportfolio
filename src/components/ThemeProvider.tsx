@@ -14,6 +14,16 @@ const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 
 const STORAGE_KEY = "portfolio-theme";
 
+/*
+ * The View Transitions API is not in the DOM lib for every TS version, and it
+ * is genuinely optional at runtime. Declaring the shape we use is honest about
+ * both facts, and better than a @ts-ignore that silently stops applying if the
+ * types ever catch up.
+ */
+type ViewTransitionDocument = Document & {
+  startViewTransition?: (callback: () => void) => { ready: Promise<void> };
+};
+
 const applyThemeToDocument = (theme: Theme) => {
   if (typeof document === "undefined") return;
   const root = document.documentElement;
@@ -31,8 +41,9 @@ const resolveInitialTheme = (): Theme => {
   if (stored === "light" || stored === "dark") {
     return stored;
   }
-  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  return prefersDark ? "dark" : "light";
+  // Dark-first: matches the inline script in layout.tsx. Only an explicit
+  // toggle switches to light, so first impressions are not left to the OS.
+  return "dark";
 };
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
@@ -44,8 +55,17 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   });
   useLayoutEffect(() => {
     const initial = resolveInitialTheme();
-    setThemeState(initial);
     applyThemeToDocument(initial);
+    /*
+     * localStorage cannot be read during SSR or inside the state initialiser,
+     * and the inline script in the root layout that normally sets this before
+     * hydration can legitimately fail — private browsing, blocked storage.
+     * This is a one-time reconciliation with an external store on mount rather
+     * than a render-driven cascade, and the functional update means React bails
+     * out entirely when the pre-hydration script already got it right.
+     */
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setThemeState((current) => (current === initial ? current : initial));
   }, []);
 
   useEffect(() => {
@@ -72,8 +92,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const toggleTheme = useCallback((e?: React.MouseEvent) => {
     const newTheme = theme === "light" ? "dark" : "light";
     
-    // @ts-ignore - View Transitions API is not yet in all TS definitions
-    if (!document.startViewTransition || !e) {
+    const doc = document as ViewTransitionDocument;
+
+    if (!doc.startViewTransition || !e) {
       setThemeState(newTheme);
       applyThemeToDocument(newTheme);
       window.localStorage.setItem(STORAGE_KEY, newTheme);
@@ -87,8 +108,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       Math.max(y, innerHeight - y)
     );
 
-    // @ts-ignore
-    const transition = document.startViewTransition(() => {
+    const transition = doc.startViewTransition(() => {
       setThemeState(newTheme);
       applyThemeToDocument(newTheme);
       window.localStorage.setItem(STORAGE_KEY, newTheme);

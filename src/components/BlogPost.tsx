@@ -17,6 +17,13 @@
 
 import { motion } from 'framer-motion';
 import { Calendar, Clock, ArrowLeft } from 'lucide-react';
+import { fieldDots, fieldLines } from '@/lib/decorativeField';
+
+// Computed once at module scope with a fixed seed, so the server and the
+// browser agree. Generating these inline during render was impure and is the
+// same hydration hazard that bit the Experience section previously.
+const DOTS = fieldDots(18, 1011);
+const LINES = fieldLines(7, 1012);
 
 interface BlogPostProps {
   onBack?: () => void;
@@ -35,60 +42,56 @@ export default function BlogPost({ onBack }: BlogPostProps) {
       <div className="absolute inset-0 opacity-[0.05]">
         {/* zpool status output */}
         <div className="absolute top-16 left-16 text-teal-300/30 font-mono text-xs rotate-[-6deg] select-none">
-          pool: centauri<br/>
+          pool: tank<br/>
           state: ONLINE<br/>
-          scan: scrub repaired 0B in 08:42:11<br/>
+          scan: scrub repaired 0B in 1 days 21:49:03<br/>
           config:<br/>
-          &nbsp;&nbsp;raidz1-0&nbsp;&nbsp;ONLINE&nbsp;&nbsp;0&nbsp;&nbsp;0&nbsp;&nbsp;0<br/>
-          &nbsp;&nbsp;raidz1-1&nbsp;&nbsp;ONLINE&nbsp;&nbsp;0&nbsp;&nbsp;0&nbsp;&nbsp;0<br/>
-          &nbsp;&nbsp;logs&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ONLINE<br/>
-          &nbsp;&nbsp;cache&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ONLINE<br/>
+          &nbsp;&nbsp;raidz2-0&nbsp;&nbsp;ONLINE&nbsp;&nbsp;0&nbsp;&nbsp;0&nbsp;&nbsp;0<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;8 × 18.2T&nbsp;&nbsp;ONLINE<br/>
+          errors: No known data errors<br/>
         </div>
 
         {/* RAID-Z vdev diagram */}
         <div className="absolute top-1/3 right-20 text-cyan-400/25 font-mono text-xs rotate-[10deg] select-none">
-          [vdev 1]&nbsp;raidz1<br/>
-          ┌──┬──┬──┬──┐<br/>
-          │4T│4T│4T│4T│ → 12 TB<br/>
-          └──┴──┴──┴──┘<br/>
-          [vdev 2]&nbsp;raidz1<br/>
-          ┌──┬──┬──┬──┐<br/>
-          │20│20│20│20│ → 60 TB<br/>
-          └──┴──┴──┴──┘<br/>
+          [vdev 0]&nbsp;raidz2<br/>
+          ┌──┬──┬──┬──┬──┬──┬──┬──┐<br/>
+          │20│20│20│20│20│20│20│20│<br/>
+          └──┴──┴──┴──┴──┴──┴──┴──┘<br/>
+          146 TiB raw → ~109 TiB usable<br/>
         </div>
 
         {/* zfs commands */}
         <div className="absolute bottom-32 left-24 text-emerald-400/25 font-mono text-xs rotate-[-12deg] select-none">
-          zfs snapshot centauri/photos@daily<br/>
-          zfs send -i @prev @daily | ssh backup<br/>
-          zpool scrub centauri<br/>
+          zfs snapshot tank/photos@weekly<br/>
+          zpool scrub tank<br/>
           zpool iostat -v 1<br/>
+          sas3flash -list<br/>
         </div>
 
         {/* Docker compose snippet */}
         <div className="absolute top-1/2 right-12 text-violet-400/25 font-mono text-xs rotate-[8deg] select-none">
           services:<br/>
-          &nbsp;&nbsp;plex:<br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;image: plexinc/pms-docker<br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;runtime: nvidia<br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;volumes:<br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- /mnt/centauri/media:/data<br/>
+          &nbsp;&nbsp;jellyfin:<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;image: jellyfin/jellyfin<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;devices:<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- /dev/dri:/dev/dri<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- /mnt/tank/media:/data<br/>
         </div>
 
         {/* SMART / disk health */}
         <div className="absolute bottom-24 right-1/4 text-amber-300/25 font-mono text-xs rotate-[-8deg] select-none">
-          /dev/sda&nbsp;HGST&nbsp;20TB&nbsp;Temp 38°C&nbsp;PASS<br/>
-          /dev/sdb&nbsp;HGST&nbsp;20TB&nbsp;Temp 39°C&nbsp;PASS<br/>
-          /dev/sdc&nbsp;WDC&nbsp;&nbsp;&nbsp;4TB&nbsp;&nbsp;Temp 36°C&nbsp;PASS<br/>
-          /dev/sdd&nbsp;WDC&nbsp;&nbsp;&nbsp;4TB&nbsp;&nbsp;Temp 35°C&nbsp;PASS<br/>
+          sda&nbsp;WDC WD200EDGZ&nbsp;18.2T&nbsp;sas<br/>
+          sdb&nbsp;WDC WD200EDGZ&nbsp;18.2T&nbsp;sas<br/>
+          sdc&nbsp;WDC WD200EDGZ&nbsp;18.2T&nbsp;sas<br/>
+          sdd&nbsp;WDC WD200EDGZ&nbsp;18.2T&nbsp;sas<br/>
         </div>
 
         {/* ARC stats */}
         <div className="absolute top-20 right-1/3 text-cyan-300/25 font-mono text-xs rotate-[-4deg] select-none">
-          ARC size:&nbsp;&nbsp;&nbsp;28.4 GiB / 46.9 GiB<br/>
-          Hit ratio:&nbsp;&nbsp;97.3%<br/>
-          L2ARC hit:&nbsp;&nbsp;42.1%<br/>
-          Prefetch:&nbsp;&nbsp;&nbsp;efficient<br/>
+          mpt3sas_cm0: log_info(0x31110e03)<br/>
+          sd 0:0:4:0: device_block, handle(0x000c)<br/>
+          sd 0:0:5:0: device_block, handle(0x000d)<br/>
+          task txg_sync blocked for 120 seconds<br/>
         </div>
 
         {/* Tailnet / Cloudflare */}
@@ -111,32 +114,20 @@ export default function BlogPost({ onBack }: BlogPostProps) {
 
       {/* Animated &ldquo;disk&rdquo; particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(18)].map((_, i) => (
+        {DOTS.map((dot, i) => (
           <div
             key={i}
             className="absolute w-1 h-1 bg-teal-400/15 rounded-full animate-pulse"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${2 + Math.random() * 6}s`,
-            }}
+            style={dot}
           />
         ))}
 
         {/* Faint connecting "bus" lines */}
-        {[...Array(7)].map((_, i) => (
+        {LINES.map((line, i) => (
           <div
             key={`line-${i}`}
             className="absolute h-px bg-gradient-to-r from-transparent via-teal-400/10 to-transparent animate-pulse"
-            style={{
-              left: `${10 + Math.random() * 80}%`,
-              top: `${10 + Math.random() * 80}%`,
-              width: `${120 + Math.random() * 220}px`,
-              transform: `rotate(${Math.random() * 360}deg)`,
-              animationDelay: `${Math.random() * 6}s`,
-              animationDuration: `${3 + Math.random() * 4}s`,
-            }}
+            style={line}
           />
         ))}
       </div>
@@ -169,7 +160,7 @@ export default function BlogPost({ onBack }: BlogPostProps) {
           <div className="flex items-center gap-6 text-muted-foreground mb-6">
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4" />
-              <span>Sep 24, 2025</span>
+              <span>Published Sep 2025 &middot; verified Sep 2026</span>
             </div>
             <div className="flex items-center gap-2">
               <Clock className="w-4 h-4" />
@@ -232,28 +223,32 @@ export default function BlogPost({ onBack }: BlogPostProps) {
                 <h3 className="text-xl font-semibold mb-4 text-accent2">System Specs</h3>
                 <div className="space-y-2 text-muted">
                   <div className="flex justify-between">
+                    <span className="font-medium">Chassis:</span>
+                    <span>Lenovo ThinkCentre + custom JBOD</span>
+                  </div>
+                  <div className="flex justify-between">
                     <span className="font-medium">CPU:</span>
-                    <span>Intel Core i7-8700 (6c / 12t, Coffee Lake)</span>
+                    <span>Intel Core i7-8700K (6c / 12t, Coffee Lake)</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="font-medium">GPU:</span>
-                    <span>NVIDIA Quadro P1000 (4 GB GDDR5)</span>
+                    <span>None &mdash; see below</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="font-medium">Memory:</span>
-                    <span>46.9 GiB DDR4 (non-ECC)</span>
+                    <span>46.7 GiB DDR4 (non-ECC)</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium">HBA:</span>
+                    <span>LSI SAS3008, IT mode</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="font-medium">Boot:</span>
-                    <span>Mirrored SATA SSDs</span>
+                    <span>Single 512 GB NVMe (no redundancy)</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="font-medium">Platform:</span>
-                    <span>TrueNAS SCALE 25.04 (Fangtooth)</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium">Uptime:</span>
-                    <span>30+ days between reboots</span>
+                    <span>TrueNAS SCALE 26.0.0-BETA</span>
                   </div>
                 </div>
               </div>
@@ -262,34 +257,34 @@ export default function BlogPost({ onBack }: BlogPostProps) {
                 <h3 className="text-xl font-semibold mb-4 text-accent2">Honest Notes on the Build</h3>
                 <ul className="list-disc pl-5 space-y-2 text-muted text-sm">
                   <li>
-                    The i7-8700 is genuinely overkill for a NAS workload. Where it earns its keep is Plex,
-                    Immich machine learning passes, and the half-dozen sidecar containers that would otherwise
-                    fight over an N100.
+                    The i7-8700K is genuinely overkill for a NAS workload. Where it earns its keep is
+                    transcoding and the three dozen sidecar containers that would otherwise fight over an N100.
                   </li>
                   <li>
                     Memory is non-ECC. ZFS does not <em>require</em> ECC, and the &quot;scrub of death&quot; story is
                     overblown, but I would absolutely take ECC if I were buying the platform new. I'm not, so I don't.
                   </li>
                   <li>
-                    The Quadro P1000 is a 4 GB Pascal card. It can NVENC-encode multiple 1080p streams comfortably
-                    and one 4K stream at a stretch. Plex's per-card session cap is lifted via the well-known
-                    open-source nvidia-patch; without it you're limited to a couple of concurrent sessions
-                    regardless of how much headroom the silicon has.
+                    <span className="text-accent2 font-medium">There used to be a Quadro P1000 in here.</span> TrueNAS
+                    SCALE 25.10 moved to NVIDIA's open GPU kernel modules, which depend on the GSP &mdash; a
+                    coprocessor that first appeared in Turing. Pascal doesn't have one, so the card stopped being
+                    supported. Not "too old for the driver": a specific architectural dependency introduced by a
+                    kernel-module change in a point release.
                   </li>
                   <li>
-                    The card also runs Immich's CLIP/face recognition jobs and small Ollama models. 4 GB of VRAM
-                    keeps me to ~7B parameter models at Q4 quantisation — usable for chat, not useful for anything
-                    serious. The LLM stuff is a toy, and I'm honest about that.
+                    I could have kept it. There are community builds of the legacy proprietary driver for exactly
+                    this situation. I chose not to maintain out-of-tree kernel modules against every future TrueNAS
+                    update for one 4 GB card, so I pulled it. Transcoding moved to the 8700K's integrated Quick Sync,
+                    and the local LLM containers &mdash; which were a toy at 4 GB of VRAM anyway &mdash; were shut down
+                    rather than migrated.
                   </li>
                   <li>
-                    The case has more drive bays than I have drives. Future me will appreciate this; current me
-                    has to look at the empty caddies and resist the urge to fill them.
+                    The drives don't live in the ThinkCentre at all. Eight 20 TB disks sit in a JBOD enclosure I
+                    fabricated out of steel, attached over an LSI SAS3008 HBA running IT-mode firmware so ZFS
+                    addresses the disks directly. Hardware RAID in front of ZFS is worse than useless &mdash; it hides
+                    exactly the information ZFS needs to do its job.
                   </li>
                 </ul>
-                <p className="text-xs italic mt-4 text-accent/70">
-                  And no, I haven't lost any RAM sticks. The reported figure is just what's left after the GPU
-                  and integrated controllers take their cut.
-                </p>
               </div>
             </div>
           </section>
@@ -299,26 +294,30 @@ export default function BlogPost({ onBack }: BlogPostProps) {
             <h2 className="text-3xl font-bold mb-6 text-accent">3. Storage &amp; Network</h2>
             <div className="space-y-6">
               <div className="bg-gradient-to-r from-accent2/5 to-accent/5 rounded-lg p-6 border border-accent/20">
-                <h3 className="text-xl font-semibold mb-4 text-accent2">ZFS Pool &ldquo;Centauri&rdquo;</h3>
+                <h3 className="text-xl font-semibold mb-4 text-accent2">ZFS Pool &ldquo;tank&rdquo;</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <h4 className="font-semibold text-accent mb-2">Pool Overview</h4>
                     <div className="space-y-1 text-muted text-sm">
                       <div className="flex justify-between">
-                        <span>Total Usable:</span>
-                        <span className="font-medium">~72 TB</span>
+                        <span>Raw capacity:</span>
+                        <span className="font-medium">146 TiB</span>
                       </div>
                       <div className="flex justify-between">
-                        <span>Currently Free:</span>
-                        <span className="font-medium">~15 TB</span>
+                        <span>Usable:</span>
+                        <span className="font-medium">~109 TiB</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Allocated:</span>
+                        <span className="font-medium">111 TiB raw &mdash; 76% full</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Fragmentation:</span>
+                        <span className="font-medium">37%</span>
                       </div>
                       <div className="flex justify-between">
                         <span>Compression:</span>
                         <span className="font-medium">LZ4 (default)</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Record size:</span>
-                        <span className="font-medium">128K default, 1M on media datasets</span>
                       </div>
                     </div>
                   </div>
@@ -327,55 +326,65 @@ export default function BlogPost({ onBack }: BlogPostProps) {
                     <h4 className="font-semibold text-accent mb-2">Vdev Configuration</h4>
                     <div className="space-y-2 text-muted text-sm">
                       <div>
-                        <span className="font-medium">Vdev 1:</span> 4 × 4 TB in RAID-Z1 → ~12 TB usable
+                        <span className="font-medium">One vdev:</span> 8 × 20 TB in RAID-Z2
                       </div>
                       <div>
-                        <span className="font-medium">Vdev 2:</span> 4 × 20 TB in RAID-Z1 → ~60 TB usable
+                        <span className="font-medium">Parity:</span> dual &mdash; any two disks may fail
                       </div>
                       <div className="text-xs text-muted/80 pt-1">
-                        Both vdevs are striped into the same pool. Losing either vdev loses the entire pool.
+                        Two other pools exist: <span className="font-mono">boot-pool</span> on a single NVMe,
+                        and <span className="font-mono">app-pool</span> on a single 500 GB SSD holding
+                        container state. Neither is redundant. More on that below.
                       </div>
                     </div>
                   </div>
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-accent/20 text-muted text-sm space-y-2">
-                  <h4 className="font-semibold text-accent mb-1">The honest part about RAID-Z1 on 20 TB drives</h4>
+                  <h4 className="font-semibold text-accent mb-1">How this pool came to be RAID-Z2</h4>
                   <p>
-                    Yes, I know. With drives this large, RAID-Z1 is on the spicy end of acceptable. A single
-                    drive failure forces a multi-day resilver during which the surviving disks are hammered, and
-                    a second failure in that window takes the pool with it. RAID-Z2 would be the textbook answer.
+                    An earlier version of this post argued that the pool's original layout &mdash; two RAID-Z1
+                    vdevs, one of them 20 TB drives &mdash; was the single decision most likely to bite me. With
+                    disks that large, a single failure forces a multi-day resilver during which the survivors get
+                    hammered, and a second failure in that window takes everything. I wrote that RAID-Z2 was the
+                    textbook answer and that I'd run it if I bought the set again.
                   </p>
                   <p>
-                    I chose Z1 with eyes open: I had the disks on hand, I wanted the extra capacity, and the
-                    pool is paired with off-box backups for anything irreplaceable. If I were buying the 20 TB
-                    set again today, I'd run RAID-Z2 and accept the capacity hit. This is the single decision
-                    most likely to bite me later.
+                    So I did. The pool you're reading about is that rebuild.
+                  </p>
+                  <p>
+                    The important detail is that it could not be done gradually. ZFS cannot convert a RAID-Z1 vdev
+                    to RAID-Z2, cannot merge two vdevs into one wider vdev, and cannot remove a raidz vdev from a
+                    pool. Replacing disks in place would have grown capacity while preserving the exact topology I
+                    was trying to escape. The only route to one 8-wide RAID-Z2 was to destroy the pool and build it
+                    again.
+                  </p>
+                  <p>
+                    Which meant deciding, concretely, what was worth carrying across. Photos and configuration got
+                    backed up. The media library did not &mdash; it's the one category I can rebuild, so it's the one
+                    category I let go. That's the same classification I'd written down months earlier as a
+                    principle; this is the week it cost me something.
                   </p>
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-accent/20">
-                  <h4 className="font-semibold text-accent mb-2">SSD Cache Devices</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-muted text-sm">
-                    <div>
-                      <span className="font-medium">SLOG:</span> ~223 GB SATA SSD
-                    </div>
-                    <div>
-                      <span className="font-medium">L2ARC:</span> ~168 GB SATA SSD
-                    </div>
-                  </div>
+                  <h4 className="font-semibold text-accent mb-2">No SLOG, no L2ARC &mdash; on purpose</h4>
                   <p className="text-xs text-muted/80 mt-3 leading-relaxed">
-                    Worth being honest here. A SLOG only accelerates <em>synchronous</em> writes — NFS with sync
-                    on, databases, iSCSI with sync writes. Most of what this box does (SMB, async writes from
-                    containers) never touches it, so the SLOG mostly sits idle. The L2ARC helps for repeated
-                    random reads of metadata and hot blocks, but its index lives in ARC, so an oversized L2ARC
-                    on a memory-constrained system can actively hurt. With ~47 GiB of RAM I'm well inside the
-                    safe ratio, but I wouldn't add more L2ARC without adding RAM first. Neither device is a
-                    magic &quot;make ZFS faster&quot; button.
+                    There are no cache or log devices attached to this pool, and for this workload that's the
+                    correct answer rather than an omission. A SLOG only accelerates <em>synchronous</em> writes
+                    &mdash; NFS with sync on, databases, iSCSI configured for sync. Almost everything this box does
+                    is SMB and async writes from containers, none of which would ever touch it. An L2ARC helps
+                    repeated random reads, but its index lives in ARC, so adding one to a memory-constrained
+                    system can actively make things worse. Neither device is a &quot;make ZFS faster&quot; button,
+                    and buying one to look thorough is how you end up with an SSD that does nothing.
+                  </p>
+                  <p className="text-xs text-muted/80 mt-2 leading-relaxed">
+                    The one workload here that <em>would</em> benefit is the 1 TB zvol exported over iSCSI. That's the
+                    honest counter-argument to the paragraph above, and it's the trade I've accepted for now.
                   </p>
                   <p className="text-xs text-accent mt-2">
-                    Health: all disks green, monthly scrubs clean, no SMART pre-fail flags. Resilver tested by
-                    deliberately offlining a 4 TB disk once — took roughly a day, behaved exactly as advertised.
+                    Health as of September 2026: all eight disks ONLINE, zero read, write or checksum errors. The
+                    last full scrub took 1 day 21 hours and repaired nothing, because there was nothing to repair.
                   </p>
                 </div>
               </div>
@@ -384,26 +393,39 @@ export default function BlogPost({ onBack }: BlogPostProps) {
                 <h3 className="text-xl font-semibold mb-4 text-accent2">Network &amp; Access</h3>
                 <div className="text-muted space-y-4 text-sm leading-relaxed">
                   <p>
-                    The NIC side is a LACP bond of two 2.5 GbE links into a managed switch. LACP balances per-flow,
-                    so it doesn't double single-stream throughput &mdash; it just means several concurrent clients
-                    (Plex direct-play to one TV, Immich uploads from a phone, an Nextcloud sync from a laptop) stop
-                    fighting each other for headroom. For a homelab that's the right trade.
+                    The network side is deliberately unglamorous: a single 2.5 GbE link into an unmanaged switch,
+                    behind an ISP-supplied router whose firewall rules I don't own. No VLANs, no LAG, no
+                    segmentation. There is exactly one interesting thing about it, and it's a bottleneck.
+                  </p>
+                  <p>
+                    Eight CMR drives in RAID-Z2 will read sequentially far faster than 2.5 GbE can carry
+                    &mdash; call it 300 MB/s at the wire, against an array that comfortably beats that. So for every
+                    transfer on this network, <span className="text-accent2">the constraint is the NIC, not the
+                    disks</span>. The WAN is 3 Gbps symmetric, which is also faster than the host link, meaning this
+                    machine cannot saturate its own internet connection. The upgrade path is obvious &mdash; 10 GbE
+                    and a managed switch &mdash; and I haven't taken it, because nothing I actually do here is
+                    currently limited by waiting on a file.
                   </p>
                   <div className="pt-2 border-t border-accent/20">
                     <h4 className="font-semibold text-accent mb-2">Two overlays, two jobs</h4>
                     <ul className="list-disc pl-5 space-y-2">
                       <li>
                         <span className="text-accent2 font-medium">Tailscale</span> handles the admin plane:
-                        SSH, the TrueNAS UI, Portainer, Glances, anything I don't want on the public internet.
+                        SSH, the TrueNAS UI, Portainer, Dozzle, anything I don't want on the public internet.
                         MagicDNS plus tagged ACLs means I never type an IP address and the family never sees
                         these endpoints.
                       </li>
                       <li>
                         <span className="text-accent2 font-medium">Cloudflare Tunnels</span> handle the public
-                        plane: the small set of services I actually want family members to reach without
-                        installing a VPN client &mdash; primarily Immich, Nextcloud, and a couple of share links.
-                        No open ports on the router, TLS terminated at Cloudflare, with Access policies in front
-                        of the more sensitive ones.
+                        plane: the small set of services I actually want family to reach without installing a VPN
+                        client &mdash; Jellyfin, its request front-end, and Wizarr for invitations. No open ports on
+                        the router, TLS terminated at Cloudflare.
+                      </li>
+                      <li>
+                        Worth being precise, because these get conflated: <span className="text-accent2">zero open
+                        ports is not the same as nothing exposed.</span> A tunnel is an outbound connection, so the
+                        router genuinely has no inbound rules &mdash; and three services are genuinely reachable from
+                        the public internet, protected by their own authentication and nothing else.
                       </li>
                     </ul>
                   </div>
@@ -442,22 +464,23 @@ export default function BlogPost({ onBack }: BlogPostProps) {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="space-y-4">
                 <div className="border border-accent/20 rounded-lg p-4">
-                  <h3 className="font-semibold text-accent2 mb-2">Plex</h3>
+                  <h3 className="font-semibold text-accent2 mb-2">Jellyfin (and Plex, for now)</h3>
                   <p className="text-muted text-sm">
-                    The original justification for the whole thing. Library is sourced from physical Blu-rays I
-                    own, ripped with MakeMKV and re-encoded only when storage pressure demands it. NVENC on the
-                    P1000 covers hardware transcoding for clients that won't direct-play. The pain point isn't
-                    Plex itself &mdash; it's keeping metadata clean across thousands of files.
+                    Plex was the original justification for the whole box. It's being wound down: pricing and
+                    policy changes made it a poor thing to keep building against, so Jellyfin is now the server
+                    that's actually published, and Plex goes local-only shortly. Both are running simultaneously
+                    while the migration finishes. Transcoding is handled by the 8700K's integrated Quick Sync
+                    since the discrete GPU came out.
                   </p>
                 </div>
 
                 <div className="border border-accent/20 rounded-lg p-4">
-                  <h3 className="font-semibold text-accent2 mb-2">Nextcloud</h3>
+                  <h3 className="font-semibold text-accent2 mb-2">Filebrowser</h3>
                   <p className="text-muted text-sm">
-                    Self-hosted file sync and basic office stack for the household. Works well enough for daily
-                    use; I'd describe its performance as &ldquo;acceptable, not delightful.&rdquo; Backed by a
-                    dedicated dataset and a Postgres container, with regular snapshots and an off-box replication
-                    target.
+                    File access for the household. This slot used to be Nextcloud, which I retired &mdash; it wanted
+                    a Postgres instance, a dedicated dataset and a meaningful share of the maintenance budget to
+                    deliver something I was mostly using as a file browser. So now it's a file browser. Not every
+                    service needs to be the full-fat option.
                   </p>
                 </div>
 
@@ -465,18 +488,20 @@ export default function BlogPost({ onBack }: BlogPostProps) {
                   <h3 className="font-semibold text-accent2 mb-2">Immich</h3>
                   <p className="text-muted text-sm">
                     The closest thing in self-hosted-land to a real Google Photos replacement. Auto-upload from
-                    phones, CLIP-based search, face recognition, shared albums. The ML containers run on the
-                    P1000 and are the single biggest reason the GPU isn't idle.
+                    phones, CLIP-based search, face recognition, shared albums. Its machine-learning containers
+                    used to be the main justification for having a GPU at all; with the card gone the indexing
+                    passes are slower, which nobody but me has noticed.
                   </p>
                 </div>
 
                 <div className="border border-accent/20 rounded-lg p-4">
-                  <h3 className="font-semibold text-accent2 mb-2">qBittorrent + NordVPN (gluetun)</h3>
+                  <h3 className="font-semibold text-accent2 mb-2">qBittorrent, VPN-bound</h3>
                   <p className="text-muted text-sm">
-                    qBittorrent runs in a network namespace tied to a gluetun VPN container with a strict kill
-                    switch. If the tunnel drops, the client has no network at all rather than falling back to
-                    the WAN. Documented this setup in a separate guide; it's the kind of configuration that's
-                    obvious in hindsight and very annoying to discover the wrong way.
+                    The client runs inside an image with the VPN built in and a strict kill switch: if the tunnel
+                    drops, it has no network at all rather than quietly falling back to the WAN. This used to be a
+                    separate gluetun sidecar with qBittorrent joined to its network namespace &mdash; the integrated
+                    image does the same job with one fewer moving part. It is the only container here with an
+                    egress path of its own, and that's the entire point.
                   </p>
                 </div>
               </div>
@@ -501,20 +526,22 @@ export default function BlogPost({ onBack }: BlogPostProps) {
                 </div>
 
                 <div className="border border-accent/20 rounded-lg p-4">
-                  <h3 className="font-semibold text-accent2 mb-2">Glances</h3>
+                  <h3 className="font-semibold text-accent2 mb-2">Homarr, Dozzle, Scrutiny</h3>
                   <p className="text-muted text-sm">
-                    Lightweight real-time view of CPU, memory, network, disk and per-container resource use.
-                    It's not Grafana, but it answers &ldquo;what's the box doing right now&rdquo; in one URL.
+                    The observability layer, such as it is: Homarr as the dashboard, Dozzle streaming container
+                    logs, Scrutiny watching SMART data across the array. It is not a metrics stack &mdash; there's no
+                    Prometheus, no Grafana, no time-series history. What actually does the work is TrueNAS emailing
+                    me when something is wrong, which is unglamorous and has caught every real fault so far.
                   </p>
                 </div>
 
                 <div className="border border-accent/20 rounded-lg p-4">
-                  <h3 className="font-semibold text-accent2 mb-2">Ollama + Open-WebUI</h3>
+                  <h3 className="font-semibold text-accent2 mb-2">CDN_Captain</h3>
                   <p className="text-muted text-sm">
-                    Local LLM playground. With 4 GB of VRAM I'm capped at ~7B-parameter models at Q4
-                    quantisation, which is enough to be interesting and nowhere near enough to be useful for
-                    real work. I keep it around for tinkering and for offline use when I don't want to send
-                    something to a hosted model.
+                    A retrieval-first Discord bot I built for a client's gaming community, running here in Docker
+                    rather than on a VPS because this box was already doing enough to absorb it. There used to be
+                    an Ollama and Open-WebUI pairing in this slot too; it went away with the GPU, and I didn't
+                    miss it &mdash; 4 GB of VRAM only ever made it a toy.
                   </p>
                 </div>
 
@@ -539,9 +566,10 @@ export default function BlogPost({ onBack }: BlogPostProps) {
                   <h3 className="font-semibold text-accent2 mb-3">Snapshots aren&rsquo;t backups</h3>
                   <p className="text-muted text-sm">
                     ZFS snapshots are excellent for &ldquo;undo&rdquo; and ransomware resilience, but a snapshot
-                    that lives on the same pool as the data dies with the pool. The dataset-level snapshots are
-                    replicated off-box on a schedule for anything irreplaceable (documents, photos, configs).
-                    Media is not in that bucket &mdash; I can re-rip a Blu-ray, I can&rsquo;t re-shoot a wedding.
+                    that lives on the same pool as the data dies with the pool. What actually leaves the box is a
+                    weekly encrypted sync of photos and configuration to cloud storage &mdash; which means my real
+                    RPO is seven days, and I&rsquo;d rather write that number down than imply something continuous.
+                    Media isn&rsquo;t in that bucket at all: I can re-rip a Blu-ray, I can&rsquo;t re-shoot a wedding.
                   </p>
                 </div>
 
@@ -569,15 +597,22 @@ export default function BlogPost({ onBack }: BlogPostProps) {
                 <h3 className="font-semibold text-accent2 mb-3">The boring stuff that matters most</h3>
                 <ul className="list-disc pl-5 space-y-2 text-muted text-sm">
                   <li>
-                    <span className="font-medium">Power.</span> Eight HDDs, an SSD pile, a GPU, and a 65 W CPU
-                    pull non-trivial wattage even at idle. The whole box sits behind a line-interactive UPS
-                    sized for a clean shutdown, not for ride-through. ZFS hates abrupt power loss less than most
-                    filesystems, but it still hates it.
+                    <span className="font-medium">Power is the weakest layer here, and I know it.</span> There is
+                    no UPS. Eight spinning disks and an active pool are exposed to abrupt loss, and with no SLOG
+                    the sync writes that do happen land in the in-pool ZIL. Worse, the JBOD runs on its own PSU
+                    with no sequencing logic &mdash; it has to be powered up before the host, or the HBA enumerates
+                    an empty bus. So nothing here recovers from an outage unattended. If the power blips while
+                    I'm away, it stays down until I'm standing in front of it. The fix is a UPS sized for both
+                    supplies plus NUT integration, and it is the next thing I'd spend money on.
                   </li>
                   <li>
-                    <span className="font-medium">Updates.</span> SCALE point releases occasionally break or
-                    deprecate apps. I read the release notes before clicking upgrade, snapshot the boot pool,
-                    and never upgrade the day a release drops.
+                    <span className="font-medium">Updates.</span> Container images are largely pinned on the
+                    TrueNAS-managed side and tracked by Watchtower on the hand-rolled side &mdash; a split I'd
+                    tighten if this were anyone else's system. The OS itself is a different story: I opted into
+                    the Early Adopter release train and discovered it's a one-way door. Once you're running a
+                    build newer than stable, the General channel isn't selectable any more; going back means a
+                    clean install and a config restore. I'm on a beta release of TrueNAS 26 because that's where
+                    I put myself, not because I chose it release by release.
                   </li>
                   <li>
                     <span className="font-medium">Monitoring.</span> Alert fatigue is real. I get email on
@@ -602,15 +637,16 @@ export default function BlogPost({ onBack }: BlogPostProps) {
                 <div className="flex items-start gap-3">
                   <div className="w-2 h-2 bg-accent rounded-full mt-2"></div>
                   <p className="text-muted">
-                    Stand up Prometheus + Grafana + node_exporter for proper time-series visibility, replacing
-                    Glances as the default dashboard.
+                    Stand up Prometheus + Grafana + node_exporter for proper time-series visibility. Right now I
+                    can tell you what the box is doing, but not what it was doing at 3am last Tuesday.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="w-2 h-2 bg-accent rounded-full mt-2"></div>
                   <p className="text-muted">
-                    Migrate the next pool expansion to RAID-Z2 and slowly age out the Z1 vdevs. Capacity is
-                    cheap; rebuilding from cold backup is not.
+                    Deal with capacity before it deals with me. The pool is 76% full and ZFS gets meaningfully
+                    worse at allocation past about 80%, so the clock is already running on either pruning or a
+                    wider vdev.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
@@ -626,15 +662,17 @@ export default function BlogPost({ onBack }: BlogPostProps) {
                 <div className="flex items-start gap-3">
                   <div className="w-2 h-2 bg-accent rounded-full mt-2"></div>
                   <p className="text-muted">
-                    Formalise the 3-2-1 backup story: pool snapshots + off-site replication + an annual cold
-                    drive rotation for the genuinely irreplaceable datasets.
+                    Get to an actual 3-2-1. Today it&rsquo;s closer to 2-2-1: the pool, plus one weekly cloud copy
+                    of the irreplaceable subset. That&rsquo;s a defensible posture for a household and it is not
+                    the thing I keep claiming it is.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="w-2 h-2 bg-accent rounded-full mt-2"></div>
                   <p className="text-muted">
-                    Tighten the Cloudflare Access policies in front of public services and add WebAuthn for the
-                    accounts that don&rsquo;t already have it.
+                    Put something in front of the publicly-tunnelled services besides their own login forms.
+                    Cloudflare Access is the obvious candidate and the reason I haven&rsquo;t done it is friction
+                    for the non-technical people who use them, which is a reason and not an excuse.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">

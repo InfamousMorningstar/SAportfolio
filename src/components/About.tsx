@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { FaCode, FaServer, FaLayerGroup, FaUniversity, FaMapMarkerAlt, FaGlobeAmericas } from 'react-icons/fa';
+import { FaCode, FaUniversity, FaMapMarkerAlt } from 'react-icons/fa';
 
 export default function About() {
   return (
@@ -69,7 +69,7 @@ export default function About() {
                 <h3 className="text-3xl font-bold text-foreground leading-none">
                   Salman Ahmad
                 </h3>
-                <p className="text-muted mt-2">Full Stack Engineer</p>
+                <p className="text-muted mt-2">Software Developer · Systems Builder</p>
              </div>
           </motion.div>
 
@@ -116,20 +116,24 @@ export default function About() {
 
              <h3 className="text-xl font-bold text-foreground mb-6 relative z-10 flex items-center gap-2">
                 <FaCode className="text-accent" />
-                Stack
+                Capabilities
              </h3>
 
-             <div className="relative z-10 flex flex-wrap gap-2">
-                {['Next.js', 'React', 'TypeScript', 'Node.js', 'Docker', 'Kubernetes', 'PostgreSQL', 'Tailwind', 'Python', 'AWS'].map((tech) => (
-                   <span key={tech} className="px-3 py-1.5 text-xs font-medium text-foreground bg-background border border-border-subtle rounded-lg hover:border-accent transition-colors cursor-default shadow-sm">
-                      {tech}
+             {/* Deliberately domains, not a wall of logos. The detail — with
+                 provenance and links to the work that proves each one — lives
+                 in the Capabilities section rather than being flattened into
+                 pills of equal weight here. */}
+             <div className="relative z-10 flex flex-wrap gap-2 mb-6">
+                {['Infrastructure & Storage', 'Networking', 'Software', 'Operations'].map((domain) => (
+                   <span key={domain} className="px-3 py-1.5 text-xs font-medium text-foreground bg-background border border-border-subtle rounded-lg shadow-sm">
+                      {domain}
                    </span>
                 ))}
             </div>
-            
-            <div className="absolute bottom-4 right-4 text-[10px] mobile-only-hide text-muted-soft font-mono">
-               SYS.OP.READY
-            </div>
+
+            <a href="#skills" className="relative z-10 font-mono text-xs text-accent hover:text-accent2 transition-colors">
+               See the evidence &rarr;
+            </a>
           </motion.div>
 
         </div>
