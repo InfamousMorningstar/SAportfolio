@@ -117,7 +117,7 @@ export default function Footer() {
                     </span>
                   )}
                   <span className="text-text-soft">51.0447 N, 114.0719 W </span>
-                  <span>Calgary, CA. Terra (Sol III)</span>
+                  <span>Calgary, CA. Earth</span>
               </div>
           </div>
         </motion.div>
@@ -205,7 +205,7 @@ export default function Footer() {
                     </>
                   )}
                   <span className="text-text-soft">51.0447 N, 114.0719 W </span>
-                  <span>Calgary, CA. Terra (Sol III)</span>
+                  <span>Calgary, CA. Earth</span>
                </div>
             </div>
 
