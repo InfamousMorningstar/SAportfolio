@@ -33,10 +33,11 @@ export interface Role {
 }
 
 /**
- * The practice's public site. Swap this to https://ahmxdtechnologies.ca once
- * DNS is live — it is the only place the URL is written down.
+ * The practice's public site. The only place this URL is written down, so the
+ * hero, the about narrative, the work card, the resume and the JSON-LD all
+ * move together.
  */
-export const AHMXD_SITE = 'https://ahmxd-technologies.vercel.app';
+export const AHMXD_SITE = 'https://ahmxdtechnologies.ca';
 
 export const roles: Role[] = [
   {
