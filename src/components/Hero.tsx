@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
+import { AHMXD_SITE } from '@/content/career';
 
 export default function Hero() {
   const { scrollY } = useScroll();
@@ -30,6 +31,14 @@ export default function Hero() {
 
         {/* Bottom/Right: Role & Intro - Offset */}
         <motion.div style={{ y: y2 }} className="self-end text-right max-w-lg md:max-w-2xl relative mt-auto">
+            <a
+                href={AHMXD_SITE}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block mt-5 md:mt-0 mb-4 font-mono text-[10px] md:text-xs tracking-[0.2em] uppercase text-muted-soft hover:text-accent transition-colors duration-300"
+            >
+                Founder &amp; Principal Engineer — AHMXD Technologies
+            </a>
             <h2 className="text-3xl md:text-5xl font-light text-foreground mb-6">
                 Software <span className="font-serif italic text-accent">Developer</span>,<br/>
                 Systems <span className="font-serif italic text-accent2">Builder</span>.

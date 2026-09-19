@@ -20,7 +20,7 @@ export type Tier =
   | 'professional'
   /** Built or operated for someone else, paid or otherwise. */
   | 'client'
-  /** Self-directed, with real users depending on it. */
+  /** Self-directed and live in service. */
   | 'production'
   /** Personal infrastructure in daily use. */
   | 'infrastructure'

@@ -1,4 +1,5 @@
 import type { Tier } from './types';
+import { AHMXD_SITE } from './career';
 
 /*
  * Project data, lifted out of the Projects component so the resume can read it
@@ -32,6 +33,26 @@ export interface Project {
 }
 
 export const projects: Project[] = [
+  {
+    id: 7,
+    slug: 'ahmxd',
+    title: 'AHMXD Technologies',
+    shot: '/works/ahmxd.webp',
+    category: 'Independent Practice',
+    tier: 'production',
+    description:
+      'My own web and IT practice, and the site that fronts it. Services, pricing and a six-stage engagement model are all stated up front rather than hidden behind a contact form — scope, mockup, sign-off, build, launch, support.',
+    tech: ['Next.js 16', 'TypeScript', 'Tailwind', 'Vercel'],
+    github: '',
+    demo: AHMXD_SITE,
+    caseStudy: '',
+    gradient: 'from-violet-500 to-indigo-600',
+    resumeBullets: [
+      'Founded an independent web and IT practice in Calgary — defined the services, pricing and a six-stage engagement model, and do the engineering myself.',
+      'Designed and shipped its public site: transparent pricing, a stated process, and an offering spanning sites, web applications, hosting and office IT.',
+    ],
+    onResume: true,
+  },
   {
     id: 1,
     slug: 'starlight',

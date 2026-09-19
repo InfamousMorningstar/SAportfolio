@@ -32,9 +32,39 @@ export interface Role {
   stack: string[];
 }
 
+/**
+ * The practice's public site. Swap this to https://ahmxdtechnologies.ca once
+ * DNS is live — it is the only place the URL is written down.
+ */
+export const AHMXD_SITE = 'https://ahmxd-technologies.vercel.app';
+
 export const roles: Role[] = [
   {
     id: 'EXP-01',
+    title: 'Founder & Principal Engineer',
+    company: 'AHMXD Technologies',
+    location: 'Calgary, AB',
+    period: '2026 - Present',
+    startedAt: '2026-09',
+    type: 'Independent',
+    roleCode: 'ENG-Principal',
+    description:
+      'An independent web and IT practice in Calgary. I set the offering, the pricing and the engagement model, then do the engineering myself — sites, web applications, and the infrastructure and support that keep them running.',
+    glance: {
+      model: 'Solo',
+      scope: 'Web · IT',
+      support: 'Ongoing',
+    },
+    responsibilities: [
+      'Defined the practice end to end — services, pricing and a six-stage engagement model: scope, mockup, sign-off, build, launch, support',
+      'Build business sites and web applications — inventory, bookings and admin dashboards behind authenticated access',
+      'Run hosting and care as an ongoing service: domains, SSL, deploys, updates and analytics',
+      'Provide the infrastructure side under the same roof — storage, backups, remote access and office IT setup',
+    ],
+    stack: ['Next.js', 'TypeScript', 'Supabase', 'Docker', 'Vercel'],
+  },
+  {
+    id: 'EXP-02',
     title: 'Assembler',
     company: 'DIRTT Environmental Solutions',
     location: 'Calgary, AB',
@@ -58,7 +88,7 @@ export const roles: Role[] = [
     stack: ['CNC Machining', 'Precision Assembly', 'Fabrication', 'Lean Mfg'],
   },
   {
-    id: 'EXP-02',
+    id: 'EXP-03',
     title: 'Customer Service Rep',
     company: 'Circle K',
     location: 'Calgary, AB',
@@ -157,7 +187,7 @@ export const certifications: Certification[] = [
 
 export const profile = {
   name: 'Salman Ahmad',
-  headline: 'Software Developer · Systems Builder',
+  headline: 'Founder & Principal Engineer · Software Developer',
   subhead: 'Linux · ZFS · Docker · Networking · Python · TypeScript',
   location: 'Calgary, AB',
   email: 's.ahmad0147@gmail.com',
@@ -166,5 +196,5 @@ export const profile = {
   github: 'github.com/InfamousMorningstar',
   linkedin: 'linkedin.com/in/salman-ahmad-6788811b6',
   summary:
-    'Software Development graduate (SAIT) completing a BSc in Computer Information Systems at Mount Royal University, with two paid client platforms delivered end to end as sole developer. Self-taught across the infrastructure side: I run a 38-container self-hosted environment on ~109 TiB of dual-parity ZFS — including the drive enclosure, which I fabricated myself — and document its architecture, trade-offs and failures rather than only its successes. Looking for a DevOps, SRE or infrastructure role.',
+    'Founder and principal engineer of AHMXD Technologies, an independent web and IT practice in Calgary. Software Development graduate (SAIT) completing a BSc in Computer Information Systems at Mount Royal University, with two paid client platforms delivered end to end as sole developer. Self-taught across the infrastructure side: I run a 38-container self-hosted environment on ~109 TiB of dual-parity ZFS — including the drive enclosure, which I fabricated myself — and document its architecture, trade-offs and failures rather than only its successes. Looking for a DevOps, SRE or infrastructure role.',
 };

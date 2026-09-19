@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { FaCode, FaUniversity, FaMapMarkerAlt } from 'react-icons/fa';
+import { AHMXD_SITE } from '@/content/career';
 
 export default function About() {
   return (
@@ -40,10 +41,10 @@ export default function About() {
              </h3>
              <div className="space-y-6 text-lg md:text-xl text-muted leading-relaxed font-light">
                 <p>
-                  I am a <span className="text-accent font-medium">Software Development graduate from Southern Alberta Institute of Technology (SAIT)</span> with a strong foundation in building and operating production-ready systems, currently completing a <span className="text-accent2 font-medium">Bachelor of Computer Information Systems</span> at Mount Royal University.
+                  I am the founder and principal engineer of <a href={AHMXD_SITE} target="_blank" rel="noopener noreferrer" className="text-accent font-medium hover:text-accent2 transition-colors">AHMXD Technologies</a>, an independent web and IT practice in Calgary, and a <span className="text-accent font-medium">Software Development graduate from Southern Alberta Institute of Technology (SAIT)</span>, currently completing a <span className="text-accent2 font-medium">Bachelor of Computer Information Systems</span> at Mount Royal University.
                 </p>
                 <p>
-                  My experience spans <span className="text-foreground">full-stack development</span>, <span className="text-foreground">DevOps-driven infrastructure</span>, and advanced home-lab environments. Backed by years in customer-facing roles, I specialize in delivering sound solutions that act as the bridge between complex engineering and end-user accessibility.
+                  My experience spans <span className="text-foreground">full-stack development</span>, <span className="text-foreground">DevOps-driven infrastructure</span>, and advanced home-lab environments. Backed by years in customer-facing roles, I bridge complex engineering and end-user accessibility.
                 </p>
              </div>
           </motion.div>
@@ -69,7 +70,7 @@ export default function About() {
                 <h3 className="text-3xl font-bold text-foreground leading-none">
                   Salman Ahmad
                 </h3>
-                <p className="text-muted mt-2">Software Developer · Systems Builder</p>
+                <p className="text-muted mt-2">Founder &amp; Principal Engineer</p>
              </div>
           </motion.div>
 

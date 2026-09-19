@@ -10,6 +10,7 @@ import './globals.css';
 import { spaceGrotesk } from './fonts';
 import Script from 'next/script';
 import { ThemeProvider } from '../components/ThemeProvider';
+import { AHMXD_SITE } from '@/content/career';
 import SmoothScroll from '../components/SmoothScroll';
 
 const inter = Inter({
@@ -77,7 +78,7 @@ const personSchema = {
   name: 'Salman Ahmad',
   url: 'https://portfolio.ahmxd.net',
   email: 'mailto:s.ahmad0147@gmail.com',
-  jobTitle: 'Software Developer · Systems Builder',
+  jobTitle: 'Founder & Principal Engineer · Software Developer',
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Calgary',
@@ -87,6 +88,7 @@ const personSchema = {
   sameAs: [
     'https://github.com/InfamousMorningstar',
     'https://www.linkedin.com/in/salman-ahmad-6788811b6/',
+    AHMXD_SITE,
   ],
   knowsAbout: [
     'Linux',
