@@ -10,7 +10,7 @@ export default function Hero() {
   const y2 = useTransform(scrollY, [0, 500], [0, -150]);
 
   return (
-    <section id="home" className="relative h-screen w-full overflow-hidden flex flex-col justify-center px-4 md:px-12 pt-20 transition-colors duration-500">
+    <section id="home" className="relative min-h-[100svh] w-full overflow-hidden flex flex-col justify-center px-4 md:px-12 pt-24 pb-32 md:pt-20 md:pb-40 transition-colors duration-500">
       
       {/* Background Noise/Gradient - Adapted for Theming */}
       <div className="absolute inset-0 -z-10 opacity-30">
@@ -19,7 +19,7 @@ export default function Hero() {
       </div>
 
       {/* Main Typography Container - Asymmetric */}
-      <div className="relative z-10 w-full max-w-[1920px] mx-auto h-[70vh] flex flex-col justify-between">
+      <div className="relative z-10 w-full max-w-[1920px] mx-auto md:min-h-[70vh] flex flex-col justify-between gap-10 md:gap-0">
         
         {/* Top/Left: Massive Name */}
         <motion.div style={{ y: y1 }} className="relative">
@@ -39,17 +39,17 @@ export default function Hero() {
             >
                 Founder &amp; Principal Engineer — AHMXD Technologies
             </a>
-            <h2 className="text-3xl md:text-5xl font-light text-foreground mb-6">
+            <h2 className="text-3xl md:text-5xl font-light text-foreground mb-4 md:mb-6">
                 Software <span className="font-serif italic text-accent">Developer</span>,<br/>
                 Systems <span className="font-serif italic text-accent2">Builder</span>.
             </h2>
-            <p className="text-muted text-lg md:text-xl leading-relaxed mb-8">
+            <p className="text-muted text-base md:text-xl leading-relaxed mb-6 md:mb-8">
                 I build software, run infrastructure, and figure out what breaks in between. From
                 full-stack applications to self-hosted systems, networking, containers, and automation
                 &mdash; I learn by building, breaking, troubleshooting, and documenting real systems.
             </p>
             
-            <div className="flex justify-end mb-8">
+            <div className="flex justify-end mb-6 md:mb-8">
                 <motion.button 
                     onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
                     whileHover={{ scale: 1.05 }}
