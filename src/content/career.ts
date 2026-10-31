@@ -42,6 +42,30 @@ export const AHMXD_SITE = 'https://ahmxdtechnologies.ca';
 export const roles: Role[] = [
   {
     id: 'EXP-01',
+    title: 'Admissions Advisor',
+    company: 'ABM College',
+    location: 'Calgary, AB',
+    period: 'Oct 2026 - Present',
+    startedAt: '2026-10',
+    type: 'Full-Time',
+    roleCode: 'ADM-Advisor',
+    description:
+      'Admissions at ABM College, a private career college. I guide prospective students from first inquiry to enrolment — matching them to the right program, walking them through requirements and keeping the process moving. Held alongside running AHMXD Technologies.',
+    glance: {
+      scope: 'Admissions',
+      focus: 'Student-facing',
+      overlap: 'Held with AHMXD',
+    },
+    responsibilities: [
+      'Advise prospective students on program options, admission requirements and career outcomes',
+      'Guide applicants through the application and enrolment process from first inquiry onward',
+      'Follow up on inquiries by phone, email and in person, and keep applicant records current',
+      'Coordinate with other college departments so applicants get complete answers',
+    ],
+    stack: ['Student Advising', 'Enrolment', 'Communication', 'Records Mgmt'],
+  },
+  {
+    id: 'EXP-02',
     title: 'Founder & Principal Engineer',
     company: 'AHMXD Technologies',
     location: 'Calgary, AB',
@@ -65,7 +89,7 @@ export const roles: Role[] = [
     stack: ['Next.js', 'TypeScript', 'Supabase', 'Docker', 'Vercel'],
   },
   {
-    id: 'EXP-02',
+    id: 'EXP-03',
     title: 'Assembler',
     company: 'DIRTT Environmental Solutions',
     location: 'Calgary, AB',
@@ -89,7 +113,7 @@ export const roles: Role[] = [
     stack: ['CNC Machining', 'Precision Assembly', 'Fabrication', 'Lean Mfg'],
   },
   {
-    id: 'EXP-03',
+    id: 'EXP-04',
     title: 'Customer Service Rep',
     company: 'Circle K',
     location: 'Calgary, AB',
